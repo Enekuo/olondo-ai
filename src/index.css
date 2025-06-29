@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* PromptForge Light Mode */
+    --background: 255 100% 100%; /* #FFFFFF */
+    --foreground: 220 13% 9%; /* #171A1C - approx slate-900 */
+    
+    --card: 255 100% 100%; 
+    --card-foreground: 220 13% 9%;
+    
+    --popover: 255 100% 100%;
+    --popover-foreground: 220 13% 9%;
+    
+    --primary: 217 91% 60%; /* #3B82F6 - blue-500 */
+    --primary-foreground: 255 100% 100%; /* #FFFFFF */
+    
+    --secondary: 220 14% 96%; /* #F1F5F9 - approx slate-100 */
+    --secondary-foreground: 220 13% 9%;
+    
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 45%; /* #6B7280 - approx slate-500 */
+    
+    --accent: 220 14% 96%; /* For hover states, etc. */
+    --accent-foreground: 220 13% 9%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    
+    --border: 220 13% 91%; /* #E2E8F0 - approx slate-200 */
+    --input: 220 13% 91%;
+    --ring: 217 91% 60%; /* #3B82F6 - blue-500 for ring color */
+    
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* PromptForge Dark Mode */
+    --background: 220 13% 9%; /* #171A1C - approx slate-900 */
+    --foreground: 220 14% 96%; /* #F1F5F9 - approx slate-100 */
+    
+    --card: 220 13% 14%; /* #1E293B - approx slate-800 */
+    --card-foreground: 220 14% 96%;
+    
+    --popover: 220 13% 14%; /* Darker popover for consistency */
+    --popover-foreground: 220 14% 96%;
+    
+    --primary: 217 91% 60%; /* #3B82F6 - blue-500 */
+    --primary-foreground: 255 100% 100%; /* #FFFFFF */
+    
+    --secondary: 220 13% 14%; /* #1E293B - approx slate-800 */
+    --secondary-foreground: 220 14% 96%;
+    
+    --muted: 220 13% 14%;
+    --muted-foreground: 220 10% 61%; /* #94A3B8 - approx slate-400 */
+    
+    --accent: 220 13% 20%; /* Slightly lighter than card for hover */
+    --accent-foreground: 220 14% 96%;
+    
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 40% 98%;
+    
+    --border: 220 13% 29%; /* #334155 - approx slate-700 */
+    --input: 220 13% 29%;
+    --ring: 217 91% 60%; /* #3B82F6 - blue-500 for ring color */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+  main {
+    padding-top: 0; /* Section handles its own spacing */
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background;
+  }
+  .btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90;
+  }
+  .btn-secondary {
+     @apply bg-secondary text-secondary-foreground hover:bg-secondary/80;
+  }
+   .btn-ghost {
+    @apply hover:bg-accent hover:text-accent-foreground;
+  }
+  .btn-link {
+    @apply text-primary underline-offset-4 hover:underline;
+  }
+}
+
+/* For Inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
+
+html {
+  scroll-behavior: smooth;
+}
