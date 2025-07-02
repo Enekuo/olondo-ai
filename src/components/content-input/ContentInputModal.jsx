@@ -160,9 +160,6 @@ const ContentInputModal = ({ isOpen, onOpenChange, onContentSubmit }) => {
               </DialogDescription>
             </div>
             {/* This DialogClose renders the button. No need for an extra Button component inside. */}
-            <DialogClose className="rounded-full p-1.5 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-              <X size={20} />
-            </DialogClose>
           </div>
         </DialogHeader>
 
