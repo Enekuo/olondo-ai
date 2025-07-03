@@ -150,21 +150,26 @@ const ContentInputModal = ({ isOpen, onOpenChange, onContentSubmit }) => {
             <p className="text-xl font-semibold text-primary">{t('contentInputModalUploadSubtitle', 'Arrastra y suelta o')}</p>
           </div>
         )}
-        <DialogHeader className="p-6 pb-4 border-b border-slate-200 dark:border-slate-700">
-          <div className="flex justify-between items-start">
-            <div>
-              <DialogTitle className="text-2xl font-bold text-slate-900 dark:text-white">{t('contentInputModalTitle')}</DialogTitle>
-              <DialogDescription className="text-slate-500 dark:text-slate-400 mt-1 text-sm">
-                {t('contentInputModalDescription')}
-              </DialogDescription>
-            </div>
-            <DialogClose asChild>
-              <Button variant="ghost" size="icon">
-                <X className="h-5 w-5 text-muted-foreground" />
-              </Button>
-            </DialogClose>
-          </div>
-        </DialogHeader>
+<DialogHeader className="p-6 pb-4 border-b border-slate-200 dark:border-slate-700">
+  <div className="flex justify-between items-start">
+    <div>
+      <DialogTitle className="text-2xl font-bold text-slate-900 dark:text-white">
+        {t('contentInputModalTitle')}
+      </DialogTitle>
+      <DialogDescription className="text-slate-500 dark:text-slate-400 mt-1 text-sm">
+        {t('contentInputModalDescription')}
+      </DialogDescription>
+    </div>
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={() => onOpenChange(false)}
+      aria-label="Cerrar"
+    >
+      <X className="h-5 w-5 text-muted-foreground" />
+    </Button>
+  </div>
+</DialogHeader>
 
         <div className="p-6 space-y-6 max-h-[70vh] overflow-y-auto">
           <div className={`relative p-8 border-2 border-dashed rounded-lg transition-colors duration-200 ease-in-out text-center cursor-pointer
