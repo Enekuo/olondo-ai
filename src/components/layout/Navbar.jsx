@@ -91,7 +91,7 @@ const Navbar = () => {
             <Link to="/" className={logoClasses()}>
               <Sparkles className="mr-2 h-6 w-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-cyan-500" />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-cyan-500">
-                Olondo AI
+                Olondo.AI
               </span>
             </Link>
           </div>
