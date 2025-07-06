@@ -41,7 +41,7 @@ const HomePage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            {t('welcome_part1', 'Bienvenido a')} <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-500 dark:from-blue-400 dark:to-sky-300">Olondo.IA</span>
+            {t('welcome_part1', 'Bienvenido a')} <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-500 dark:from-blue-400 dark:to-sky-300">Olondo.AI</span>
           </motion.h1>
 
           <motion.p 
