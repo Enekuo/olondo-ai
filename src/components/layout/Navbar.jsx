@@ -90,7 +90,7 @@ const Navbar = () => {
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
             <img
-  src="/logo-olondo-v2.png"
+  src="/logo-olondo.png"
   alt="Olondo AI Logo"
   className="h-12 sm:h-14 w-auto"
 />
