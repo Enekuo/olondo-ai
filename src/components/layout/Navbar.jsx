@@ -92,7 +92,7 @@ const Navbar = () => {
   <img
     src="/logo-olondo.png"
     alt="Olondo AI Logo"
-    className="h-8 w-auto"
+    className="h-12 sm:h-14 w-auto"
   />
            </Link> 
           </div>
