@@ -88,12 +88,13 @@ const Navbar = () => {
       <header className="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center">
-            <Link to="/" className={logoClasses()}>
-              <Sparkles className="mr-2 h-6 w-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-cyan-500" />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-cyan-500">
-                Olondo.AI
-              </span>
-            </Link>
+            <Link to="/" className="flex items-center space-x-2">
+  <img
+    src="/logo-olondo.png"
+    alt="Olondo AI Logo"
+    className="h-8 w-auto"
+  />
+           </Link> 
           </div>
 
           <nav className="hidden md:flex flex-1 items-center justify-center space-x-0.5 lg:space-x-1">
