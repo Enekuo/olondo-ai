@@ -89,11 +89,11 @@ const Navbar = () => {
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
-  <img
-    src="/logo-olondo.png"
-    alt="Olondo AI Logo"
-    className="h-12 sm:h-14 w-auto"
-  />
+            <img
+  src="/logo-olondo.png"
+  alt="Olondo AI Logo"
+  className="h-12 sm:h-14 w-auto"
+/>
            </Link> 
           </div>
 
