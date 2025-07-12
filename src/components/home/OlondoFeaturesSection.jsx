@@ -40,20 +40,23 @@ const OlondoFeaturesSection = () => {
 
   return (
     <section className="w-full py-16 md:py-24 lg:py-32 bg-slate-50 dark:bg-slate-900">
-      <div className="container mx-auto px-4 md:px-6">
-        <motion.div
-         className="text-center max-w-3xl mx-auto mb-12 md:mb-16"
-  initial={{ opacity: 0, y: 20 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true }}
-  transition={{ duration: 0.5 }}
->
-  <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white md:pl-[38px]">
-    {t('features_main_title')}
-  </h2>
-  <p className="mt-4 text-lg text-slate-600 dark:text-slate-400 md:pl-[38px]">
-    {t('features_intro')}
-  </p>
+    <div className="container mx-auto px-4 md:px-6">
+      <motion.div
+        className="text-center max-w-3xl mx-auto mb-12 md:mb-16"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        {/* 🔄 Bloque desplazado 2cm a la izquierda */}
+        <div className="md:pl-[2cm]">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
+            {t('features_main_title')}
+          </h2>
+          <p className="mt-4 text-lg text-slate-600 dark:text-slate-400">
+            {t('features_intro')}
+          </p>
+        </div>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-start mb-16 md:mb-24">
