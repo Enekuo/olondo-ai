@@ -41,27 +41,20 @@ const OlondoFeaturesSection = () => {
   return (
     <section className="w-full py-16 md:py-24 lg:py-32 bg-slate-50 dark:bg-slate-900">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex items-start justify-center mb-12 md:mb-16 gap-6">
-          <img
-            src="/brain-mic.png"
-            alt="Brain mic"
-            className="h-full object-contain"
-          />
-          <motion.div
-            className="text-center max-w-3xl mt-[-10px] ml-[-20px]"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
-              {t('features_main_title')}
-            </h2>
-            <p className="mt-4 text-lg text-slate-600 dark:text-slate-400">
-              {t('features_intro')}
-            </p>
-          </motion.div>
-        </div>
+        <motion.div
+          className="text-center max-w-3xl mx-auto mb-12 md:mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
+            {t('features_main_title')}
+          </h2>
+          <p className="mt-4 text-lg text-slate-600 dark:text-slate-400">
+            {t('features_intro')}
+          </p>
+        </motion.div>
 
         <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-start mb-16 md:mb-24">
           <motion.div
@@ -137,7 +130,7 @@ const OlondoFeaturesSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <div className="order-2 md:order-1">
+          <div className="order-2 md:order-1 pr-6">
             <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-4">
               {t('how_it_works_title')}
             </h3>
@@ -174,7 +167,7 @@ const OlondoFeaturesSection = () => {
             </div>
           </div>
           <div className="order-1 md:order-2 flex justify-center items-center">
-            <img className="rounded-lg shadow-md max-w-sm w-full h-auto aspect-square object-cover" alt="Ilustración abstracta del funcionamiento de la IA" src="https://images.unsplash.com/photo-1677442135131-4d7c123aef1c" />
+            <img className="rounded-lg shadow-md max-w-sm w-full h-auto aspect-square object-cover" src="/brain-mic.png" alt="Ilustración abstracta del funcionamiento de la IA" />
           </div>
         </motion.div>
       </div>
