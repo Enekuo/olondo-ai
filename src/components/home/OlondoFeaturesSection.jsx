@@ -64,7 +64,7 @@ const OlondoFeaturesSection = () => {
   <img
     src="/brain-mic.png"
     alt="Ilustración cerebro con micrófono"
-    className="w-[320px] object-contain shadow-md rounded-xl"
+    className="w-[320px] object-contain shadow-md rounded-xl md:-translate-y-[20px]"
   />
 </div>
         </motion.div>
