@@ -42,23 +42,23 @@ const OlondoFeaturesSection = () => {
     <section className="w-full py-16 md:py-24 lg:py-32 bg-slate-50 dark:bg-slate-900">
       <div className="container mx-auto px-4 md:px-6">
         <motion.div
-          className="flex flex-col md:flex-row md:items-start md:justify-between max-w-6xl mx-auto mb-12 md:mb-16"
+          className="flex flex-col md:flex-row md:items-center md:justify-between max-w-6xl mx-auto mb-12 md:mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
           <div className="md:w-3/5 text-left">
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-slate-900 dark:text-white">
+            <h2 className="text-4xl sm:text-4xl md:text-4xl font-bold tracking-tight text-slate-900 dark:text-white mb-4">
               {t('features_main_title')}
             </h2>
-            <p className="mt-2 text-lg text-slate-600 dark:text-slate-400 max-w-2xl">
+            <p className="max-w-3xl text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
               {t('features_intro')}
             </p>
           </div>
           <div className="md:w-2/5 flex justify-center mt-8 md:mt-0">
             <img
-              src="/images/brain-mic.png"
+              src="/images/brain-microphone.png"
               alt="Cerebro con micrófono"
               className="w-48 h-auto object-contain"
             />
