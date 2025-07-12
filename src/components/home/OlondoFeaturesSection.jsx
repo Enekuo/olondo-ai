@@ -49,14 +49,14 @@ const OlondoFeaturesSection = () => {
         transition={{ duration: 0.5 }}
       >
         {/* 🔄 Bloque desplazado 2cm a la izquierda */}
-        <div className="md:ml-[6cm]">
+        <div className="md:-translate-x-[2cm]">
   <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
     {t('features_main_title')}
   </h2>
   <p className="mt-4 text-lg text-slate-600 dark:text-slate-400">
     {t('features_intro')}
   </p>
-  </div>
+</div>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-start mb-16 md:mb-24">
