@@ -48,17 +48,17 @@ const OlondoFeaturesSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <div className="md:w-3/5 text-left -mt-6">
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight">
+          <div className="md:w-3/5 text-left">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-slate-900 dark:text-white">
               {t('features_main_title')}
             </h2>
-            <p className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-snug max-w-2xl">
+            <p className="mt-2 text-lg text-slate-600 dark:text-slate-400 max-w-2xl">
               {t('features_intro')}
             </p>
           </div>
           <div className="md:w-2/5 flex justify-center mt-8 md:mt-0">
             <img
-              src="/images/brain-microphone.png"
+              src="/images/brain-mic.png"
               alt="Cerebro con micrófono"
               className="w-48 h-auto object-contain"
             />
