@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React from 'react'; 
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Check, Headphones, FileText, Mic, Lock, Settings2, Brain } from 'lucide-react';
@@ -43,18 +42,27 @@ const OlondoFeaturesSection = () => {
     <section className="w-full py-16 md:py-24 lg:py-32 bg-slate-50 dark:bg-slate-900">
       <div className="container mx-auto px-4 md:px-6">
         <motion.div
-          className="text-center max-w-3xl mx-auto mb-12 md:mb-16"
+          className="flex flex-col md:flex-row md:items-center md:justify-between max-w-6xl mx-auto mb-12 md:mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
-            {t('features_main_title')}
-          </h2>
-          <p className="mt-4 text-lg text-slate-600 dark:text-slate-400">
-            {t('features_intro')}
-          </p>
+          <div className="md:w-3/5 text-left">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
+              {t('features_main_title')}
+            </h2>
+            <p className="mt-4 text-lg text-slate-600 dark:text-slate-400">
+              {t('features_intro')}
+            </p>
+          </div>
+          <div className="md:w-2/5 flex justify-center mt-8 md:mt-0">
+            <img
+              src="/brain-mic.png"
+              alt="Cerebro con micrófono"
+              className="w-48 h-auto object-contain"
+            />
+          </div>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-start mb-16 md:mb-24">
@@ -114,11 +122,11 @@ const OlondoFeaturesSection = () => {
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6 text-left">
             {whyOlondoPoints.map((point, index) => (
               <li key={index} className="p-3 bg-white dark:bg-slate-800 rounded-lg shadow-sm">
-                 <div className="flex items-center mb-1">
-                    <Check className="h-5 w-5 mr-3 text-green-500 flex-shrink-0" />
-                    <h4 className="text-base font-semibold text-slate-800 dark:text-slate-100">{t(point.titleKey)}</h4>
-                 </div>
-                 <p className="ml-8 text-sm text-slate-600 dark:text-slate-400">{t(point.descriptionKey)}</p>
+                <div className="flex items-center mb-1">
+                  <Check className="h-5 w-5 mr-3 text-green-500 flex-shrink-0" />
+                  <h4 className="text-base font-semibold text-slate-800 dark:text-slate-100">{t(point.titleKey)}</h4>
+                </div>
+                <p className="ml-8 text-sm text-slate-600 dark:text-slate-400">{t(point.descriptionKey)}</p>
               </li>
             ))}
           </ul>
@@ -139,37 +147,40 @@ const OlondoFeaturesSection = () => {
               {t('how_it_works_desc')}
             </p>
             <div className="bg-slate-100 dark:bg-slate-700/50 p-6 rounded-lg">
-                <h4 className="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-3 flex items-center">
-                    <Brain className="h-6 w-6 mr-2 text-primary" />
-                    {t('features_main_title')}
-                </h4>
-                <p className="text-sm text-slate-600 dark:text-slate-300 mb-4">
-                    {t('how_it_works_sub_desc', '', {
-                      sub_title: t('how_it_works_sub_title')
-                    })}
-                </p>
-                 <h4 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-3">
-                    {t('what_it_offers_title')}
-                </h4>
-                 <ul className="space-y-2 mb-4">
-                    {whatOlondoOffersPoints.map((key, index) => (
-                        <li key={index} className="flex items-start text-sm">
-                            <Check className="h-4 w-4 mr-2 mt-0.5 text-green-500 flex-shrink-0" />
-                            <span className="text-slate-600 dark:text-slate-300">{t(key)}</span>
-                        </li>
-                    ))}
-                </ul>
-                <h4 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-3">
-                   {t('listen_everything_title')}
-                </h4>
-                <p className="text-sm text-slate-600 dark:text-slate-300">
-                   {t('listen_everything_desc')}
-                </p>
+              <h4 className="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-3 flex items-center">
+                <Brain className="h-6 w-6 mr-2 text-primary" />
+                {t('features_main_title')}
+              </h4>
+              <p className="text-sm text-slate-600 dark:text-slate-300 mb-4">
+                {t('how_it_works_sub_desc', '', {
+                  sub_title: t('how_it_works_sub_title')
+                })}
+              </p>
+              <h4 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-3">
+                {t('what_it_offers_title')}
+              </h4>
+              <ul className="space-y-2 mb-4">
+                {whatOlondoOffersPoints.map((key, index) => (
+                  <li key={index} className="flex items-start text-sm">
+                    <Check className="h-4 w-4 mr-2 mt-0.5 text-green-500 flex-shrink-0" />
+                    <span className="text-slate-600 dark:text-slate-300">{t(key)}</span>
+                  </li>
+                ))}
+              </ul>
+              <h4 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-3">
+                {t('listen_everything_title')}
+              </h4>
+              <p className="text-sm text-slate-600 dark:text-slate-300">
+                {t('listen_everything_desc')}
+              </p>
             </div>
-
           </div>
           <div className="order-1 md:order-2 flex justify-center items-center">
-            <img  class="rounded-lg shadow-md max-w-sm w-full h-auto aspect-square object-cover" alt="Ilustración abstracta del funcionamiento de la IA" src="https://images.unsplash.com/photo-1677442135131-4d7c123aef1c" />
+            <img
+              className="rounded-lg shadow-md max-w-sm w-full h-auto aspect-square object-cover"
+              alt="Ilustración abstracta del funcionamiento de la IA"
+              src="https://images.unsplash.com/photo-1677442135131-4d7c123aef1c"
+            />
           </div>
         </motion.div>
       </div>
