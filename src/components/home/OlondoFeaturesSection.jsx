@@ -42,7 +42,7 @@ const OlondoFeaturesSection = () => {
     <section className="w-full py-16 md:py-24 lg:py-32 bg-slate-50 dark:bg-slate-900">
       <div className="container mx-auto px-4 md:px-6">
         <motion.div
-          className="text-center max-w-3xl mx-auto mb-12 md:mb-16 md-[38px]"
+          className="text-center max-w-3xl mx-auto mb-12 md:mb-16 md-[30px]"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
