@@ -169,7 +169,6 @@ const OlondoFeaturesSection = () => {
                 </p>
             </div>
 
-          </div>
           <div className="order-1 md:order-2 flex justify-center items-center">
 <img
   src="/como-funciona.png"
