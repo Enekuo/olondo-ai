@@ -150,16 +150,6 @@ const OlondoFeaturesSection = () => {
             <p className="text-slate-600 dark:text-slate-300 mb-6">
               {t('how_it_works_desc')}
             </p>
-            <div className="bg-slate-100 dark:bg-slate-700/50 p-6 rounded-lg">
-                <h4 className="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-3 flex items-center">
-                    <Brain className="h-6 w-6 mr-2 text-primary" />
-                    {t('features_main_title')}
-                </h4>
-                <p className="text-sm text-slate-600 dark:text-slate-300 mb-4">
-                    {t('how_it_works_sub_desc', '', {
-                      sub_title: t('how_it_works_sub_title')
-                    })}
-                </p>
                  <h4 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-3">
                     {t('what_it_offers_title')}
                 </h4>
