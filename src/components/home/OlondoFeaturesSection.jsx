@@ -181,7 +181,11 @@ const OlondoFeaturesSection = () => {
 
           </div>
           <div className="order-1 md:order-2 flex justify-center items-center">
-            <img  class="rounded-lg shadow-md max-w-sm w-full h-auto aspect-square object-cover" alt="Ilustración abstracta del funcionamiento de la IA" src="/brain-mic.png" />
+<img
+  src="/como-funciona.png"
+  alt="Funcionamiento de Olondo AI"
+  className="rounded-lg shadow-md max-w-sm w-full h-auto object-contain"
+/>
           </div>
         </motion.div>
       </div>
