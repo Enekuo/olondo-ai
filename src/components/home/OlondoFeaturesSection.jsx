@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Check, Headphones, FileText, Mic, Lock, Settings2, Brain } from 'lucide-react';
+import OlondoBenefitsSection from './OlondoBenefitsSection';
 
 const OlondoFeaturesSection = () => {
   const { t } = useLanguage();
@@ -113,15 +114,8 @@ const OlondoFeaturesSection = () => {
           </motion.div>
         </div>
 
-        <motion.div
-  className="max-w-6xl mx-auto px-4 py-8"
-  initial={{ opacity: 0, y: 20 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true }}
-  transition={{ duration: 0.5, delay: 0.3 }}
->
-  {/* Aquí se insertará próximamente la nueva sección de tarjetas de beneficios */}
-        </motion.div>
+        <OlondoBenefitsSection />
+ 
 
         <motion.div
           className="grid md:grid-cols-2 gap-10 md:gap-16 items-center bg-white dark:bg-slate-800 p-8 sm:p-12 rounded-xl shadow-xl"
