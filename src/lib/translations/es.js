@@ -211,5 +211,5 @@ benefit_languages_title: "Mejora tus idiomas",
 benefit_languages_desc: "Escuchar en diferentes lenguas fortalece tu comprensión y oído.",
 
 benefit_noreg_title: "Sin registro ni instalaciones",
-benefit_noreg_desc: "Usa Olondo.AI directamente desde tu navegador, sin cuentas ni descargas.",
+benefit_noreg_desc: "Usa Olondo.AI directamente con la prueba gratis, sin cuentas ni descargas.",
 };

@@ -193,4 +193,21 @@ export const de = {
 
   listen_everything_title: '🔊 Alles, was Sie generieren, kann gehört werden',
   listen_everything_desc: 'Bei Olondo AI geht es nicht nur darum, Text zu erstellen: Es geht darum, ihn in Audio umzuwandeln, damit Sie ihn mühelos anhören können. Das unterscheidet Olondo AI von jedem anderen Werkzeug zur Inhaltserstellung. Vom ersten Moment an ist das Ziel, dass Ihr Text als Stimme lebendig wird – um Ihnen zu helfen, ihn besser zu verstehen, sich leichter daran zu erinnern oder ihn einfach ohne Lesen zu genießen.',
+  benefit_listen_title: "Höre, was du erstellst",
+benefit_listen_desc: "Wandle beliebigen Text in Audio um und höre ihn beim Multitasking an.",
+
+benefit_creativity_title: "Steigere deine Kreativität",
+benefit_creativity_desc: "Ideen laut zu hören fördert das Denken und die Kreativität.",
+
+benefit_memory_title: "Lernen ohne Aufwand",
+benefit_memory_desc: "Höre dir deine Texte nebenbei an und merke sie dir ganz natürlich, ohne Anstrengung.",
+
+benefit_fast_title: "Spare Zeit",
+benefit_fast_desc: "Konsumiere Inhalte ohne zu lesen. Lerne und wiederhole beim Multitasking.",
+
+benefit_languages_title: "Verbessere deine Sprachen",
+benefit_languages_desc: "Hören in verschiedenen Sprachen verbessert dein Verständnis und Hörvermögen.",
+
+benefit_noreg_title: "Keine Registrierung oder Installation",
+benefit_noreg_desc: "Nutze Olondo.AI direkt mit der kostenlosen Testversion – ohne Konto oder Downloads.",
 };

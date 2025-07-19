@@ -193,4 +193,21 @@ export const it = {
 
   listen_everything_title: '🔊 Tutto ciò che generi, puoi sentirlo',
   listen_everything_desc: 'Con Olondo AI, non si tratta solo di creare un testo: si tratta di trasformarlo in audio per poterlo ascoltare senza sforzo. È questo che distingue Olondo AI da qualsiasi altro strumento di generazione di contenuti. Fin dal primo momento, l\'obiettivo è che il tuo testo prenda vita come voce, per aiutarti a capirlo meglio, a memorizzarlo più facilmente o semplicemente a godertelo senza dover leggere.',
+  benefit_listen_title: "Ascolta ciò che crei",
+benefit_listen_desc: "Trasforma qualsiasi testo in audio e ascoltalo mentre fai altre attività.",
+
+benefit_creativity_title: "Stimola la tua creatività",
+benefit_creativity_desc: "Ascoltare le idee ad alta voce stimola il pensiero e la creatività.",
+
+benefit_memory_title: "Impara senza sforzo",
+benefit_memory_desc: "Ascolta i tuoi testi mentre fai altro e memorizzali in modo naturale, senza sforzo.",
+
+benefit_fast_title: "Risparmia tempo",
+benefit_fast_desc: "Consuma contenuti senza leggere. Impara e ripassa mentre fai altro.",
+
+benefit_languages_title: "Migliora le tue lingue",
+benefit_languages_desc: "Ascoltare in lingue diverse rafforza la comprensione e l’ascolto.",
+
+benefit_noreg_title: "Nessuna registrazione o installazione",
+benefit_noreg_desc: "Usa Olondo.AI direttamente con la prova gratuita, senza account né download.",
 };
