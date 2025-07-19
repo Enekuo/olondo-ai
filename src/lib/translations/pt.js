@@ -193,6 +193,8 @@ export const pt = {
 
   listen_everything_title: '🔊 Tudo o que você gera pode ser ouvido',
   listen_everything_desc: 'No Olondo AI, não se trata apenas de criar texto: trata-se de transformá-lo em áudio para que você possa ouvir sem esforço. É isso que diferencia o Olondo AI de qualquer outra ferramenta de geração de conteúdo. Desde o primeiro momento, o objetivo é que seu texto ganhe vida como voz - para ajudá-lo a entendê-lo melhor, lembrá-lo com mais facilidade ou simplesmente apreciá-lo sem ler.',
+benefits_section_title: "O que você pode alcançar com o Olondo.AI?",
+
   benefit_listen_title: "Ouça o que você cria",
 benefit_listen_desc: "Transforme qualquer texto em áudio e ouça enquanto faz outras tarefas.",
 
