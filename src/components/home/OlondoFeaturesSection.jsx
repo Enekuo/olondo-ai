@@ -114,26 +114,13 @@ const OlondoFeaturesSection = () => {
         </div>
 
         <motion.div
-          className="max-w-4xl mx-auto text-center mb-16 md:mb-24"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-8">
-            {t('why_different_title')}
-          </h3>
-          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6 text-left">
-            {whyOlondoPoints.map((point, index) => (
-              <li key={index} className="p-3 bg-white dark:bg-slate-800 rounded-lg shadow-sm">
-                 <div className="flex items-center mb-1">
-                    <Check className="h-5 w-5 mr-3 text-green-500 flex-shrink-0" />
-                    <h4 className="text-base font-semibold text-slate-800 dark:text-slate-100">{t(point.titleKey)}</h4>
-                 </div>
-                 <p className="ml-8 text-sm text-slate-600 dark:text-slate-400">{t(point.descriptionKey)}</p>
-              </li>
-            ))}
-          </ul>
+  className="max-w-6xl mx-auto px-4 py-8"
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.5, delay: 0.3 }}
+>
+  {/* Aquí se insertará próximamente la nueva sección de tarjetas de beneficios */}
         </motion.div>
 
         <motion.div
