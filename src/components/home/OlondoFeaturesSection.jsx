@@ -53,13 +53,13 @@ const OlondoFeaturesSection = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
   {/* Bloque de texto */}
   <div className="md:-translate-x-[130px] md:-translate-y-[30px] text-center md:text-left">
-    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
-      {t('features_main_title')}
-    </h2>
-    <p className="mt-4 text-lg text-slate-600 dark:text-slate-400">
-      {t('features_intro')}
-    </p>
-  </div>
+  <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+    {t('features_main_title')}
+  </h2>
+  <p className="mt-4 text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+    {t('features_intro')}
+  </p>
+</div>
 
   {/* Imagen a la derecha */}
   <img
