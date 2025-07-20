@@ -45,7 +45,7 @@ const HomePage = () => {
           </motion.h1>
 
           <motion.p 
-            className="max-w-2xl mx-auto text-lg md:text-xl text-slate-600 dark:text-slate-300 mb-8"
+            className="max-w-2xl mx-auto text-lg md:text-xl text-gray-700 dark:text-slate-300 mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.5 }}
@@ -54,7 +54,7 @@ const HomePage = () => {
           </motion.p>
           
           <motion.p
-            className="max-w-xl mx-auto text-md text-slate-500 dark:text-slate-400 mb-10"
+            className="max-w-xl mx-auto text-base italic text-gray-600 dark:text-gray-400 mb-10"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.5 }}
