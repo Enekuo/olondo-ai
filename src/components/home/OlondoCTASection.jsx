@@ -26,7 +26,7 @@ const OlondoCTASection = () => {
           <Button
             asChild
             size="lg"
-            className="bg-green-500 hover:bg-green-600 text-white font-semibold text-lg px-8 py-4 rounded-xl shadow-md hover:shadow-xl transition-all duration-300"
+            className="bg-green-500 hover:bg-green-600 text-white font-semibold text-xl px-10 py-5 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300"
           >
             <Link to="/free-trial">🚀 {t('navFreeTrial', 'Probar Gratis')}</Link>
           </Button>
@@ -35,7 +35,7 @@ const OlondoCTASection = () => {
             asChild
             variant="outline"
             size="lg"
-            className="border-2 border-blue-500 text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:border-sky-400 dark:text-sky-300 dark:hover:text-sky-200 dark:hover:bg-sky-800/20 font-semibold text-lg px-8 py-4 rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+            className="border-2 border-blue-500 text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:border-sky-400 dark:text-sky-300 dark:hover:text-sky-200 dark:hover:bg-sky-800/20 font-semibold text-xl px-10 py-5 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300"
           >
             <Link to="/pricing">✨ {t('ctaSeePlans', 'Ver Planes')}</Link>
           </Button>
