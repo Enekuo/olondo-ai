@@ -307,7 +307,7 @@ const FaqSection = () => {
   };
 
   return (
-    <section className="w-full py-20 md:py-24 lg:py-32 bg-white dark:bg-slate-950">
+    <section className="w-full py-32 bg-[#eef4ff] dark:bg-sky-900">
       <div className="container mx-auto px-4 md:px-6">
         <motion.div 
           className="text-center max-w-3xl mx-auto mb-12"
