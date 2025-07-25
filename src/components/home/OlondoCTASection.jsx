@@ -9,8 +9,8 @@ const OlondoCTASection = () => {
 
   return (
     <section
-      className="w-full bg-no-repeat bg-cover bg-center pt-0 pb-40 px-6"
-      style={{ backgroundImage: "url('/cta-background.png')" }}
+      className="w-full bg-no-repeat bg-cover bg-center pt-40 pb-40 px-6"
+      style={{ backgroundImage: "url('/images/cta-background.png')" }}
     >
       <div className="container mx-auto max-w-4xl flex flex-col items-center text-center gap-8">
         <div className="bg-purple-100 dark:bg-purple-800 p-6 rounded-full">
