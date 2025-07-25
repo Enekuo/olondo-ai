@@ -91,7 +91,7 @@ const HomePage = () => {
               size="lg" 
               className="text-base font-semibold bg-gradient-to-r from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-lg px-10 py-6"
             >
-              <Link to="/free-trial">{t('homeBtnCreateText', '✍ Crear Texto')}</Link>
+              <Link to="/pricing">{t('homeBtnCreateText', '✍ Crear Texto')}</Link>
             </Button>
             <Button 
               asChild 
@@ -99,7 +99,7 @@ const HomePage = () => {
               size="lg" 
               className="text-base font-semibold border-2 border-blue-500 text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:border-sky-400 dark:text-sky-300 dark:hover:text-sky-200 dark:hover:bg-sky-700/20 shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 rounded-lg px-10 py-6"
             >
-              <Link to="/free-trial">{t('homeBtnCreateSummary', '📝 Crear Resumen')}</Link>
+              <Link to="/pricing">{t('homeBtnCreateSummary', '📝 Crear Resumen')}</Link>
             </Button>
           </motion.div>
         </div>
