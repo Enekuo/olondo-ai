@@ -18,8 +18,8 @@ const Navbar = () => {
 
   const navItemsCenter = [
     { nameKey: 'navHome', path: '/', isButton: false, actionType: 'link', icon: null },
-    { nameKey: 'navCreateText', path: '/free-trial', isButton: false, icon: PlusCircle, actionType: 'link' },
-    { nameKey: 'navCreateSummary', path: '/free-trial', isButton: false, icon: PlusCircle, actionType: 'link' },
+    { nameKey: 'navCreateText', path: '/pricing', isButton: false, icon: PlusCircle, actionType: 'link' },
+    { nameKey: 'navCreateSummary', path: '/pricing', isButton: false, icon: PlusCircle, actionType: 'link' },
   ];
 
   const isActive = (path) => location.pathname === path;
