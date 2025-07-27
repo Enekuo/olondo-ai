@@ -80,7 +80,6 @@ const HomeFooter = () => {
                 <li key={item.titleKey}>
                   <Link 
                     to={item.path} 
-                    onClick={(e) => handleLegalLinkClick(e, item.path)}
                     className="text-sm text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors"
                   >
                     {t(item.titleKey)}
