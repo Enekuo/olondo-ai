@@ -216,34 +216,34 @@ benefit_noreg_desc: "Usa Olondo.AI directamente con la prueba gratis, sin cuenta
 
   legal_notice_title: "Aviso Legal",
 
-  legal_notice_intro_title: "Introducción",
-  legal_notice_intro_text: "Este Aviso Legal regula el uso de esta página web. El acceso al sitio es gratuito para los usuarios, salvo por los costes derivados de la conexión a Internet contratada por cada persona usuaria y de aquellos servicios que, en su caso, puedan ofrecerse bajo suscripción.",
+legal_notice_intro_title: "Introducción",
+legal_notice_intro_text: "Este Aviso Legal regula el uso de esta página web. El acceso al sitio es gratuito para los usuarios, salvo por los costes derivados de la conexión a Internet contratada por cada persona usuaria y de aquellos servicios que, en su caso, puedan ofrecerse bajo suscripción.",
 
-  legal_notice_accept_title: "Aceptación de condiciones legales de navegación",
-  legal_notice_accept_text: "La utilización de la web https://olondoweb.com atribuye la condición de persona usuaria e implica la aceptación plena y sin reservas de todas y cada una de las disposiciones incluidas en este Aviso Legal en el mismo momento en que la persona usuaria acceda a la web. En consecuencia, el usuario debe leer atentamente el presente Aviso Legal y por ello se pone a su disposición de forma permanente.",
+legal_notice_accept_title: "Aceptación de condiciones legales de navegación",
+legal_notice_accept_text: "La utilización de la web https://olondoweb.com atribuye la condición de persona usuaria e implica la aceptación plena y sin reservas de todas y cada una de las disposiciones incluidas en este Aviso Legal en el mismo momento en que la persona usuaria acceda a la web. En consecuencia, el usuario debe leer atentamente el presente Aviso Legal y por ello se pone a su disposición de forma permanente.",
 
-  legal_notice_responsible_title: "Responsable - ¿Quién es el responsable legal de la web?",
-  legal_notice_responsible_text: "De conformidad con el artículo 10 de la Ley 34/2002, de 11 de julio, de 'Servicios de la Sociedad de la Información y Comercio Electrónico (LSSI)', se informa que la empresa encargada de la gestión y funcionamiento del sitio Web es:",
+legal_notice_responsible_title: "Responsable - ¿Quién es el responsable legal de la web?",
+legal_notice_responsible_text: "De conformidad con el artículo 10 de la Ley 34/2002, de 11 de julio, de 'Servicios de la Sociedad de la Información y Comercio Electrónico (LSSI)', se informa que la empresa encargada de la gestión y funcionamiento del sitio Web es:",
 
-  legal_notice_responsible_name: "Olondoweb",
-  legal_notice_responsible_domain: "https://olondoweb.com",
-  legal_notice_responsible_email: "info@olondoweb.com",
-  legal_notice_responsible_activity: "Servicios digitales basados en Inteligencia Artificial.",
+legal_notice_responsible_name: "Olondoweb",
+legal_notice_responsible_domain: "https://olondoweb.com",
+legal_notice_responsible_email: "info@olondoweb.com",
+legal_notice_responsible_activity: "Servicios digitales basados en Inteligencia Artificial.",
 
-  legal_notice_laws_title: "Normativa aplicable",
-  legal_notice_laws_text: "- Reglamento (UE) 2016/679...",
+legal_notice_laws_title: "Normativa aplicable",
+legal_notice_laws_text: "- Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo, de 27 de abril de 2016, relativo a la protección de las personas físicas en lo que respecta al tratamiento de datos personales y a la libre circulación de estos datos. - Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales. - Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y Comercio Electrónico.",
 
-  legal_notice_links_title: "Información sobre los vínculos “links”",
-  legal_notice_links_text: "Olondoweb no se hace responsable de los contenidos de las webs de terceros a las que se puede acceder mediante vínculos “links”…",
+legal_notice_links_title: "Información sobre los vínculos “links”",
+legal_notice_links_text: "Olondoweb no se hace responsable de los contenidos de las webs de terceros a las que se puede acceder mediante vínculos “links” desde esta web, ni garantiza la disponibilidad técnica, exactitud, veracidad o legalidad de dichas páginas externas.",
 
-  legal_notice_liability_title: "Limitación de responsabilidades",
-  legal_notice_liability_text: "Olondoweb hace todo lo posible para evitar cualquier error…",
+legal_notice_liability_title: "Limitación de responsabilidades",
+legal_notice_liability_text: "Olondoweb hace todo lo posible para evitar cualquier error en los contenidos que pudieran aparecer en esta web. No obstante, no garantiza ni se responsabiliza de las consecuencias que puedan derivarse de errores puntuales o fallos técnicos, ni del uso indebido de la información publicada por parte de terceros.",
 
-  legal_notice_privacy_title: "No comparta su información personal",
-  legal_notice_privacy_text: "Olondoweb nunca le enviará un correo solicitando sus datos personales o bancarios…",
+legal_notice_privacy_title: "No comparta su información personal",
+legal_notice_privacy_text: "Olondoweb nunca le enviará un correo solicitando sus datos personales o bancarios. Si recibe algún mensaje sospechoso, elimínelo y no facilite ningún dato confidencial. La seguridad de su información es una prioridad para nosotros.",
 
-  legal_notice_phishing_title: "Identifique los correos electrónicos falsos (phishing)",
-  legal_notice_phishing_text: "Ignore cualquier correo que solicite datos personales y redirija fuera de olondoweb.com…",
+legal_notice_phishing_title: "Identifique los correos electrónicos falsos (phishing)",
+legal_notice_phishing_text: "Ignore cualquier correo que solicite datos personales y redirija fuera de olondoweb.com. Olondoweb nunca solicita credenciales de acceso ni información confidencial a través de enlaces externos. En caso de duda, contacte directamente con nuestro equipo de soporte.",
 
-  legal_notice_update_note: "Este aviso legal está actualizado a 27 de julio de 2025."
+legal_notice_update_note: "Este aviso legal está actualizado a 27 de julio de 2025."
 };
