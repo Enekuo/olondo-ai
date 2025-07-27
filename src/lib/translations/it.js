@@ -6,7 +6,7 @@ export const it = {
   navFreeTrial: 'Prova Gratuita',
   navPremiumPlan: 'Piano Premium',
   themeToggle: 'Cambia tema',
-  authModalTitle: 'Accedi al Tuo Account',
+  authModalTitle: 'Accedi',
   authModalSubtitle: 'Accedi o crea un account per continuare.',
   authModalLoginTab: 'Accedi',
   authModalRegisterTab: 'Registrati',

@@ -6,7 +6,7 @@ export const en = {
   navFreeTrial: 'Free Trial',
   navPremiumPlan: 'Premium Plan',
   themeToggle: 'Toggle theme',
-  authModalTitle: 'Access Your Account',
+  authModalTitle: 'Log in',
   authModalSubtitle: 'Log in or create an account to continue.',
   authModalLoginTab: 'Log In',
   authModalRegisterTab: 'Sign Up',
