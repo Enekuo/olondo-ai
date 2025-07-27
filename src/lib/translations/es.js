@@ -213,39 +213,37 @@ benefit_languages_desc: "Escuchar en diferentes lenguas fortalece tu comprensió
 benefit_noreg_title: "Sin registro ni instalaciones",
 benefit_noreg_desc: "Usa Olondo.AI directamente con la prueba gratis, sin cuentas ni descargas.",
 
-legal_notice_title: "Aviso Legal",
 
-legal_notice: {
-  intro_title: "Introducción",
-  intro_text: "Este Aviso Legal regula el uso de esta página web. El acceso al sitio es gratuito para los usuarios, salvo por los costes derivados de la conexión a Internet contratada por cada persona usuaria y de aquellos servicios que, en su caso, puedan ofrecerse bajo suscripción.",
+  legal_notice_title: "Aviso Legal",
 
-  accept_title: "Aceptación de condiciones legales de navegación",
-  accept_text: "La utilización de la web https://olondoweb.com atribuye la condición de persona usuaria e implica la aceptación plena y sin reservas de todas y cada una de las disposiciones incluidas en este Aviso Legal en el mismo momento en que la persona usuaria acceda a la web. En consecuencia, el usuario debe leer atentamente el presente Aviso Legal y por ello se pone a su disposición de forma permanente.",
+  legal_notice_intro_title: "Introducción",
+  legal_notice_intro_text: "Este Aviso Legal regula el uso de esta página web. El acceso al sitio es gratuito para los usuarios, salvo por los costes derivados de la conexión a Internet contratada por cada persona usuaria y de aquellos servicios que, en su caso, puedan ofrecerse bajo suscripción.",
 
-  responsible_title: "Responsable - ¿Quién es el responsable legal de la web?",
-  responsible_text: "De conformidad con el artículo 10 de la Ley 34/2002, de 11 de julio, de 'Servicios de la Sociedad de la Información y Comercio Electrónico (LSSI)', se informa que la empresa encargada de la gestión y funcionamiento del sitio Web es:",
-  responsible_info: {
-    name: "Olondoweb",
-    domain: "https://olondoweb.com",
-    email: "info@olondoweb.com",
-    activity: "Servicios digitales basados en Inteligencia Artificial."
-  },
+  legal_notice_accept_title: "Aceptación de condiciones legales de navegación",
+  legal_notice_accept_text: "La utilización de la web https://olondoweb.com atribuye la condición de persona usuaria e implica la aceptación plena y sin reservas de todas y cada una de las disposiciones incluidas en este Aviso Legal en el mismo momento en que la persona usuaria acceda a la web. En consecuencia, el usuario debe leer atentamente el presente Aviso Legal y por ello se pone a su disposición de forma permanente.",
 
-  laws_title: "Normativa aplicable",
-  laws_text: "- Reglamento (UE) 2016/679... [puedo ponértelo entero si lo deseas]",
+  legal_notice_responsible_title: "Responsable - ¿Quién es el responsable legal de la web?",
+  legal_notice_responsible_text: "De conformidad con el artículo 10 de la Ley 34/2002, de 11 de julio, de 'Servicios de la Sociedad de la Información y Comercio Electrónico (LSSI)', se informa que la empresa encargada de la gestión y funcionamiento del sitio Web es:",
 
-  links_title: "Información sobre los vínculos “links”",
-  links_text: "Olondoweb no se hace responsable de los contenidos de las webs de terceros a las que se puede acceder mediante vínculos “links”...",
+  legal_notice_responsible_name: "Olondoweb",
+  legal_notice_responsible_domain: "https://olondoweb.com",
+  legal_notice_responsible_email: "info@olondoweb.com",
+  legal_notice_responsible_activity: "Servicios digitales basados en Inteligencia Artificial.",
 
-  liability_title: "Limitación de responsabilidades",
-  liability_text: "Olondoweb hace todo lo posible para evitar cualquier error...",
+  legal_notice_laws_title: "Normativa aplicable",
+  legal_notice_laws_text: "- Reglamento (UE) 2016/679...",
 
-  privacy_title: "No comparta su información personal",
-  privacy_text: "Olondoweb nunca le enviará un correo solicitando sus datos personales o bancarios...",
+  legal_notice_links_title: "Información sobre los vínculos “links”",
+  legal_notice_links_text: "Olondoweb no se hace responsable de los contenidos de las webs de terceros a las que se puede acceder mediante vínculos “links”…",
 
-  phishing_title: "Identifique los correos electrónicos falsos (phishing)",
-  phishing_text: "Ignore cualquier correo que solicite datos personales y redirija fuera de olondoweb.com...",
+  legal_notice_liability_title: "Limitación de responsabilidades",
+  legal_notice_liability_text: "Olondoweb hace todo lo posible para evitar cualquier error…",
 
-  update_note: "Este aviso legal está actualizado a 27 de julio de 2025."
-}, 
+  legal_notice_privacy_title: "No comparta su información personal",
+  legal_notice_privacy_text: "Olondoweb nunca le enviará un correo solicitando sus datos personales o bancarios…",
+
+  legal_notice_phishing_title: "Identifique los correos electrónicos falsos (phishing)",
+  legal_notice_phishing_text: "Ignore cualquier correo que solicite datos personales y redirija fuera de olondoweb.com…",
+
+  legal_notice_update_note: "Este aviso legal está actualizado a 27 de julio de 2025."
 };
