@@ -212,4 +212,6 @@ benefit_languages_desc: "Escuchar en diferentes lenguas fortalece tu comprensió
 
 benefit_noreg_title: "Sin registro ni instalaciones",
 benefit_noreg_desc: "Usa Olondo.AI directamente con la prueba gratis, sin cuentas ni descargas.",
+
+legal_notice_title: "Aviso Legal",
 };

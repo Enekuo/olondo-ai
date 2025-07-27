@@ -11,6 +11,7 @@ import FreeTrialPage from '@/pages/FreeTrialPage';
 import PricingPage from '@/pages/PricingPage.jsx';
 import CheckoutPage from '@/pages/CheckoutPage.jsx';
 import { Toaster } from '@/components/ui/toaster';
+import LegalNoticePage from './pages/LegalNoticePage';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
                 <Route path="/free-trial" element={<FreeTrialPage />} />
                 <Route path="/pricing" element={<PricingPage />} />
                 <Route path="/checkout" element={<CheckoutPage />} />
+                <Route path="/aviso-legal" element={<LegalNoticePage />} />
               </Routes>
             </main>
             <Footer />
