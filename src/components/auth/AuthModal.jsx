@@ -81,16 +81,6 @@ const AuthModal = ({ isOpen, onOpenChange }) => {
           </TabsContent>
         </Tabs>
         
-        <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
-          <Button 
-            variant="outline" 
-            className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white py-3 text-base flex items-center justify-center"
-            onClick={handleFreeTrialClick}
-          >
-            <Sparkles size={18} className="mr-2" />
-            {t('navFreeTrial', 'Prueba Gratis')}
-          </Button>
-        </div>
       </DialogContent>
     </Dialog>
   );
