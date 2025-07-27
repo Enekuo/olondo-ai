@@ -21,7 +21,7 @@ const HomeFooter = () => {
   ];
 
   const legalItems = [
-    { titleKey: 'footerLegalTitle1', contentKey: 'footerLegalContent1', path: '/legal-notice' },
+    { titleKey: 'footerLegalTitle1', contentKey: 'footerLegalContent1', path: '/aviso-legal' },
     { titleKey: 'footerLegalTitle2', contentKey: 'footerLegalContent2', path: '/privacy-policy' },
     { titleKey: 'footerLegalTitle3', contentKey: 'footerLegalContent3', path: '/terms-conditions' },
     { titleKey: 'footerLegalTitle4', contentKey: 'footerLegalContent4', path: '/synthetic-voice-use' },
