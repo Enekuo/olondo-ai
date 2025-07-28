@@ -246,4 +246,42 @@ legal_notice_phishing_title: "Identifique los correos electrónicos falsos (phis
 legal_notice_phishing_text: "Ignore cualquier correo que solicite datos personales y redirija fuera de olondoweb.com. Olondoweb nunca solicita credenciales de acceso ni información confidencial a través de enlaces externos. En caso de duda, contacte directamente con nuestro equipo de soporte.",
 
 legal_notice_update_note: "Este aviso legal está actualizado a 27 de julio de 2025."
+
+privacy_policy_title: "Política de Privacidad",
+
+privacy_policy_scope_title: "Ámbito de Aplicación",
+privacy_policy_scope_text: "Olondo AI se compromete a respetar la privacidad de quienes visitan y utilizan su web, alojada bajo la URL https://olondoweb.com. Esta Política de Privacidad tiene como finalidad informar a las personas usuarias acerca del tratamiento de los datos personales que se recogen a través del Sitio Web y de los servicios ofrecidos en él. El uso de https://olondoweb.com implica la aceptación por parte de la persona usuaria de las condiciones recogidas en esta Política de Privacidad y el tratamiento de sus datos conforme a lo aquí establecido y a la legislación vigente.",
+
+privacy_policy_responsible_title: "Responsable – ¿Quién es el responsable del tratamiento de los datos?",
+privacy_policy_responsible_text: "Los datos personales proporcionados a través del Sitio Web o mediante el uso de los servicios de Olondo AI se incluirán en un tratamiento de datos gestionado por:",
+privacy_policy_responsible_name: "Olondoweb",
+privacy_policy_responsible_domain: "https://olondoweb.com",
+privacy_policy_responsible_email: "info@olondoweb.com",
+privacy_policy_responsible_activity: "Servicios digitales basados en inteligencia artificial orientados a la creación y escucha de textos personalizados.",
+
+privacy_policy_purposes_title: "Finalidades",
+privacy_policy_purposes_text: "Los datos podrán ser tratados con las siguientes finalidades: facilitar información relacionada con el uso de la plataforma, atender solicitudes de soporte o contacto, enviar comunicaciones informativas o novedades (si se ha dado el consentimiento), y mejorar la experiencia del usuario mediante análisis estadísticos. Puedes darte de baja de estas comunicaciones en cualquier momento escribiendo a info@olondoweb.com o mediante el enlace de cancelación incluido en cada mensaje.",
+
+privacy_policy_about_title: "Sobre esta Política de Privacidad",
+privacy_policy_about_text: "Olondo AI tiene un firme compromiso con la protección de los datos personales de las personas usuarias. Esta Política busca ser clara, transparente y permitir que cada persona decida libremente qué información desea facilitar y cómo se utilizará.",
+
+privacy_policy_confidentiality_title: "Confidencialidad y Seguridad",
+privacy_policy_confidentiality_text: "Olondo AI garantiza que los datos proporcionados serán tratados con estricta confidencialidad. Se han adoptado medidas técnicas y organizativas adecuadas para evitar el acceso no autorizado, la pérdida o alteración de los datos. No obstante, ningún sistema es completamente infalible, por lo que no se puede garantizar una seguridad absoluta frente a incidentes externos.",
+
+privacy_policy_user_rights_title: "Derechos de las personas usuarias",
+privacy_policy_user_rights_text: "De acuerdo con la legislación vigente, las personas usuarias pueden ejercer los derechos de acceso, rectificación, supresión, oposición y portabilidad de sus datos. Para ello, pueden escribir a info@olondoweb.com indicando el derecho que desean ejercer.",
+
+privacy_policy_no_spam_title: "Envíos comerciales y spam",
+privacy_policy_no_spam_text: "Olondo AI no realiza prácticas de envío masivo de correos electrónicos no solicitados (spam). En caso de enviar comunicaciones informativas o promocionales, se hará siempre con consentimiento previo y se incluirá un mecanismo claro para cancelar la suscripción.",
+
+privacy_policy_ads_title: "Publicidad",
+privacy_policy_ads_text: "En la versión gratuita del servicio podrían mostrarse anuncios personalizados. En ningún caso se compartirán datos personales con terceros sin una justificación legal o consentimiento expreso.",
+
+privacy_policy_comments_title: "Comentarios de terceros",
+privacy_policy_comments_text: "Olondo AI no se hace responsable de las opiniones, valoraciones o comentarios publicados por terceras personas en plataformas externas, redes sociales o sitios web sobre el servicio, marca o personal de la empresa.",
+
+privacy_policy_changes_title: "Modificaciones de la Política",
+privacy_policy_changes_text: "Olondo AI se reserva el derecho de modificar esta Política de Privacidad para adaptarla a cambios legislativos o mejoras técnicas. La versión vigente estará siempre disponible en el Sitio Web. En caso de cambios sustanciales, se notificará a los usuarios y se solicitará consentimiento si fuera necesario.",
+
+privacy_policy_update_note: "Esta Política de Privacidad está actualizada a fecha 27 de julio de 2025."
 };
