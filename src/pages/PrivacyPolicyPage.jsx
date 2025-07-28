@@ -5,10 +5,8 @@ const PrivacyPolicyPage = () => {
   const { t } = useLanguage();
 
   return (
-    <div className="max-w-3xl mx-auto py-12 px-4">
-      <h1 className="text-3xl font-bold text-center mb-8">
-        {t('privacy_policy_title')}
-      </h1>
+    <div className="max-w-4xl mx-auto px-4 py-16 text-gray-800">
+      <h1 className="text-3xl font-bold mb-6">{t('privacy_policy_title')}</h1>
 
       <section className="mb-8">
         <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_scope_title')}</h2>
@@ -16,8 +14,8 @@ const PrivacyPolicyPage = () => {
       </section>
 
       <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_responsible_title')}</h2>
-        <p>{t('privacy_policy_responsible_text')}</p>
+        <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_controller_title')}</h2>
+        <p>{t('privacy_policy_controller_text')}</p>
       </section>
 
       <section className="mb-8">
@@ -26,23 +24,13 @@ const PrivacyPolicyPage = () => {
       </section>
 
       <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_about_title')}</h2>
-        <p>{t('privacy_policy_about_text')}</p>
-      </section>
-
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_confidentiality_title')}</h2>
-        <p>{t('privacy_policy_confidentiality_text')}</p>
+        <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_security_title')}</h2>
+        <p>{t('privacy_policy_security_text')}</p>
       </section>
 
       <section className="mb-8">
         <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_rights_title')}</h2>
         <p>{t('privacy_policy_rights_text')}</p>
-      </section>
-
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_data_rights_title')}</h2>
-        <p>{t('privacy_policy_data_rights_text')}</p>
       </section>
 
       <section className="mb-8">
@@ -60,12 +48,10 @@ const PrivacyPolicyPage = () => {
         <p>{t('privacy_policy_disclaimer_text')}</p>
       </section>
 
-      <section className="mb-8">
+      <section>
         <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_modification_title')}</h2>
         <p>{t('privacy_policy_modification_text')}</p>
       </section>
-
-      <p className="text-sm text-gray-500 mt-8">{t('privacy_policy_update_note')}</p>
     </div>
   );
 };
