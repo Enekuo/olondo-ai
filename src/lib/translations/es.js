@@ -245,9 +245,9 @@ legal_notice_privacy_text: "Olondoweb nunca le enviará un correo solicitando su
 legal_notice_phishing_title: "Identifique los correos electrónicos falsos (phishing)",
 legal_notice_phishing_text: "Ignore cualquier correo que solicite datos personales y redirija fuera de olondoweb.com. Olondoweb nunca solicita credenciales de acceso ni información confidencial a través de enlaces externos. En caso de duda, contacte directamente con nuestro equipo de soporte.",
 
-legal_notice_update_note: "Este aviso legal está actualizado a 27 de julio de 2025."
+legal_notice_update_note: "Este aviso legal está actualizado a 27 de julio de 2025.",
 
-privacy_policy_title: "Política de Privacidad",
+ privacy_policy_title: "Política de Privacidad",
 
 privacy_policy_scope_title: "Ámbito de Aplicación",
 privacy_policy_scope_text: "Olondo AI se compromete a respetar la privacidad de quienes visitan y utilizan su web, alojada bajo la URL https://olondoweb.com. Esta Política de Privacidad tiene como finalidad informar a las personas usuarias acerca del tratamiento de los datos personales que se recogen a través del Sitio Web y de los servicios ofrecidos en él. El uso de https://olondoweb.com implica la aceptación por parte de la persona usuaria de las condiciones recogidas en esta Política de Privacidad y el tratamiento de sus datos conforme a lo aquí establecido y a la legislación vigente.",

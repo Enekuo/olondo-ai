@@ -12,6 +12,7 @@ import PricingPage from '@/pages/PricingPage.jsx';
 import CheckoutPage from '@/pages/CheckoutPage.jsx';
 import { Toaster } from '@/components/ui/toaster';
 import LegalNoticePage from './pages/LegalNoticePage';
+import PrivacyPolicyPage from '@/pages/PrivacyPolicyPage';
 
 function App() {
   return (
