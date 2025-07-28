@@ -6,7 +6,7 @@ const LegalNoticePage = () => {
 
   return (
     <div className="max-w-3xl mx-auto py-12 px-4">
-      <h1 className="text-3xl font-bold mb-8">{t('legal_notice_title')}</h1>
+      <h1 className="text-3xl font-bold mb-8 text-center">{t('legal_notice_title')}</h1>
 
       <section className="mb-8">
         <h2 className="text-xl font-semibold mb-2">{t('legal_notice_intro_title')}</h2>
