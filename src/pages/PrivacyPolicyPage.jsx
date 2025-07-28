@@ -14,28 +14,37 @@ const PrivacyPolicyPage = () => {
       </section>
 
       <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_controller_title')}</h2>
-        <p>{t('privacy_policy_controller_text')}</p>
+        <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_responsible_title')}</h2>
+        <p>{t('privacy_policy_responsible_text')}</p>
+        <p className="mt-2 font-medium">📌 {t('privacy_policy_responsible_name')}</p>
+        <p>🌐 {t('privacy_policy_responsible_domain')}</p>
+        <p>✉️ {t('privacy_policy_responsible_email')}</p>
+        <p>💼 {t('privacy_policy_responsible_activity')}</p>
       </section>
 
       <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_purpose_title')}</h2>
-        <p>{t('privacy_policy_purpose_text')}</p>
+        <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_purposes_title')}</h2>
+        <p>{t('privacy_policy_purposes_text')}</p>
       </section>
 
       <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_security_title')}</h2>
-        <p>{t('privacy_policy_security_text')}</p>
+        <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_about_title')}</h2>
+        <p>{t('privacy_policy_about_text')}</p>
       </section>
 
       <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_rights_title')}</h2>
-        <p>{t('privacy_policy_rights_text')}</p>
+        <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_confidentiality_title')}</h2>
+        <p>{t('privacy_policy_confidentiality_text')}</p>
       </section>
 
       <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_spam_title')}</h2>
-        <p>{t('privacy_policy_spam_text')}</p>
+        <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_user_rights_title')}</h2>
+        <p>{t('privacy_policy_user_rights_text')}</p>
+      </section>
+
+      <section className="mb-8">
+        <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_no_spam_title')}</h2>
+        <p>{t('privacy_policy_no_spam_text')}</p>
       </section>
 
       <section className="mb-8">
@@ -44,13 +53,14 @@ const PrivacyPolicyPage = () => {
       </section>
 
       <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_disclaimer_title')}</h2>
-        <p>{t('privacy_policy_disclaimer_text')}</p>
+        <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_comments_title')}</h2>
+        <p>{t('privacy_policy_comments_text')}</p>
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_modification_title')}</h2>
-        <p>{t('privacy_policy_modification_text')}</p>
+        <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_changes_title')}</h2>
+        <p>{t('privacy_policy_changes_text')}</p>
+        <p className="mt-4 text-sm text-gray-500">{t('privacy_policy_update_note')}</p>
       </section>
     </div>
   );
