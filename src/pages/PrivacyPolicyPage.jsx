@@ -16,10 +16,6 @@ const PrivacyPolicyPage = () => {
       <section className="mb-8">
         <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_responsible_title')}</h2>
         <p>{t('privacy_policy_responsible_text')}</p>
-        <p className="mt-2 font-medium">📌 {t('privacy_policy_responsible_name')}</p>
-        <p>🌐 {t('privacy_policy_responsible_domain')}</p>
-        <p>✉️ {t('privacy_policy_responsible_email')}</p>
-        <p>💼 {t('privacy_policy_responsible_activity')}</p>
       </section>
 
       <section className="mb-8">
@@ -57,13 +53,16 @@ const PrivacyPolicyPage = () => {
         <p>{t('privacy_policy_comments_text')}</p>
       </section>
 
-      <section>
+      <section className="mb-8">
         <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_changes_title')}</h2>
         <p>{t('privacy_policy_changes_text')}</p>
-        <p className="mt-4 text-sm text-gray-500">{t('privacy_policy_update_note')}</p>
+      </section>
+
+      <section>
+        <p className="text-sm italic">{t('privacy_policy_update_note')}</p>
       </section>
     </div>
   );
 };
 
-export default PrivacyPolicyPage
+export default PrivacyPolicyPage;
