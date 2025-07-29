@@ -13,6 +13,7 @@ import CheckoutPage from '@/pages/CheckoutPage.jsx';
 import { Toaster } from '@/components/ui/toaster';
 import LegalNoticePage from './pages/LegalNoticePage';
 import PrivacyPolicyPage from '@/pages/PrivacyPolicyPage';
+import TermsConditionsPage from '@/pages/TermsConditionsPage';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
                 <Route path="/checkout" element={<CheckoutPage />} />
                 <Route path="/aviso-legal" element={<LegalNoticePage />} />
                 <Route path="/politica-privacidad" element={<PrivacyPolicyPage />} />
+                <Route path="/terminos-condiciones" element={<TermsConditionsPage />} />
               </Routes>
             </main>
             <Footer />

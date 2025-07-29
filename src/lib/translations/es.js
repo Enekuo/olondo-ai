@@ -283,5 +283,9 @@ privacy_policy_comments_text: "Olondo AI no se hace responsable de las opiniones
 privacy_policy_changes_title: "Modificaciones de la Política",
 privacy_policy_changes_text: "Olondo AI se reserva el derecho de modificar esta Política de Privacidad para adaptarla a cambios legislativos o mejoras técnicas. La versión vigente estará siempre disponible en el Sitio Web. En caso de cambios sustanciales, se notificará a los usuarios y se solicitará consentimiento si fuera necesario.",
 
-privacy_policy_update_note: "Esta Política de Privacidad está actualizada a fecha 27 de julio de 2025."
+privacy_policy_update_note: "Esta Política de Privacidad está actualizada a fecha 27 de julio de 2025.",
+
+
+terms_title: "Términos y Condiciones", 
+
 };
