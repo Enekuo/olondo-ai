@@ -16,7 +16,11 @@ const PrivacyPolicyPage = () => {
 
       <section className="mb-8">
         <h2 className="text-xl font-semibold mb-2">{t('privacy_policy_responsible_title')}</h2>
-        <p>{t('privacy_policy_responsible_text')}</p>
+        <p><strong>{t('privacy_policy_responsible_name')}</strong></p>
+  <p>{t('privacy_policy_responsible_activity')}</p>
+  <p>{t('privacy_policy_responsible_email')}</p>
+  <p>{t('privacy_policy_responsible_domain')}</p>
+  <p>{t('privacy_policy_responsible_text')}</p>
       </section>
 
       <section className="mb-8">
