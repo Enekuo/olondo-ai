@@ -286,6 +286,6 @@ privacy_policy_changes_text: "Olondo AI se reserva el derecho de modificar esta 
 privacy_policy_update_note: "Esta Política de Privacidad está actualizada a fecha 27 de julio de 2025.",
 
 
-terms_title: "Términos y Condiciones de Uso"
+terms_title: "Términos y Condiciones de Uso",
 
 };
