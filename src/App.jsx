@@ -31,7 +31,7 @@ function App() {
                 <Route path="/pricing" element={<PricingPage />} />
                 <Route path="/checkout" element={<CheckoutPage />} />
                 <Route path="/aviso-legal" element={<LegalNoticePage />} />
-                <Route path="/politica-privacidad" element={<PrivacyPolicyPage />} />
+                <Route path="/politica-de-privacidad" element={<PrivacyPolicyPage />} />
                 <Route path="/terminos-condiciones" element={<TermsConditionsPage />} />
               </Routes>
             </main>
