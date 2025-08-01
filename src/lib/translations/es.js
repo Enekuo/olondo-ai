@@ -290,4 +290,4 @@ terms_title: "Términos y Condiciones",
 
 cookies_title: "Política de Cookies",
 
-};
+}
