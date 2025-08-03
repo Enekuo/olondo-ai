@@ -18,6 +18,8 @@ export const fr = {
   authModalRegisterNamePlaceholder: 'Votre Nom',
   authModalRegisterPasswordPlaceholder: 'Créez un mot de passe sécurisé',
   welcome_part1: 'Bienvenue sur',
+  homeSubtitle: "Créez des textes ou des résumés avec l'IA à partir de n'importe quelle idée ou contenu, et écoutez-les à voix haute en quelques secondes.",
+  homeParagraph: "Laissez l'IA écrire pour vous et obtenez des textes ou résumés clairs, prêts à être écoutés comme une expérience audio de type podcast.",
   homeSubtitle: "Saisis ton idée de base ou importe des informations (PDF, texte copié, liens…), laisse l'IA créer des textes ou des résumés en quelques secondes et écoute-les à voix haute où et quand tu veux.",
   homeParagraph: "Olondo.AI transforme la lecture en une expérience auditive pour que tu puisses apprendre ou t’inspirer sans interrompre tes activités.",
   homeBtnCreateText: '✍ Créer Texte',
