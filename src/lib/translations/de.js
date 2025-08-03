@@ -212,4 +212,8 @@ benefit_languages_desc: "Hören in verschiedenen Sprachen verbessert dein Verst�
 
 benefit_noreg_title: "Keine Registrierung oder Installation",
 benefit_noreg_desc: "Nutze Olondo.AI direkt mit der kostenlosen Testversion – ohne Konto oder Downloads.",
+
+ctaTitle: "Beginne jetzt damit, deine Inhalte mit KI zu erstellen und anzuhören",
+ctaSubtitle: "Kein Konto erforderlich. Kostenlos, schnell und unkompliziert.",
+
 };

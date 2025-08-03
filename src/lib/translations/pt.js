@@ -212,4 +212,8 @@ benefit_languages_desc: "Ouvir em diferentes idiomas fortalece sua compreensão 
 
 benefit_noreg_title: "Sem registo ou instalação",
 benefit_noreg_desc: "Use o Olondo.AI diretamente com o teste gratuito, sem contas ou downloads.",
+
+ctaTitle: "Comece agora a criar e ouvir seu conteúdo com IA",
+ctaSubtitle: "Não precisa de conta. Grátis, rápido e sem complicações.",
+
 };

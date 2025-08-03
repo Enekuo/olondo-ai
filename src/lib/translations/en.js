@@ -212,4 +212,8 @@ benefit_languages_desc: "Listening in different languages strengthens your compr
 
 benefit_noreg_title: "No sign-up or installation",
 benefit_noreg_desc: "Use Olondo.AI directly with the free trial, no accounts or downloads required.",
+
+ctaTitle: "Start now to create and listen to your content with AI",
+ctaSubtitle: "No account needed. Free, fast, and hassle-free.",
+
 };
