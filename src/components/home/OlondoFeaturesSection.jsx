@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Check, Headphones, FileText, Mic, Lock, Settings2, Brain } from 'lucide-react';
-import OlondoBenefitsSection from './OlondoBenefitsSection';
+
 
 const OlondoFeaturesSection = () => {
   const { t } = useLanguage();
@@ -114,7 +114,7 @@ const OlondoFeaturesSection = () => {
           </motion.div>
         </div>
 
-        <OlondoBenefitsSection />
+        
  
 
         <motion.div
