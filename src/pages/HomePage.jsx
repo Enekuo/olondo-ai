@@ -8,6 +8,7 @@ import HomeFooter from '@/components/layout/HomeFooter';
 import OlondoFeaturesSection from '@/components/home/OlondoFeaturesSection'; // Import the new section
 import { Sparkles } from 'lucide-react';
 import OlondoCTASection from '@/components/home/OlondoCTASection';
+import OlondoBenefitsSection from '@/components/home/OlondoBenefitsSection';
 
 const HomePage = () => {
   const { t } = useLanguage();
@@ -105,6 +106,8 @@ const HomePage = () => {
         </div>
       </section>
       
+      <OlondoBenefitsSection />
+
       <OlondoFeaturesSection /> {/* Add the new OlondoFeaturesSection here */}
       <FaqSection />
       <OlondoCTASection />
