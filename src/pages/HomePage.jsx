@@ -1,73 +1,120 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { Link, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Sparkles, FileText, BookOpen } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import FaqSection from '@/components/home/FaqSection';
+import HomeFooter from '@/components/layout/HomeFooter';
+import OlondoFeaturesSection from '@/components/home/OlondoFeaturesSection';
+import { Sparkles } from 'lucide-react';
+import OlondoCTASection from '@/components/home/OlondoCTASection';
+import OlondoBenefitsSection from '@/components/home/OlondoBenefitsSection';
 
-const HeroSection = () => {
+const HomePage = () => {
   const { t } = useLanguage();
   const navigate = useNavigate();
 
-  const handleFreeTrial = () => {
-    navigate('/pricing');
+  const pageVariants = {
+    initial: { opacity: 0, y: 20 },
+    in: { opacity: 1, y: 0 },
+    out: { opacity: 0, y: -20 },
   };
 
-  const handleCreateText = () => {
-    navigate('/pricing');
-  };
-
-  const handleCreateSummary = () => {
-    navigate('/pricing');
+  const pageTransition = {
+    type: 'spring',
+    stiffness: 100,
+    damping: 20,
   };
 
   return (
-    <section className="bg-gradient-to-b from-[#f2f9ff] to-[#e6f0fa] py-20 px-4 md:px-8 lg:px-16">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between space-y-10 md:space-y-0">
-        <div className="text-center md:text-left md:max-w-2xl">
-          <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-4">
+    <motion.div
+      initial="initial"
+      animate="in"
+      exit="out"
+      variants={pageVariants}
+      transition={pageTransition}
+      className="flex flex-col w-full"
+    >
+      <section className="w-full py-20 md:py-32 lg:py-40 bg-gradient-to-br from-slate-50 via-sky-50 to-blue-100 dark:from-slate-900 dark:via-slate-800 dark:to-sky-900">
+        <div className="container mx-auto px-4 md:px-6 text-left">
+          <motion.h1 
+            className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-6 leading-tight"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          >
             {t('hero_title_line1')} <br className="hidden md:block" />
-            {t('hero_title_line2')}
-          </h1>
-          <h2 className="text-5xl md:text-6xl font-extrabold text-gradient bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent mb-6">
-            {t('hero_title_brand')}
-          </h2>
-          <p className="text-lg text-gray-700 mb-4">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-500 dark:from-blue-400 dark:to-sky-300">
+              {t('hero_title_line2')}
+            </span>
+          </motion.h1>
+
+          <motion.p 
+            className="max-w-2xl text-lg md:text-xl text-gray-700 dark:text-slate-300 mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+          >
             {t('hero_description')}
-          </p>
-          <p className="italic text-sm text-gray-600 mb-8">
+          </motion.p>
+
+          <motion.p
+            className="max-w-xl text-base italic text-gray-600 dark:text-gray-400 mb-10"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
+          >
             {t('hero_secondary_description')}
-          </p>
-          <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
+          </motion.p>
+
+          <motion.div
+            className="mb-10"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.5 }}
+          >
             <Button
-              onClick={handleFreeTrial}
-              className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full text-lg shadow-md"
+              size="lg"
+              onClick={() => navigate('/pricing')}
+              className="text-lg font-semibold bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-full px-12 py-7"
             >
-              <Sparkles className="mr-2 h-5 w-5" />
-              {t('cta_free_trial')}
+              <Sparkles size={20} className="mr-2.5" />
+              {t('navFreeTrial')}
             </Button>
-            <Button
-              onClick={handleCreateText}
-              className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg text-lg shadow-md"
+          </motion.div>
+
+          <motion.div 
+            className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7, duration: 0.5 }}
+          >
+            <Button 
+              asChild 
+              size="lg" 
+              className="text-base font-semibold bg-gradient-to-r from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-lg px-10 py-6"
             >
-              <FileText className="mr-2 h-5 w-5" />
-              {t('cta_create_text')}
+              <Link to="/pricing">{t('homeBtnCreateText')}</Link>
             </Button>
-            <Button
-              onClick={handleCreateSummary}
-              variant="outline"
-              className="border-blue-500 text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-lg text-lg shadow-sm"
+            <Button 
+              asChild 
+              variant="outline" 
+              size="lg" 
+              className="text-base font-semibold border-2 border-blue-500 text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:border-sky-400 dark:text-sky-300 dark:hover:text-sky-200 dark:hover:bg-sky-700/20 shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 rounded-lg px-10 py-6"
             >
-              <BookOpen className="mr-2 h-5 w-5" />
-              {t('cta_create_summary')}
+              <Link to="/pricing">{t('homeBtnCreateSummary')}</Link>
             </Button>
-          </div>
+          </motion.div>
         </div>
-        <div className="hidden md:block md:w-1/2">
-          {/* Aquí podrías colocar una imagen ilustrativa o animación en el futuro */}
-        </div>
-      </div>
-    </section>
+      </section>
+
+      <OlondoBenefitsSection />
+      <OlondoFeaturesSection />
+      <FaqSection />
+      <OlondoCTASection />
+      <HomeFooter />
+    </motion.div>
   );
 };
 
-export default HeroSection;
+export default HomePage;
