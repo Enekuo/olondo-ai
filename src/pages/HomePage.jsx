@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; 
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -43,7 +43,7 @@ const HomePage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            {t('welcome_part1', 'Bienvenido a')} <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-500 dark:from-blue-400 dark:to-sky-300">Olondo.AI</span>
+            Creador De Texto Y Resumen En Voz <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-500 dark:from-blue-400 dark:to-sky-300">Olondo.AI</span>
           </motion.h1>
 
           <motion.p 
@@ -52,7 +52,7 @@ const HomePage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.5 }}
           >
-            {t('homeSubtitle', 'Introduce tu idea base o vuelca la información (PDF, texto copiado, enlaces…), y deja que la IA cree textos o resúmenes para ti en segundos.')}
+            Crea textos o resúmenes con IA a partir de cualquier idea o contenido, y escúchalos en voz alta en segundos.
           </motion.p>
           
           <motion.p
@@ -61,7 +61,7 @@ const HomePage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.5 }}
           >
-             {t('homeParagraph', 'Olondo AI es tu espacio para generar contenido, colaborar, y escuchar el resultado con voz sintética.')}
+            Deja que la IA escriba por ti y obtén textos o resúmenes claros, listos para escuchar como una experiencia auditiva tipo podcast.
           </motion.p>
 
           <motion.div
@@ -79,7 +79,6 @@ const HomePage = () => {
               {t('navFreeTrial', 'Prueba Gratis')}
             </Button>
           </motion.div>
-
 
           <motion.div 
             className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6"
