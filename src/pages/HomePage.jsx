@@ -35,7 +35,7 @@ const HomePage = () => {
       transition={pageTransition}
       className="flex flex-col w-full"
     >
-        <section className="w-full min-h-screen flex items-center md:-mt-12 lg:-mt-16 py-20 md:py-32 lg:py-40 bg-gradient-to-br from-slate-50 via-sky-50 to-blue-100 dark:from-slate-900 dark:via-slate-800 dark:to-sky-900">
+        <section className="w-full min-h-screen flex items-center md:-mt-20 lg:-mt-24 py-20 md:py-32 lg:py-40 bg-gradient-to-br from-slate-50 via-sky-50 to-blue-100 dark:from-slate-900 dark:via-slate-800 dark:to-sky-900">  
         <div className="container mx-auto px-4 md:px-6">
           {/* === HERO A LA IZQUIERDA (con espacio a la derecha) === */}
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-10">
