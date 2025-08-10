@@ -58,15 +58,6 @@ const HomePage = () => {
                 {t('homeSubtitle')}
               </motion.p>
 
-              <motion.p
-                className="max-w-xl text-base italic text-gray-600 dark:text-gray-400 mb-10"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.5 }}
-              >
-                {t('homeParagraph')}
-              </motion.p>
-
               <motion.div
                 className="mb-10"
                 initial={{ opacity: 0, y: 20 }}
