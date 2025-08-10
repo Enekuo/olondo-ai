@@ -19,7 +19,6 @@ export const en = {
   authModalRegisterPasswordPlaceholder: 'Create a secure password',
   welcome_part1: 'Welcome to',
   homeSubtitle: "Create texts or summaries with AI from any idea or content, and listen to them out loud in seconds.",
-  homeParagraph: "Let the AI write for you and get clear texts or summaries, ready to listen to like a podcast-style audio experience.",
   homeBtnCreateText: '✍ Create Text',
   homeBtnCreateSummary: '📝 Create Summary',
   faqTitle: 'Frequently Asked Questions',

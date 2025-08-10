@@ -19,7 +19,6 @@ export const pt = {
   authModalRegisterPasswordPlaceholder: 'Crie uma palavra-passe segura',
   welcome_part1: 'Bem-vindo ao',
   homeSubtitle: "Crie textos ou resumos com IA a partir de qualquer ideia ou conteúdo e ouça em voz alta em segundos.",
-  homeParagraph: "Deixe que a IA escreva por você e receba textos ou resumos claros, prontos para ouvir como uma experiência auditiva tipo podcast.",
   homeBtnCreateText: '✍ Criar Texto',
   homeBtnCreateSummary: '📝 Criar Resumo',
   faqTitle: 'Perguntas Frequentes',

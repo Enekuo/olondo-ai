@@ -19,7 +19,6 @@ export const it = {
   authModalRegisterPasswordPlaceholder: 'Crea una password sicura',
   welcome_part1: 'Benvenuto su',
   homeSubtitle: "Crea testi o riassunti con l'IA a partire da qualsiasi idea o contenuto, e ascoltali ad alta voce in pochi secondi.",
-  homeParagraph: "Lascia che l'IA scriva per te e ottieni testi o riassunti chiari, pronti per essere ascoltati come un'esperienza audio in stile podcast.",  homeBtnCreateText: '✍ Crea Testo',
   homeBtnCreateSummary: '📝 Crea Riassunto',
   faqTitle: 'Domande Frequenti',
   faqSubtitle: 'Qui rispondiamo alle domande più comuni dei nostri utenti. Questa sezione è costantemente aggiornata per aiutarti meglio.',

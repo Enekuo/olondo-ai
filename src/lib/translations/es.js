@@ -19,7 +19,6 @@ export const es = {
   authModalRegisterPasswordPlaceholder: 'Crea una contraseña segura',
   welcome_part1: 'Creador De Texto Y Resumen En Voz',
   homeSubtitle: "Genera resúmenes y textos con IA y escúchalos con voz natural para estudiar, trabajar o inspirarte.", 
-  homeParagraph: "Deja que la IA escriba por ti y obtén textos o resúmenes claros, listos para escuchar como una experiencia auditiva tipo podcast.",
   homeBtnCreateText: '✍ Crear Texto',
   homeBtnCreateSummary: '📝 Crear Resumen',
   faqTitle: 'Preguntas Frecuentes',

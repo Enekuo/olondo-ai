@@ -19,7 +19,6 @@ export const de = {
   authModalRegisterPasswordPlaceholder: 'Erstellen Sie ein sicheres Passwort',
   welcome_part1: 'Willkommen bei',
   homeSubtitle: "Erstelle Texte oder Zusammenfassungen mit KI aus jeder Idee oder jedem Inhalt und höre sie dir in wenigen Sekunden laut an.",
-  homeParagraph: "Lass die KI für dich schreiben und erhalte klare Texte oder Zusammenfassungen, bereit zum Anhören wie ein Podcast-Erlebnis.",
   homeBtnCreateText: '✍ Text Erstellen',
   homeBtnCreateSummary: '📝 Zusammenfassung Erstellen',
   faqTitle: 'Häufig Gestellte Fragen',
