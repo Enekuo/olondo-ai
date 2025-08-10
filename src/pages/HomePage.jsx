@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; 
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -55,7 +55,7 @@ const HomePage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
               >
-                Crea textos o resúmenes con IA a partir de cualquier idea o contenido, y escúchalos en voz alta en segundos.
+                {t('homeSubtitle')}
               </motion.p>
 
               <motion.p
@@ -64,7 +64,7 @@ const HomePage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.5 }}
               >
-                Deja que la IA escriba por ti y obtén textos o resúmenes claros, listos para escuchar como una experiencia auditiva tipo podcast.
+                {t('homeParagraph')}
               </motion.p>
 
               <motion.div
