@@ -9,6 +9,7 @@ import OlondoFeaturesSection from '@/components/home/OlondoFeaturesSection'; // 
 import { Sparkles } from 'lucide-react';
 import OlondoCTASection from '@/components/home/OlondoCTASection';
 import OlondoBenefitsSection from '@/components/home/OlondoBenefitsSection';
+import HeroRightMockup from "@/components/shared/HeroRightMockup";
 
 const HomePage = () => {
   const { t } = useLanguage();
@@ -98,8 +99,10 @@ const HomePage = () => {
               </motion.div>
             </div>
 
-            {/* Espacio reservado para ilustración/derecha */}
-            <div className="hidden md:block md:w-1/2" />
+            {/* Columna derecha: mockup */}
+<div className="hidden md:flex md:w-1/2 justify-end">
+  <HeroRightMockup />
+</div>
           </div>
         </div>
       </section>
