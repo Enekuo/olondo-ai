@@ -289,6 +289,23 @@ privacy_policy_update_note: "Esta Política de Privacidad está actualizada a fe
 
 terms_title: "Términos y Condiciones",
 
+// --- Cookies Policy ---
 cookies_title: "Política de Cookies",
+
+ cookies_intro_title: "¿Qué son las cookies?",
+  cookies_intro_text: "Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo (ordenador, tableta o teléfono móvil) cuando visitas un sitio web. Sirven para que el sitio recuerde tus acciones y preferencias (por ejemplo, inicio de sesión, idioma, tamaño de letra y otras preferencias de visualización) durante un periodo de tiempo, para que no tengas que volver a configurarlas cada vez que regreses al sitio o navegues entre sus páginas.",
+
+  cookies_types_title: "Tipos de cookies que utiliza Olondo AI",
+  cookies_types_text: "En Olondo AI utilizamos únicamente cookies técnicas esenciales para el funcionamiento correcto de la plataforma. Estas cookies permiten la navegación por el sitio y el uso de las diferentes funcionalidades que ofrecemos. No utilizamos cookies publicitarias, de análisis, de personalización o de seguimiento de comportamiento.",
+
+  cookies_purpose_title: "Finalidad de las cookies",
+  cookies_purpose_text: "Las cookies que empleamos tienen como único objetivo garantizar que el sitio web funcione de manera óptima, recordando ciertas configuraciones básicas y mejorando la experiencia de la persona usuaria durante su visita.",
+
+  cookies_manage_title: "Cómo gestionar las cookies",
+  cookies_manage_text: "Puedes permitir, bloquear o eliminar las cookies instaladas en tu dispositivo configurando las opciones del navegador que utilices. En caso de que bloquees el uso de cookies, es posible que algunos servicios o funcionalidades de la web no estén disponibles o funcionen de manera incorrecta.",
+
+  cookies_update_title: "Actualizaciones de la Política de Cookies",
+  cookies_update_text: "Esta Política de Cookies podrá ser actualizada para adaptarse a cambios normativos o técnicos. En caso de modificaciones sustanciales, se informará a las personas usuarias a través del sitio web.",
+  cookies_update_note: "Fecha de última actualización: 27 de julio de 2025.",
 
 }
