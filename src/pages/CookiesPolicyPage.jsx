@@ -6,7 +6,7 @@ const CookiesPolicyPage = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-16 text-gray-800">
-      <h1 className="text-3xl font-bold mb-8">{t('cookies_title')}</h1>
+      <h1 className="text-3xl font-bold mb-8 text-center">{t('cookies_title')}</h1>
 
       <section className="mb-8">
         <h2 className="text-xl font-semibold mb-2">{t('cookies_intro_title')}</h2>
