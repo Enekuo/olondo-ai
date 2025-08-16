@@ -287,7 +287,41 @@ privacy_policy_changes_text: "Olondo AI se reserva el derecho de modificar esta 
 privacy_policy_update_note: "Esta Política de Privacidad está actualizada a fecha 27 de julio de 2025.",
 
 
+// --- Términos y Condiciones ---
 terms_title: "Términos y Condiciones",
+
+terms_object_title: "1. Objeto y aceptación",
+  terms_object_text: "Los presentes Términos y Condiciones regulan el acceso, navegación y uso de la plataforma Olondo.AI, así como la contratación de los servicios ofrecidos a través de la misma. El uso del sitio web implica la aceptación plena de estas condiciones por parte de la persona usuaria. En caso de no estar de acuerdo, deberá abstenerse de utilizar la plataforma.",
+
+  terms_responsible_title: "2. Identidad del responsable",
+  terms_responsible_text: "El responsable de la plataforma es Olondo.AI, en adelante “el Prestador”, accesible en la URL principal del sitio web.",
+
+  terms_services_title: "3. Servicios ofrecidos",
+  terms_services_text: "Olondo.AI permite a las personas usuarias introducir información base (texto, enlaces o documentos compatibles) para generar automáticamente textos o resúmenes mediante inteligencia artificial y escucharlos en voz alta. Existen tres modalidades de acceso: acceso gratuito sin registro, plan de pago 1 con prestaciones ampliadas y plan de pago 2 con acceso completo. Los planes de pago se contratan mediante suscripción mensual con renovación automática, salvo cancelación por parte de la persona usuaria.",
+
+  terms_register_title: "4. Registro de usuarios",
+  terms_register_text: "Para contratar cualquiera de los planes de pago, la persona usuaria deberá registrarse, facilitando información veraz y actualizada. La cuenta es personal e intransferible.",
+
+  terms_payment_title: "5. Condiciones económicas y facturación",
+  terms_payment_text: "El precio de cada plan de pago se mostrará en el momento de la contratación. Los pagos se realizan mediante los métodos habilitados en la web. Las suscripciones se renuevan automáticamente cada periodo de facturación, salvo que la persona usuaria cancele su plan antes de la fecha de renovación. En caso de impago, el Prestador podrá suspender o cancelar el acceso al servicio.",
+
+  terms_use_title: "6. Uso permitido y prohibido",
+  terms_use_text: "La persona usuaria se compromete a utilizar Olondo.AI conforme a la ley, la moral y el orden público. En particular, se prohíbe el uso de la plataforma para crear, difundir o almacenar contenidos ilícitos, difamatorios, ofensivos, violentos, discriminatorios o que atenten contra los derechos de terceros; utilizar la plataforma con fines de spam, fraude o manipulación de datos; e intentar dañar, alterar o sobrecargar los sistemas de Olondo.AI. El incumplimiento podrá dar lugar a la suspensión inmediata de la cuenta sin derecho a reembolso.",
+
+  terms_ip_title: "7. Propiedad intelectual",
+  terms_ip_text: "Todos los elementos que conforman Olondo.AI (código, diseño, textos, audios generados, logotipo, etc.) son propiedad del Prestador o cuentan con las licencias correspondientes. El uso de la plataforma no otorga ningún derecho de propiedad intelectual a la persona usuaria.",
+
+  terms_responsibility_title: "8. Responsabilidad",
+  terms_responsibility_text: "Olondo.AI no garantiza la disponibilidad continua de la plataforma, aunque adoptará medidas para asegurar un servicio estable. El Prestador no se responsabiliza del uso indebido de los textos o audios generados por la persona usuaria. La persona usuaria será la única responsable de los contenidos que introduzca en la plataforma.",
+
+  terms_cancellation_title: "9. Cancelación y desistimiento",
+  terms_cancellation_text: "La persona usuaria podrá cancelar su suscripción en cualquier momento desde su cuenta. El efecto será inmediato para evitar renovaciones futuras. No se realizarán devoluciones parciales por periodos ya iniciados, salvo obligación legal en contrario.",
+
+  terms_modifications_title: "10. Modificaciones",
+  terms_modifications_text: "Olondo.AI se reserva el derecho de modificar los presentes Términos y Condiciones en cualquier momento. Los cambios se comunicarán en la web y entrarán en vigor desde su publicación.",
+
+  terms_jurisdiction_title: "11. Legislación aplicable y jurisdicción",
+  terms_jurisdiction_text: "Los presentes Términos y Condiciones se rigen por la legislación española. En caso de conflicto, las partes se someterán a los Juzgados y Tribunales de España, salvo disposición legal en contrario.",
 
 // --- Cookies Policy ---
 cookies_title: "Política de Cookies",
