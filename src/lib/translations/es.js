@@ -342,4 +342,26 @@ cookies_title: "Política de Cookies",
   cookies_update_text: "Esta Política de Cookies podrá ser actualizada para adaptarse a cambios normativos o técnicos. En caso de modificaciones sustanciales, se informará a las personas usuarias a través del sitio web.",
   cookies_update_note: "Fecha de última actualización: 27 de julio de 2025.",
 
+
+  // --- Uso de voz sintética ---
+  voice_title: "Uso de voz sintética",
+
+  voice_nature_title: "1. Naturaleza del servicio",
+  voice_nature_text: "Olondo.AI utiliza tecnología de síntesis de voz artificial para convertir los textos generados o introducidos por la persona usuaria en archivos de audio. Estas voces no corresponden a locutores humanos, sino a sistemas automáticos de inteligencia artificial.",
+
+  voice_purpose_title: "2. Propósito del servicio",
+  voice_purpose_text: "El servicio de voz sintética tiene como finalidad facilitar la comprensión, aprendizaje y accesibilidad de los textos. Está orientado a un uso personal, educativo o profesional legítimo, nunca a la suplantación de identidades ni a la creación de contenidos engañosos.",
+
+  voice_limitations_title: "3. Limitaciones",
+  voice_limitations_text: "El contenido de los audios generados depende directamente de los textos introducidos o creados por la persona usuaria. Olondo.AI no garantiza la exactitud absoluta de la pronunciación o entonación. El servicio no debe utilizarse para difundir mensajes ofensivos, ilegales, difamatorios o contrarios a los derechos de terceros.",
+
+  voice_responsibility_title: "4. Responsabilidad",
+  voice_responsibility_text: "La persona usuaria es la única responsable de los textos que introduce en la plataforma y del uso que haga de los audios generados. Olondo.AI declina toda responsabilidad por un uso indebido o ilícito de la voz sintética.",
+
+  voice_rights_title: "5. Derechos de uso",
+  voice_rights_text: "Los audios generados pueden ser utilizados por la persona usuaria dentro de los límites de la legalidad vigente y siempre que se respete la propiedad intelectual de terceros. El uso comercial de dichos audios podrá estar sujeto a condiciones adicionales.",
+
+  voice_modifications_title: "6. Modificaciones del servicio",
+  voice_modifications_text: "Olondo.AI se reserva el derecho de mejorar, modificar o suspender temporal o definitivamente el servicio de voz sintética cuando lo considere necesario, notificándolo a las personas usuarias en caso de cambios relevantes.",
+
 }
