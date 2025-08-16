@@ -215,4 +215,154 @@ benefit_noreg_desc: "Nutze Olondo.AI direkt mit der kostenlosen Testversion – 
 ctaTitle: "Beginne jetzt damit, deine Inhalte mit KI zu erstellen und anzuhören",
 ctaSubtitle: "Kein Konto erforderlich. Kostenlos, schnell und unkompliziert.",
 
+
+// --- Impressum / Rechtliche Hinweise ---
+legal_notice_title: "Rechtlicher Hinweis",
+
+legal_notice_intro_title: "Einleitung",
+legal_notice_intro_text: "Dieser rechtliche Hinweis regelt die Nutzung dieser Website. Der Zugang zur Website ist für die Nutzer kostenlos, mit Ausnahme der Kosten, die sich aus der von jedem Nutzer abgeschlossenen Internetverbindung ergeben, sowie etwaiger Dienste, die gegebenenfalls im Rahmen eines Abonnements angeboten werden können.",
+
+legal_notice_accept_title: "Annahme der rechtlichen Nutzungsbedingungen",
+legal_notice_accept_text: "Die Nutzung der Website https://olondoweb.com verleiht den Status eines Nutzers und impliziert die vollständige und vorbehaltlose Annahme aller Bestimmungen in diesem rechtlichen Hinweis im Moment des Zugriffs auf die Website. Folglich muss der Nutzer diesen rechtlichen Hinweis sorgfältig lesen, der dauerhaft zur Verfügung steht.",
+
+legal_notice_responsible_title: "Verantwortlicher – Wer ist der rechtliche Inhaber der Website?",
+legal_notice_responsible_text: "Gemäß Artikel 10 des Gesetzes 34/2002 vom 11. Juli über 'Dienste der Informationsgesellschaft und elektronischen Geschäftsverkehr (LSSI)' wird hiermit mitgeteilt, dass das für die Verwaltung und den Betrieb dieser Website verantwortliche Unternehmen ist:",
+
+legal_notice_responsible_name: "Olondoweb",
+legal_notice_responsible_domain: "https://olondoweb.com",
+legal_notice_responsible_email: "info@olondoweb.com",
+legal_notice_responsible_activity: "Digitale Dienstleistungen auf Basis künstlicher Intelligenz.",
+
+legal_notice_laws_title: "Anwendbare Vorschriften",
+legal_notice_laws_text: "- Verordnung (EU) 2016/679 des Europäischen Parlaments und des Rates vom 27. April 2016 zum Schutz natürlicher Personen bei der Verarbeitung personenbezogener Daten und zum freien Datenverkehr. - Organgesetz 3/2018 vom 5. Dezember über den Schutz personenbezogener Daten und die Gewährleistung digitaler Rechte. - Gesetz 34/2002 vom 11. Juli über Dienste der Informationsgesellschaft und elektronischen Geschäftsverkehr.",
+
+legal_notice_links_title: "Informationen zu Links",
+legal_notice_links_text: "Olondoweb ist nicht verantwortlich für die Inhalte von Drittanbieter-Websites, die über Links von dieser Website aus zugänglich sind, und garantiert nicht die technische Verfügbarkeit, Richtigkeit, Wahrhaftigkeit oder Rechtmäßigkeit solcher externen Seiten.",
+
+legal_notice_liability_title: "Haftungsbeschränkung",
+legal_notice_liability_text: "Olondoweb unternimmt alle Anstrengungen, um Fehler in den Inhalten dieser Website zu vermeiden. Es übernimmt jedoch keine Garantie und keine Verantwortung für Folgen, die sich aus gelegentlichen Fehlern, technischen Störungen oder missbräuchlicher Verwendung der von Dritten veröffentlichten Informationen ergeben.",
+
+legal_notice_privacy_title: "Geben Sie Ihre persönlichen Daten nicht weiter",
+legal_notice_privacy_text: "Olondoweb wird Ihnen niemals eine E-Mail senden, in der persönliche oder Bankdaten angefordert werden. Wenn Sie eine verdächtige Nachricht erhalten, löschen Sie diese und geben Sie keine vertraulichen Informationen weiter. Der Schutz Ihrer Daten hat für uns höchste Priorität.",
+
+legal_notice_phishing_title: "Erkennen Sie betrügerische E-Mails (Phishing)",
+legal_notice_phishing_text: "Ignorieren Sie jede E-Mail, in der persönliche Daten angefordert werden und die außerhalb von olondoweb.com weiterleitet. Olondoweb fordert niemals Anmeldedaten oder vertrauliche Informationen über externe Links an. Im Zweifelsfall wenden Sie sich direkt an unser Support-Team.",
+
+legal_notice_update_note: "Dieser rechtliche Hinweis wurde zuletzt am 27. Juli 2025 aktualisiert.",
+
+// --- Datenschutzrichtlinie ---
+privacy_policy_title: "Datenschutzerklärung",
+
+privacy_policy_scope_title: "Geltungsbereich",
+privacy_policy_scope_text: "Olondo AI verpflichtet sich, die Privatsphäre der Besucher und Nutzer seiner Website unter der URL https://olondoweb.com zu respektieren. Diese Datenschutzerklärung soll die Nutzer über die Verarbeitung personenbezogener Daten informieren, die über die Website und die dort angebotenen Dienste erhoben werden. Die Nutzung von https://olondoweb.com impliziert die Zustimmung des Nutzers zu den in dieser Datenschutzerklärung festgelegten Bedingungen und zur Verarbeitung seiner Daten gemäß diesen Bestimmungen und der geltenden Gesetzgebung.",
+
+privacy_policy_responsible_title: "Verantwortlicher – Wer ist für die Datenverarbeitung verantwortlich?",
+privacy_policy_responsible_text: "Die über die Website oder durch die Nutzung der Olondo AI-Dienste bereitgestellten personenbezogenen Daten werden in eine von folgendem Unternehmen verwaltete Datenverarbeitung einbezogen:",
+privacy_policy_responsible_name: "Olondoweb",
+privacy_policy_responsible_domain: "https://olondoweb.com",
+privacy_policy_responsible_email: "info@olondoweb.com",
+privacy_policy_responsible_activity: "Digitale Dienstleistungen auf Basis künstlicher Intelligenz, ausgerichtet auf die Erstellung und das Anhören personalisierter Texte.",
+
+privacy_policy_purposes_title: "Zwecke",
+privacy_policy_purposes_text: "Die Daten können für folgende Zwecke verarbeitet werden: Bereitstellung von Informationen zur Nutzung der Plattform, Bearbeitung von Support- oder Kontaktanfragen, Versand von Informationsmitteilungen oder Neuigkeiten (sofern die Einwilligung erteilt wurde) sowie Verbesserung der Benutzererfahrung durch statistische Analysen. Sie können diese Mitteilungen jederzeit abbestellen, indem Sie eine E-Mail an info@olondoweb.com senden oder den in jeder Nachricht enthaltenen Abmeldelink verwenden.",
+
+privacy_policy_about_title: "Über diese Datenschutzerklärung",
+privacy_policy_about_text: "Olondo AI verpflichtet sich stark zum Schutz der personenbezogenen Daten der Nutzer. Diese Richtlinie soll klar, transparent und verständlich sein und jedem Nutzer ermöglichen, frei zu entscheiden, welche Informationen er bereitstellen möchte und wie diese verwendet werden.",
+
+privacy_policy_confidentiality_title: "Vertraulichkeit und Sicherheit",
+privacy_policy_confidentiality_text: "Olondo AI garantiert, dass die bereitgestellten Daten streng vertraulich behandelt werden. Es wurden geeignete technische und organisatorische Maßnahmen getroffen, um unbefugten Zugriff, Verlust oder Veränderung der Daten zu verhindern. Kein System ist jedoch völlig unfehlbar, sodass absolute Sicherheit vor externen Vorfällen nicht gewährleistet werden kann.",
+
+privacy_policy_user_rights_title: "Rechte der Nutzer",
+privacy_policy_user_rights_text: "Gemäß der geltenden Gesetzgebung können Nutzer ihre Rechte auf Auskunft, Berichtigung, Löschung, Widerspruch und Datenübertragbarkeit ausüben. Dazu können sie eine E-Mail an info@olondoweb.com senden und das gewünschte Recht angeben.",
+
+privacy_policy_no_spam_title: "Kommerzielle Mitteilungen und Spam",
+privacy_policy_no_spam_text: "Olondo AI betreibt kein unaufgefordertes Massenmailing (Spam). Im Falle von Informations- oder Werbemitteilungen erfolgt dies stets mit vorheriger Zustimmung, und es wird stets ein klarer Mechanismus zur Abbestellung bereitgestellt.",
+
+privacy_policy_ads_title: "Werbung",
+privacy_policy_ads_text: "In der kostenlosen Version des Dienstes können personalisierte Anzeigen angezeigt werden. Unter keinen Umständen werden personenbezogene Daten ohne rechtliche Grundlage oder ausdrückliche Zustimmung an Dritte weitergegeben.",
+
+privacy_policy_comments_title: "Kommentare Dritter",
+privacy_policy_comments_text: "Olondo AI ist nicht verantwortlich für Meinungen, Bewertungen oder Kommentare, die von Dritten auf externen Plattformen, sozialen Netzwerken oder Websites über den Dienst, die Marke oder das Personal des Unternehmens veröffentlicht werden.",
+
+privacy_policy_changes_title: "Änderungen der Richtlinie",
+privacy_policy_changes_text: "Olondo AI behält sich das Recht vor, diese Datenschutzerklärung zu ändern, um sie an gesetzliche Änderungen oder technische Verbesserungen anzupassen. Die jeweils aktuelle Version ist jederzeit auf der Website verfügbar. Bei wesentlichen Änderungen werden die Nutzer informiert und gegebenenfalls um Zustimmung gebeten.",
+
+privacy_policy_update_note: "Diese Datenschutzerklärung wurde zuletzt am 27. Juli 2025 aktualisiert.",
+
+// --- Allgemeine Geschäftsbedingungen ---
+terms_title: "Allgemeine Geschäftsbedingungen",
+
+terms_object_title: "1. Zweck und Annahme",
+terms_object_text: "Diese Allgemeinen Geschäftsbedingungen regeln den Zugang, das Browsen und die Nutzung der Olondo.AI-Plattform sowie den Abschluss der über sie angebotenen Dienstleistungen. Die Nutzung der Website impliziert die vollständige Annahme dieser Bedingungen durch den Nutzer. Wenn Sie nicht einverstanden sind, müssen Sie die Nutzung der Plattform unterlassen.",
+
+terms_responsible_title: "2. Identität des Verantwortlichen",
+terms_responsible_text: "Der Verantwortliche für die Plattform ist Olondo.AI, im Folgenden „der Anbieter“, erreichbar unter der Haupt-URL der Website.",
+
+terms_services_title: "3. Angebotene Dienstleistungen",
+terms_services_text: "Olondo.AI ermöglicht es den Nutzern, grundlegende Informationen (Text, Links oder kompatible Dokumente) einzugeben, um automatisch Texte oder Zusammenfassungen mithilfe künstlicher Intelligenz zu generieren und diese laut anzuhören. Es gibt drei Zugangsarten: kostenloser Zugang ohne Registrierung, kostenpflichtiger Plan 1 mit erweiterten Funktionen und kostenpflichtiger Plan 2 mit vollem Zugang. Kostenpflichtige Pläne werden auf Abonnementbasis mit monatlicher automatischer Verlängerung abgeschlossen, es sei denn, der Nutzer kündigt.",
+
+terms_register_title: "4. Benutzerregistrierung",
+terms_register_text: "Um einen der kostenpflichtigen Pläne abzuschließen, muss sich der Nutzer registrieren und wahrheitsgemäße und aktuelle Informationen angeben. Das Konto ist persönlich und nicht übertragbar.",
+
+terms_payment_title: "5. Zahlungsbedingungen und Abrechnung",
+terms_payment_text: "Der Preis jedes kostenpflichtigen Plans wird zum Zeitpunkt des Vertragsabschlusses angezeigt. Die Zahlungen erfolgen über die auf der Website angebotenen Methoden. Abonnements werden automatisch in jedem Abrechnungszeitraum verlängert, es sei denn, der Nutzer kündigt seinen Plan vor dem Verlängerungsdatum. Bei Nichtzahlung kann der Anbieter den Zugriff auf den Dienst aussetzen oder kündigen.",
+
+terms_use_title: "6. Zulässige und verbotene Nutzung",
+terms_use_text: "Der Nutzer verpflichtet sich, Olondo.AI im Einklang mit dem Gesetz, der Moral und der öffentlichen Ordnung zu nutzen. Insbesondere ist es verboten, die Plattform zu verwenden, um rechtswidrige, verleumderische, anstößige, gewalttätige oder diskriminierende Inhalte zu erstellen, zu verbreiten oder zu speichern oder Inhalte, die die Rechte Dritter verletzen; die Plattform für Spam, Betrug oder Datenmanipulation zu nutzen; oder zu versuchen, die Systeme von Olondo.AI zu beschädigen, zu verändern oder zu überlasten. Ein Verstoß kann zur sofortigen Sperrung des Kontos ohne Anspruch auf Rückerstattung führen.",
+
+terms_ip_title: "7. Geistiges Eigentum",
+terms_ip_text: "Alle Elemente, aus denen Olondo.AI besteht (Code, Design, Texte, generierte Audios, Logo usw.), sind Eigentum des Anbieters oder entsprechend lizenziert. Die Nutzung der Plattform gewährt dem Nutzer keinerlei Rechte an geistigem Eigentum.",
+
+terms_responsibility_title: "8. Haftung",
+terms_responsibility_text: "Olondo.AI garantiert nicht die ständige Verfügbarkeit der Plattform, obwohl Maßnahmen ergriffen werden, um einen stabilen Dienst zu gewährleisten. Der Anbieter ist nicht verantwortlich für den Missbrauch von Texten oder Audios, die vom Nutzer generiert wurden. Der Nutzer ist allein für die von ihm eingegebenen Inhalte verantwortlich.",
+
+terms_cancellation_title: "9. Kündigung und Widerruf",
+terms_cancellation_text: "Der Nutzer kann sein Abonnement jederzeit über sein Konto kündigen. Die Wirkung tritt sofort ein, um zukünftige Verlängerungen zu verhindern. Es werden keine anteiligen Rückerstattungen für bereits begonnene Zeiträume vorgenommen, sofern nicht gesetzlich vorgeschrieben.",
+
+terms_modifications_title: "10. Änderungen",
+terms_modifications_text: "Olondo.AI behält sich das Recht vor, diese Allgemeinen Geschäftsbedingungen jederzeit zu ändern. Änderungen werden auf der Website bekannt gegeben und treten mit der Veröffentlichung in Kraft.",
+
+terms_jurisdiction_title: "11. Anwendbares Recht und Gerichtsstand",
+terms_jurisdiction_text: "Diese Allgemeinen Geschäftsbedingungen unterliegen spanischem Recht. Im Falle von Streitigkeiten unterwerfen sich die Parteien den Gerichten Spaniens, sofern nicht gesetzlich anders bestimmt.",
+
+// --- Cookie-Richtlinie ---
+cookies_title: "Cookie-Richtlinie",
+
+cookies_intro_title: "Was sind Cookies?",
+cookies_intro_text: "Cookies sind kleine Textdateien, die auf Ihrem Gerät (Computer, Tablet oder Mobiltelefon) gespeichert werden, wenn Sie eine Website besuchen. Sie ermöglichen es der Website, sich an Ihre Handlungen und Präferenzen (z. B. Login, Sprache, Schriftgröße und andere Anzeigeeinstellungen) über einen bestimmten Zeitraum zu erinnern, sodass Sie diese nicht jedes Mal neu einstellen müssen, wenn Sie auf die Website zurückkehren oder zwischen den Seiten navigieren.",
+
+cookies_types_title: "Arten von Cookies, die von Olondo AI verwendet werden",
+cookies_types_text: "Bei Olondo AI verwenden wir nur technisch notwendige Cookies, die für das ordnungsgemäße Funktionieren der Plattform erforderlich sind. Diese Cookies ermöglichen die Navigation auf der Website und die Nutzung der verschiedenen Funktionen, die wir anbieten. Wir verwenden keine Werbe-, Analyse-, Personalisierungs- oder Tracking-Cookies.",
+
+cookies_purpose_title: "Zweck von Cookies",
+cookies_purpose_text: "Der einzige Zweck der von uns verwendeten Cookies besteht darin, sicherzustellen, dass die Website optimal funktioniert, bestimmte Grundeinstellungen beibehält und die Benutzererfahrung während des Besuchs verbessert.",
+
+cookies_manage_title: "Wie man Cookies verwaltet",
+cookies_manage_text: "Sie können die auf Ihrem Gerät installierten Cookies zulassen, blockieren oder löschen, indem Sie die Einstellungen des von Ihnen verwendeten Browsers konfigurieren. Wenn Sie die Verwendung von Cookies blockieren, sind möglicherweise einige Dienste oder Funktionen der Website nicht verfügbar oder funktionieren nicht richtig.",
+
+cookies_update_title: "Aktualisierungen der Cookie-Richtlinie",
+cookies_update_text: "Diese Cookie-Richtlinie kann aktualisiert werden, um sich an gesetzliche oder technische Änderungen anzupassen. Im Falle wesentlicher Änderungen werden die Nutzer über die Website informiert.",
+cookies_update_note: "Zuletzt aktualisiert am: 27. Juli 2025.",
+
+// --- Nutzung der synthetischen Stimme ---
+voice_title: "Nutzung der synthetischen Stimme",
+
+voice_nature_title: "1. Art des Dienstes",
+voice_nature_text: "Olondo.AI verwendet Technologie zur Sprachsynthese, um von den Nutzern eingegebene oder generierte Texte in Audiodateien umzuwandeln. Diese Stimmen entsprechen keinen menschlichen Sprechern, sondern automatisierten Systemen der künstlichen Intelligenz.",
+
+voice_purpose_title: "2. Zweck des Dienstes",
+voice_purpose_text: "Der Dienst für synthetische Sprache soll das Verständnis, Lernen und die Zugänglichkeit von Texten erleichtern. Er ist für legitime persönliche, pädagogische oder berufliche Nutzung bestimmt, jedoch niemals für Identitätsbetrug oder die Erstellung irreführender Inhalte.",
+
+voice_limitations_title: "3. Einschränkungen",
+voice_limitations_text: "Der Inhalt der generierten Audios hängt direkt von den vom Nutzer eingegebenen oder erstellten Texten ab. Olondo.AI garantiert nicht die absolute Genauigkeit der Aussprache oder Intonation. Der Dienst darf nicht zur Verbreitung von beleidigenden, illegalen, verleumderischen Inhalten oder Inhalten, die gegen die Rechte Dritter verstoßen, verwendet werden.",
+
+voice_responsibility_title: "4. Verantwortung",
+voice_responsibility_text: "Der Nutzer ist allein verantwortlich für die von ihm eingegebenen Texte und die Nutzung der generierten Audios. Olondo.AI übernimmt keine Verantwortung für die missbräuchliche oder rechtswidrige Nutzung der synthetischen Sprache.",
+
+voice_rights_title: "5. Nutzungsrechte",
+voice_rights_text: "Die generierten Audios dürfen vom Nutzer im Rahmen der geltenden Gesetze verwendet werden, sofern die geistigen Eigentumsrechte Dritter respektiert werden. Die kommerzielle Nutzung solcher Audios kann zusätzlichen Bedingungen unterliegen.",
+
+voice_modifications_title: "6. Änderungen des Dienstes",
+voice_modifications_text: "Olondo.AI behält sich das Recht vor, den Dienst für synthetische Sprache zu verbessern, zu ändern oder vorübergehend oder dauerhaft auszusetzen, wenn es dies für erforderlich hält, und wird die Nutzer im Falle relevanter Änderungen benachrichtigen.",
+
 };
