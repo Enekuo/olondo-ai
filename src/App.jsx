@@ -14,6 +14,7 @@ import { Toaster } from '@/components/ui/toaster';
 import LegalNoticePage from '@/pages/LegalNoticePage';
 import PrivacyPolicyPage from '@/pages/PrivacyPolicyPage';
 import TermsConditionsPage from '@/pages/TermsConditionsPage';
+import SyntheticVoiceUsagePage from '@/pages/SyntheticVoiceUsagePage';
 import CookiesPolicyPage from '@/pages/CookiesPolicyPage';
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
                 <Route path="/aviso-legal" element={<LegalNoticePage />} />
                 <Route path="/politica-de-privacidad" element={<PrivacyPolicyPage />} />
                 <Route path="/terminos-condiciones" element={<TermsConditionsPage />} />
+                <Route path="/synthetic-voice-use" element={<SyntheticVoiceUsagePage />} />
                 <Route path="/cookies" element={<CookiesPolicyPage />} />
 
               </Routes>
