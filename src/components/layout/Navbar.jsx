@@ -25,21 +25,23 @@ const Navbar = () => {
   const isActive = (path) => location.pathname === path;
 
   const logoClasses = () => {
+    // ↑ AUMENTADO proporcional a los botones del centro
     return "flex items-center text-xl font-semibold transition-colors duration-150 ease-in-out";
   };
   
   const navLinkClasses = (path, isMobile = false, hasIcon = false) => {
-    let baseClasses = "text-xs font-medium transition-colors duration-150 ease-in-out flex items-center";
+    // ↑ AUMENTADO: tipografía y sensación de botón (alto/padding)
+    let baseClasses = "text-sm md:text-base font-medium transition-colors duration-150 ease-in-out flex items-center";
     if (isMobile) {
-      baseClasses += " block px-2 py-1.5 rounded-md w-full text-left";
+      baseClasses += " block px-3 py-2 rounded-md w-full text-left";
     } else if (hasIcon) {
-      baseClasses += " px-2 py-1.5 rounded-md";
+      baseClasses += " h-11 md:h-12 px-3 md:px-4 rounded-md";
     } else {
-      baseClasses += " px-2 py-1.5 rounded-md";
+      baseClasses += " h-11 md:h-12 px-3 md:px-4 rounded-md";
     }
     
     if (isActive(path)) {
-      return `${baseClasses} text-primary dark:text-primary`;
+      return `${baseClasses} text-slate-900 dark:text-slate-100`;
     }
     return `${baseClasses} text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200`;
   };
@@ -89,29 +91,33 @@ const Navbar = () => {
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
-            <img
-  src="/logo-olondo.png"
-  alt="Olondo AI Logo"
-  className="h-24 sm:h-28 w-auto"
-/>
-           </Link> 
+              {/* ↑ LOGO AUMENTADO de forma proporcionada */}
+              <img
+                src="/logo-olondo.png"
+                alt="Olondo AI Logo"
+                className="h-12 md:h-14 w-auto"
+              />
+            </Link> 
           </div>
 
+          {/* ↑ Botones centro aumentados (altura/px y tipografía via navLinkClasses) */}
           <nav className="hidden md:flex flex-1 items-center justify-center space-x-0.5 lg:space-x-1">
             {navItemsCenter.map((item) => (
               <Button
                 key={item.nameKey}
                 variant="ghost"
+                // mantenemos size, reforzamos altura con clases
                 size="sm"
                 onClick={() => handleNavItemClick(item)}
                 className={navLinkClasses(item.path, false, !!item.icon)}
               >
-                {item.icon && <item.icon size={16} className="mr-1 text-primary" />}
+                {item.icon && <item.icon size={18} className="mr-1" />}
                 {t(item.nameKey)}
               </Button>
             ))}
           </nav>
 
+          {/* BLOQUE DERECHO — NO TOCAR */}
           <div className="hidden md:flex items-center space-x-2 lg:space-x-3">
             <LanguageSwitcher />
             <button
@@ -173,7 +179,7 @@ const Navbar = () => {
                         onClick={() => handleNavItemClick(item, true)}
                         className={`${item.isButton ? premiumButtonClasses() + ' w-full mt-2 justify-center' : navLinkClasses(item.path, true, !!item.icon) + ' w-full justify-start'}`}
                       >
-                         {item.icon && <item.icon size={16} className="mr-1.5" />}
+                        {item.icon && <item.icon size={16} className="mr-1.5" />}
                         {t(item.nameKey)}
                       </Button>
                     </li>
