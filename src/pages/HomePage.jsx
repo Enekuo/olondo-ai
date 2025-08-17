@@ -60,7 +60,7 @@ const HomePage = () => {
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-10 relative z-10">
             <div className="w-full md:w-1/2 text-left">
               <motion.h1
-                className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[112px] font-extrabold tracking-tight text-slate-900 dark:text-white mb-6"
+                className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.5 }}
