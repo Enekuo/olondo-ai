@@ -39,17 +39,21 @@ const HomePage = () => {
       <section className="relative overflow-hidden w-full min-h-screen flex items-center md:-mt-20 lg:-mt-24 py-20 md:py-32 lg:py-40 bg-gradient-to-br from-slate-50 via-sky-50 to-blue-100 dark:from-slate-900 dark:via-slate-800 dark:to-sky-900">  
         <div className="container mx-auto px-4 md:px-6">
 
-          {/* === BG: LINES + CIRCLES (visible) === */}
+          {/* === BG: LÍNEAS + CÍRCULOS (forzado con inline style) === */}
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
-            {/* Líneas diagonales (más visibles) */}
+            {/* Líneas diagonales visibles */}
             <div
-              className="absolute inset-0 opacity-[0.35] dark:opacity-[0.18]
-              [background-image:linear-gradient(45deg,rgba(59,130,246,0.20)_1px,transparent_1px)]
-              [background-size:26px_26px]"
+              className="absolute inset-0"
+              style={{
+                opacity: 0.28,                 // ajusta 0.2–0.4 según prefieras
+                backgroundImage:
+                  'linear-gradient(45deg, rgba(59,130,246,0.18) 1px, transparent 1px)',
+                backgroundSize: '26px 26px'
+              }}
             />
-            {/* Círculos difuminados blancos */}
-            <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-white/60 dark:bg-slate-800/30 blur-2xl" />
-            <div className="absolute -bottom-40 -right-40 w-[28rem] h-[28rem] rounded-full bg-white/50 dark:bg-slate-700/20 blur-2xl" />
+            {/* Círculos difuminados blancos (muy suaves) */}
+            <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-white/55 dark:bg-slate-800/30 blur-2xl" />
+            <div className="absolute -bottom-40 -right-40 w-[28rem] h-[28rem] rounded-full bg-white/45 dark:bg-slate-700/25 blur-2xl" />
           </div>
 
           {/* === HERO A LA IZQUIERDA (con espacio a la derecha) === */}
