@@ -17,7 +17,7 @@ export const fr = {
   authModalRegisterNameLabel: 'Nom (optionnel)',
   authModalRegisterNamePlaceholder: 'Votre Nom',
   authModalRegisterPasswordPlaceholder: 'Créez un mot de passe sécurisé',
-  welcome_part1: 'Bienvenue sur',
+  welcome_part1: 'Créateur De Texte Et De Résumé En Voix',
   homeSubtitle: "Créez des textes ou des résumés avec l'IA à partir de n'importe quelle idée ou contenu, et écoutez-les à voix haute en quelques secondes.",
   homeParagraph: "Laissez l'IA écrire pour vous et obtenez des textes ou résumés clairs, prêts à être écoutés comme une expérience audio de type podcast.",
   homeSubtitle: "Saisis ton idée de base ou importe des informations (PDF, texte copié, liens…), laisse l'IA créer des textes ou des résumés en quelques secondes et écoute-les à voix haute où et quand tu veux.",

@@ -17,7 +17,7 @@ export const de = {
   authModalRegisterNameLabel: 'Name (optional)',
   authModalRegisterNamePlaceholder: 'Ihr Name',
   authModalRegisterPasswordPlaceholder: 'Erstellen Sie ein sicheres Passwort',
-  welcome_part1: 'Willkommen bei',
+  welcome_part1: 'Ersteller Für Text Und Zusammenfassung In Audio',
   homeSubtitle: "Erstelle Texte oder Zusammenfassungen mit KI aus jeder Idee oder jedem Inhalt und höre sie dir in wenigen Sekunden laut an.",
   homeBtnCreateText: '✍ Text Erstellen',
   homeBtnCreateSummary: '📝 Zusammenfassung Erstellen',

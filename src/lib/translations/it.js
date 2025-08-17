@@ -17,7 +17,7 @@ export const it = {
   authModalRegisterNameLabel: 'Nome (opzionale)',
   authModalRegisterNamePlaceholder: 'Il Tuo Nome',
   authModalRegisterPasswordPlaceholder: 'Crea una password sicura',
-  welcome_part1: 'Benvenuto su',
+  welcome_part1: 'Creatore Di Testi E Riassunti In Voce',
   homeSubtitle: "Crea testi o riassunti con l'IA a partire da qualsiasi idea o contenuto, e ascoltali ad alta voce in pochi secondi.",
   homeBtnCreateSummary: '📝 Crea Riassunto',
   faqTitle: 'Domande Frequenti',

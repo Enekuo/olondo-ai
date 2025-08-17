@@ -17,7 +17,7 @@ export const en = {
   authModalRegisterNameLabel: 'Name (optional)',
   authModalRegisterNamePlaceholder: 'Your Name',
   authModalRegisterPasswordPlaceholder: 'Create a secure password',
-  welcome_part1: 'Welcome to',
+  welcome_part1: 'Text & Summary Creator In Voice',
   homeSubtitle: "Create texts or summaries with AI from any idea or content, and listen to them out loud in seconds.",
   homeBtnCreateText: '✍ Create Text',
   homeBtnCreateSummary: '📝 Create Summary',
