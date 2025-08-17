@@ -39,22 +39,21 @@ const HomePage = () => {
       <section className="relative overflow-hidden w-full min-h-screen flex items-center md:-mt-20 lg:-mt-24 py-20 md:py-32 lg:py-40 bg-gradient-to-br from-slate-50 via-sky-50 to-blue-100 dark:from-slate-900 dark:via-slate-800 dark:to-sky-900">  
         <div className="container mx-auto px-4 md:px-6">
 
-          {/* === BG: LINES + CIRCLES (estilo Notta) === */}
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-            {/* Líneas diagonales sutiles */}
-            <div className="absolute inset-0 opacity-[0.15] dark:opacity-[0.08] 
-              [background-image:linear-gradient(45deg,rgba(59,130,246,0.12)_1px,transparent_1px)] 
-              [background-size:32px_32px]" />
-            
-            {/* Círculo suave en la esquina superior izquierda */}
-            <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-white/40 dark:bg-slate-800/30 blur-3xl" />
-            
-            {/* Círculo suave en la esquina inferior derecha */}
-            <div className="absolute -bottom-40 -right-40 w-[28rem] h-[28rem] rounded-full bg-white/30 dark:bg-slate-700/20 blur-3xl" />
+          {/* === BG: LINES + CIRCLES (visible) === */}
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
+            {/* Líneas diagonales (más visibles) */}
+            <div
+              className="absolute inset-0 opacity-[0.35] dark:opacity-[0.18]
+              [background-image:linear-gradient(45deg,rgba(59,130,246,0.20)_1px,transparent_1px)]
+              [background-size:26px_26px]"
+            />
+            {/* Círculos difuminados blancos */}
+            <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-white/60 dark:bg-slate-800/30 blur-2xl" />
+            <div className="absolute -bottom-40 -right-40 w-[28rem] h-[28rem] rounded-full bg-white/50 dark:bg-slate-700/20 blur-2xl" />
           </div>
 
           {/* === HERO A LA IZQUIERDA (con espacio a la derecha) === */}
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-10">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-10 relative z-10">
             <div className="w-full md:w-1/2 text-left">
               <motion.h1
                 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-6"
@@ -62,7 +61,7 @@ const HomePage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.5 }}
               >
-              {t('welcome_part1')} 
+                {t('welcome_part1')} 
               </motion.h1>
 
               <motion.p
