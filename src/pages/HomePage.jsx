@@ -36,8 +36,16 @@ const HomePage = () => {
       transition={pageTransition}
       className="flex flex-col w-full"
     >
-      <section className="w-full min-h-screen flex items-center md:-mt-20 lg:-mt-24 py-20 md:py-32 lg:py-40 bg-gradient-to-br from-slate-50 via-sky-50 to-blue-100 dark:from-slate-900 dark:via-slate-800 dark:to-sky-900">  
+      <section className="relative overflow-hidden w-full min-h-screen flex items-center md:-mt-20 lg:-mt-24 py-20 md:py-32 lg:py-40 bg-gradient-to-br from-slate-50 via-sky-50 to-blue-100 dark:from-slate-900 dark:via-slate-800 dark:to-sky-900">  
         <div className="container mx-auto px-4 md:px-6">
+
+          {/* === BG: BLOBS DIFUMINADOS === */}
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+            <div className="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-sky-200/50 dark:bg-sky-400/20 blur-3xl mix-blend-multiply" />
+            <div className="absolute top-40 -right-16 w-96 h-96 rounded-full bg-blue-300/40 dark:bg-blue-500/20 blur-3xl mix-blend-multiply" />
+            <div className="absolute -bottom-28 left-1/3 w-[28rem] h-[28rem] rounded-full bg-cyan-200/40 dark:bg-cyan-400/20 blur-3xl mix-blend-multiply" />
+          </div>
+
           {/* === HERO A LA IZQUIERDA (con espacio a la derecha) === */}
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-10">
             <div className="w-full md:w-1/2 text-left">
@@ -74,14 +82,12 @@ const HomePage = () => {
                   {t('navFreeTrial', 'Prueba Gratis')}
                 </Button>
               </motion.div>
-
-              
             </div>
 
             {/* Columna derecha: mockup */}
-<div className="hidden md:flex md:w-1/2 justify-end">
-  <HeroRightMockup />
-</div>
+            <div className="hidden md:flex md:w-1/2 justify-end">
+              <HeroRightMockup />
+            </div>
           </div>
         </div>
       </section>
