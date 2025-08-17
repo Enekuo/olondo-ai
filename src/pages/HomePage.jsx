@@ -60,15 +60,12 @@ const HomePage = () => {
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-10 relative z-10">
             <div className="w-full md:w-1/2 text-left">
               <motion.h1
-                className="font-extrabold tracking-tight text-slate-900 dark:text-white mb-6 text-4xl sm:text-6xl lg:text-7xl xl:text-[112px] leading-[1.05]"
+                className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[112px] font-extrabold tracking-tight text-slate-900 dark:text-white mb-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.5 }}
               >
-                {t('welcome_part1')}{" "}
-                <span className="inline-flex items-center px-6 py-2 rounded-[22px] bg-[#E9D7FF] text-[#6D4AFF] shadow-[0_8px_24px_rgba(109,74,255,0.15)] text-[0.98em]">
-                  voz
-                </span>
+                {t('welcome_part1')} 
               </motion.h1>
 
               <motion.p
