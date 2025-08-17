@@ -75,28 +75,7 @@ const HomePage = () => {
                 </Button>
               </motion.div>
 
-              <motion.div
-                className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7, duration: 0.5 }}
-              >
-                <Button
-                  asChild
-                  size="lg"
-                  className="text-base font-semibold bg-gradient-to-r from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-lg px-10 py-6"
-                >
-                  <Link to="/pricing">{t('homeBtnCreateText', '✍ Crear Texto')}</Link>
-                </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="text-base font-semibold border-2 border-blue-500 text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:border-sky-400 dark:text-sky-300 dark:hover:text-sky-200 dark:hover:bg-sky-700/20 shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 rounded-lg px-10 py-6"
-                >
-                  <Link to="/pricing">{t('homeBtnCreateSummary', '📝 Crear Resumen')}</Link>
-                </Button>
-              </motion.div>
+              
             </div>
 
             {/* Columna derecha: mockup */}
