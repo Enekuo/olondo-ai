@@ -39,11 +39,18 @@ const HomePage = () => {
       <section className="relative overflow-hidden w-full min-h-screen flex items-center md:-mt-20 lg:-mt-24 py-20 md:py-32 lg:py-40 bg-gradient-to-br from-slate-50 via-sky-50 to-blue-100 dark:from-slate-900 dark:via-slate-800 dark:to-sky-900">  
         <div className="container mx-auto px-4 md:px-6">
 
-          {/* === BG: BLOBS DIFUMINADOS === */}
+          {/* === BG: LINES + CIRCLES (estilo Notta) === */}
           <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-            <div className="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-sky-200/50 dark:bg-sky-400/20 blur-3xl mix-blend-multiply" />
-            <div className="absolute top-40 -right-16 w-96 h-96 rounded-full bg-blue-300/40 dark:bg-blue-500/20 blur-3xl mix-blend-multiply" />
-            <div className="absolute -bottom-28 left-1/3 w-[28rem] h-[28rem] rounded-full bg-cyan-200/40 dark:bg-cyan-400/20 blur-3xl mix-blend-multiply" />
+            {/* Líneas diagonales sutiles */}
+            <div className="absolute inset-0 opacity-[0.15] dark:opacity-[0.08] 
+              [background-image:linear-gradient(45deg,rgba(59,130,246,0.12)_1px,transparent_1px)] 
+              [background-size:32px_32px]" />
+            
+            {/* Círculo suave en la esquina superior izquierda */}
+            <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-white/40 dark:bg-slate-800/30 blur-3xl" />
+            
+            {/* Círculo suave en la esquina inferior derecha */}
+            <div className="absolute -bottom-40 -right-40 w-[28rem] h-[28rem] rounded-full bg-white/30 dark:bg-slate-700/20 blur-3xl" />
           </div>
 
           {/* === HERO A LA IZQUIERDA (con espacio a la derecha) === */}
