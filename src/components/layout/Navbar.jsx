@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Sun, Moon, PlusCircle, Gem } from 'lucide-react';
+import { Menu, X, Sun, Moon, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from './ThemeProvider';
 import AuthModal from '@/components/auth/AuthModal';
@@ -16,169 +16,165 @@ const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const { t } = useLanguage();
 
-  // Enlaces centrales (texto limpio, tono negro)
   const navItemsCenter = [
-    { nameKey: 'navCreateText',    path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
-    { nameKey: 'navCreateSummary', path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
-    { nameKey: 'navPricing',       path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
-    { nameKey: 'navSupport',       path: '/support',  isButton: false, icon: null, actionType: 'link' },
+    { nameKey: 'navCreateText', path: '/create-text' },
+    { nameKey: 'navCreateSummary', path: '/create-summary' },
+    { nameKey: 'navPricing', path: '/pricing' },
+    { nameKey: 'navSupport', path: '/support' },
   ];
 
-  const isActive = (path) => location.pathname === path;
-
-  const themeButtonClasses = () => {
-    return "flex items-center justify-center h-9 w-9 rounded-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors duration-150 ease-in-out";
-  };
-
-  const premiumButtonClasses = () => {
-    return "flex items-center justify-center h-9 px-4 rounded-md bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90 text-sm font-medium text-white shadow-md hover:shadow-lg transition-all duration-300";
-  };
-
-  const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
-  };
-
-  useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto';
-    return () => { document.body.style.overflow = 'auto'; };
-  }, [isMenuOpen]);
-
-  // Estilos de enlaces del centro (negro, sin iconos)
-  const navLinkClasses = (path, { isMobile = false, hasIcon = false, isTitle = false } = {}) => {
-    const sizeTitle = "text-lg md:text-xl font-bold";           // no usado
-    const sizeNormal = "text-base md:text-lg font-medium";      // enlaces
-
-    let baseClasses = `${isTitle ? sizeTitle : sizeNormal} transition-colors duration-150 ease-in-out flex items-center`;
-
-    if (isMobile) {
-      baseClasses += " block px-3 py-2 rounded-md w-full text-left";
-    } else {
-      baseClasses += " h-11 md:h-12 px-3 md:px-4 rounded-md";
-    }
-
-    // Tono negro (light) / claro (dark)
-    if (isActive(path)) {
-      return `${baseClasses} text-slate-900 dark:text-slate-100`;
-    }
-    return `${baseClasses} text-slate-900 hover:text-slate-900 dark:text-slate-100 dark:hover:text-slate-100`;
-  };
-
-  const allMobileNavItems = [
-    { nameKey: 'navCreateText', path: '/free-trial', isButton: false, icon: PlusCircle, actionType: 'link' },
-    { nameKey: 'navCreateSummary', path: '/free-trial', isButton: false, icon: PlusCircle, actionType: 'link' },
-    { nameKey: 'navFreeTrial', path: '/free-trial', isButton: true, actionType: 'link', icon: Gem },
+  const navItemsRight = [
+    { nameKey: 'navFreeTrial', path: '/free-trial', icon: <Sparkles className="h-4 w-4" /> },
   ];
 
-  const handleNavItemClick = (item, isMobile = false) => {
-    if (isMobile) setIsMenuOpen(false);
-    if (item.actionType === 'authModal') {
+  const handleNavItemClick = (item) => {
+    if (item.path === '/login') {
       setIsAuthModalOpen(true);
-    } else if (item.actionType === 'link') {
+    } else {
       navigate(item.path);
+      setIsMenuOpen(false);
     }
+  };
+
+  const navLinkClasses = (path, { isMobile = false, hasIcon = false, isTitle = false } = {}) => {
+    const base = isMobile
+      ? "w-full text-left px-3 py-2 rounded-md text-sm font-medium"
+      : "text-sm font-medium transition-colors";
+
+    const active = location.pathname === path
+      ? "text-blue-600"
+      : "text-gray-900 dark:text-gray-100 hover:text-blue-600";
+
+    const spacing = hasIcon ? "flex items-center gap-2" : "";
+
+    const weight = isTitle ? "font-semibold" : "";
+
+    return `${base} ${active} ${spacing} ${weight}`;
   };
 
   return (
-    <>
-      <header className="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+    <nav className="w-full bg-white dark:bg-gray-900 shadow-sm fixed top-0 left-0 right-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
           
-          {/* IZQUIERDA: logo (movido ~1cm a la izquierda) + menú pegado */}
-          <div className="flex items-center -ml-10"> {/* ~40px hacia la izquierda */}
-            <Link
-              to="/"
-              onClick={(e) => {
-                if (location.pathname === "/") {
-                  e.preventDefault();
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                }
-              }}
-              className="flex items-center space-x-2"
-            >
+          {/* Logo */}
+          <div className="flex-shrink-0 flex items-center" style={{ marginLeft: "-12px" }}>
+            <Link to="/" className="flex items-center">
               <img
-                src="/logo-olondo.png"
-                alt="Olondo AI Logo"
-                className="h-28 md:h-36 w-auto"
+                className="h-8 w-auto"
+                src="/logo.png"
+                alt="Olondo AI"
               />
+              <span className="ml-2 font-bold text-xl text-blue-600">Olondo.AI</span>
             </Link>
-
-            <nav className="hidden md:flex items-center justify-start gap-8 ml-6 md:ml-8">
-              {navItemsCenter.map((item) => {
-                const isTitle = item.path === '/';
-                return (
-                  <Button
-                    key={item.nameKey}
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleNavItemClick(item)}
-                    className={navLinkClasses(item.path, { isMobile: false, hasIcon: !!item.icon, isTitle })}
-                  >
-                    {item.nameKey === 'navPricing'
-                      ? t('navPricing', 'Planes')
-                      : item.nameKey === 'navSupport'
-                      ? t('navSupport', 'Soporte')
-                      : t(item.nameKey)}
-                  </Button>
-                );
-              })}
-            </nav>
           </div>
 
-          {/* DERECHA: idioma, tema, CTA */}
-          <div className="hidden md:flex items-center space-x-2 lg:space-x-3">
+          {/* Menú centro */}
+          <div className="hidden md:flex items-center justify-start gap-4 ml-6 md:ml-8">
+            {navItemsCenter.map((item, index) => {
+              const isTitle = item.nameKey === 'navCreateText'; // El primero (Crear Texto)
+              return (
+                <Button
+                  key={item.nameKey}
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleNavItemClick(item)}
+                  className={navLinkClasses(item.path, { isMobile: false, hasIcon: !!item.icon, isTitle })}
+                  style={{
+                    marginLeft: isTitle ? "0px" : "0px", // "Crear Texto" no cambia
+                    marginRight: isTitle ? "24px" : "0px" // Espacio solo después de "Crear Texto"
+                  }}
+                >
+                  {item.nameKey === 'navPricing'
+                    ? t('navPricing', 'Planes')
+                    : item.nameKey === 'navSupport'
+                    ? t('navSupport', 'Soporte')
+                    : t(item.nameKey)}
+                </Button>
+              );
+            })}
+          </div>
+
+          {/* Menú derecho */}
+          <div className="hidden md:flex items-center gap-2">
             <LanguageSwitcher />
-            <button
-              onClick={toggleTheme}
-              className={themeButtonClasses()}
-              aria-label={t('themeToggle', 'Toggle theme')}
-            >
-              {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
-            </button>
             <Button
-              onClick={() => navigate('/free-trial')}
-              className={premiumButtonClasses()}
+              variant="outline"
+              size="icon"
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             >
-              <Gem size={14} className="mr-1.5" />
-              {t('navFreeTrial', 'Prueba Gratis')}
+              {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </Button>
+            {navItemsRight.map((item) => (
+              <Button
+                key={item.nameKey}
+                onClick={() => handleNavItemClick(item)}
+                className="bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                {item.icon}
+                {t(item.nameKey)}
+              </Button>
+            ))}
+          </div>
+
+          {/* Botón hamburguesa */}
+          <div className="flex items-center md:hidden">
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 rounded-md text-gray-700 dark:text-gray-200"
+            >
+              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
           </div>
         </div>
+      </div>
 
-        {/* Móvil (sin cambios) */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="md:hidden absolute top-16 left-0 w-full bg-white dark:bg-slate-900 border-b border-t border-slate-200 dark:border-slate-700 shadow-lg"
-              style={{ maxHeight: 'calc(100vh - 4rem)', overflowY: 'auto' }}
-            >
-              <nav className="px-4 pb-6 pt-4 sm:px-6">
-                <ul className="space-y-1">
-                  {allMobileNavItems.map((item) => (
-                    <li key={item.nameKey}>
-                      <Button
-                        variant={item.isButton ? "default" : "ghost"}
-                        size="sm"
-                        onClick={() => handleNavItemClick(item, true)}
-                        className={`${item.isButton ? premiumButtonClasses() + ' w-full mt-2 justify-center' : navLinkClasses(item.path, { isMobile: true, hasIcon: !!item.icon, isTitle: item.path === '/' }) + ' w-full justify-start'}`}
-                      >
-                        {item.icon && <item.icon size={16} className="mr-1.5 text-blue-600 dark:text-blue-400" />}
-                        {t(item.nameKey)}
-                      </Button>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
+      {/* Menú móvil */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="md:hidden bg-white dark:bg-gray-900 shadow-lg"
+          >
+            <div className="px-2 pt-2 pb-3 space-y-1">
+              {navItemsCenter.map((item) => (
+                <button
+                  key={item.nameKey}
+                  onClick={() => handleNavItemClick(item)}
+                  className={navLinkClasses(item.path, { isMobile: true })}
+                >
+                  {t(item.nameKey)}
+                </button>
+              ))}
+              {navItemsRight.map((item) => (
+                <button
+                  key={item.nameKey}
+                  onClick={() => handleNavItemClick(item)}
+                  className={navLinkClasses(item.path, { isMobile: true, hasIcon: !!item.icon })}
+                >
+                  {item.icon}
+                  {t(item.nameKey)}
+                </button>
+              ))}
+              <LanguageSwitcher />
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className="w-full mt-2"
+              >
+                {theme === 'dark' ? <Sun className="h-4 w-4 mr-2" /> : <Moon className="h-4 w-4 mr-2" />}
+                {theme === 'dark' ? t('lightMode', 'Modo Claro') : t('darkMode', 'Modo Oscuro')}
+              </Button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      <AuthModal isOpen={isAuthModalOpen} onOpenChange={setIsAuthModalOpen} />
-    </>
+      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
+    </nav>
   );
 };
 
