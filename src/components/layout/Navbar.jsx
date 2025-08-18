@@ -16,7 +16,7 @@ const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const { t } = useLanguage();
 
-  // Centro: Crear Texto · Crear Resumen · Planes · Soporte (texto limpio)
+  // --- Centro: 4 enlaces, sin iconos, estilo negro tipo Algor ---
   const navItemsCenter = [
     { nameKey: 'navCreateText',    path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
     { nameKey: 'navCreateSummary', path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
@@ -43,11 +43,10 @@ const Navbar = () => {
     return () => { document.body.style.overflow = 'auto'; };
   }, [isMenuOpen]);
 
-  // Estilos para enlaces del centro.
-  // isTitle = true SOLO para "Inicio" (más grande).
+  // Estilos para enlaces del centro (tono negro tipo Algor)
   const navLinkClasses = (path, { isMobile = false, hasIcon = false, isTitle = false } = {}) => {
-    const sizeTitle = "text-lg md:text-xl font-bold";           // Inicio
-    const sizeNormal = "text-base md:text-lg font-medium";      // Crear Texto / Crear Resumen
+    const sizeTitle = "text-lg md:text-xl font-bold";           // (reservado para 'Inicio', ya no se usa)
+    const sizeNormal = "text-base md:text-lg font-medium";      // Enlaces del centro
 
     let baseClasses = `${isTitle ? sizeTitle : sizeNormal} transition-colors duration-150 ease-in-out flex items-center`;
 
@@ -57,11 +56,11 @@ const Navbar = () => {
       baseClasses += " h-11 md:h-12 px-3 md:px-4 rounded-md";
     }
 
-    // Colores "como antes": inactivo gris -> hover azul; activo azul
+    // Tono negro por defecto; activo también oscuro
     if (isActive(path)) {
-      return `${baseClasses} text-blue-600 dark:text-blue-400`;
+      return `${baseClasses} text-slate-900 dark:text-slate-100`;
     }
-    return `${baseClasses} text-slate-600 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-300`;
+    return `${baseClasses} text-slate-900 hover:text-slate-900 dark:text-slate-100 dark:hover:text-slate-100`;
   };
 
   const allMobileNavItems = [
@@ -101,10 +100,10 @@ const Navbar = () => {
             />
           </Link>
 
-          {/* Centro — enlaces con colores anteriores y "Inicio" más grande */}
-          <nav className="hidden md:flex flex-1 items-center justify-center space-x-0.5 lg:space-x-1">
-            {navItemsCenter.map((item, idx) => {
-              const isTitle = item.path === '/'; // Solo "Inicio"
+          {/* Centro — AHORA alineado a la izquierda y con tono negro */}
+          <nav className="hidden md:flex flex-1 items-center justify-start space-x-6 lg:space-x-8 pl-2 md:pl-4">
+            {navItemsCenter.map((item) => {
+              const isTitle = item.path === '/';
               return (
                 <Button
                   key={item.nameKey}
@@ -113,12 +112,7 @@ const Navbar = () => {
                   onClick={() => handleNavItemClick(item)}
                   className={navLinkClasses(item.path, { isMobile: false, hasIcon: !!item.icon, isTitle })}
                 >
-                  {item.icon && (
-                    <item.icon
-                      size={18}
-                      className="mr-1 text-blue-600 dark:text-blue-400"
-                    />
-                  )}
+                  {/* Sin iconos: texto limpio tipo Algor */}
                   {t(item.nameKey)}
                 </Button>
               );
