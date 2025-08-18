@@ -81,15 +81,22 @@ const Navbar = () => {
       <header className="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Logo — aumentado proporcionalmente */}
-          <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-2">
-              <img
-                src="/logo-olondo.png"
-                alt="Olondo AI Logo"
-                className="h-28 md:h-36 w-auto"
-              />
-            </Link>
-          </div>
+          <Link
+  to="/"
+  onClick={(e) => {
+    if (location.pathname === "/") {
+      e.preventDefault(); // evita recargar
+      window.scrollTo({ top: 0, behavior: "smooth" }); // sube al inicio
+    }
+  }}
+  className="flex items-center space-x-2"
+>
+  <img
+    src="/logo-olondo.png"
+    alt="Olondo AI Logo"
+    className="h-12 md:h-14 w-auto"
+  />
+</Link>
 
           {/* Centro — enlaces con colores anteriores y "Inicio" más grande */}
           <nav className="hidden md:flex flex-1 items-center justify-center space-x-0.5 lg:space-x-1">
