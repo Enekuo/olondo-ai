@@ -17,7 +17,6 @@ const Navbar = () => {
   const { t } = useLanguage();
 
   const navItemsCenter = [
-    { nameKey: 'navHome', path: '/', isButton: false, actionType: 'link', icon: null },
     { nameKey: 'navCreateText', path: '/pricing', isButton: false, icon: PlusCircle, actionType: 'link' },
     { nameKey: 'navCreateSummary', path: '/pricing', isButton: false, icon: PlusCircle, actionType: 'link' },
   ];
@@ -63,7 +62,6 @@ const Navbar = () => {
   };
 
   const allMobileNavItems = [
-    { nameKey: 'navHome', path: '/', isButton: false, actionType: 'link', icon: null },
     { nameKey: 'navCreateText', path: '/free-trial', isButton: false, icon: PlusCircle, actionType: 'link' },
     { nameKey: 'navCreateSummary', path: '/free-trial', isButton: false, icon: PlusCircle, actionType: 'link' },
     { nameKey: 'navPremiumPlan', path: '/pricing', isButton: true, actionType: 'link', icon: Gem },
