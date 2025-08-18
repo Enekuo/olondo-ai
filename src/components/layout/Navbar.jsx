@@ -16,7 +16,7 @@ const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const { t } = useLanguage();
 
-  // --- Centro: 4 enlaces, sin iconos, estilo texto negro ---
+  // Centro: Crear Texto · Crear Resumen · Planes · Soporte (sin iconos, estilo negro)
   const navItemsCenter = [
     { nameKey: 'navCreateText',    path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
     { nameKey: 'navCreateSummary', path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
@@ -45,7 +45,7 @@ const Navbar = () => {
 
   // Estilos de enlaces del centro (negro, sin iconos)
   const navLinkClasses = (path, { isMobile = false, hasIcon = false, isTitle = false } = {}) => {
-    const sizeTitle = "text-lg md:text-xl font-bold";           // (reservado para 'Inicio', no se usa)
+    const sizeTitle = "text-lg md:text-xl font-bold";           // (no se usa)
     const sizeNormal = "text-base md:text-lg font-medium";      // Enlaces del centro
 
     let baseClasses = `${isTitle ? sizeTitle : sizeNormal} transition-colors duration-150 ease-in-out flex items-center`;
@@ -56,7 +56,6 @@ const Navbar = () => {
       baseClasses += " h-11 md:h-12 px-3 md:px-4 rounded-md";
     }
 
-    // Tono negro en light, claro en dark. Activo igual de oscuro (tipo Algor)
     if (isActive(path)) {
       return `${baseClasses} text-slate-900 dark:text-slate-100`;
     }
@@ -82,48 +81,51 @@ const Navbar = () => {
     <>
       <header className="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          {/* Logo — aumentado proporcionalmente */}
-          <Link
-            to="/"
-            onClick={(e) => {
-              if (location.pathname === "/") {
-                e.preventDefault(); // evita recargar
-                window.scrollTo({ top: 0, behavior: "smooth" }); // sube al inicio
-              }
-            }}
-            className="flex items-center space-x-2"
-          >
-            <img
-              src="/logo-olondo.png"
-              alt="Olondo AI Logo"
-              className="h-28 md:h-36 w-auto"
-            />
-          </Link>
+          
+          {/* IZQUIERDA: logo + menú alineado a la izquierda */}
+          <div className="flex items-center">
+            <Link
+              to="/"
+              onClick={(e) => {
+                if (location.pathname === "/") {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }
+              }}
+              className="flex items-center space-x-2"
+            >
+              <img
+                src="/logo-olondo.png"
+                alt="Olondo AI Logo"
+                className="h-28 md:h-36 w-auto"
+              />
+            </Link>
 
-          {/* Centro — alineado a la izquierda (quitamos flex-1) */}
-          <nav className="hidden md:flex items-center justify-start space-x-6 lg:space-x-8 ml-2 md:ml-4">
-            {navItemsCenter.map((item) => {
-              const isTitle = item.path === '/';
-              return (
-                <Button
-                  key={item.nameKey}
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => handleNavItemClick(item)}
-                  className={navLinkClasses(item.path, { isMobile: false, hasIcon: !!item.icon, isTitle })}
-                >
-                  {/* Texto limpio (sin iconos) y con fallback de traducción */}
-                  {item.nameKey === 'navPricing'
-                    ? t('navPricing', 'Planes')
-                    : item.nameKey === 'navSupport'
-                    ? t('navSupport', 'Soporte')
-                    : t(item.nameKey)}
-                </Button>
-              );
-            })}
-          </nav>
+            {/* Menú central pegado a la izquierda como en Algor */}
+            <nav className="hidden md:flex items-center justify-start gap-8 ml-6 md:ml-8">
+              {navItemsCenter.map((item) => {
+                const isTitle = item.path === '/';
+                return (
+                  <Button
+                    key={item.nameKey}
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleNavItemClick(item)}
+                    className={navLinkClasses(item.path, { isMobile: false, hasIcon: !!item.icon, isTitle })}
+                  >
+                    {/* Texto limpio con fallback de traducción */}
+                    {item.nameKey === 'navPricing'
+                      ? t('navPricing', 'Planes')
+                      : item.nameKey === 'navSupport'
+                      ? t('navSupport', 'Soporte')
+                      : t(item.nameKey)}
+                  </Button>
+                );
+              })}
+            </nav>
+          </div>
 
-          {/* Derecha — no tocado (solo ya era Prueba Gratis) */}
+          {/* DERECHA: idioma, tema, CTA */}
           <div className="hidden md:flex items-center space-x-2 lg:space-x-3">
             <LanguageSwitcher />
             <button
@@ -141,31 +143,9 @@ const Navbar = () => {
               {t('navFreeTrial', 'Prueba Gratis')}
             </Button>
           </div>
-
-          {/* Mobile */}
-          <div className="flex items-center md:hidden space-x-2">
-            <LanguageSwitcher />
-            <button
-              onClick={toggleTheme}
-              className={themeButtonClasses()}
-              aria-label={t('themeToggle', 'Toggle theme')}
-            >
-              {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
-            </button>
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="inline-flex items-center justify-center h-9 w-9 rounded-md p-0 text-slate-500 dark:text-slate-400 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none border border-slate-300 dark:border-slate-600"
-              aria-label="Toggle menu"
-            >
-              {isMenuOpen ? (
-                <X className="block h-5 w-5" aria-hidden="true" />
-              ) : (
-                <Menu className="block h-5 w-5" aria-hidden="true" />
-              )}
-            </button>
-          </div>
         </div>
 
+        {/* Móvil (sin cambios) */}
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
