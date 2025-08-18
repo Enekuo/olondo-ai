@@ -43,10 +43,10 @@ const Navbar = () => {
     return () => { document.body.style.overflow = 'auto'; };
   }, [isMenuOpen]);
 
-  // Estilos enlaces centro: tono negro tipo Algor
+  // Estilos enlaces centro: letra más pequeña + separaciones ajustadas
   const navLinkClasses = (path, { isMobile = false } = {}) => {
     const base = "transition-colors duration-150 ease-in-out flex items-center";
-    const size = "text-base md:text-lg font-medium";
+    const size = "text-sm md:text-base font-medium"; // letra más pequeña
     const box  = isMobile ? "block px-3 py-2 rounded-md w-full text-left" : "h-11 md:h-12 px-3 md:px-4 rounded-md";
 
     if (isActive(path)) {
@@ -75,7 +75,7 @@ const Navbar = () => {
       <header className="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 
-          {/* IZQUIERDA: logo + menú (alineado a la izquierda como en el ejemplo) */}
+          {/* IZQUIERDA: logo + menú */}
           <div className="flex items-center">
             <Link
               to="/"
@@ -94,7 +94,7 @@ const Navbar = () => {
               />
             </Link>
 
-            {/* Menú: “Crear Texto” queda igual; los otros 3 más pegados a la izquierda */}
+            {/* Menú: Crear Texto fijo, otros más a la izquierda */}
             <nav className="hidden md:flex items-center justify-start ml-6 md:ml-8">
               {navItemsCenter.map((item, index) => {
                 const label =
@@ -102,9 +102,9 @@ const Navbar = () => {
                   : item.nameKey === 'navSupport' ? t('navSupport', 'Soporte')
                   : t(item.nameKey);
 
-                // separaciones: más espacio solo tras "Crear Texto"
+                // separaciones reducidas
                 const mr =
-                  index === 0 ? 12 : (index < navItemsCenter.length - 1 ? 6 : 0); // px
+                  index === 0 ? 16 : (index < navItemsCenter.length - 1 ? 8 : 0);
 
                 return (
                   <Button
@@ -122,7 +122,7 @@ const Navbar = () => {
             </nav>
           </div>
 
-          {/* DERECHA (sin cambios) */}
+          {/* DERECHA */}
           <div className="hidden md:flex items-center space-x-2 lg:space-x-3">
             <LanguageSwitcher />
             <button
@@ -141,7 +141,7 @@ const Navbar = () => {
             </Button>
           </div>
 
-          {/* Móvil (igual que antes) */}
+          {/* Móvil */}
           <div className="flex items-center md:hidden space-x-2">
             <LanguageSwitcher />
             <button
