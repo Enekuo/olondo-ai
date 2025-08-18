@@ -16,7 +16,7 @@ const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const { t } = useLanguage();
 
-  // --- Centro: 4 enlaces, sin iconos, estilo negro tipo Algor ---
+  // --- Centro: 4 enlaces, sin iconos, estilo texto negro ---
   const navItemsCenter = [
     { nameKey: 'navCreateText',    path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
     { nameKey: 'navCreateSummary', path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
@@ -43,9 +43,9 @@ const Navbar = () => {
     return () => { document.body.style.overflow = 'auto'; };
   }, [isMenuOpen]);
 
-  // Estilos para enlaces del centro (tono negro tipo Algor)
+  // Estilos de enlaces del centro (negro, sin iconos)
   const navLinkClasses = (path, { isMobile = false, hasIcon = false, isTitle = false } = {}) => {
-    const sizeTitle = "text-lg md:text-xl font-bold";           // (reservado para 'Inicio', ya no se usa)
+    const sizeTitle = "text-lg md:text-xl font-bold";           // (reservado para 'Inicio', no se usa)
     const sizeNormal = "text-base md:text-lg font-medium";      // Enlaces del centro
 
     let baseClasses = `${isTitle ? sizeTitle : sizeNormal} transition-colors duration-150 ease-in-out flex items-center`;
@@ -56,7 +56,7 @@ const Navbar = () => {
       baseClasses += " h-11 md:h-12 px-3 md:px-4 rounded-md";
     }
 
-    // Tono negro por defecto; activo también oscuro
+    // Tono negro en light, claro en dark. Activo igual de oscuro (tipo Algor)
     if (isActive(path)) {
       return `${baseClasses} text-slate-900 dark:text-slate-100`;
     }
@@ -100,8 +100,8 @@ const Navbar = () => {
             />
           </Link>
 
-          {/* Centro — AHORA alineado a la izquierda y con tono negro */}
-          <nav className="hidden md:flex flex-1 items-center justify-start space-x-6 lg:space-x-8 pl-2 md:pl-4">
+          {/* Centro — alineado a la izquierda (quitamos flex-1) */}
+          <nav className="hidden md:flex items-center justify-start space-x-6 lg:space-x-8 ml-2 md:ml-4">
             {navItemsCenter.map((item) => {
               const isTitle = item.path === '/';
               return (
@@ -112,14 +112,18 @@ const Navbar = () => {
                   onClick={() => handleNavItemClick(item)}
                   className={navLinkClasses(item.path, { isMobile: false, hasIcon: !!item.icon, isTitle })}
                 >
-                  {/* Sin iconos: texto limpio tipo Algor */}
-                  {t(item.nameKey)}
+                  {/* Texto limpio (sin iconos) y con fallback de traducción */}
+                  {item.nameKey === 'navPricing'
+                    ? t('navPricing', 'Planes')
+                    : item.nameKey === 'navSupport'
+                    ? t('navSupport', 'Soporte')
+                    : t(item.nameKey)}
                 </Button>
               );
             })}
           </nav>
 
-          {/* Derecha — NO TOCAR (solo texto/ruta) */}
+          {/* Derecha — no tocado (solo ya era Prueba Gratis) */}
           <div className="hidden md:flex items-center space-x-2 lg:space-x-3">
             <LanguageSwitcher />
             <button
