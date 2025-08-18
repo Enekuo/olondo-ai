@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Sun, Moon, PlusCircle, Gem } from 'lucide-react';
+import { Menu, X, Sun, Moon, Gem } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from './ThemeProvider';
 import AuthModal from '@/components/auth/AuthModal';
@@ -16,7 +16,6 @@ const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const { t } = useLanguage();
 
-  // Centro: texto limpio, sin iconos
   const navItemsCenter = [
     { nameKey: 'navCreateText',    path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
     { nameKey: 'navCreateSummary', path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
@@ -43,10 +42,9 @@ const Navbar = () => {
     return () => { document.body.style.overflow = 'auto'; };
   }, [isMenuOpen]);
 
-  // Estilos enlaces centro: letra más pequeña + separaciones ajustadas
   const navLinkClasses = (path, { isMobile = false } = {}) => {
     const base = "transition-colors duration-150 ease-in-out flex items-center";
-    const size = "text-sm md:text-base font-medium"; // letra más pequeña
+    const size = "text-sm md:text-base font-medium";
     const box  = isMobile ? "block px-3 py-2 rounded-md w-full text-left" : "h-11 md:h-12 px-3 md:px-4 rounded-md";
 
     if (isActive(path)) {
@@ -56,8 +54,8 @@ const Navbar = () => {
   };
 
   const allMobileNavItems = [
-    { nameKey: 'navCreateText', path: '/free-trial', isButton: false, icon: PlusCircle, actionType: 'link' },
-    { nameKey: 'navCreateSummary', path: '/free-trial', isButton: false, icon: PlusCircle, actionType: 'link' },
+    { nameKey: 'navCreateText', path: '/free-trial', isButton: false, actionType: 'link' },
+    { nameKey: 'navCreateSummary', path: '/free-trial', isButton: false, actionType: 'link' },
     { nameKey: 'navFreeTrial', path: '/free-trial', isButton: true, actionType: 'link', icon: Gem },
   ];
 
@@ -75,7 +73,7 @@ const Navbar = () => {
       <header className="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 
-          {/* IZQUIERDA: logo + menú */}
+          {/* IZQUIERDA */}
           <div className="flex items-center">
             <Link
               to="/"
@@ -94,7 +92,7 @@ const Navbar = () => {
               />
             </Link>
 
-            {/* Menú: Crear Texto fijo, otros más a la izquierda */}
+            {/* NAV LINKS */}
             <nav className="hidden md:flex items-center justify-start ml-6 md:ml-8">
               {navItemsCenter.map((item, index) => {
                 const label =
@@ -102,9 +100,8 @@ const Navbar = () => {
                   : item.nameKey === 'navSupport' ? t('navSupport', 'Soporte')
                   : t(item.nameKey);
 
-                // separaciones reducidas
                 const mr =
-                  index === 0 ? 16 : (index < navItemsCenter.length - 1 ? 8 : 0);
+                  index === 0 ? 10 : (index < navItemsCenter.length - 1 ? 4 : 0);
 
                 return (
                   <Button
@@ -141,7 +138,7 @@ const Navbar = () => {
             </Button>
           </div>
 
-          {/* Móvil */}
+          {/* MÓVIL */}
           <div className="flex items-center md:hidden space-x-2">
             <LanguageSwitcher />
             <button
@@ -185,7 +182,6 @@ const Navbar = () => {
                         onClick={() => handleNavItemClick(item, true)}
                         className={`${item.isButton ? premiumButtonClasses() + ' w-full mt-2 justify-center' : navLinkClasses(item.path, { isMobile: true }) + ' w-full justify-start'}`}
                       >
-                        {item.icon && <item.icon size={16} className="mr-1.5 text-blue-600 dark:text-blue-400" />}
                         {t(item.nameKey)}
                       </Button>
                     </li>
