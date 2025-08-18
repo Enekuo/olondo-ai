@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Sun, Moon, Sparkles } from 'lucide-react';
+import { Menu, X, Sun, Moon, PlusCircle, Gem } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from './ThemeProvider';
 import AuthModal from '@/components/auth/AuthModal';
@@ -16,165 +16,189 @@ const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const { t } = useLanguage();
 
+  // Centro: texto limpio, sin iconos
   const navItemsCenter = [
-    { nameKey: 'navCreateText', path: '/create-text' },
-    { nameKey: 'navCreateSummary', path: '/create-summary' },
-    { nameKey: 'navPricing', path: '/pricing' },
-    { nameKey: 'navSupport', path: '/support' },
+    { nameKey: 'navCreateText',    path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
+    { nameKey: 'navCreateSummary', path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
+    { nameKey: 'navPricing',       path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
+    { nameKey: 'navSupport',       path: '/support',  isButton: false, icon: null, actionType: 'link' },
   ];
 
-  const navItemsRight = [
-    { nameKey: 'navFreeTrial', path: '/free-trial', icon: <Sparkles className="h-4 w-4" /> },
+  const isActive = (path) => location.pathname === path;
+
+  const themeButtonClasses = () => {
+    return "flex items-center justify-center h-9 w-9 rounded-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors duration-150 ease-in-out";
+  };
+
+  const premiumButtonClasses = () => {
+    return "flex items-center justify-center h-9 px-4 rounded-md bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90 text-sm font-medium text-white shadow-md hover:shadow-lg transition-all duration-300";
+  };
+
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto';
+    return () => { document.body.style.overflow = 'auto'; };
+  }, [isMenuOpen]);
+
+  // Estilos enlaces centro: tono negro tipo Algor
+  const navLinkClasses = (path, { isMobile = false } = {}) => {
+    const base = "transition-colors duration-150 ease-in-out flex items-center";
+    const size = "text-base md:text-lg font-medium";
+    const box  = isMobile ? "block px-3 py-2 rounded-md w-full text-left" : "h-11 md:h-12 px-3 md:px-4 rounded-md";
+
+    if (isActive(path)) {
+      return `${base} ${size} ${box} text-slate-900 dark:text-slate-100`;
+    }
+    return `${base} ${size} ${box} text-slate-900 hover:text-slate-900 dark:text-slate-100 dark:hover:text-slate-100`;
+  };
+
+  const allMobileNavItems = [
+    { nameKey: 'navCreateText', path: '/free-trial', isButton: false, icon: PlusCircle, actionType: 'link' },
+    { nameKey: 'navCreateSummary', path: '/free-trial', isButton: false, icon: PlusCircle, actionType: 'link' },
+    { nameKey: 'navFreeTrial', path: '/free-trial', isButton: true, actionType: 'link', icon: Gem },
   ];
 
-  const handleNavItemClick = (item) => {
-    if (item.path === '/login') {
+  const handleNavItemClick = (item, isMobile = false) => {
+    if (isMobile) setIsMenuOpen(false);
+    if (item.actionType === 'authModal') {
       setIsAuthModalOpen(true);
-    } else {
+    } else if (item.actionType === 'link') {
       navigate(item.path);
-      setIsMenuOpen(false);
     }
   };
 
-  const navLinkClasses = (path, { isMobile = false, hasIcon = false, isTitle = false } = {}) => {
-    const base = isMobile
-      ? "w-full text-left px-3 py-2 rounded-md text-sm font-medium"
-      : "text-sm font-medium transition-colors";
-
-    const active = location.pathname === path
-      ? "text-blue-600"
-      : "text-gray-900 dark:text-gray-100 hover:text-blue-600";
-
-    const spacing = hasIcon ? "flex items-center gap-2" : "";
-
-    const weight = isTitle ? "font-semibold" : "";
-
-    return `${base} ${active} ${spacing} ${weight}`;
-  };
-
   return (
-    <nav className="w-full bg-white dark:bg-gray-900 shadow-sm fixed top-0 left-0 right-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          
-          {/* Logo */}
-          <div className="flex-shrink-0 flex items-center" style={{ marginLeft: "-12px" }}>
-            <Link to="/" className="flex items-center">
-              <img
-                className="h-8 w-auto"
-                src="/logo.png"
-                alt="Olondo AI"
-              />
-              <span className="ml-2 font-bold text-xl text-blue-600">Olondo.AI</span>
-            </Link>
-          </div>
+    <>
+      <header className="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 
-          {/* Menú centro */}
-          <div className="hidden md:flex items-center justify-start gap-4 ml-6 md:ml-8">
-            {navItemsCenter.map((item, index) => {
-              const isTitle = item.nameKey === 'navCreateText'; // El primero (Crear Texto)
-              return (
-                <Button
-                  key={item.nameKey}
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => handleNavItemClick(item)}
-                  className={navLinkClasses(item.path, { isMobile: false, hasIcon: !!item.icon, isTitle })}
-                  style={{
-                    marginLeft: isTitle ? "0px" : "0px", // "Crear Texto" no cambia
-                    marginRight: isTitle ? "24px" : "0px" // Espacio solo después de "Crear Texto"
-                  }}
-                >
-                  {item.nameKey === 'navPricing'
-                    ? t('navPricing', 'Planes')
-                    : item.nameKey === 'navSupport'
-                    ? t('navSupport', 'Soporte')
-                    : t(item.nameKey)}
-                </Button>
-              );
-            })}
-          </div>
-
-          {/* Menú derecho */}
-          <div className="hidden md:flex items-center gap-2">
-            <LanguageSwitcher />
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          {/* IZQUIERDA: logo + menú (alineado a la izquierda como en el ejemplo) */}
+          <div className="flex items-center">
+            <Link
+              to="/"
+              onClick={(e) => {
+                if (location.pathname === "/") {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }
+              }}
+              className="flex items-center space-x-2"
             >
-              {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </Button>
-            {navItemsRight.map((item) => (
-              <Button
-                key={item.nameKey}
-                onClick={() => handleNavItemClick(item)}
-                className="bg-blue-600 hover:bg-blue-700 text-white"
-              >
-                {item.icon}
-                {t(item.nameKey)}
-              </Button>
-            ))}
+              <img
+                src="/logo-olondo.png"
+                alt="Olondo AI Logo"
+                className="h-28 md:h-36 w-auto"
+              />
+            </Link>
+
+            {/* Menú: “Crear Texto” queda igual; los otros 3 más pegados a la izquierda */}
+            <nav className="hidden md:flex items-center justify-start ml-6 md:ml-8">
+              {navItemsCenter.map((item, index) => {
+                const label =
+                  item.nameKey === 'navPricing' ? t('navPricing', 'Planes')
+                  : item.nameKey === 'navSupport' ? t('navSupport', 'Soporte')
+                  : t(item.nameKey);
+
+                // separaciones: más espacio solo tras "Crear Texto"
+                const mr =
+                  index === 0 ? 24 : (index < navItemsCenter.length - 1 ? 12 : 0); // px
+
+                return (
+                  <Button
+                    key={item.nameKey}
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleNavItemClick(item)}
+                    className={navLinkClasses(item.path, { isMobile: false })}
+                    style={{ marginRight: `${mr}px` }}
+                  >
+                    {label}
+                  </Button>
+                );
+              })}
+            </nav>
           </div>
 
-          {/* Botón hamburguesa */}
-          <div className="flex items-center md:hidden">
+          {/* DERECHA (sin cambios) */}
+          <div className="hidden md:flex items-center space-x-2 lg:space-x-3">
+            <LanguageSwitcher />
+            <button
+              onClick={toggleTheme}
+              className={themeButtonClasses()}
+              aria-label={t('themeToggle', 'Toggle theme')}
+            >
+              {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
+            </button>
+            <Button
+              onClick={() => navigate('/free-trial')}
+              className={premiumButtonClasses()}
+            >
+              <Gem size={14} className="mr-1.5" />
+              {t('navFreeTrial', 'Prueba Gratis')}
+            </Button>
+          </div>
+
+          {/* Móvil (igual que antes) */}
+          <div className="flex items-center md:hidden space-x-2">
+            <LanguageSwitcher />
+            <button
+              onClick={toggleTheme}
+              className={themeButtonClasses()}
+              aria-label={t('themeToggle', 'Toggle theme')}
+            >
+              {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
+            </button>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-md text-gray-700 dark:text-gray-200"
+              className="inline-flex items-center justify-center h-9 w-9 rounded-md p-0 text-slate-500 dark:text-slate-400 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none border border-slate-300 dark:border-slate-600"
+              aria-label="Toggle menu"
             >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isMenuOpen ? (
+                <X className="block h-5 w-5" aria-hidden="true" />
+              ) : (
+                <Menu className="block h-5 w-5" aria-hidden="true" />
+              )}
             </button>
           </div>
         </div>
-      </div>
 
-      {/* Menú móvil */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="md:hidden bg-white dark:bg-gray-900 shadow-lg"
-          >
-            <div className="px-2 pt-2 pb-3 space-y-1">
-              {navItemsCenter.map((item) => (
-                <button
-                  key={item.nameKey}
-                  onClick={() => handleNavItemClick(item)}
-                  className={navLinkClasses(item.path, { isMobile: true })}
-                >
-                  {t(item.nameKey)}
-                </button>
-              ))}
-              {navItemsRight.map((item) => (
-                <button
-                  key={item.nameKey}
-                  onClick={() => handleNavItemClick(item)}
-                  className={navLinkClasses(item.path, { isMobile: true, hasIcon: !!item.icon })}
-                >
-                  {item.icon}
-                  {t(item.nameKey)}
-                </button>
-              ))}
-              <LanguageSwitcher />
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="w-full mt-2"
-              >
-                {theme === 'dark' ? <Sun className="h-4 w-4 mr-2" /> : <Moon className="h-4 w-4 mr-2" />}
-                {theme === 'dark' ? t('lightMode', 'Modo Claro') : t('darkMode', 'Modo Oscuro')}
-              </Button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="md:hidden absolute top-16 left-0 w-full bg-white dark:bg-slate-900 border-b border-t border-slate-200 dark:border-slate-700 shadow-lg"
+              style={{ maxHeight: 'calc(100vh - 4rem)', overflowY: 'auto' }}
+            >
+              <nav className="px-4 pb-6 pt-4 sm:px-6">
+                <ul className="space-y-1">
+                  {allMobileNavItems.map((item) => (
+                    <li key={item.nameKey}>
+                      <Button
+                        variant={item.isButton ? "default" : "ghost"}
+                        size="sm"
+                        onClick={() => handleNavItemClick(item, true)}
+                        className={`${item.isButton ? premiumButtonClasses() + ' w-full mt-2 justify-center' : navLinkClasses(item.path, { isMobile: true }) + ' w-full justify-start'}`}
+                      >
+                        {item.icon && <item.icon size={16} className="mr-1.5 text-blue-600 dark:text-blue-400" />}
+                        {t(item.nameKey)}
+                      </Button>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
 
-      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
-    </nav>
+      <AuthModal isOpen={isAuthModalOpen} onOpenChange={setIsAuthModalOpen} />
+    </>
   );
 };
 
