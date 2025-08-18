@@ -16,7 +16,7 @@ const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const { t } = useLanguage();
 
-  // Centro: Crear Texto · Crear Resumen · Planes · Soporte (sin iconos, estilo negro)
+  // Enlaces centrales (texto limpio, tono negro)
   const navItemsCenter = [
     { nameKey: 'navCreateText',    path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
     { nameKey: 'navCreateSummary', path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
@@ -45,8 +45,8 @@ const Navbar = () => {
 
   // Estilos de enlaces del centro (negro, sin iconos)
   const navLinkClasses = (path, { isMobile = false, hasIcon = false, isTitle = false } = {}) => {
-    const sizeTitle = "text-lg md:text-xl font-bold";           // (no se usa)
-    const sizeNormal = "text-base md:text-lg font-medium";      // Enlaces del centro
+    const sizeTitle = "text-lg md:text-xl font-bold";           // no usado
+    const sizeNormal = "text-base md:text-lg font-medium";      // enlaces
 
     let baseClasses = `${isTitle ? sizeTitle : sizeNormal} transition-colors duration-150 ease-in-out flex items-center`;
 
@@ -56,6 +56,7 @@ const Navbar = () => {
       baseClasses += " h-11 md:h-12 px-3 md:px-4 rounded-md";
     }
 
+    // Tono negro (light) / claro (dark)
     if (isActive(path)) {
       return `${baseClasses} text-slate-900 dark:text-slate-100`;
     }
@@ -82,8 +83,8 @@ const Navbar = () => {
       <header className="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           
-          {/* IZQUIERDA: logo + menú alineado a la izquierda */}
-          <div className="flex items-center">
+          {/* IZQUIERDA: logo (movido ~1cm a la izquierda) + menú pegado */}
+          <div className="flex items-center -ml-10"> {/* ~40px hacia la izquierda */}
             <Link
               to="/"
               onClick={(e) => {
@@ -101,7 +102,6 @@ const Navbar = () => {
               />
             </Link>
 
-            {/* Menú central pegado a la izquierda como en Algor */}
             <nav className="hidden md:flex items-center justify-start gap-8 ml-6 md:ml-8">
               {navItemsCenter.map((item) => {
                 const isTitle = item.path === '/';
@@ -113,7 +113,6 @@ const Navbar = () => {
                     onClick={() => handleNavItemClick(item)}
                     className={navLinkClasses(item.path, { isMobile: false, hasIcon: !!item.icon, isTitle })}
                   >
-                    {/* Texto limpio con fallback de traducción */}
                     {item.nameKey === 'navPricing'
                       ? t('navPricing', 'Planes')
                       : item.nameKey === 'navSupport'
