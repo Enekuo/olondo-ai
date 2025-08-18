@@ -16,9 +16,12 @@ const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const { t } = useLanguage();
 
+  // Centro: Crear Texto · Crear Resumen · Planes · Soporte (texto limpio)
   const navItemsCenter = [
-    { nameKey: 'navCreateText', path: '/pricing', isButton: false, icon: PlusCircle, actionType: 'link' },
-    { nameKey: 'navCreateSummary', path: '/pricing', isButton: false, icon: PlusCircle, actionType: 'link' },
+    { nameKey: 'navCreateText',    path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
+    { nameKey: 'navCreateSummary', path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
+    { nameKey: 'navPricing',       path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
+    { nameKey: 'navSupport',       path: '/support',  isButton: false, icon: null, actionType: 'link' },
   ];
 
   const isActive = (path) => location.pathname === path;
