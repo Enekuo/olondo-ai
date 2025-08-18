@@ -64,7 +64,7 @@ const Navbar = () => {
   const allMobileNavItems = [
     { nameKey: 'navCreateText', path: '/free-trial', isButton: false, icon: PlusCircle, actionType: 'link' },
     { nameKey: 'navCreateSummary', path: '/free-trial', isButton: false, icon: PlusCircle, actionType: 'link' },
-    { nameKey: 'navPremiumPlan', path: '/pricing', isButton: true, actionType: 'link', icon: Gem },
+    { nameKey: 'navFreeTrial', path: '/free-trial', isButton: true, actionType: 'link', icon: Gem },
   ];
 
   const handleNavItemClick = (item, isMobile = false) => {
@@ -82,21 +82,21 @@ const Navbar = () => {
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Logo — aumentado proporcionalmente */}
           <Link
-  to="/"
-  onClick={(e) => {
-    if (location.pathname === "/") {
-      e.preventDefault(); // evita recargar
-      window.scrollTo({ top: 0, behavior: "smooth" }); // sube al inicio
-    }
-  }}
-  className="flex items-center space-x-2"
->
-  <img
-    src="/logo-olondo.png"
-    alt="Olondo AI Logo"
-    className="h-28 md:h-36 w-auto"
-  />
-</Link>
+            to="/"
+            onClick={(e) => {
+              if (location.pathname === "/") {
+                e.preventDefault(); // evita recargar
+                window.scrollTo({ top: 0, behavior: "smooth" }); // sube al inicio
+              }
+            }}
+            className="flex items-center space-x-2"
+          >
+            <img
+              src="/logo-olondo.png"
+              alt="Olondo AI Logo"
+              className="h-28 md:h-36 w-auto"
+            />
+          </Link>
 
           {/* Centro — enlaces con colores anteriores y "Inicio" más grande */}
           <nav className="hidden md:flex flex-1 items-center justify-center space-x-0.5 lg:space-x-1">
@@ -122,7 +122,7 @@ const Navbar = () => {
             })}
           </nav>
 
-          {/* Derecha — NO TOCAR */}
+          {/* Derecha — NO TOCAR (solo texto/ruta) */}
           <div className="hidden md:flex items-center space-x-2 lg:space-x-3">
             <LanguageSwitcher />
             <button
@@ -133,11 +133,11 @@ const Navbar = () => {
               {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
             </button>
             <Button
-              onClick={() => navigate('/pricing')}
+              onClick={() => navigate('/free-trial')}
               className={premiumButtonClasses()}
             >
               <Gem size={14} className="mr-1.5" />
-              {t('navPremiumPlan', 'Plan Premium')}
+              {t('navFreeTrial', 'Prueba Gratis')}
             </Button>
           </div>
 
