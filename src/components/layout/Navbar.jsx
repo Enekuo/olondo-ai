@@ -20,7 +20,7 @@ const Navbar = () => {
     { nameKey: 'navCreateText',    path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
     { nameKey: 'navCreateSummary', path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
     { nameKey: 'navPricing',       path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
-    { nameKey: 'navSupport',       path: '/support',  isButton: false, icon: null, actionType: 'link' },
+    { nameKey: 'navSupport',       path: '/soporte',  isButton: false, icon: null, actionType: 'link' },
   ];
 
   const isActive = (path) => location.pathname === path;
