@@ -56,9 +56,8 @@ const SupportPage = () => {
             <p className="text-sm font-semibold tracking-wider text-blue-600 mb-3">
               {t("support_kicker")}
             </p>
-            <h1 className="text-4xl sm:text-5xl font-extrabold leading-tight text-slate-900">
-              {t("support_title")}
-            </h1>
+           
+            
             <p className="mt-4 text-slate-600 text-lg">
               {t("support_subtitle")}
             </p>

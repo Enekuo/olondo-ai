@@ -371,7 +371,6 @@ contact_hero_subtitle: "¿Necesitas ayuda? Escríbenos a través del formulario,
 contact_hero_bubble: "Contáctanos",
 
 support_kicker: "SOPORTE",
-support_title: "Estamos aquí para ayudarte",
 support_subtitle: "Cuéntanos tu duda o problema y te responderemos lo antes posible.",
 support_bubble_text: "¡Ciao! ¿En qué podemos ayudarte?",
 support_form_name_label: "Tu nombre completo",
