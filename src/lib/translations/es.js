@@ -372,7 +372,7 @@ contact_hero_bubble: "Contáctanos",
 
 support_kicker: "SOPORTE",
 support_subtitle: "Cuéntanos tu duda o problema y te responderemos lo antes posible.",
-support_bubble_text: "¡Hola! ¿En qué podemos ayudarte?",
+support_bubble_text: "¡Hola! ¿En qué puedo ayudarte?",
 support_form_name_label: "Tu nombre completo",
 support_form_name_placeholder: "Nombre y apellidos",
 support_form_email_label: "Tu dirección de correo electrónico",
