@@ -16,6 +16,8 @@ import PrivacyPolicyPage from '@/pages/PrivacyPolicyPage';
 import TermsConditionsPage from '@/pages/TermsConditionsPage';
 import SyntheticVoiceUsagePage from '@/pages/SyntheticVoiceUsagePage';
 import CookiesPolicyPage from '@/pages/CookiesPolicyPage';
+import SupportPage from "@/pages/SupportPage"; // ajusta la ruta si usas otra carpeta
+
 
 function App() {
   return (
@@ -37,6 +39,7 @@ function App() {
                 <Route path="/terminos-condiciones" element={<TermsConditionsPage />} />
                 <Route path="/synthetic-voice-use" element={<SyntheticVoiceUsagePage />} />
                 <Route path="/cookies" element={<CookiesPolicyPage />} />
+                <Route path="/soporte" element={<SupportPage />} />
 
               </Routes>
             </main>

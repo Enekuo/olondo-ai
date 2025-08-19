@@ -364,4 +364,20 @@ cookies_title: "Política de Cookies",
   voice_modifications_title: "6. Modificaciones del servicio",
   voice_modifications_text: "Olondo.AI se reserva el derecho de mejorar, modificar o suspender temporal o definitivamente el servicio de voz sintética cuando lo considere necesario, notificándolo a las personas usuarias en caso de cambios relevantes.",
 
+
+  support_kicker: "SOPORTE",
+  support_title: "Estamos aquí para ayudarte",
+  support_subtitle: "Cuéntanos tu duda o problema y te responderemos lo antes posible.",
+  support_bubble_text: "¡Ciao! ¿En qué podemos ayudarte?",
+  support_form_name_label: "Tu nombre completo",
+  support_form_name_placeholder: "Nombre y apellidos",
+  support_form_email_label: "Tu dirección de correo electrónico",
+  support_form_subject_label: "Asunto",
+  support_form_subject_placeholder: "¿Sobre qué necesitas ayuda?",
+  support_form_message_label: "Mensaje",
+  support_form_message_placeholder: "¿Cómo podemos ayudarte?",
+  support_form_submit: "Enviar mensaje",
+  support_form_privacy_hint: "Al enviar aceptas nuestra",
+  support_form_privacy_link: "Política de Privacidad",
+
 }
