@@ -20,7 +20,9 @@ const SupportPage = () => {
     e.preventDefault();
     if (form.honey) return; // bot
     const to = "support@olondo.ai";
-    const subject = encodeURIComponent(`[Olondo.AI] ${form.subject || t("support_form_subject_placeholder")}`);
+    const subject = encodeURIComponent(
+      `[Olondo.AI] ${form.subject || t("support_form_subject_placeholder")}`
+    );
     const body = encodeURIComponent(
       `${t("support_form_name_label")}: ${form.name}\n${t("support_form_email_label")}: ${form.email}\n\n${t("support_form_message_label")}:\n${form.message}`
     );
@@ -42,7 +44,10 @@ const SupportPage = () => {
                     {t("contact_hero_title", "Contáctanos")}
                   </h2>
                   <p className="mt-2 max-w-2xl text-slate-600">
-                    {t("contact_hero_subtitle", "¿Necesitas ayuda? Escríbenos a través del formulario, nuestro equipo está aquí para ayudarte.")}
+                    {t(
+                      "contact_hero_subtitle",
+                      "¿Necesitas ayuda? Escríbenos a través del formulario, nuestro equipo está aquí para ayudarte."
+                    )}
                   </p>
                 </div>
                 <div className="hidden md:flex items-center gap-2">
@@ -63,14 +68,26 @@ const SupportPage = () => {
               {t("support_subtitle")}
             </p>
 
-            {/* Mascota Olondo (solo imagen) */}
-            <div className="mt-10">
+            {/* Mascota + burbuja a la derecha */}
+            <div className="relative mt-10 inline-block">
               <img
                 src="/olondo.mascota.png"   // asegúrate de tenerla en /public
                 alt="Soporte Olondo.AI"
                 className="h-[260px] sm:h-[320px] w-auto select-none pointer-events-none"
                 draggable={false}
               />
+
+              {/* Burbuja (solo desktop/tablet) */}
+              <div className="absolute left-[calc(100%+12px)] top-6 hidden md:block">
+                {/* “pico” de la burbuja */}
+                <div className="absolute -left-2 top-4 h-3 w-3 rotate-45 bg-white border-l border-t border-slate-200 shadow-[0_1px_2px_rgba(15,23,42,0.06)]" />
+                {/* cuerpo de la burbuja */}
+                <div className="rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
+                  <span className="text-slate-700">
+                    {t("support_bubble_text", "¡Hola! ¿En qué podemos ayudarte?")}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
 
