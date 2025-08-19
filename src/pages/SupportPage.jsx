@@ -20,13 +20,9 @@ const SupportPage = () => {
     e.preventDefault();
     if (form.honey) return; // bot
     const to = "support@olondo.ai";
-    const subject = encodeURIComponent(
-      `[Olondo.AI] ${form.subject || t("support_form_subject_placeholder")}`
-    );
+    const subject = encodeURIComponent(`[Olondo.AI] ${form.subject || t("support_form_subject_placeholder")}`);
     const body = encodeURIComponent(
-      `${t("support_form_name_label")}: ${form.name}\n${t(
-        "support_form_email_label"
-      )}: ${form.email}\n\n${t("support_form_message_label")}:\n${form.message}`
+      `${t("support_form_name_label")}: ${form.name}\n${t("support_form_email_label")}: ${form.email}\n\n${t("support_form_message_label")}:\n${form.message}`
     );
     window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
   };
@@ -34,45 +30,51 @@ const SupportPage = () => {
   return (
     <div className="min-h-[70vh] bg-gradient-to-b from-[#F6FAFF] to-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14">
+
         <div className="grid gap-10 md:grid-cols-2 items-start">
-          {/* IZQUIERDA: título + burbuja + mascota */}
+          {/* Left: compact "Contáctanos" + heading + mascot */}
           <div>
+            {/* Contáctanos (compacto, solo en la columna izquierda) */}
+            <section className="mb-8 rounded-2xl border border-slate-200 bg-[#F7F8FC] p-5 sm:p-6">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <h2 className="text-3xl sm:text-4xl font-extrabold leading-tight text-slate-900">
+                    {t("contact_hero_title", "Contáctanos")}
+                  </h2>
+                  <p className="mt-2 max-w-2xl text-slate-600">
+                    {t("contact_hero_subtitle", "¿Necesitas ayuda? Escríbenos a través del formulario, nuestro equipo está aquí para ayudarte.")}
+                  </p>
+                </div>
+                <div className="hidden md:flex items-center gap-2">
+                  <div className="rounded-xl bg-violet-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm">
+                    {t("contact_hero_bubble", "Contáctanos")}
+                  </div>
+                </div>
+              </div>
+            </section>
+
             <p className="text-sm font-semibold tracking-wider text-blue-600 mb-3">
               {t("support_kicker")}
             </p>
-
-            <h1 className="text-4xl sm:text-5xl font-extrabold leading-tight text-slate-900">
-              {t("support_title", "Estamos aquí para ayudarte")}
-            </h1>
-
+            {/* <h1 className="text-4xl sm:text-5xl font-extrabold leading-tight text-slate-900">
+              {t("support_title")}
+            </h1> */}
             <p className="mt-4 text-slate-600 text-lg">
-              {t(
-                "support_subtitle",
-                "Cuéntanos tu duda o problema y te responderemos lo antes posible."
-              )}
+              {t("support_subtitle")}
             </p>
 
-            {/* Mascota + burbuja “Ciao!” como en tu referencia */}
-            <div className="relative mt-10 inline-block">
-              {/* Burbuja */}
-              <div className="absolute -top-6 right-6 rounded-xl bg-indigo-600 px-4 py-2 text-white text-lg font-semibold shadow-sm">
-                Ciao!
-              </div>
-
-              {/* Mascota (asegúrate de tener /public/olondo.mascota.png) */}
+            {/* Mascota Olondo (solo imagen) */}
+            <div className="mt-10">
               <img
-                src="/olondo.mascota.png"
+                src="/olondo.mascota.png"   // asegúrate de tenerla en /public
                 alt="Soporte Olondo.AI"
-                className="h-[280px] sm:h-[320px] w-auto select-none pointer-events-none"
+                className="h-[260px] sm:h-[320px] w-auto select-none pointer-events-none"
                 draggable={false}
               />
-
-              {/* Sombra elíptica bajo la mascota */}
-              <div className="mx-auto mt-3 h-2 w-40 rounded-full bg-slate-300/40" />
             </div>
           </div>
 
-          {/* DERECHA: tarjeta con formulario (sin cambios) */}
+          {/* Right: form card (sin cambios) */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
