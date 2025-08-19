@@ -30,6 +30,29 @@ const SupportPage = () => {
   return (
     <div className="min-h-[70vh] bg-gradient-to-b from-[#F6FAFF] to-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14">
+
+        {/* HERO: Contáctanos (nuevo bloque) */}
+        <section className="mb-10 rounded-2xl border border-slate-200 bg-[#F7F8FC] px-6 sm:px-10 py-10 sm:py-14">
+          <div className="flex items-center justify-between gap-6">
+            <div>
+              <h1 className="text-5xl sm:text-6xl font-extrabold leading-[1.05] text-slate-900">
+                {t("contact_hero_title", "Contáctanos")}
+              </h1>
+              <p className="mt-4 max-w-3xl text-lg sm:text-xl text-slate-600">
+                {t("contact_hero_subtitle", "¿Necesitas ayuda? Escríbenos a través del formulario, nuestro equipo está aquí para ayudarte.")}
+              </p>
+            </div>
+
+            {/* Globo + placeholder de ilustración (oculto en móvil) */}
+            <div className="hidden md:flex items-center gap-3">
+              <div className="rounded-xl bg-violet-600 px-4 py-2 text-sm font-semibold text-white shadow-sm">
+                {t("contact_hero_bubble", "Contáctanos")}
+              </div>
+              <div className="h-14 w-14 rounded-2xl bg-orange-500/10 ring-1 ring-orange-200" />
+            </div>
+          </div>
+        </section>
+
         <div className="grid gap-10 md:grid-cols-2 items-start">
           {/* Left: heading + mascot */}
           <div>
