@@ -107,24 +107,50 @@ export const es = {
   toastFeatureNotImplementedTitle: '🚧 Funcionalidad no implementada',
   toastFeatureNotImplementedDescription: 'Esta función aún no está implementada, ¡pero no te preocupes! Puedes solicitarla en tu próximo mensaje. 🚀',
   toastPageNotImplementedDescription: 'La página para "{linkName}" aún no está implementada. ¡Puedes solicitarla en tu próximo mensaje! 🚀',
-  pricingPageTitle: 'Elige Tu Plan Perfecto',
-  pricingPageSubtitle: 'Desbloquea todo el potencial de Olondo AI con el plan que mejor se adapte a ti.',
-  pricingFreeTitle: 'Prueba Gratis',
-  pricingFreePrice: 'Gratis',
-  pricingFreeFeature1: 'Crear texto (hasta 4.000 caracteres)',
-  pricingFreeFeature2: 'Crear resumen (hasta 2.000 caracteres)',
-  pricingFreeFeature3: 'Voz sintética',
-  pricingFreeButton: 'Usar ahora',
-  pricingFreeDisclaimer: 'No requiere registro',
-  pricingPremiumTitle: 'Plan Premium',
-  pricingPremiumPrice: '5,99 €',
-  pricingPremiumPriceSuffix: '/ mes',
-  pricingPremiumFeature1: 'Crear texto ilimitado',
-  pricingPremiumFeature2: 'Crear resumen ilimitado',
-  pricingPremiumFeature3: 'Envío de prompts para que la IA busque información',
-  pricingPremiumFeature4: 'Voz sintética',
-  pricingPremiumFeature5: 'Voz personalizada del usuario (grabada)',
-  pricingPremiumButton: 'Suscribirse al Plan Premium',
+  
+  // Títulos y subtítulos
+pricingPageTitle: "Elige Tu Plan Perfecto",
+pricingPageSubtitle: "Desbloquea todo el potencial de Olondo AI con el plan que mejor se adapte a ti.",
+pricingPerMonth: " / mes",
+
+// Nombres y precios
+pricingFreeTitle: "Prueba Gratis",
+pricingFreePrice: "Gratis",
+pricingBasicTitle: "Plan Básico",
+pricingBasicPrice: "4,99 €",
+pricingPremiumTitle: "Plan Premium",
+pricingPremiumPrice: "9,99 €",
+
+// Botones
+pricingFreeButton: "Usar ahora",
+pricingBasicButton: "Empezar Plan Básico",
+pricingPremiumButton: "Suscribirse al Premium",
+
+// Features acordadas
+// Gratis
+pricingFeat_ai_free: "Generaciones de IA sin registro (con límites funcionales)",
+pricingFeat_library_free: "Sin biblioteca (no guarda documentos)",
+pricingFeat_export_free: "Exportación solo en TXT",
+pricingFeat_audio_free: "Audio (TTS) hasta 10 min/día",
+pricingFeat_file_free: "Tamaño de archivo hasta 5 MB",
+pricingFeat_speed_free: "Velocidad de procesamiento normal",
+
+// Básico
+pricingFeat_ai_basic: "Hasta 300 generaciones al mes",
+pricingFeat_library_basic: "Biblioteca con hasta 20 documentos guardados",
+pricingFeat_export_basic: "Exportación en TXT y MP3 (calidad estándar)",
+pricingFeat_audio_basic: "Audio (TTS) 200 min/mes",
+pricingFeat_file_basic: "Tamaño de archivo hasta 20 MB",
+pricingFeat_speed_basic: "Velocidad de procesamiento normal",
+
+// Premium
+pricingFeat_ai_premium: "Uso alto con política de uso justo",
+pricingFeat_library_premium: "Biblioteca ilimitada + favoritos + buscador",
+pricingFeat_export_premium: "Exportación en TXT y MP3 (alta calidad)",
+pricingFeat_audio_premium: "Audio (TTS) 1.000 min/mes",
+pricingFeat_file_premium: "Tamaño de archivo hasta 100 MB",
+pricingFeat_speed_premium: "Procesamiento prioritario",
+  
   checkoutTitle: 'Suscripción al Plan Premium',
   checkoutRenewalInfo: 'Renovación automática mensual. Cancela cuando quieras.',
   checkoutIncludesTitle: 'Lo que incluye:',
