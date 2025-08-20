@@ -50,13 +50,16 @@ const PricingPage = () => {
       id: 'free',
       titleKey: 'pricingFreeTitle',
       priceKey: 'pricingFreePrice',
+      priceSuffixKey: null,
+      perDayKey: null,
       featuresKeys: [
-        'pricingFeat_ai_free',        // Uso ilimitado con límites funcionales
-        'pricingFeat_library_free',   // Sin biblioteca
-        'pricingFeat_export_free',    // Solo TXT
-        'pricingFeat_audio_free',     // 10 min/día
-        'pricingFeat_file_free',      // 5 MB
-        'pricingFeat_speed_free',     // Velocidad normal
+        // Reordenado: Biblioteca, Exportación, Audio, IA, Archivos, Velocidad
+        'pricingFeat_library_free',
+        'pricingFeat_export_free',
+        'pricingFeat_audio_free',
+        'pricingFeat_ai_free',
+        'pricingFeat_file_free',
+        'pricingFeat_speed_free',
       ],
       buttonTextKey: 'pricingFreeButton',
       buttonAction: () => navigate('/free-trial'),
@@ -64,20 +67,24 @@ const PricingPage = () => {
       borderColor: 'border-green-500',
       buttonGradient: 'bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600',
       glow: false,
+      badgeKey: null,
+      priceColorClass: 'text-green-500',
+      checkColorClass: 'text-green-500',
     },
-    // BÁSICO
+    // BÁSICO (Más popular)
     {
       id: 'basic',
       titleKey: 'pricingBasicTitle',
       priceKey: 'pricingBasicPrice',
       priceSuffixKey: 'pricingPerMonth',
+      perDayKey: 'pricingBasicPerDay', // ≈ 0,17 €/día
       featuresKeys: [
-        'pricingFeat_ai_basic',       // 300/mes
-        'pricingFeat_library_basic',  // Biblioteca hasta 20 docs
-        'pricingFeat_export_basic',   // TXT + MP3 estándar
-        'pricingFeat_audio_basic',    // 200 min/mes
-        'pricingFeat_file_basic',     // 20 MB
-        'pricingFeat_speed_basic',    // Velocidad normal
+        'pricingFeat_library_basic',
+        'pricingFeat_export_basic',
+        'pricingFeat_audio_basic',
+        'pricingFeat_ai_basic',
+        'pricingFeat_file_basic',
+        'pricingFeat_speed_basic',
       ],
       buttonTextKey: 'pricingBasicButton',
       buttonAction: () => openCheckout('basic'),
@@ -85,6 +92,9 @@ const PricingPage = () => {
       borderColor: 'border-blue-500',
       buttonGradient: 'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700',
       glow: false,
+      badgeKey: 'pricingBadgeMostPopular',
+      priceColorClass: 'text-blue-600',
+      checkColorClass: 'text-blue-600',
     },
     // PREMIUM
     {
@@ -92,13 +102,14 @@ const PricingPage = () => {
       titleKey: 'pricingPremiumTitle',
       priceKey: 'pricingPremiumPrice',
       priceSuffixKey: 'pricingPerMonth',
+      perDayKey: 'pricingPremiumPerDay', // ≈ 0,33 €/día
       featuresKeys: [
-        'pricingFeat_ai_premium',       // Uso alto (fair use)
-        'pricingFeat_library_premium',  // Biblioteca ilimitada + favoritos + buscador
-        'pricingFeat_export_premium',   // TXT + MP3 HQ
-        'pricingFeat_audio_premium',    // 1000 min/mes
-        'pricingFeat_file_premium',     // 100 MB
-        'pricingFeat_speed_premium',    // Prioritaria
+        'pricingFeat_library_premium',
+        'pricingFeat_export_premium',
+        'pricingFeat_audio_premium',
+        'pricingFeat_ai_premium',
+        'pricingFeat_file_premium',
+        'pricingFeat_speed_premium',
       ],
       buttonTextKey: 'pricingPremiumButton',
       buttonAction: () => openCheckout('premium'),
@@ -106,6 +117,9 @@ const PricingPage = () => {
       borderColor: 'border-primary',
       buttonGradient: 'bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90',
       glow: true,
+      badgeKey: null,
+      priceColorClass: 'text-primary',
+      checkColorClass: 'text-primary',
     }
   ];
 
@@ -148,31 +162,44 @@ const PricingPage = () => {
               variants={cardVariants}
               initial="initial"
               animate="in"
-              className={`relative bg-white dark:bg-slate-800/80 backdrop-blur-md p-8 rounded-xl shadow-xl border-2 ${plan.borderColor} flex flex-col ${plan.glow ? 'shadow-primary/30' : ''}`}
+              className={`group relative bg-white dark:bg-slate-800/80 backdrop-blur-md p-8 rounded-xl shadow-xl border-2 ${plan.borderColor} flex flex-col transition-transform duration-300 hover:shadow-2xl hover:-translate-y-1 hover:scale-[1.01] ${plan.glow ? 'shadow-primary/30' : ''}`}
             >
               {plan.glow && (
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-blue-600 rounded-xl blur opacity-50 transition duration-1000 animate-tilt"></div>
+                <div className="pointer-events-none absolute -inset-0.5 bg-gradient-to-r from-primary to-blue-600 rounded-xl blur opacity-40 group-hover:opacity-60 transition duration-300"></div>
               )}
+
+              {/* Badge "Más popular" */}
+              {plan.badgeKey && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md">
+                  {t(plan.badgeKey)}
+                </div>
+              )}
+
               <div className="relative z-10 flex flex-col h-full">
                 <div className="flex justify-center mb-3">{plan.icon}</div>
+
                 <h2 className="text-3xl font-bold text-slate-800 dark:text-white text-center mb-2">
                   {t(plan.titleKey)}
                 </h2>
-                <p className="text-4xl font-extrabold text-center mb-6">
-                  <span className={`${plan.id === 'premium' ? 'text-primary' : plan.id === 'basic' ? 'text-blue-600' : 'text-green-500'}`}>
-                    {t(plan.priceKey)}
-                  </span>
-                  {plan.priceSuffixKey && (
-                    <span className="text-base font-normal text-slate-500 dark:text-slate-400">
-                      {t(plan.priceSuffixKey)}
-                    </span>
-                  )}
-                </p>
 
-                <ul className="space-y-3 mb-8 flex-grow">
+                <div className="text-center mb-6">
+                  <p className="text-4xl font-extrabold">
+                    <span className={plan.priceColorClass}>{t(plan.priceKey)}</span>
+                    {plan.priceSuffixKey && (
+                      <span className="text-base font-normal text-slate-500 dark:text-slate-400"> {t(plan.priceSuffixKey)}</span>
+                    )}
+                  </p>
+                  {plan.perDayKey && (
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                      {t(plan.perDayKey)}
+                    </p>
+                  )}
+                </div>
+
+                <ul className="space-y-4 mb-8 flex-grow">
                   {plan.featuresKeys.map((featureKey) => (
                     <li key={featureKey} className="flex items-start">
-                      <CheckCircle className={`h-5 w-5 mr-2 mt-0.5 flex-shrink-0 ${plan.id === 'premium' ? 'text-primary' : plan.id === 'basic' ? 'text-blue-600' : 'text-green-500'}`} />
+                      <CheckCircle className={`h-5 w-5 mr-2 mt-0.5 flex-shrink-0 ${plan.checkColorClass}`} />
                       <span className="text-slate-600 dark:text-slate-300 text-sm">{t(featureKey)}</span>
                     </li>
                   ))}
