@@ -149,7 +149,7 @@ const PricingPage = () => {
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-3">
             {t('pricingPageTitle', 'Elige Tu Plan Perfecto')}
           </h1>
-          <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+          <p className="text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
             {t('pricingPageSubtitle', 'Desbloquea todo el potencial de Olondo AI con el plan que mejor se adapte a ti.')}
           </p>
         </motion.div>
