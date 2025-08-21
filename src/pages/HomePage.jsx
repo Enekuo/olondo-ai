@@ -39,16 +39,16 @@ const HomePage = () => {
       <section className="relative overflow-hidden w-full min-h-screen flex items-center md:-mt-20 lg:-mt-24 py-20 md:py-32 lg:py-40 bg-gradient-to-br from-slate-50 via-sky-50 to-blue-100 dark:from-slate-900 dark:via-slate-800 dark:to-sky-900">  
         <div className="container mx-auto px-4 md:px-6">
 
-          {/* === BG: LÍNEAS + CÍRCULOS (forzado con inline style) === */}
+          {/* === BG: LÍNEAS + CÍRCULOS === */}
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
-            {/* Líneas diagonales visibles */}
+            {/* Líneas diagonales visibles (↘ desde arriba-derecha a abajo-izquierda = 135deg) */}
             <div
               className="absolute inset-0"
               style={{
-                opacity: 0.28,                 // ajusta 0.2–0.4 según prefieras
+                opacity: 0.35, // +visibles (antes 0.28). Ajustable 0.25–0.45
                 backgroundImage:
-                  'linear-gradient(45deg, rgba(59,130,246,0.18) 1px, transparent 1px)',
-                backgroundSize: '26px 26px'
+                  'linear-gradient(135deg, rgba(59,130,246,0.22) 1px, transparent 1px)',
+                backgroundSize: '22px 22px' // trama un poco más densa (antes 26px)
               }}
             />
             {/* Círculos difuminados blancos (muy suaves) */}
@@ -86,7 +86,10 @@ const HomePage = () => {
                 <Button
                   size="lg"
                   onClick={() => navigate('/free-trial')}
-                  className="text-lg font-semibold bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-lg px-12 py-7"
+                  className="text-lg font-semibold bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-xl px-12 py-7
+                             shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30
+                             ring-2 ring-emerald-400/30 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-400/60
+                             transition-all duration-200 will-change-transform hover:-translate-y-0.5"
                 >
                   <Sparkles size={20} className="mr-2.5" />
                   {t('navFreeTrial', 'Prueba Gratis')}
