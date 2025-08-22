@@ -25,55 +25,27 @@ const Navbar = () => {
 
   const isActive = (path) => location.pathname === path;
 
-  const themeButtonClasses = () => {
-    return "flex items-center justify-center h-9 w-9 rounded-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors duration-150 ease-in-out";
-  };
-
-  const premiumButtonClasses = () => {
-    return "flex items-center justify-center h-9 px-4 rounded-md bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90 text-sm font-medium text-white shadow-md hover:shadow-lg transition-all duration-300";
-  };
-
-  const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
-  };
+  const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
 
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto';
     return () => { document.body.style.overflow = 'auto'; };
   }, [isMenuOpen]);
 
-  const navLinkClasses = (path, { isMobile = false } = {}) => {
-    const base = "transition-colors duration-150 ease-in-out flex items-center";
-    const size = "text-sm md:text-base font-medium";
-    const box  = isMobile ? "block px-3 py-2 rounded-md w-full text-left" : "h-11 md:h-12 px-3 md:px-4 rounded-md";
-
-    if (isActive(path)) {
-      return `${base} ${size} ${box} text-slate-900 dark:text-slate-100`;
-    }
-    return `${base} ${size} ${box} text-slate-900 hover:text-slate-900 dark:text-slate-100 dark:hover:text-slate-100`;
-  };
-
-  const allMobileNavItems = [
-    { nameKey: 'navCreateText', path: '/free-trial', isButton: false, actionType: 'link' },
-    { nameKey: 'navCreateSummary', path: '/free-trial', isButton: false, actionType: 'link' },
-    { nameKey: 'navFreeTrial', path: '/free-trial', isButton: true, actionType: 'link', icon: Gem },
-  ];
-
-  const handleNavItemClick = (item, isMobile = false) => {
-    if (isMobile) setIsMenuOpen(false);
-    if (item.actionType === 'authModal') {
-      setIsAuthModalOpen(true);
-    } else if (item.actionType === 'link') {
-      navigate(item.path);
-    }
-  };
+  const linkBase =
+    "transition-colors duration-150 ease-in-out flex items-center h-11 px-3 rounded-md text-[15px] font-medium";
+  const navLinkClasses = (path) =>
+    isActive(path)
+      ? `${linkBase} text-slate-900 dark:text-slate-100`
+      : `${linkBase} text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-slate-100`;
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
+      {/* Barra blanca minimal como el ejemplo */}
+      <header className="sticky top-0 z-50 w-full border-b border-slate-200/70 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 
-          {/* IZQUIERDA */}
+          {/* IZQUIERDA: logo compacto */}
           <div className="flex items-center">
             <Link
               to="/"
@@ -88,50 +60,44 @@ const Navbar = () => {
               <img
                 src="/logo-olondo.png"
                 alt="Olondo AI Logo"
-                className="h-[100px] md:h-[120px] w-auto shrink-0"
+                className="h-8 w-auto shrink-0"  /* tamaño estilo Makeral */
               />
             </Link>
 
-            {/* NAV LINKS */}
-            <nav className="hidden md:flex items-center justify-start ml-6 md:ml-8">
+            {/* NAV LINKS centrales, estilo texto simple */}
+            <nav className="hidden md:flex items-center justify-start ml-6">
               {navItemsCenter.map((item, index) => {
                 const label =
                   item.nameKey === 'navPricing' ? t('navPricing', 'Planes')
                   : item.nameKey === 'navSupport' ? t('navSupport', 'Soporte')
                   : t(item.nameKey);
 
-                const mr =
-                  index === 0 ? 10 : (index < navItemsCenter.length - 1 ? 4 : 0);
-
                 return (
-                  <Button
+                  <button
                     key={item.nameKey}
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleNavItemClick(item)}
-                    className={navLinkClasses(item.path, { isMobile: false })}
-                    style={{ marginRight: `${mr}px` }}
+                    onClick={() => navigate(item.path)}
+                    className={`${navLinkClasses(item.path)} mr-1.5`}
                   >
                     {label}
-                  </Button>
+                  </button>
                 );
               })}
             </nav>
           </div>
 
-          {/* DERECHA */}
-          <div className="hidden md:flex items-center space-x-2 lg:space-x-3">
+          {/* DERECHA: idioma, tema y CTA rectangular */}
+          <div className="hidden md:flex items-center space-x-2">
             <LanguageSwitcher />
             <button
               onClick={toggleTheme}
-              className={themeButtonClasses()}
+              className="flex items-center justify-center h-9 w-9 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400"
               aria-label={t('themeToggle', 'Toggle theme')}
             >
               {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
             </button>
             <Button
               onClick={() => navigate('/free-trial')}
-              className={premiumButtonClasses()}
+              className="h-9 px-4 rounded-md text-sm font-medium text-white bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90 shadow-sm"
             >
               <Gem size={14} className="mr-1.5" />
               {t('navFreeTrial', 'Prueba Gratis')}
@@ -143,21 +109,17 @@ const Navbar = () => {
             <LanguageSwitcher />
             <button
               onClick={toggleTheme}
-              className={themeButtonClasses()}
+              className="flex items-center justify-center h-9 w-9 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400"
               aria-label={t('themeToggle', 'Toggle theme')}
             >
               {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
             </button>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="inline-flex items-center justify-center h-9 w-9 rounded-md p-0 text-slate-500 dark:text-slate-400 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none border border-slate-300 dark:border-slate-600"
+              className="inline-flex items-center justify-center h-9 w-9 rounded-md text-slate-500 dark:text-slate-400 border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800"
               aria-label="Toggle menu"
             >
-              {isMenuOpen ? (
-                <X className="block h-5 w-5" aria-hidden="true" />
-              ) : (
-                <Menu className="block h-5 w-5" aria-hidden="true" />
-              )}
+              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>
@@ -169,23 +131,35 @@ const Navbar = () => {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="md:hidden absolute top-16 left-0 w-full bg-white dark:bg-slate-900 border-b border-t border-slate-200 dark:border-slate-700 shadow-lg"
+              className="md:hidden absolute top-16 left-0 w-full bg-white dark:bg-slate-900 border-b border-t border-slate-200 dark:border-slate-800 shadow-lg"
               style={{ maxHeight: 'calc(100vh - 4rem)', overflowY: 'auto' }}
             >
               <nav className="px-4 pb-6 pt-4 sm:px-6">
                 <ul className="space-y-1">
-                  {allMobileNavItems.map((item) => (
+                  {[
+                    { nameKey: 'navCreateText', path: '/free-trial' },
+                    { nameKey: 'navCreateSummary', path: '/free-trial' },
+                    { nameKey: 'navPricing', path: '/pricing' },
+                    { nameKey: 'navSupport', path: '/soporte' },
+                  ].map((item) => (
                     <li key={item.nameKey}>
-                      <Button
-                        variant={item.isButton ? "default" : "ghost"}
-                        size="sm"
-                        onClick={() => handleNavItemClick(item, true)}
-                        className={`${item.isButton ? premiumButtonClasses() + ' w-full mt-2 justify-center' : navLinkClasses(item.path, { isMobile: true }) + ' w-full justify-start'}`}
+                      <button
+                        onClick={() => { setIsMenuOpen(false); navigate(item.path); }}
+                        className="w-full text-left px-3 py-2 rounded-md text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-slate-100"
                       >
-                        {t(item.nameKey)}
-                      </Button>
+                        {t(item.nameKey, item.nameKey)}
+                      </button>
                     </li>
                   ))}
+                  <li className="pt-2">
+                    <Button
+                      onClick={() => { setIsMenuOpen(false); navigate('/free-trial'); }}
+                      className="w-full h-9 px-4 rounded-md text-sm font-medium text-white bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90"
+                    >
+                      <Gem size={14} className="mr-1.5" />
+                      {t('navFreeTrial', 'Prueba Gratis')}
+                    </Button>
+                  </li>
                 </ul>
               </nav>
             </motion.div>
