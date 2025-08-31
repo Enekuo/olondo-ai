@@ -60,7 +60,7 @@ const Navbar = () => {
               <img
                 src="/logo-olondo.png"
                 alt="Olondo AI Logo"
-                className="h-24 w-auto shrink-0" /* tamaño estilo Makeral */
+                className="h-26 w-auto shrink-0" /* tamaño estilo Makeral */
               />
             </Link>
 
