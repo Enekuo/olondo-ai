@@ -33,15 +33,6 @@ const OlondoCTASection = () => {
           >
             <Link to="/free-trial">🚀 {t('navFreeTrial', 'Probar Gratis')}</Link>
           </Button>
-
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
-            className="border-2 border-blue-500 text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:border-sky-400 dark:text-sky-300 dark:hover:text-sky-200 dark:hover:bg-sky-800/20 font-semibold text-xl px-10 py-5 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300"
-          >
-            <Link to="/pricing">✨ {t('ctaSeePlans', 'Ver Planes')}</Link>
-          </Button>
         </div>
       </div>
     </section>
