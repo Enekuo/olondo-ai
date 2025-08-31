@@ -17,8 +17,8 @@ const Navbar = () => {
   const { t } = useLanguage();
 
   const navItemsCenter = [
-    { nameKey: 'navCreateText',    path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
-    { nameKey: 'navCreateSummary', path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
+    { nameKey: 'navCreateText',    path: '/create-text',  isButton: false, icon: null, actionType: 'link' },
+    { nameKey: 'navCreateSummary', path: '/create-summary',  isButton: false, icon: null, actionType: 'link' },
     { nameKey: 'navPricing',       path: '/pricing',  isButton: false, icon: null, actionType: 'link' },
     { nameKey: 'navSupport',       path: '/soporte',  isButton: false, icon: null, actionType: 'link' },
   ];
