@@ -29,7 +29,7 @@ const OlondoCTASection = () => {
           <Button
             asChild
             size="lg"
-            className="bg-green-500 hover:bg-green-600 text-white font-semibold text-xl px-10 py-5 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300"
+            className="bg-green-500 hover:bg-green-600 text-white font-semibold text-2xl px-14 py-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300"
           >
             <Link to="/free-trial">🚀 {t('navFreeTrial', 'Probar Gratis')}</Link>
           </Button>
