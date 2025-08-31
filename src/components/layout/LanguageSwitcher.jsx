@@ -10,12 +10,14 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const languages = [
-  { code: 'es', fullName: 'Español', shortName: 'ES', flagUrl: 'https://storage.googleapis.com/hostinger-horizons-assets-prod/0938f0a9-b7a5-4869-ab6b-3b773ccf2511/8b94ad513cbdc384ffdf7c82cb40748d.png' },
-  { code: 'en', fullName: 'English', shortName: 'EN', flagUrl: 'https://storage.googleapis.com/hostinger-horizons-assets-prod/0938f0a9-b7a5-4869-ab6b-3b773ccf2511/01bda96f5248bb09b994d8a3e06cf818.png' },
-  { code: 'it', fullName: 'Italiano', shortName: 'IT', flagUrl: 'https://storage.googleapis.com/hostinger-horizons-assets-prod/0938f0a9-b7a5-4869-ab6b-3b773ccf2511/0c11e246e9ce34c66c78ed7845e5b33e.png' },
-  { code: 'fr', fullName: 'Français', shortName: 'FR', flagUrl: 'https://storage.googleapis.com/hostinger-horizons-assets-prod/0938f0a9-b7a5-4869-ab6b-3b773ccf2511/b8a957d5835f0cd72dbf8178c3d8e4a6.png' },
-  { code: 'pt', fullName: 'Português', shortName: 'PT', flagUrl: 'https://storage.googleapis.com/hostinger-horizons-assets-prod/0938f0a9-b7a5-4869-ab6b-3b773ccf2511/8fa00336c326f28ea6f14088076a6f95.png' },
-  { code: 'de', fullName: 'Deutsch', shortName: 'DE', flagUrl: 'https://storage.googleapis.com/hostinger-horizons-assets-prod/0938f0a9-b7a5-4869-ab6b-3b773ccf2511/af49a07fdcbce77ad78dfd2f201a38ed.png' },
+  // Usamos un CDN estable de banderas (lipis/flag-icons)
+  { code: 'es', fullName: 'Español',  shortName: 'ES', flagUrl: 'https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/es.svg' },
+  // Para inglés se suele mostrar la bandera de Reino Unido (gb). Si prefieres USA, cambia a "us.svg".
+  { code: 'en', fullName: 'English',  shortName: 'EN', flagUrl: 'https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/gb.svg' },
+  { code: 'it', fullName: 'Italiano', shortName: 'IT', flagUrl: 'https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/it.svg' },
+  { code: 'fr', fullName: 'Français', shortName: 'FR', flagUrl: 'https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/fr.svg' },
+  { code: 'pt', fullName: 'Português', shortName: 'PT', flagUrl: 'https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/pt.svg' },
+  { code: 'de', fullName: 'Deutsch',  shortName: 'DE', flagUrl: 'https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/de.svg' },
 ];
 
 const LanguageSwitcher = () => {
@@ -33,7 +35,9 @@ const LanguageSwitcher = () => {
           <img 
             src={currentLanguage.flagUrl} 
             alt={currentLanguage.fullName} 
-            className="h-[18px] w-auto max-w-[28px] object-contain rounded-sm" 
+            className="h-[18px] w-auto max-w-[28px] object-contain rounded-sm"
+            loading="lazy"
+            onError={(e) => { e.currentTarget.style.display = 'none'; }}
           />
           <span className="sr-only">{currentLanguage.fullName}</span>
         </Button>
@@ -51,7 +55,9 @@ const LanguageSwitcher = () => {
                     <img 
                       src={lang.flagUrl} 
                       alt={lang.fullName} 
-                      className="max-h-[20px] max-w-full object-contain rounded-sm" 
+                      className="max-h-[20px] max-w-full object-contain rounded-sm"
+                      loading="lazy"
+                      onError={(e) => { e.currentTarget.style.display = 'none'; }}
                     />
                   </div>
                   {lang.shortName}
