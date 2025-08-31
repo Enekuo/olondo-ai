@@ -28,7 +28,7 @@ const Navbar = () => {
   const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
 
   useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto';
+    document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto'; 
     return () => { document.body.style.overflow = 'auto'; };
   }, [isMenuOpen]);
 
