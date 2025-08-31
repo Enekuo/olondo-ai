@@ -43,7 +43,8 @@ const Navbar = () => {
     <>
       {/* Barra blanca minimal como el ejemplo */}
       <header className="sticky top-0 z-50 w-full border-b border-slate-200/70 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        {/* Altura mínima justa para alojar un logo h-28 (112px) */}
+        <div className="mx-auto flex min-h-[112px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 
           {/* IZQUIERDA: logo compacto */}
           <div className="flex items-center">
@@ -60,13 +61,13 @@ const Navbar = () => {
               <img
                 src="/logo-olondo.png"
                 alt="Olondo AI Logo"
-                className="h-25 w-auto shrink-0" /* tamaño estilo Makeral */
+                className="h-28 w-auto shrink-0"
               />
             </Link>
 
             {/* NAV LINKS centrales, estilo texto simple */}
             <nav className="hidden md:flex items-center justify-start ml-6">
-              {navItemsCenter.map((item, index) => {
+              {navItemsCenter.map((item) => {
                 const label =
                   item.nameKey === 'navPricing' ? t('navPricing', 'Planes')
                   : item.nameKey === 'navSupport' ? t('navSupport', 'Soporte')
@@ -131,7 +132,8 @@ const Navbar = () => {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="md:hidden absolute top-16 left-0 w-full bg-white dark:bg-slate-900 border-b border-t border-slate-200 dark:border-slate-800 shadow-lg"
+              /* Coloca el menú justo debajo del header, aunque cambie de altura */
+              className="md:hidden absolute inset-x-0 top-full w-full bg-white dark:bg-slate-900 border-b border-t border-slate-200 dark:border-slate-800 shadow-lg"
               style={{ maxHeight: 'calc(100vh - 4rem)', overflowY: 'auto' }}
             >
               <nav className="px-4 pb-6 pt-4 sm:px-6">
