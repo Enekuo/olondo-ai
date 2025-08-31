@@ -417,4 +417,44 @@ support_form_submit: "Enviar mensaje",
 support_form_privacy_hint: "Al enviar aceptas nuestra",
 support_form_privacy_link: "Política de Privacidad",
 
+
+// Create Text
+create_text_badge: "CREAR TEXTO",
+create_text_title: "Crea textos listos para escuchar en voz alta",
+create_text_subtitle: "Introduce una idea o pega contenido. Olondo.AI lo transforma en un texto claro y luego lo convierte en audio para que lo escuches donde quieras.",
+create_text_how_title: "Cómo funciona",
+create_text_step1: "Introduce tu idea base o sube/pega contenido (PDF, enlace o texto).",
+create_text_step2: "La IA genera un texto claro, estructurado y listo para usar.",
+create_text_step3: "Elige voz y velocidad para escucharlo como un podcast.",
+create_text_step4: "Guárdalo en tu biblioteca y recupéralo cuando quieras.",
+
+create_text_example_title: "Texto (ejemplo)",
+create_text_example_bullet1: "Introducción breve al tema.",
+create_text_example_bullet2: "Desarrollo con ideas clave y ejemplos.",
+create_text_example_bullet3: "Cierre con conclusión accionable.",
+
+// Create Summary
+create_summary_badge: "CREAR RESUMEN",
+create_summary_title: "Convierte textos largos en resúmenes en voz",
+create_summary_subtitle: "Sube un PDF o pega cualquier texto. Te damos un resumen claro en pocos segundos y lo escuchas en voz.",
+create_summary_how_title: "Cómo funciona",
+create_summary_step1: "Pega el texto o sube el documento (PDF, enlace o texto).",
+create_summary_step2: "La IA identifica ideas clave y estructura el contenido.",
+create_summary_step3: "Genera un resumen claro en 3–5 puntos.",
+create_summary_step4: "Escúchalo con voz y guarda tu resumen en la biblioteca.",
+
+create_summary_example_title: "Resumen (ejemplo)",
+create_summary_example_bullet1: "Primero creamos tu resumen en 3 ideas.",
+create_summary_example_bullet2: "Puedes leerlo en pantalla.",
+create_summary_example_bullet3: "Y escucharlo con voz natural.",
+
+// Compartidas
+create_example_header: "Escucha cómo suena un ejemplo",
+demo_badge: "Demo 20s",
+create_example_footer: "La demo es orientativa. Las voces y la velocidad pueden variar según tu configuración.",
+
+cta_view_plans: "Ver Planes",
+cta_try_free: "Probar Gratis",
+cta_or_view_plans: "o ver los planes",
+
 }
