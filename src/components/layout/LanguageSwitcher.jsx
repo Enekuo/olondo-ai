@@ -12,8 +12,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 const languages = [
   // Usamos un CDN estable de banderas (lipis/flag-icons)
   { code: 'es', fullName: 'Español',  shortName: 'ES', flagUrl: 'https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/es.svg' },
-  // Para inglés se suele mostrar la bandera de Reino Unido (gb). Si prefieres USA, cambia a "us.svg".
-  { code: 'en', fullName: 'English',  shortName: 'EN', flagUrl: 'https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/gb.svg' },
+  { code: 'en', fullName: 'English',  shortName: 'EN', flagUrl: 'https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/us.svg' },
   { code: 'it', fullName: 'Italiano', shortName: 'IT', flagUrl: 'https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/it.svg' },
   { code: 'fr', fullName: 'Français', shortName: 'FR', flagUrl: 'https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/fr.svg' },
   { code: 'pt', fullName: 'Português', shortName: 'PT', flagUrl: 'https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/pt.svg' },
