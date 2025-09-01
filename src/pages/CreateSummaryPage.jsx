@@ -97,7 +97,7 @@ const CreateSummaryPage = () => {
           <div className="relative flex justify-center md:justify-end order-first md:order-none">
             <div className="relative">
               <img
-                src="/mascots/olondo-mascota2.png"  // ← cambia a .svg si tu archivo es SVG
+                src="olondo-mascota2.png"  // ← cambia a .svg si tu archivo es SVG
                 alt={t("create_summary_badge")}
                 className="w-[320px] sm:w-[360px] md:w-[380px] h-auto select-none"
                 draggable="false"
