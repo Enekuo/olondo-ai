@@ -4,12 +4,14 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Sparkles } from "lucide-react";
 
+// PUNTO AZUL
 const Dot = () => (
   <span className="mt-2 h-2.5 w-2.5 rounded-full bg-sky-500 shrink-0" />
 );
 
 const CreateSummaryPage = () => {
   const { t } = useLanguage();
+  const speechText = t("create_summary_speech");
 
   return (
     <section className="w-full bg-white dark:bg-slate-950">
@@ -22,12 +24,12 @@ const CreateSummaryPage = () => {
           <h1 className="mt-3 text-[40px] sm:text-[52px] md:text-[64px] leading-[1.05] font-extrabold text-slate-900 dark:text-white">
             {t("create_summary_title")}
           </h1>
-        <p className="mt-4 text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-3xl">
+          <p className="mt-4 text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-3xl">
             {t("create_summary_subtitle")}
           </p>
         </div>
 
-        {/* Cuerpo: Explicación + Mascota (invertido respecto a Texto) */}
+        {/* Cuerpo: Explicación + Mascota */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           {/* Explicación (izquierda) */}
           <div>
@@ -36,13 +38,21 @@ const CreateSummaryPage = () => {
             </h3>
 
             <ul className="space-y-5 text-[17px] leading-relaxed text-slate-700 dark:text-slate-300">
-              <li className="flex items-start gap-3"><Dot /><span>{t("create_summary_step1")}</span></li>
-              <li className="flex items-start gap-3"><Dot /><span>{t("create_summary_step2")}</span></li>
-              <li className="flex items-start gap-3"><Dot /><span>{t("create_summary_step3")}</span></li>
-              <li className="flex items-start gap-3"><Dot /><span>{t("create_summary_step4")}</span></li>
+              <li className="flex items-start gap-3">
+                <Dot /><span>{t("create_summary_step1")}</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Dot /><span>{t("create_summary_step2")}</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Dot /><span>{t("create_summary_step3")}</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Dot /><span>{t("create_summary_step4")}</span>
+              </li>
             </ul>
 
-            {/* Ejemplo */}
+            {/* Tarjeta ejemplo */}
             <div className="mt-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40 p-5">
               <div className="flex items-center justify-between">
                 <div className="text-sm text-slate-500 dark:text-slate-400">
@@ -87,17 +97,20 @@ const CreateSummaryPage = () => {
           <div className="relative flex justify-center md:justify-end order-first md:order-none">
             <div className="relative">
               <img
-                src="mascota-olondo2.png"
+                src="/mascots/olondo-mascota2.png"  // ← cambia a .svg si tu archivo es SVG
                 alt={t("create_summary_badge")}
                 className="w-[320px] sm:w-[360px] md:w-[380px] h-auto select-none"
                 draggable="false"
               />
-              {/* Bocadillo */}
-              <div className="hidden sm:block absolute -left-6 top-6">
-                <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2 text-sm text-slate-700 dark:text-slate-200 shadow-sm">
-                  {t("create_summary_speech")}
+
+              {/* Bocadillo solo si existe la traducción */}
+              {(speechText && speechText !== "create_summary_speech") && (
+                <div className="hidden sm:block absolute -left-6 top-6">
+                  <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2 text-sm text-slate-700 dark:text-slate-200 shadow-sm">
+                    {speechText}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
@@ -106,4 +119,4 @@ const CreateSummaryPage = () => {
   );
 };
 
-export default CreateSummaryPage;
+export default CreateSummaryPage

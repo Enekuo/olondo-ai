@@ -442,6 +442,7 @@ create_summary_step1: "Pega el texto o sube el documento (PDF, enlace o texto)."
 create_summary_step2: "La IA identifica ideas clave y estructura el contenido.",
 create_summary_step3: "Genera un resumen claro en 3–5 puntos.",
 create_summary_step4: "Escúchalo con voz y guarda tu resumen en la biblioteca.",
+create_summary_speech: "Te hago un resumen claro en segundos.",
 
 create_summary_example_title: "Resumen (ejemplo)",
 create_summary_example_bullet1: "Primero creamos tu resumen en 3 ideas.",
