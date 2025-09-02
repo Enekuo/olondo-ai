@@ -15,13 +15,14 @@ const CreateTextPage = () => {
 <section className="w-full bg-white">
   <div className="container mx-auto px-6 md:px-10 lg:px-16 py-12 md:py-16">
 
-    {/* TÍTULO AZUL ARRIBA (mantenido) */}
+    {/* TÍTULO AZUL ARRIBA */}
     <div className="mb-8 md:mb-10">
       <p className="text-sm font-semibold tracking-wide text-sky-700 mb-3">
         {t('create_text_breadcrumb')}
       </p>
-      <h1 className="text-sky-700 font-extrabold leading-tight text-[40px] sm:text-[52px] md:text-[64px]">
-        {t('create_text_title')}
+      <h1 className="text-sky-700 font-extrabold leading-tight
+                     text-[56px] sm:text-[72px] md:text-[88px]">
+        Crear texto
       </h1>
     </div>
 
