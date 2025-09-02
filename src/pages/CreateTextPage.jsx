@@ -1,3 +1,17 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { Button } from "@/components/ui/button";
+import { Sparkles } from "lucide-react";
+
+const Dot = () => (
+  <span className="mt-2 h-2.5 w-2.5 rounded-full bg-sky-500 shrink-0" />
+);
+
+const CreateTextPage = () => {
+  const { t } = useLanguage();
+
+  return (
 <section className="w-full bg-white">
   <div className="container mx-auto px-6 md:px-10 lg:px-16 py-12 md:py-16">
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
@@ -143,3 +157,7 @@
     </div>
   </div>
 </section>
+);
+};
+
+export default CreateTextPage;
