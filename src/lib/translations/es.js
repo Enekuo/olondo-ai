@@ -419,20 +419,75 @@ support_form_privacy_link: "Política de Privacidad",
 
 
 // Create Text
-create_text_badge: "CREAR TEXTO",
-create_text_title: "Crea textos listos para escuchar en voz alta",
-create_text_subtitle: "Introduce una idea o pega contenido. Olondo.AI lo transforma en un texto claro y luego lo convierte en audio para que lo escuches donde quieras.",
-create_text_how_title: "Cómo funciona",
-create_text_step1: "Introduce tu idea base o sube/pega contenido (PDF, enlace o texto).",
-create_text_step2: "La IA genera un texto claro, estructurado y listo para usar.",
-create_text_step3: "Elige voz y velocidad para escucharlo como un podcast.",
-create_text_step4: "Guárdalo en tu biblioteca y recupéralo cuando quieras.",
+ct_mascot_alt: "Mascota Olondo.AI",
 
-create_text_example_title: "Texto (ejemplo)",
-create_text_example_bullet1: "Introducción breve al tema.",
-create_text_example_bullet2: "Desarrollo con ideas clave y ejemplos.",
-create_text_example_bullet3: "Cierre con conclusión accionable.",
+ct_long_intro_1: "La sección “Crear Texto” es uno de los pilares centrales de Olondo.AI. Está diseñada para que cualquier persona pueda transformar ideas, textos copiados, documentos o fragmentos de información en textos completos, bien estructurados y listos para ser escuchados en voz natural tipo podcast.",
+ct_long_intro_2: "Este espacio combina simplicidad y flexibilidad: el usuario puede generar contenido de forma rápida con un solo clic o guiar el proceso mediante un prompt personalizado. Todo dentro de un entorno intuitivo, moderno y enfocado en la experiencia auditiva.",
 
+ct_obj_title: "Objetivo central",
+ct_obj_1: "Introducir información base (texto escrito, documentos, enlaces).",
+ct_obj_2: "Pulsar Generar para obtener un texto nuevo, claro y adaptado automáticamente al tono, idioma, formato y extensión elegidos.",
+ct_obj_3: "Opcionalmente, escribir un prompt específico para tener un control más preciso sobre el resultado.",
+ct_obj_4: "Convertir el texto generado en audio natural, listo para escucharse como un podcast personal.",
+
+ct_flow_title: "Flujo de uso paso a paso",
+
+ct_flow_1_title: "Acceso",
+ct_flow_1_p: "El usuario entra desde la navegación principal o desde los botones destacados de la página de inicio. Al hacer clic en “Crear Texto”, se abre una página dedicada con un editor central limpio y amplio.",
+
+ct_flow_2_title: "Entrada de información",
+ct_flow_2_b1: "Escribir manualmente una idea o párrafo.",
+ct_flow_2_b2: "Copiar y pegar apuntes, artículos o fragmentos de libros.",
+ct_flow_2_b3: "Adjuntar documentos (ej. PDF, DOCX, TXT).",
+ct_flow_2_b4: "Añadir enlaces a fuentes externas.",
+
+ct_flow_3_title: "Prompt opcional",
+ct_flow_3_p: "Debajo del editor, el usuario encuentra un campo de prompt opcional.",
+ct_flow_3_s1: "Si lo deja vacío → la IA usará un prompt interno por defecto que genera un texto estructurado en base a la información aportada, aplicando el tono, la longitud y el formato seleccionados.",
+ct_flow_3_s2: "Si escribe algo → el sistema usará directamente ese prompt, dándole control total sobre la generación.",
+ct_flow_3_examples_label: "Ejemplo:",
+ct_flow_3_ex1: "Prompt vacío → “A partir de este documento, crea un resumen claro de 500 palabras en tono profesional.”",
+ct_flow_3_ex2: "Prompt escrito → “Redacta un guion breve y divertido de estilo YouTube para explicar este tema.”",
+
+ct_flow_4_title: "Personalización",
+ct_flow_4_b1: "Tono del texto: académico, profesional, creativo, casual, divulgativo…",
+ct_flow_4_b2: "Extensión: breve (~200 palabras), estándar (~500), larga (1000+).",
+ct_flow_4_b3: "Idioma de salida: español, inglés, francés, italiano, portugués, alemán, etc.",
+ct_flow_4_b4: "Formato del resultado: ensayo, artículo, guion, narración…",
+
+ct_flow_5_title: "Generación con IA",
+ct_flow_5_p1: "Al pulsar el botón “Generar Texto”, el sistema envía la información a la API de Olondo.AI (basada en ChatGPT).",
+ct_flow_5_b1: "Si no hay prompt → se aplica el modo rápido y automático.",
+ct_flow_5_b2: "Si hay prompt → se aplica el modo guiado por el usuario.",
+ct_flow_5_p2: "En segundos, se muestra un texto estructurado, claro y adaptado a las preferencias elegidas.",
+
+ct_flow_6_title: "Visualización y edición",
+ct_flow_6_p: "El texto aparece en un visor elegante y cómodo para leer.",
+ct_flow_6_b1: "Editar manualmente cualquier parte.",
+ct_flow_6_b2: "Guardarlo en su biblioteca personal.",
+ct_flow_6_b3: "Copiarlo para usarlo en otros proyectos.",
+ct_flow_6_b4: "Regenerarlo para obtener otra versión.",
+
+ct_flow_7_title: "Conversión a voz",
+ct_flow_7_p: "Con un solo clic en “Escuchar”, el texto se convierte en audio con voces naturales tipo podcast.",
+ct_flow_7_b1: "Cambiar voz (masculina, femenina, juvenil, profesional).",
+ct_flow_7_b2: "Ajustar velocidad (lenta, normal, rápida).",
+ct_flow_7_b3: "Descargar el audio en formato MP3 para escucharlo sin conexión.",
+
+ct_mgmt_title: "Gestión y guardado",
+ct_mgmt_b1: "Guardado en la biblioteca personal del usuario.",
+ct_mgmt_b2: "Clasificado en carpetas o con etiquetas (ej. “apuntes”, “ensayo”, “ideas de proyecto”).",
+ct_mgmt_b3: "Compartido mediante un enlace privado (opcional).",
+
+ct_cases_title: "Casos de uso reales",
+ct_cases_b1: "Estudiantes: convierten apuntes o PDFs en un texto comprensible y lo escuchan mientras viajan o entrenan.",
+ct_cases_b2: "Profesionales: transforman notas rápidas en informes listos para enviar.",
+ct_cases_b3: "Creadores de contenido: generan artículos, guiones de vídeo o narraciones de podcast.",
+ct_cases_b4: "Personas con fatiga visual o déficit de atención: delegan la redacción y se centran en escuchar el resultado.",
+
+ct_value_title: "Valor diferencial de Olondo.AI",
+ct_value_p1: "Lo que distingue a la sección “Crear Texto” es que no se limita a la escritura. Cada texto generado se convierte automáticamente en una experiencia sonora, accesible desde cualquier lugar.",
+ct_value_p2: "Esto hace que Olondo.AI no solo sea un creador de textos, sino también un compañero auditivo que transforma la lectura en algo dinámico, práctico y accesible. En lugar de depender únicamente de la pantalla, los usuarios pueden aprender, trabajar o inspirarse escuchando sus textos en formato podcast personal, en el coche, en el gimnasio, caminando o simplemente descansando.",
 // Create Summary
 create_summary_badge: "CREAR RESUMEN",
 create_summary_title: "Convierte textos largos en resúmenes en voz",
