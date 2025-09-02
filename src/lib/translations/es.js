@@ -419,6 +419,8 @@ support_form_privacy_link: "Política de Privacidad",
 
 
 // Create Text
+create_text_breadcrumb: "CREAR TEXTO",
+
 ct_mascot_alt: "Mascota Olondo.AI",
 
 ct_long_intro_1: "La sección “Crear Texto” es uno de los pilares centrales de Olondo.AI. Está diseñada para que cualquier persona pueda transformar ideas, textos copiados, documentos o fragmentos de información en textos completos, bien estructurados y listos para ser escuchados en voz natural tipo podcast.",
