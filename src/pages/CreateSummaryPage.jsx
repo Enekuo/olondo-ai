@@ -27,7 +27,7 @@ const CreateSummaryPage = () => {
             <div className="relative">
               {/* Bocadillo justo encima de la cabeza */}
               {speechText && speechText !== "create_summary_speech" && (
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-md px-4 py-2 rounded-2xl text-sm text-slate-800 dark:text-slate-200 relative">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-md px-4 py-2 rounded-2xl text-sm text-slate-800 dark:text-slate-200 relative">
                   {speechText}
                   {/* Triángulo apuntando hacia abajo */}
                   <div className="absolute left-1/2 top-full -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-white dark:border-b-slate-900"></div>
