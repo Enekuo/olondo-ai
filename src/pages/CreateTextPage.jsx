@@ -15,20 +15,19 @@ const CreateTextPage = () => {
 <section className="w-full bg-white">
   <div className="container mx-auto px-6 md:px-10 lg:px-16 py-12 md:py-16">
 
-    {/* TÍTULO AZUL ARRIBA */}
+    {/* TÍTULO (el azul ahora grande y principal) */}
     <div className="mb-8 md:mb-10">
-      <p className="text-sm font-semibold tracking-wide text-sky-700 mb-3">
+      <h1
+        className="text-sky-700 font-extrabold leading-tight
+                   text-[56px] sm:text-[72px] md:text-[88px]"
+      >
         {t('create_text_breadcrumb')}
-      </p>
-      <h1 className="text-sky-700 font-extrabold leading-tight
-                     text-[56px] sm:text-[72px] md:text-[88px]">
-        Crear texto
       </h1>
     </div>
 
-    {/* INTRO: texto IZQ (con párrafo bajado) + mascota DER */}
+    {/* INTRO: texto IZQ + mascota DER con bocadillo */}
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center mb-12">
-      {/* Intro (primer párrafo un poco más abajo) */}
+      {/* Intro */}
       <div>
         <p className="text-slate-700 text-lg leading-relaxed mt-3 md:mt-5">
           {t('ct_long_intro_1')}
@@ -38,14 +37,25 @@ const CreateTextPage = () => {
         </p>
       </div>
 
-      {/* Mascota a la DERECHA */}
+      {/* Mascota a la DERECHA con bocadillo */}
       <div className="flex justify-center lg:justify-end">
-        <img
-          src="/olondo-mascota2.png"  /* ← cambia la extensión si no es PNG */
-          alt={t('ct_mascot_alt')}
-          className="w-[420px] max-w-full h-auto select-none"
-          draggable="false"
-        />
+        <div className="relative">
+          {/* Bocadillo */}
+          <div className="absolute -top-6 -left-6 bg-white border border-slate-200 shadow-sm rounded-full px-4 py-2">
+            <span className="text-slate-700 text-sm md:text-base font-medium">
+              {t('ct_bubble_text')}
+            </span>
+            {/* “Colita” del bocadillo */}
+            <div className="absolute -bottom-2 left-8 w-3 h-3 bg-white border-l border-t border-slate-200 rotate-45"></div>
+          </div>
+
+          <img
+            src="/olondo-mascota2.png"
+            alt={t('ct_mascot_alt')}
+            className="w-[420px] max-w-full h-auto select-none"
+            draggable="false"
+          />
+        </div>
       </div>
     </div>
 
