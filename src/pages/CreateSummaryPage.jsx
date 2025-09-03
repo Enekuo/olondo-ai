@@ -1,117 +1,140 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Button } from "@/components/ui/button";
-import { Sparkles } from "lucide-react";
-
-// PUNTO AZUL
-const Dot = () => (
-  <span className="mt-2 h-2.5 w-2.5 rounded-full bg-sky-500 shrink-0" />
-);
 
 const CreateSummaryPage = () => {
   const { t } = useLanguage();
-  const speechText = t("create_summary_speech");
 
   return (
-    <section className="w-full bg-white dark:bg-slate-950">
-      <div className="container mx-auto px-6 py-16 max-w-6xl">
-        {/* Encabezado */}
-        <div className="mb-12">
-          <span className="uppercase tracking-wide text-xs font-semibold text-sky-600 dark:text-sky-400">
-            {t("create_summary_badge")}
-          </span>
-          <h1 className="mt-3 text-[40px] sm:text-[52px] md:text-[64px] leading-[1.05] font-extrabold text-slate-900 dark:text-white">
-            {t("create_summary_title")}
-          </h1>
-          <p className="mt-4 text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-3xl">
-            {t("create_summary_subtitle")}
-          </p>
+    <section className="w-full py-16 px-6">
+      <div className="container mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+        {/* Ilustración / Mascota (izquierda en desktop) */}
+        <div className="flex justify-center md:justify-start">
+          {/* Usa la imagen que ya tienes en /public/mascots */}
+          <img
+            src="/mascots/olondo-explain.png"
+            alt={t("create_summary_image_alt")}
+            className="w-full max-w-md h-auto select-none"
+            loading="eager"
+          />
         </div>
 
-        {/* Cuerpo: Explicación + Mascota */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* Explicación (izquierda) */}
-          <div>
-            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
-              {t("create_summary_how_title")}
-            </h3>
+        {/* Contenido (derecha en desktop) */}
+        <div className="space-y-6">
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+            {t("create_summary_title")}
+          </h1>
 
-            <ul className="space-y-5 text-[17px] leading-relaxed text-slate-700 dark:text-slate-300">
-              <li className="flex items-start gap-3">
-                <Dot /><span>{t("create_summary_step1")}</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <Dot /><span>{t("create_summary_step2")}</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <Dot /><span>{t("create_summary_step3")}</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <Dot /><span>{t("create_summary_step4")}</span>
-              </li>
+          <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+            {t("create_summary_intro")}
+          </p>
+
+          {/* Objetivo */}
+          <div className="space-y-3">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+              {t("create_summary_objective_title")}
+            </h2>
+            <ul className="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300">
+              <li>{t("create_summary_objective_point_1")}</li>
+              <li>{t("create_summary_objective_point_2")}</li>
+              <li>{t("create_summary_objective_point_3")}</li>
             </ul>
+          </div>
 
-            {/* Tarjeta ejemplo */}
-            <div className="mt-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40 p-5">
-              <div className="flex items-center justify-between">
-                <div className="text-sm text-slate-500 dark:text-slate-400">
-                  {t("create_example_header")}
-                </div>
-                <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
-                  {t("demo_badge")}
-                </span>
-              </div>
+          {/* Flujo paso a paso */}
+          <div className="space-y-4">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+              {t("create_summary_steps_title")}
+            </h2>
 
-              <div className="mt-4 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-5">
-                <p className="text-slate-900 dark:text-white font-semibold mb-2">
-                  {t("create_summary_example_title")}
-                </p>
-                <ul className="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300">
-                  <li>{t("create_summary_example_bullet1")}</li>
-                  <li>{t("create_summary_example_bullet2")}</li>
-                  <li>{t("create_summary_example_bullet3")}</li>
-                </ul>
-              </div>
-
-              <p className="mt-4 text-xs text-slate-500 dark:text-slate-400">
-                {t("create_example_footer")}
+            <div>
+              <h3 className="font-semibold text-slate-900 dark:text-white">
+                {t("create_summary_steps_access")}
+              </h3>
+              <p className="text-slate-700 dark:text-slate-300">
+                {t("create_summary_steps_access_text")}
               </p>
             </div>
 
-            {/* CTA */}
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Link to="/pricing">
-                <Button className="h-12 px-6 text-base font-semibold rounded-xl">
-                  <Sparkles className="mr-2 h-5 w-5" />
-                  {t("cta_view_plans")}
-                </Button>
-              </Link>
-              <Link to="/pricing" className="text-sky-600 dark:text-sky-400 font-semibold">
-                {t("cta_or_view_plans")}
-              </Link>
+            <div>
+              <h3 className="font-semibold text-slate-900 dark:text-white">
+                {t("create_summary_steps_input_title")}
+              </h3>
+              <ul className="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300">
+                <li>{t("create_summary_steps_input_point_1")}</li>
+                <li>{t("create_summary_steps_input_point_2")}</li>
+                <li>{t("create_summary_steps_input_point_3")}</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-slate-900 dark:text-white">
+                {t("create_summary_steps_generate_title")}
+              </h3>
+              <p className="text-slate-700 dark:text-slate-300">
+                {t("create_summary_steps_generate_text")}
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-slate-900 dark:text-white">
+                {t("create_summary_steps_view_title")}
+              </h3>
+              <ul className="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300">
+                <li>{t("create_summary_steps_view_point_1")}</li>
+                <li>{t("create_summary_steps_view_point_2")}</li>
+                <li>{t("create_summary_steps_view_point_3")}</li>
+              </ul>
             </div>
           </div>
 
-          {/* Mascota (derecha) */}
-          <div className="relative flex justify-center md:justify-end order-first md:order-none">
-            <div className="relative">
-              <img
-                src="olondo-mascota2.png"  // ← cambia a .svg si tu archivo es SVG
-                alt={t("create_summary_badge")}
-                className="w-[320px] sm:w-[360px] md:w-[380px] h-auto select-none"
-                draggable="false"
-              />
+          {/* Audio */}
+          <div className="space-y-3">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+              {t("create_summary_audio_title")}
+            </h2>
+            <p className="text-slate-700 dark:text-slate-300">
+              {t("create_summary_audio_text")}
+            </p>
+            <ul className="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300">
+              <li>{t("create_summary_audio_point_1")}</li>
+              <li>{t("create_summary_audio_point_2")}</li>
+              <li>{t("create_summary_audio_point_3")}</li>
+            </ul>
+          </div>
 
-              {/* Bocadillo solo si existe la traducción */}
-              {(speechText && speechText !== "create_summary_speech") && (
-                <div className="hidden sm:block absolute -left-6 top-6">
-                  <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2 text-sm text-slate-700 dark:text-slate-200 shadow-sm">
-                    {speechText}
-                  </div>
-                </div>
-              )}
-            </div>
+          {/* Gestión */}
+          <div className="space-y-3">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+              {t("create_summary_manage_title")}
+            </h2>
+            <ul className="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300">
+              <li>{t("create_summary_manage_point_1")}</li>
+              <li>{t("create_summary_manage_point_2")}</li>
+              <li>{t("create_summary_manage_point_3")}</li>
+            </ul>
+          </div>
+
+          {/* Ejemplos de uso */}
+          <div className="space-y-3">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+              {t("create_summary_examples_title")}
+            </h2>
+            <ul className="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300">
+              <li>{t("create_summary_examples_point_1")}</li>
+              <li>{t("create_summary_examples_point_2")}</li>
+              <li>{t("create_summary_examples_point_3")}</li>
+              <li>{t("create_summary_examples_point_4")}</li>
+            </ul>
+          </div>
+
+          {/* Diferenciador */}
+          <div className="space-y-2">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+              {t("create_summary_diff_title")}
+            </h2>
+            <p className="text-slate-700 dark:text-slate-300">
+              {t("create_summary_diff_text")}
+            </p>
           </div>
         </div>
       </div>
@@ -119,4 +142,4 @@ const CreateSummaryPage = () => {
   );
 };
 
-export default CreateSummaryPage
+export default CreateSummaryPage;

@@ -492,21 +492,56 @@ ct_cases_b4: "Personas con fatiga visual o déficit de atención: delegan la red
 ct_value_title: "Valor diferencial de Olondo.AI",
 ct_value_p1: "Lo que distingue a la sección “Crear Texto” es que no se limita a la escritura. Cada texto generado se convierte automáticamente en una experiencia sonora, accesible desde cualquier lugar.",
 ct_value_p2: "Esto hace que Olondo.AI no solo sea un creador de textos, sino también un compañero auditivo que transforma la lectura en algo dinámico, práctico y accesible. En lugar de depender únicamente de la pantalla, los usuarios pueden aprender, trabajar o inspirarse escuchando sus textos en formato podcast personal, en el coche, en el gimnasio, caminando o simplemente descansando.",
-// Create Summary
-create_summary_badge: "CREAR RESUMEN",
-create_summary_title: "Convierte textos largos en resúmenes en voz",
-create_summary_subtitle: "Sube un PDF o pega cualquier texto. Te damos un resumen claro en pocos segundos y lo escuchas en voz.",
-create_summary_how_title: "Cómo funciona",
-create_summary_step1: "Pega el texto o sube el documento (PDF, enlace o texto).",
-create_summary_step2: "La IA identifica ideas clave y estructura el contenido.",
-create_summary_step3: "Genera un resumen claro en 3–5 puntos.",
-create_summary_step4: "Escúchalo con voz y guarda tu resumen en la biblioteca.",
-create_summary_speech: "Te hago un resumen claro en segundos.",
 
-create_summary_example_title: "Resumen (ejemplo)",
-create_summary_example_bullet1: "Primero creamos tu resumen en 3 ideas.",
-create_summary_example_bullet2: "Puedes leerlo en pantalla.",
-create_summary_example_bullet3: "Y escucharlo con voz natural.",
+// Create Summary
+
+create_summary_image_alt: "Ilustración explicativa de Olondo.AI",
+create_summary_title: "Sección Crear Resumen",
+create_summary_intro:
+  "Esta sección está pensada para extraer lo esencial de un contenido extenso de manera rápida, clara y precisa, y escuchar el resultado en audio para las personas que prefieren oír en vez de leer.",
+
+create_summary_objective_title: "Objetivo principal",
+create_summary_objective_point_1: "Introducir documentos largos, artículos, textos copiados o enlaces web.",
+create_summary_objective_point_2: "Obtener un resumen claro y estructurado al nivel de detalle deseado.",
+create_summary_objective_point_3: "Escuchar ese resumen en audio sin necesidad de leerlo.",
+
+create_summary_steps_title: "Flujo de uso paso a paso",
+create_summary_steps_access: "Acceso a la sección",
+create_summary_steps_access_text:
+  "Desde la navegación principal, selecciona “Crear Resumen”. Verás un entorno limpio con un área central preparada para recibir el contenido.",
+create_summary_steps_input_title: "Entrada de información",
+create_summary_steps_input_point_1: "Copiar y pegar un texto largo.",
+create_summary_steps_input_point_2: "Subir un archivo compatible (PDF, Word o TXT).",
+create_summary_steps_input_point_3: "Introducir un enlace a una página web o artículo.",
+create_summary_steps_generate_title: "Generación del resumen",
+create_summary_steps_generate_text:
+  "Pulsa “Generar Resumen” para que la IA procese el contenido y entregue un resultado condensado y estructurado. Puedes regenerar para obtener otra versión.",
+create_summary_steps_view_title: "Visualización y edición",
+create_summary_steps_view_point_1: "Editar manualmente frases o añadir notas.",
+create_summary_steps_view_point_2: "Destacar ideas clave o copiar el resultado.",
+create_summary_steps_view_point_3: "Guardar el resumen en tu biblioteca o exportarlo.",
+
+create_summary_audio_title: "Conversión a audio",
+create_summary_audio_text:
+  "Tras generar el resumen, pulsa “Escuchar” para oírlo en un audio claro y natural, ideal para quienes prefieren oír en vez de leer.",
+create_summary_audio_point_1: "Elegir la voz (masculina, femenina, juvenil, profesional).",
+create_summary_audio_point_2: "Ajustar la velocidad de lectura.",
+create_summary_audio_point_3: "Descargar el archivo MP3 para escucharlo sin conexión.",
+
+create_summary_manage_title: "Gestión y guardado",
+create_summary_manage_point_1: "Guardar en la biblioteca personal para consultarlo más tarde.",
+create_summary_manage_point_2: "Clasificar con etiquetas o carpetas (universidad, trabajo, libros, etc.).",
+create_summary_manage_point_3: "Compartir mediante enlace privado, si lo deseas.",
+
+create_summary_examples_title: "Ejemplos de uso real",
+create_summary_examples_point_1: "Estudiantes: resumir capítulos o apuntes antes de un examen.",
+create_summary_examples_point_2: "Profesionales: condensar informes extensos para ahorrar tiempo.",
+create_summary_examples_point_3: "Investigadores: escuchar resúmenes en desplazamientos.",
+create_summary_examples_point_4: "Lectores con fatiga visual o déficit de atención.",
+
+create_summary_diff_title: "¿Qué hace diferente a Olondo.AI?",
+create_summary_diff_text:
+  "Además de resumir, también puedes escuchar el resultado en audio. Así aprovechas cualquier momento (conduciendo, caminando, entrenando o trabajando) para absorber la información clave sin necesidad de leer.",
 
 // Compartidas
 create_example_header: "Escucha cómo suena un ejemplo",
