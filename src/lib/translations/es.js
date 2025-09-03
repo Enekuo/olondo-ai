@@ -496,7 +496,7 @@ ct_value_p2: "Esto hace que Olondo.AI no solo sea un creador de textos, sino tam
 // Create Summary
 
 create_summary_image_alt: "Ilustración explicativa de Olondo.AI",
-create_summary_title: "Sección Crear Resumen",
+create_summary_title: "CREAR RESUMEN",  
 create_summary_intro:
   "Esta sección está pensada para extraer lo esencial de un contenido extenso de manera rápida, clara y precisa, y escuchar el resultado en audio para las personas que prefieren oír en vez de leer.",
 
