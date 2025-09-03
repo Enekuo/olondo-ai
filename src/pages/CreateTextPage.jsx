@@ -42,12 +42,12 @@ const CreateTextPage = () => {
         <div className="relative">
           {/* Bocadillo */}
           <div className="absolute -top-6 -left-6 bg-white border border-slate-200 shadow-sm rounded-full px-4 py-2">
-            <span className="text-slate-700 text-sm md:text-base font-medium">
-              {t('ct_bubble_text')}
-            </span>
+          <span className="text-slate-800 text-base font-normal">
+             {t('ct_bubble_text')}
+          </span>
             {/* “Colita” del bocadillo */}
-            <div className="absolute -bottom-2 left-8 w-3 h-3 bg-white border-l border-t border-slate-200 rotate-45"></div>
-          </div>
+          <div className="absolute -bottom-2 left-8 w-3 h-3 bg-white border-l border-t border-slate-200 rotate-45"></div>
+        </div>
 
           <img
             src="/olondo-mascota2.png"
