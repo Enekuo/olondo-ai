@@ -495,10 +495,12 @@ ct_value_p2: "Esto hace que Olondo.AI no solo sea un creador de textos, sino tam
 
 // Create Summary
 
-create_summary_image_alt: "Ilustración explicativa de Olondo.AI",
-create_summary_title: "CREAR RESUMEN",  
+create_summary_title: "CREAR RESUMEN",
+create_summary_image_alt: "Ilustración de Olondo.AI",
+create_summary_speech: "Te hago un resumen en segundos",
+
 create_summary_intro:
-  "Esta sección está pensada para extraer lo esencial de un contenido extenso de manera rápida, clara y precisa, y escuchar el resultado en audio para las personas que prefieren oír en vez de leer.",
+  "La sección “Crear Resumen” está pensada para extraer lo esencial de un contenido extenso de manera rápida, clara y precisa. Además, puedes escucharlo en audio si prefieres oír en vez de leer.",
 
 create_summary_objective_title: "Objetivo principal",
 create_summary_objective_point_1: "Introducir documentos largos, artículos, textos copiados o enlaces web.",
@@ -523,13 +525,13 @@ create_summary_steps_view_point_3: "Guardar el resumen en tu biblioteca o export
 
 create_summary_audio_title: "Conversión a audio",
 create_summary_audio_text:
-  "Tras generar el resumen, pulsa “Escuchar” para oírlo en un audio claro y natural, ideal para quienes prefieren oír en vez de leer.",
+  "Tras generar el resumen, pulsa “Escuchar” para oírlo con una voz clara y natural. Ideal para personas que prefieren oír en vez de leer.",
 create_summary_audio_point_1: "Elegir la voz (masculina, femenina, juvenil, profesional).",
 create_summary_audio_point_2: "Ajustar la velocidad de lectura.",
 create_summary_audio_point_3: "Descargar el archivo MP3 para escucharlo sin conexión.",
 
 create_summary_manage_title: "Gestión y guardado",
-create_summary_manage_point_1: "Guardar en la biblioteca personal para consultarlo más tarde.",
+create_summary_manage_point_1: "Guardar en tu biblioteca personal para consultarlo más tarde.",
 create_summary_manage_point_2: "Clasificar con etiquetas o carpetas (universidad, trabajo, libros, etc.).",
 create_summary_manage_point_3: "Compartir mediante enlace privado, si lo deseas.",
 
@@ -541,9 +543,9 @@ create_summary_examples_point_4: "Lectores con fatiga visual o déficit de atenc
 
 create_summary_diff_title: "¿Qué hace diferente a Olondo.AI?",
 create_summary_diff_text:
-  "Además de resumir, también puedes escuchar el resultado en audio. Así aprovechas cualquier momento (conduciendo, caminando, entrenando o trabajando) para absorber la información clave sin necesidad de leer.",
+  "Además de resumir, también puedes escucharlo en audio. Así aprovechas cualquier momento (conduciendo, caminando, entrenando o trabajando) para absorber la información clave sin necesidad de leer.",
 
-// Compartidas
+  // Compartidas
 create_example_header: "Escucha cómo suena un ejemplo",
 demo_badge: "Demo 20s",
 create_example_footer: "La demo es orientativa. Las voces y la velocidad pueden variar según tu configuración.",

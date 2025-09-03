@@ -1,44 +1,47 @@
 import React from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-// Punto azul para las listas
+// Punto azul para listas
 const Dot = () => (
   <span className="mt-2 h-2.5 w-2.5 rounded-full bg-sky-500 shrink-0" />
 );
 
 const CreateSummaryPage = () => {
   const { t } = useLanguage();
+  const speechText = t("create_summary_speech");
 
   return (
     <section className="w-full bg-white dark:bg-slate-950">
       <div className="container mx-auto px-6 py-16 max-w-6xl">
-        {/* ENCABEZADO */}
+        {/* SOLO TÍTULO (sin badge ni subtitle) */}
         <div className="mb-12">
-          <span className="uppercase tracking-wide text-xs font-semibold text-sky-600 dark:text-sky-400">
-            {t("create_summary_badge")}
-          </span>
           <h1 className="mt-3 text-[40px] sm:text-[52px] md:text-[64px] leading-[1.05] font-extrabold text-slate-900 dark:text-white">
             {t("create_summary_title")}
           </h1>
-          <p className="mt-4 text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-3xl">
-            {t("create_summary_subtitle")}
-          </p>
         </div>
 
         {/* BLOQUE INICIAL: Mascota izquierda / Intro + Objetivo derecha */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
-          {/* Mascota (izquierda) */}
-          <div className="relative flex justify-center md:justify-start">
-            <img
-              src="olondo-mascota2.png"  // 
-              alt={t("create_summary_image_alt")}
-              className="w-[320px] sm:w-[360px] md:w-[380px] h-auto select-none"
-              draggable="false"
-              loading="eager"
-            />
+          {/* Mascota con bocadillo (texto desde traducciones) */}
+          <div className="relative flex justify-center md:justify-start order-first">
+            <div className="relative">
+              <img
+                src="olondo-mascota2.png" // ajusta ruta/nombre si es distinto
+                alt={t("create_summary_image_alt")}
+                className="w-[320px] sm:w-[360px] md:w-[380px] h-auto select-none"
+                draggable="false"
+                loading="eager"
+              />
+              {/* Bocadillo (se muestra si la clave existe) */}
+              {speechText && speechText !== "create_summary_speech" && (
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-md px-4 py-2 rounded-2xl text-sm text-slate-800 dark:text-slate-200">
+                  {speechText}
+                </div>
+              )}
+            </div>
           </div>
 
-          {/* Intro + Objetivo (derecha) */}
+          {/* Intro + Objetivo */}
           <div className="space-y-6">
             <p className="text-slate-700 dark:text-slate-300 text-[17px] leading-relaxed">
               {t("create_summary_intro")}
@@ -57,8 +60,7 @@ const CreateSummaryPage = () => {
           </div>
         </div>
 
-        {/* RESTO EN UNA COLUMNA (izquierda a derecha) */}
-        {/* Flujo de uso */}
+        {/* RESTO EN UNA COLUMNA */}
         <div className="space-y-4 mb-12">
           <h2 className="text-xl font-bold text-slate-900 dark:text-white">
             {t("create_summary_steps_title")}
