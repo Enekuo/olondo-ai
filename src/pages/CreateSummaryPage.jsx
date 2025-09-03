@@ -14,7 +14,7 @@ const CreateSummaryPage = () => {
     <section className="w-full bg-white dark:bg-slate-950">
       <div className="container mx-auto px-6 py-16 max-w-6xl">
         {/* SOLO TÍTULO (sin badge ni subtitle) */}
-        <div className="mb-12">
+        <div className="mb-12 text-center">
           <h1 className="mt-3 text-[40px] sm:text-[52px] md:text-[64px] leading-[1.05] font-extrabold text-slate-900 dark:text-white">
             {t("create_summary_title")}
           </h1>
@@ -34,7 +34,7 @@ const CreateSummaryPage = () => {
               />
               {/* Bocadillo (se muestra si la clave existe) */}
               {speechText && speechText !== "create_summary_speech" && (
-                <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-md px-4 py-2 rounded-2xl text-sm text-slate-800 dark:text-slate-200">
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-md px-4 py-2 rounded-2xl text-sm text-slate-800 dark:text-slate-200">
                   {speechText}
                 </div>
               )}
