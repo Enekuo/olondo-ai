@@ -45,12 +45,16 @@ const PricingPage = () => {
   };
 
 // Boton temporal para dashboard 
-<button
-  onClick={() => window.location.href = "/app/home"}
-  className="px-4 py-2 bg-sky-600 text-white rounded-lg"
->
-  Ir al Dashboard
-</button>
+<section className="relative">
+  <button
+    onClick={() => (window.location.href = "/app/home")}
+    className="absolute right-4 top-4 px-4 py-2 bg-sky-600 text-white rounded-lg"
+  >
+    Ir al Dashboard
+  </button>
+
+  {/* ... resto del contenido de planes ... */}
+</section>
 
 
   const plans = [
