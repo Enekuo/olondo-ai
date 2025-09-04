@@ -17,7 +17,7 @@ import TermsConditionsPage from '@/pages/TermsConditionsPage';
 import SyntheticVoiceUsagePage from '@/pages/SyntheticVoiceUsagePage';
 import CookiesPolicyPage from '@/pages/CookiesPolicyPage';
 import SupportPage from "@/pages/SupportPage";
-import Dashboard from "@/pages/app/Dashboard";
+import Dashboard from "@/pages/Dashboard";
 
 
 function App() {
