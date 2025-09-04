@@ -44,19 +44,6 @@ const PricingPage = () => {
     }
   };
 
-// Boton temporal para dashboard 
-<section className="relative">
-  <button
-    onClick={() => (window.location.href = "/app/home")}
-    className="absolute right-4 top-4 px-4 py-2 bg-sky-600 text-white rounded-lg"
-  >
-    Ir al Dashboard
-  </button>
-
-  {/* ... resto del contenido de planes ... */}
-</section>
-
-
   const plans = [
     // GRATIS
     {
@@ -144,8 +131,16 @@ const PricingPage = () => {
         exit="out"
         variants={pageVariants}
         transition={{ duration: 0.4 }}
-        className="min-h-[calc(100vh-4rem)] flex flex-col items-center bg-gradient-to-br from-slate-100 via-sky-50 to-blue-100 dark:from-slate-900 dark:via-slate-800 dark:to-sky-900 p-6 pt-12 md:pt-20"
+        className="min-h-[calc(100vh-4rem)] flex flex-col items-center bg-gradient-to-br from-slate-100 via-sky-50 to-blue-100 dark:from-slate-900 dark:via-slate-800 dark:to-sky-900 p-6 pt-12 md:pt-20 relative"
       >
+        {/* Botón temporal hacia el Dashboard (se eliminará cuando el dashboard esté listo) */}
+        <button
+          onClick={() => navigate('/app/home')}
+          className="absolute right-6 top-20 z-30 px-4 py-2 bg-sky-600 text-white rounded-lg"
+        >
+          Ir al Dashboard
+        </button>
+
         <div className="absolute top-20 left-6 z-10">
           <Button variant="ghost" onClick={() => navigate('/')} className="text-primary hover:bg-primary/10">
             <ArrowLeft className="mr-2 h-5 w-5" />
