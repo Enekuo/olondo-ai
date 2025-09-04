@@ -44,6 +44,15 @@ const PricingPage = () => {
     }
   };
 
+// Boton temporal para dashboard 
+<button
+  onClick={() => window.location.href = "/app/home"}
+  className="px-4 py-2 bg-sky-600 text-white rounded-lg"
+>
+  Ir al Dashboard
+</button>
+
+
   const plans = [
     // GRATIS
     {
