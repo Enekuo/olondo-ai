@@ -556,14 +556,14 @@ cta_or_view_plans: "o ver los planes",
 
 
 // Dashboard
-  dashboard_nav_home: "Home",
-  dashboard_nav_create: "Crear nuevo",
-  dashboard_nav_library: "Biblioteca",
-  dashboard_nav_plans: "Planes",
-  dashboard_nav_support: "Soporte",
-  dashboard_nav_settings: "Configuración",
-  theme_toggle: "Cambiar tema",
-  user_menu: "Menú de usuario",
+ dashboard_nav_home: "Home",
+dashboard_nav_create: "Crear nuevo",
+dashboard_nav_library: "Biblioteca",
+dashboard_nav_plans: "Planes",
+dashboard_nav_support: "Soporte",
+dashboard_nav_settings: "Configuración",
+theme_toggle: "Cambiar tema",
+user_menu: "Menú de usuario",
 
-  
+
 }
