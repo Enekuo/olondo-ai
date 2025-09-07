@@ -18,7 +18,7 @@ const Dashboard = () => {
 
     // ⬅️ Medidas Header y Sidebar
   const HEADER_HEIGHT_PX = 72;   // alto del header
-  const SIDEBAR_WIDTH_PX = 180;  // ancho del sidebar
+  const SIDEBAR_WIDTH_PX = 190  ;  // ancho del sidebar
 
 
   const isActive = (path) => location.pathname === path;
@@ -68,7 +68,7 @@ const Dashboard = () => {
       {/* LAYOUT principal con columnas fijas (sidebar 264px + contenido 1fr) */}
       <div className="w-full">
         <div
-          className="grid gap-0 md:grid-cols-[180px_1fr]"
+          className="grid gap-0 md:grid-cols-[190px_1fr]"
         >
           {/* SIDEBAR */}
           <aside className="border-r border-slate-800">
