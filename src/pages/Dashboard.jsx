@@ -70,7 +70,7 @@ const Dashboard = () => {
           {/* SIDEBAR */}
           <aside className="border-r border-slate-800">
             <div
-              className="sticky text-slate-100 ps-2 pe-5 py-6"   // <-- movemos todo un poco a la izquierda
+              className="sticky text-slate-100 ps-2 pe-5 py-6"
               style={{
                 backgroundColor: SIDEBAR_COLOR,
                 top: HEADER_HEIGHT_PX,
@@ -81,11 +81,21 @@ const Dashboard = () => {
               <nav className="space-y-1">
                 <Link
                   to="/app/dashboard"
-                  className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" // <- px-2
+                  className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
                   style={{ backgroundColor: isActive("/app/dashboard") ? HEADER_COLOR : "transparent" }}
                 >
                   <Home className="w-5 h-5 shrink-0" />
                   <span className="truncate">{t("dashboard_nav_home")}</span>
+                </Link>
+
+                {/* 🔁 Intercambiado: Crear nuevo va antes que Biblioteca */}
+                <Link
+                  to="/create"
+                  className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
+                  style={{ backgroundColor: isActive("/create") ? HEADER_COLOR : "transparent" }}
+                >
+                  <PlusCircle className="w-5 h-5 shrink-0" />
+                  <span className="truncate">{t("dashboard_nav_create")}</span>
                 </Link>
 
                 <Link
@@ -95,15 +105,6 @@ const Dashboard = () => {
                 >
                   <Folder className="w-5 h-5 shrink-0" />
                   <span className="truncate">{t("dashboard_nav_library")}</span>
-                </Link>
-
-                <Link
-                  to="/create"
-                  className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
-                  style={{ backgroundColor: isActive("/create") ? HEADER_COLOR : "transparent" }}
-                >
-                  <PlusCircle className="w-5 h-5 shrink-0" />
-                  <span className="truncate">{t("dashboard_nav_create")}</span>
                 </Link>
 
                 <Link
