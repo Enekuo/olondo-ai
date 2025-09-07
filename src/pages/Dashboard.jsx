@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
-  Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon
+  Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon, Gem
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
@@ -20,6 +20,10 @@ const Dashboard = () => {
   const HEADER_HEIGHT_PX = 72;
   const SIDEBAR_WIDTH_PX = 190;
 
+  // Plan del usuario (ajústalo desde tu lógica real)
+  const USER_PLAN = "premium"; // "basic" | "premium"
+  const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
+
   const isActive = (path) => location.pathname === path;
 
   return (
@@ -36,7 +40,35 @@ const Dashboard = () => {
           </Link>
 
           {/* Controles */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 sm:gap-4">
+            {/* Indicador de plan: ICONO + PÍLDORA (opción C) */}
+            <div className="hidden sm:flex items-center gap-2 select-none">
+              {/* Caja del icono */}
+              <div
+                className="inline-flex items-center justify-center rounded-[10px]"
+                style={{
+                  width: 44,
+                  height: 44,
+                  backgroundColor: "rgba(255,255,255,0.22)",
+                  boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)"
+                }}
+                aria-hidden="true"
+              >
+                <Gem className="w-5 h-5 text-white/90" />
+              </div>
+
+              {/* Píldora con el nombre del plan */}
+              <div
+                className="rounded-xl px-3 py-1.5 text-sm font-medium text-slate-100/90"
+                style={{
+                  backgroundColor: "rgba(255,255,255,0.06)",
+                  boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)"
+                }}
+              >
+                {planLabel}
+              </div>
+            </div>
+
             {/* Selector idioma sin blanco */}
             <div className="rounded-xl p-1 ring-1 ring-slate-600/20" style={{ backgroundColor: HEADER_COLOR }}>
               <LanguageSwitcher className="!bg-transparent !text-white !border-0 !shadow-none !ring-0 !p-0 !m-0" />
@@ -88,7 +120,7 @@ const Dashboard = () => {
                   <span className="truncate">{t("dashboard_nav_home")}</span>
                 </Link>
 
-                {/* 🔁 Intercambiado: Crear nuevo va antes que Biblioteca */}
+                {/* Crear nuevo va antes que Biblioteca (como dejaste) */}
                 <Link
                   to="/create"
                   className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
