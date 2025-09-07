@@ -16,9 +16,6 @@ const Dashboard = () => {
   const HEADER_COLOR  = "#262F3F"; // header y item activo
   const SIDEBAR_COLOR = "#354153"; // base sidebar
 
-  // Dimensiones EXACTAS del mock (proporcionadas a tu web)
-  const HEADER_HEIGHT_PX = 72;   // 72px de alto
-  const SIDEBAR_WIDTH_PX = 264;  // 264px de ancho
 
   const isActive = (path) => location.pathname === path;
 
@@ -67,7 +64,7 @@ const Dashboard = () => {
       {/* LAYOUT principal con columnas fijas (sidebar 264px + contenido 1fr) */}
       <div className="w-full">
         <div
-          className="grid gap-0 md:grid-cols-[264px_1fr]"
+          className="grid gap-0 md:grid-cols-[220px_1fr]"
         >
           {/* SIDEBAR */}
           <aside className="border-r border-slate-800">
