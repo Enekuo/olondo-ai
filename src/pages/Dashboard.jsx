@@ -12,9 +12,13 @@ const Dashboard = () => {
   const { theme, setTheme } = useTheme();
   const location = useLocation();
 
-  // 🎨 Colores exactos del mock
+  // Colores EXACTOS del mock
   const HEADER_COLOR  = "#262F3F"; // header y item activo
-  const SIDEBAR_COLOR = "#354153"; // fondo base del sidebar
+  const SIDEBAR_COLOR = "#354153"; // base sidebar
+
+  // Dimensiones EXACTAS del mock (proporcionadas a tu web)
+  const HEADER_HEIGHT_PX = 72;   // 72px de alto
+  const SIDEBAR_WIDTH_PX = 264;  // 264px de ancho
 
   const isActive = (path) => location.pathname === path;
 
@@ -23,9 +27,9 @@ const Dashboard = () => {
       {/* HEADER */}
       <header
         className="sticky top-0 z-40 w-full border-b border-slate-800"
-        style={{ backgroundColor: HEADER_COLOR }}
+        style={{ backgroundColor: HEADER_COLOR, height: HEADER_HEIGHT_PX }}
       >
-        <div className="w-full h-16 px-4 sm:px-6 flex items-center justify-between">
+        <div className="w-full h-full px-4 sm:px-6 flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="font-extrabold text-lg tracking-tight text-sky-400">
             Olondo.ai
@@ -60,14 +64,21 @@ const Dashboard = () => {
         </div>
       </header>
 
-      {/* LAYOUT */}
-      <div className="w-full px-0">
-        <div className="grid grid-cols-12 gap-0">
+      {/* LAYOUT principal con columnas fijas (sidebar 264px + contenido 1fr) */}
+      <div className="w-full">
+        <div
+          className="grid gap-0 md:grid-cols-[264px_1fr]"
+        >
           {/* SIDEBAR */}
-          <aside className="col-span-12 md:col-span-3 lg:col-span-2 border-r border-slate-800">
+          <aside className="border-r border-slate-800">
             <div
-              className="sticky top-16 h-[calc(100vh-64px)] text-slate-100 px-5 py-6"
-              style={{ backgroundColor: SIDEBAR_COLOR }}
+              className="sticky text-slate-100 px-5 py-6"
+              style={{
+                backgroundColor: SIDEBAR_COLOR,
+                top: HEADER_HEIGHT_PX,                  // mismo offset del header (72px)
+                height: `calc(100vh - ${HEADER_HEIGHT_PX}px)`,
+                width: SIDEBAR_WIDTH_PX                  // 264px exactos
+              }}
             >
               <nav className="space-y-1">
                 <Link
@@ -80,21 +91,21 @@ const Dashboard = () => {
                 </Link>
 
                 <Link
-                  to="/create"
-                  className="flex items-center gap-3 h-11 px-3 rounded-xl transition-colors"
-                  style={{ backgroundColor: isActive("/create") ? HEADER_COLOR : "transparent" }}
-                >
-                  <PlusCircle className="w-5 h-5" />
-                  <span>{t("dashboard_nav_create")}</span>
-                </Link>
-
-                <Link
                   to="/library"
                   className="flex items-center gap-3 h-11 px-3 rounded-xl transition-colors"
                   style={{ backgroundColor: isActive("/library") ? HEADER_COLOR : "transparent" }}
                 >
                   <Folder className="w-5 h-5" />
                   <span>{t("dashboard_nav_library")}</span>
+                </Link>
+
+                <Link
+                  to="/create"
+                  className="flex items-center gap-3 h-11 px-3 rounded-xl transition-colors"
+                  style={{ backgroundColor: isActive("/create") ? HEADER_COLOR : "transparent" }}
+                >
+                  <PlusCircle className="w-5 h-5" />
+                  <span>{t("dashboard_nav_create")}</span>
                 </Link>
 
                 <Link
@@ -119,8 +130,8 @@ const Dashboard = () => {
           </aside>
 
           {/* CONTENIDO */}
-          <main className="col-span-12 md:col-span-9 lg:col-span-10">
-            <section className="py-8 md:py-10">{/* vacío */}</section>
+          <main>
+            <section className="py-8 md:py-10">{/* vacío intencional */}</section>
           </main>
         </div>
       </div>
