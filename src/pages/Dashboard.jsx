@@ -16,6 +16,10 @@ const Dashboard = () => {
   const HEADER_COLOR  = "#262F3F"; // header y item activo
   const SIDEBAR_COLOR = "#354153"; // base sidebar
 
+    // ⬅️ Medidas Header y Sidebar
+  const HEADER_HEIGHT_PX = 72;   // alto del header
+  const SIDEBAR_WIDTH_PX = 220;  // ancho del sidebar
+
 
   const isActive = (path) => location.pathname === path;
 
