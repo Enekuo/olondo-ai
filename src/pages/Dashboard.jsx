@@ -69,10 +69,8 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Selector idioma sin blanco */}
-            <div className="rounded-xl p-1 ring-1 ring-slate-600/20" style={{ backgroundColor: HEADER_COLOR }}>
-              <LanguageSwitcher className="lang-reset !text-white !p-0 !m-0" />
-            </div>
+            {/* Selector idioma (igual que en Navbar: sin wrappers ni fondos) */}
+            <LanguageSwitcher />
 
             {/* Toggle claro/oscuro */}
             <button
