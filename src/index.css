@@ -105,3 +105,28 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* === UTILIDAD GLOBAL: LanguageSwitcher sin fondo blanco en claro/oscuro === */
+@layer utilities {
+  /* El wrapper y sus hijos nunca pintan blancos ni sombras propias */
+  .lang-reset, .lang-reset * {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: 0 !important;
+  }
+
+  /* Foco accesible y discreto (útil sobre header oscuro) */
+  .lang-reset:focus-visible,
+  .lang-reset :is(button,[role="button"]):focus-visible {
+    outline: 2px solid rgba(255,255,255,0.25) !important;
+    outline-offset: 2px;
+    border-radius: 12px;
+  }
+
+  /* Asegura que la bandera no introduce relleno blanco */
+  .lang-reset :is(img,svg) {
+    background: transparent !important;
+    display: block;
+    border-radius: 10px;
+  }
+}
