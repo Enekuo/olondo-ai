@@ -16,10 +16,9 @@ const Dashboard = () => {
   const HEADER_COLOR  = "#262F3F"; // header y item activo
   const SIDEBAR_COLOR = "#354153"; // base sidebar
 
-    // ⬅️ Medidas Header y Sidebar
-  const HEADER_HEIGHT_PX = 72;   // alto del header
-  const SIDEBAR_WIDTH_PX = 190  ;  // ancho del sidebar
-
+  // Dimensiones
+  const HEADER_HEIGHT_PX = 72;
+  const SIDEBAR_WIDTH_PX = 190;
 
   const isActive = (path) => location.pathname === path;
 
@@ -65,66 +64,64 @@ const Dashboard = () => {
         </div>
       </header>
 
-      {/* LAYOUT principal con columnas fijas (sidebar 264px + contenido 1fr) */}
+      {/* LAYOUT principal con columnas fijas (sidebar 190px + contenido 1fr) */}
       <div className="w-full">
-        <div
-          className="grid gap-0 md:grid-cols-[190px_1fr]"
-        >
+        <div className="grid gap-0 md:grid-cols-[190px_1fr]">
           {/* SIDEBAR */}
           <aside className="border-r border-slate-800">
             <div
               className="sticky text-slate-100 px-5 py-6"
               style={{
                 backgroundColor: SIDEBAR_COLOR,
-                top: HEADER_HEIGHT_PX,                  // mismo offset del header (72px)
+                top: HEADER_HEIGHT_PX,
                 height: `calc(100vh - ${HEADER_HEIGHT_PX}px)`,
-                width: SIDEBAR_WIDTH_PX                  // 264px exactos
+                width: SIDEBAR_WIDTH_PX
               }}
             >
               <nav className="space-y-1">
                 <Link
                   to="/app/dashboard"
-                  className="flex items-center gap-3 h-11 px-3 rounded-xl transition-colors"
+                  className="w-full flex items-center gap-3 h-11 px-3 rounded-xl transition-colors"
                   style={{ backgroundColor: isActive("/app/dashboard") ? HEADER_COLOR : "transparent" }}
                 >
-                  <Home className="w-5 h-5" />
-                  <span>{t("dashboard_nav_home")}</span>
+                  <Home className="w-5 h-5 shrink-0" />
+                  <span className="truncate">{t("dashboard_nav_home")}</span>
                 </Link>
 
                 <Link
                   to="/library"
-                  className="flex items-center gap-3 h-11 px-3 rounded-xl transition-colors"
+                  className="w-full flex items-center gap-3 h-11 px-3 rounded-xl transition-colors"
                   style={{ backgroundColor: isActive("/library") ? HEADER_COLOR : "transparent" }}
                 >
-                  <Folder className="w-5 h-5" />
-                  <span>{t("dashboard_nav_library")}</span>
+                  <Folder className="w-5 h-5 shrink-0" />
+                  <span className="truncate">{t("dashboard_nav_library")}</span>
                 </Link>
 
                 <Link
                   to="/create"
-                  className="flex items-center gap-3 h-11 px-3 rounded-xl transition-colors"
+                  className="w-full flex items-center gap-3 h-11 px-3 rounded-xl transition-colors"
                   style={{ backgroundColor: isActive("/create") ? HEADER_COLOR : "transparent" }}
                 >
-                  <PlusCircle className="w-5 h-5" />
-                  <span>{t("dashboard_nav_create")}</span>
+                  <PlusCircle className="w-5 h-5 shrink-0" />
+                  <span className="truncate">{t("dashboard_nav_create")}</span>
                 </Link>
 
                 <Link
                   to="/pricing"
-                  className="flex items-center gap-3 h-11 px-3 rounded-xl transition-colors"
+                  className="w-full flex items-center gap-3 h-11 px-3 rounded-xl transition-colors"
                   style={{ backgroundColor: isActive("/pricing") ? HEADER_COLOR : "transparent" }}
                 >
-                  <CreditCard className="w-5 h-5" />
-                  <span>{t("dashboard_nav_plans")}</span>
+                  <CreditCard className="w-5 h-5 shrink-0" />
+                  <span className="truncate">{t("dashboard_nav_plans")}</span>
                 </Link>
 
                 <Link
                   to="/settings"
-                  className="flex items-center gap-3 h-11 px-3 rounded-xl transition-colors"
+                  className="w-full flex items-center gap-3 h-11 px-3 rounded-xl transition-colors"
                   style={{ backgroundColor: isActive("/settings") ? HEADER_COLOR : "transparent" }}
                 >
-                  <Settings className="w-5 h-5" />
-                  <span>{t("dashboard_nav_settings")}</span>
+                  <Settings className="w-5 h-5 shrink-0" />
+                  <span className="truncate">{t("dashboard_nav_settings")}</span>
                 </Link>
               </nav>
             </div>
