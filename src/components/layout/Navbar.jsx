@@ -68,10 +68,7 @@ const Navbar = () => {
             {/* NAV LINKS centrales, estilo texto simple */}
             <nav className="hidden md:flex items-center justify-start ml-6">
               {navItemsCenter.map((item) => {
-                const label =
-                  item.nameKey === 'navPricing' ? t('navPricing', 'Planes')
-                  : item.nameKey === 'navSupport' ? t('navSupport', 'Soporte')
-                  : t(item.nameKey);
+                const label = t(item.nameKey);
 
                 return (
                   <button
@@ -149,7 +146,7 @@ const Navbar = () => {
                         onClick={() => { setIsMenuOpen(false); navigate(item.path); }}
                         className="w-full text-left px-3 py-2 rounded-md text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-slate-100"
                       >
-                        {t(item.nameKey, item.nameKey)}
+                        {t(item.nameKey)}
                       </button>
                     </li>
                   ))}
@@ -174,4 +171,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar; 
+export default Navbar;  
