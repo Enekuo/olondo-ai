@@ -48,7 +48,7 @@ const SupportPage = () => {
                   </p>
                 </div>
                 <div className="hidden md:flex items-center gap-2">
-                  <div className="rounded-xl bg-violet-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm">
+                  <div className="rounded-xl bg-violet-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm whitespace-nowrap">
                     {t("support_cta")}
                   </div>
                 </div>
