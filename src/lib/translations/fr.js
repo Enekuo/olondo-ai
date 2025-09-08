@@ -396,4 +396,26 @@ voice_rights_text: "Les audios générés peuvent être utilisés par l’utilis
 voice_modifications_title: "6. Modifications du service",
 voice_modifications_text: "Olondo.AI se réserve le droit d’améliorer, de modifier ou de suspendre temporairement ou définitivement le service de voix synthétique lorsqu’il le juge nécessaire, en informant les utilisateurs en cas de changements pertinents.",
 
+
+// --- Support / Contact ---
+contact_hero_title: "Contactez-nous",
+contact_hero_subtitle: "Besoin d’aide ? Écrivez-nous via le formulaire ; notre équipe est là pour vous aider.",
+contact_hero_bubble: "Contactez-nous",
+
+support_kicker: "SUPPORT",
+support_title: "Contactez-nous",
+support_cta: "Contactez-nous",
+support_subtitle: "Dites-nous votre question ou problème et nous vous répondrons dès que possible.",
+support_bubble_text: "Bonjour ! En quoi puis-je vous aider ?",
+support_form_name_label: "Votre nom complet",
+support_form_name_placeholder: "Nom et prénom",
+support_form_email_label: "Votre adresse e-mail",
+support_form_subject_label: "Objet",
+support_form_subject_placeholder: "De quoi avez-vous besoin ?",
+support_form_message_label: "Message",
+support_form_message_placeholder: "Comment pouvons-nous vous aider ?",
+support_form_submit: "Envoyer le message",
+support_form_privacy_hint: "En envoyant, vous acceptez notre",
+support_form_privacy_link: "Politique de confidentialité",
+
 };
