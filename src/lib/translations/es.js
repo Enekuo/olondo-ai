@@ -407,6 +407,8 @@ contact_hero_subtitle: "¿Necesitas ayuda? Escríbenos a través del formulario,
 contact_hero_bubble: "Contáctanos",
 
 support_kicker: "SOPORTE",
+support_title: "Contáctanos",
+support_cta: "Contáctanos",
 support_subtitle: "Cuéntanos tu duda o problema y te responderemos lo antes posible.",
 support_bubble_text: "¡Hola! ¿En qué puedo ayudarte?",
 support_form_name_label: "Tu nombre completo",
@@ -419,7 +421,6 @@ support_form_message_placeholder: "¿Cómo podemos ayudarte?",
 support_form_submit: "Enviar mensaje",
 support_form_privacy_hint: "Al enviar aceptas nuestra",
 support_form_privacy_link: "Política de Privacidad",
-
 
 // Create Text
 create_text_breadcrumb: "CREAR TEXTO",
