@@ -416,4 +416,139 @@ support_form_submit: "Send message",
 support_form_privacy_hint: "By sending, you accept our",
 support_form_privacy_link: "Privacy Policy",
 
+
+// Create Text
+create_text_breadcrumb: "CREATE TEXT",
+
+ct_mascot_alt: "Olondo.AI Mascot",
+ct_bubble_text: "I’ll create a text in seconds, ready to listen podcast-style.",
+
+ct_long_intro_1: "The “Create Text” section is one of Olondo.AI’s core pillars. It’s designed so anyone can turn ideas, pasted text, documents or snippets of information into complete, well-structured texts ready to be listened to in natural, podcast-style voice.",
+ct_long_intro_2: "This space combines simplicity and flexibility: the user can generate content quickly with a single click or guide the process with a custom prompt. All within an intuitive, modern environment focused on the listening experience.",
+
+ct_obj_title: "Core objective",
+ct_obj_1: "Enter base information (written text, documents, links).",
+ct_obj_2: "Press Generate to obtain a new, clear text automatically adapted to the chosen tone, language, format and length.",
+ct_obj_3: "Optionally, write a specific prompt to gain finer control over the result.",
+ct_obj_4: "Convert the generated text into natural audio, ready to be listened to like a personal podcast.",
+
+ct_flow_title: "Step-by-step usage flow",
+
+ct_flow_1_title: "Access",
+ct_flow_1_p: "The user enters from the main navigation or from the highlighted buttons on the homepage. Clicking “Create Text” opens a dedicated page with a clean, spacious central editor.",
+
+ct_flow_2_title: "Input",
+ct_flow_2_b1: "Manually write an idea or paragraph.",
+ct_flow_2_b2: "Copy and paste notes, articles or book excerpts.",
+ct_flow_2_b3: "Attach documents (e.g., PDF, DOCX, TXT).",
+ct_flow_2_b4: "Add links to external sources.",
+
+ct_flow_3_title: "Optional prompt",
+ct_flow_3_p: "Below the editor, the user finds an optional prompt field.",
+ct_flow_3_s1: "If left empty → the AI uses a default internal prompt that generates a structured text based on the provided information, applying the selected tone, length and format.",
+ct_flow_3_s2: "If something is written → the system uses that prompt directly, giving full control over the generation.",
+ct_flow_3_examples_label: "Example:",
+ct_flow_3_ex1: "Empty prompt → “From this document, create a clear 500-word summary in a professional tone.”",
+ct_flow_3_ex2: "Written prompt → “Write a short, fun YouTube-style script to explain this topic.”",
+
+ct_flow_4_title: "Personalization",
+ct_flow_4_b1: "Text tone: academic, professional, creative, casual, explanatory…",
+ct_flow_4_b2: "Length: short (~200 words), standard (~500), long (1000+).",
+ct_flow_4_b3: "Output language: Spanish, English, French, Italian, Portuguese, German, etc.",
+ct_flow_4_b4: "Output format: essay, article, script, narration…",
+
+ct_flow_5_title: "AI generation",
+ct_flow_5_p1: "When clicking “Generate Text”, the system sends the information to the Olondo.AI API (powered by ChatGPT).",
+ct_flow_5_b1: "If there’s no prompt → the quick automatic mode is applied.",
+ct_flow_5_b2: "If there is a prompt → the user-guided mode is applied.",
+ct_flow_5_p2: "In seconds, a structured, clear text appears, adapted to the chosen preferences.",
+
+ct_flow_6_title: "Viewing and editing",
+ct_flow_6_p: "The text is displayed in an elegant, comfortable viewer.",
+ct_flow_6_b1: "Manually edit any part.",
+ct_flow_6_b2: "Save it to the personal library.",
+ct_flow_6_b3: "Copy it for use in other projects.",
+ct_flow_6_b4: "Regenerate to obtain another version.",
+
+ct_flow_7_title: "Convert to voice",
+ct_flow_7_p: "With a single click on “Listen”, the text is converted into audio with natural podcast-style voices.",
+ct_flow_7_b1: "Change voice (male, female, youthful, professional).",
+ct_flow_7_b2: "Adjust speed (slow, normal, fast).",
+ct_flow_7_b3: "Download the audio as MP3 to listen offline.",
+
+ct_mgmt_title: "Management and saving",
+ct_mgmt_b1: "Saved to the user’s personal library.",
+ct_mgmt_b2: "Classified into folders or with tags (e.g., “notes”, “essay”, “project ideas”).",
+ct_mgmt_b3: "Shared via private link (optional).",
+
+ct_cases_title: "Real use cases",
+ct_cases_b1: "Students: turn notes or PDFs into an understandable text and listen while commuting or training.",
+ct_cases_b2: "Professionals: transform quick notes into ready-to-send reports.",
+ct_cases_b3: "Content creators: generate articles, video scripts or podcast narrations.",
+ct_cases_b4: "People with visual fatigue or attention difficulties: delegate writing and focus on listening to the result.",
+
+ct_value_title: "Olondo.AI’s differential value",
+ct_value_p1: "What makes “Create Text” different is that it doesn’t stop at writing. Every generated text is automatically turned into a sound experience accessible from anywhere.",
+ct_value_p2: "This means Olondo.AI is not only a text creator but also a listening companion that turns reading into something dynamic, practical and accessible. Instead of relying only on the screen, users can learn, work or get inspired by listening to their texts in a personal podcast format—in the car, at the gym, walking or simply resting.",
+
+// Create Summary
+create_summary_title: "CREATE SUMMARY",
+create_summary_image_alt: "Olondo.AI illustration",
+create_summary_speech: "I’ll make a summary in seconds",
+
+create_summary_intro:
+  "The “Create Summary” section is designed to extract the essence from long content quickly, clearly and precisely. You can also listen to it in audio if you prefer listening over reading.",
+
+create_summary_objective_title: "Main objective",
+create_summary_objective_point_1: "Enter long documents, articles, pasted text or web links.",
+create_summary_objective_point_2: "Obtain a clear and structured summary at the desired level of detail.",
+create_summary_objective_point_3: "Listen to that summary in audio without needing to read.",
+
+create_summary_steps_title: "Step-by-step usage flow",
+create_summary_steps_access: "Access the section",
+create_summary_steps_access_text:
+  "From the main navigation, select “Create Summary”. You’ll see a clean environment with a central area ready to receive the content.",
+create_summary_steps_input_title: "Input",
+create_summary_steps_input_point_1: "Copy and paste a long text.",
+create_summary_steps_input_point_2: "Upload a compatible file (PDF, Word or TXT).",
+create_summary_steps_input_point_3: "Enter a link to a web page or article.",
+create_summary_steps_generate_title: "Generate the summary",
+create_summary_steps_generate_text:
+  "Click “Generate Summary” for the AI to process the content and deliver a condensed, structured result. You can regenerate to obtain another version.",
+create_summary_steps_view_title: "Viewing and editing",
+create_summary_steps_view_point_1: "Manually edit sentences or add notes.",
+create_summary_steps_view_point_2: "Highlight key ideas or copy the result.",
+create_summary_steps_view_point_3: "Save the summary to your library or export it.",
+
+create_summary_audio_title: "Convert to audio",
+create_summary_audio_text:
+  "After generating the summary, click “Listen” to hear it with a clear, natural voice. Ideal for people who prefer listening over reading.",
+create_summary_audio_point_1: "Choose the voice (male, female, youthful, professional).",
+create_summary_audio_point_2: "Adjust reading speed.",
+create_summary_audio_point_3: "Download the MP3 to listen offline.",
+
+create_summary_manage_title: "Management and saving",
+create_summary_manage_point_1: "Save it to your personal library to consult later.",
+create_summary_manage_point_2: "Classify with tags or folders (school, work, books, etc.).",
+create_summary_manage_point_3: "Share via private link, if you wish.",
+
+create_summary_examples_title: "Real-world examples",
+create_summary_examples_point_1: "Students: summarize chapters or notes before an exam.",
+create_summary_examples_point_2: "Professionals: condense long reports to save time.",
+create_summary_examples_point_3: "Researchers: listen to summaries while commuting.",
+create_summary_examples_point_4: "Readers with visual fatigue or attention difficulties.",
+
+create_summary_diff_title: "What makes Olondo.AI different?",
+create_summary_diff_text:
+  "Besides summarizing, you can also listen to it in audio. This way you can use any moment (driving, walking, training or working) to absorb key information without having to read.",
+
+// Compartidas
+create_example_header: "Listen to how an example sounds",
+demo_badge: "20s Demo",
+create_example_footer: "The demo is illustrative. Voices and speed may vary depending on your settings.",
+
+cta_view_plans: "View Plans",
+cta_try_free: "Try for Free",
+cta_or_view_plans: "or view plans",
+
 };

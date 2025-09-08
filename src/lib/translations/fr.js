@@ -418,4 +418,139 @@ support_form_submit: "Envoyer le message",
 support_form_privacy_hint: "En envoyant, vous acceptez notre",
 support_form_privacy_link: "Politique de confidentialité",
 
+
+// Créer un texte
+create_text_breadcrumb: "CRÉER UN TEXTE",
+
+ct_mascot_alt: "Mascotte d’Olondo.AI",
+ct_bubble_text: "Je crée un texte en quelques secondes, prêt à être écouté comme un podcast.",
+
+ct_long_intro_1: "La section « Créer un texte » est l’un des piliers d’Olondo.AI. Elle est conçue pour que chacun puisse transformer des idées, des textes copiés, des documents ou des extraits d’informations en textes complets, bien structurés et prêts à être écoutés avec une voix naturelle façon podcast.",
+ct_long_intro_2: "Cet espace allie simplicité et flexibilité : l’utilisateur peut générer du contenu rapidement en un clic ou guider le processus via un prompt personnalisé. Le tout dans un environnement intuitif, moderne et centré sur l’expérience d’écoute.",
+
+ct_obj_title: "Objectif principal",
+ct_obj_1: "Saisir des informations de base (texte écrit, documents, liens).",
+ct_obj_2: "Appuyer sur Générer pour obtenir un nouveau texte clair, automatiquement adapté au ton, à la langue, au format et à la longueur choisis.",
+ct_obj_3: "En option, écrire un prompt spécifique pour un contrôle plus précis du résultat.",
+ct_obj_4: "Convertir le texte généré en audio naturel, prêt à être écouté comme un podcast personnel.",
+
+ct_flow_title: "Flux d’utilisation pas à pas",
+
+ct_flow_1_title: "Accès",
+ct_flow_1_p: "L’utilisateur entre depuis la navigation principale ou depuis les boutons mis en avant sur la page d’accueil. En cliquant sur « Créer un texte », une page dédiée s’ouvre avec un éditeur central propre et spacieux.",
+
+ct_flow_2_title: "Saisie des informations",
+ct_flow_2_b1: "Écrire manuellement une idée ou un paragraphe.",
+ct_flow_2_b2: "Copier-coller des notes, des articles ou des extraits de livres.",
+ct_flow_2_b3: "Joindre des documents (ex. PDF, DOCX, TXT).",
+ct_flow_2_b4: "Ajouter des liens vers des sources externes.",
+
+ct_flow_3_title: "Prompt optionnel",
+ct_flow_3_p: "Sous l’éditeur se trouve un champ de prompt optionnel.",
+ct_flow_3_s1: "S’il est vide → l’IA utilise un prompt interne par défaut qui génère un texte structuré à partir des informations fournies, en appliquant le ton, la longueur et le format sélectionnés.",
+ct_flow_3_s2: "S’il est renseigné → le système utilise directement ce prompt, offrant un contrôle total sur la génération.",
+ct_flow_3_examples_label: "Exemple :",
+ct_flow_3_ex1: "Prompt vide → « À partir de ce document, crée un résumé clair de 500 mots au ton professionnel. »",
+ct_flow_3_ex2: "Prompt écrit → « Rédige un court script YouTube, léger et amusant, pour expliquer ce sujet. »",
+
+ct_flow_4_title: "Personnalisation",
+ct_flow_4_b1: "Ton du texte : académique, professionnel, créatif, décontracté, vulgarisation…",
+ct_flow_4_b2: "Longueur : courte (~200 mots), standard (~500), longue (1000+).",
+ct_flow_4_b3: "Langue de sortie : espagnol, anglais, français, italien, portugais, allemand, etc.",
+ct_flow_4_b4: "Format du résultat : essai, article, script, narration…",
+
+ct_flow_5_title: "Génération par l’IA",
+ct_flow_5_p1: "En cliquant sur « Générer le texte », le système envoie les informations à l’API d’Olondo.AI (propulsée par ChatGPT).",
+ct_flow_5_b1: "Sans prompt → mode rapide automatique.",
+ct_flow_5_b2: "Avec prompt → mode guidé par l’utilisateur.",
+ct_flow_5_p2: "En quelques secondes, un texte structuré et clair s’affiche, adapté aux préférences choisies.",
+
+ct_flow_6_title: "Affichage et édition",
+ct_flow_6_p: "Le texte apparaît dans un lecteur élégant et confortable.",
+ct_flow_6_b1: "Éditer manuellement n’importe quelle partie.",
+ct_flow_6_b2: "L’enregistrer dans la bibliothèque personnelle.",
+ct_flow_6_b3: "Le copier pour l’utiliser ailleurs.",
+ct_flow_6_b4: "Le régénérer pour obtenir une autre version.",
+
+ct_flow_7_title: "Conversion en voix",
+ct_flow_7_p: "D’un clic sur « Écouter », le texte est converti en audio avec des voix naturelles façon podcast.",
+ct_flow_7_b1: "Changer la voix (masculine, féminine, jeune, professionnelle).",
+ct_flow_7_b2: "Ajuster la vitesse (lente, normale, rapide).",
+ct_flow_7_b3: "Télécharger l’audio au format MP3 pour l’écouter hors ligne.",
+
+ct_mgmt_title: "Gestion et sauvegarde",
+ct_mgmt_b1: "Sauvegarde dans la bibliothèque personnelle de l’utilisateur.",
+ct_mgmt_b2: "Classé dans des dossiers ou avec des étiquettes (ex. « notes », « essai », « idées de projet »).",
+ct_mgmt_b3: "Partage via lien privé (optionnel).",
+
+ct_cases_title: "Cas d’usage réels",
+ct_cases_b1: "Étudiants : transforment des notes ou des PDFs en un texte compréhensible et l’écoutent en se déplaçant ou en s’entraînant.",
+ct_cases_b2: "Professionnels : transforment des notes rapides en rapports prêts à l’envoi.",
+ct_cases_b3: "Créateurs de contenu : génèrent des articles, des scripts vidéo ou des narrations de podcast.",
+ct_cases_b4: "Personnes souffrant de fatigue visuelle ou de troubles de l’attention : délèguent la rédaction et se concentrent sur l’écoute.",
+
+ct_value_title: "Valeur différenciante d’Olondo.AI",
+ct_value_p1: "Ce qui distingue « Créer un texte », c’est que cela ne s’arrête pas à l’écriture. Chaque texte généré devient automatiquement une expérience sonore accessible partout.",
+ct_value_p2: "Ainsi, Olondo.AI n’est pas seulement un créateur de textes, mais aussi un compagnon d’écoute qui transforme la lecture en une expérience dynamique, pratique et accessible. Au lieu de dépendre uniquement de l’écran, les utilisateurs peuvent apprendre, travailler ou s’inspirer en écoutant leurs textes comme un podcast personnel — en voiture, à la salle, en marchant ou en se reposant.",
+
+// Créer un résumé
+create_summary_title: "CRÉER UN RÉSUMÉ",
+create_summary_image_alt: "Illustration d’Olondo.AI",
+create_summary_speech: "Je te fais un résumé en quelques secondes",
+
+create_summary_intro:
+  "La section « Créer un résumé » sert à extraire l’essentiel d’un contenu long de manière rapide, claire et précise. Tu peux également l’écouter en audio si tu préfères écouter plutôt que lire.",
+
+create_summary_objective_title: "Objectif principal",
+create_summary_objective_point_1: "Introduire des documents longs, des articles, des textes copiés ou des liens web.",
+create_summary_objective_point_2: "Obtenir un résumé clair et structuré au niveau de détail souhaité.",
+create_summary_objective_point_3: "Écouter ce résumé en audio sans avoir à le lire.",
+
+create_summary_steps_title: "Flux d’utilisation pas à pas",
+create_summary_steps_access: "Accès à la section",
+create_summary_steps_access_text:
+  "Depuis la navigation principale, sélectionne « Créer un résumé ». Tu verras un espace épuré avec une zone centrale prête à recevoir le contenu.",
+create_summary_steps_input_title: "Saisie des informations",
+create_summary_steps_input_point_1: "Copier-coller un long texte.",
+create_summary_steps_input_point_2: "Téléverser un fichier compatible (PDF, Word ou TXT).",
+create_summary_steps_input_point_3: "Entrer un lien vers une page web ou un article.",
+create_summary_steps_generate_title: "Génération du résumé",
+create_summary_steps_generate_text:
+  "Appuie sur « Générer le résumé » pour que l’IA traite le contenu et livre un résultat condensé et structuré. Tu peux régénérer pour obtenir une autre version.",
+create_summary_steps_view_title: "Affichage et édition",
+create_summary_steps_view_point_1: "Éditer manuellement des phrases ou ajouter des notes.",
+create_summary_steps_view_point_2: "Mettre en évidence les idées clés ou copier le résultat.",
+create_summary_steps_view_point_3: "Enregistrer le résumé dans ta bibliothèque ou l’exporter.",
+
+create_summary_audio_title: "Conversion en audio",
+create_summary_audio_text:
+  "Après la génération, clique sur « Écouter » pour l’entendre avec une voix claire et naturelle. Idéal pour ceux qui préfèrent écouter plutôt que lire.",
+create_summary_audio_point_1: "Choisir la voix (masculine, féminine, jeune, professionnelle).",
+create_summary_audio_point_2: "Ajuster la vitesse de lecture.",
+create_summary_audio_point_3: "Télécharger le fichier MP3 pour l’écouter hors ligne.",
+
+create_summary_manage_title: "Gestion et sauvegarde",
+create_summary_manage_point_1: "Enregistrer dans ta bibliothèque personnelle pour le consulter plus tard.",
+create_summary_manage_point_2: "Classer avec des étiquettes ou des dossiers (université, travail, livres, etc.).",
+create_summary_manage_point_3: "Partager via un lien privé, si tu le souhaites.",
+
+create_summary_examples_title: "Exemples d’utilisation réels",
+create_summary_examples_point_1: "Étudiants : résumer des chapitres ou des notes avant un examen.",
+create_summary_examples_point_2: "Professionnels : condenser de longs rapports pour gagner du temps.",
+create_summary_examples_point_3: "Chercheurs : écouter des résumés lors des déplacements.",
+create_summary_examples_point_4: "Lecteurs souffrant de fatigue visuelle ou de troubles de l’attention.",
+
+create_summary_diff_title: "Qu’est-ce qui rend Olondo.AI différent ?",
+create_summary_diff_text:
+  "En plus de résumer, tu peux aussi l’écouter en audio. Tu profites ainsi de n’importe quel moment (en conduisant, en marchant, à l’entraînement ou au travail) pour absorber l’essentiel sans avoir à lire.",
+
+// Compartidas
+create_example_header: "Écoute un exemple",
+demo_badge: "Démo 20 s",
+create_example_footer: "La démo est indicative. Les voix et la vitesse peuvent varier selon tes réglages.",
+
+cta_view_plans: "Voir les tarifs",
+cta_try_free: "Essayer gratuitement",
+cta_or_view_plans: "ou voir les tarifs",
+
 };
