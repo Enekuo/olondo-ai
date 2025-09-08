@@ -41,18 +41,15 @@ const SupportPage = () => {
               <div className="flex items-center justify-between gap-4">
                 <div>
                   <h2 className="text-3xl sm:text-4xl font-extrabold leading-tight text-slate-900">
-                    {t("contact_hero_title", "Contáctanos")}
+                    {t("support_title")}
                   </h2>
                   <p className="mt-2 max-w-2xl text-slate-600">
-                    {t(
-                      "contact_hero_subtitle",
-                      "¿Necesitas ayuda? Escríbenos a través del formulario, nuestro equipo está aquí para ayudarte."
-                    )}
+                    {t("support_subtitle")}
                   </p>
                 </div>
                 <div className="hidden md:flex items-center gap-2">
                   <div className="rounded-xl bg-violet-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm">
-                    {t("contact_hero_bubble", "Contáctanos")}
+                    {t("support_cta")}
                   </div>
                 </div>
               </div>
@@ -84,7 +81,7 @@ const SupportPage = () => {
                 {/* cuerpo de la burbuja */}
                 <div className="rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
                   <span className="text-slate-700">
-                    {t("support_bubble_text", "¡Hola! ¿En qué podemos ayudarte?")}
+                    {t("support_bubble_text")}
                   </span>
                 </div>
               </div>
