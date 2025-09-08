@@ -110,6 +110,9 @@ export const fr = {
   toastFeatureNotImplementedDescription: 'Cette fonctionnalité n\'est pas encore implémentée, mais ne vous inquiétez pas ! Vous pouvez la demander dans votre prochain message. 🚀',
   toastPageNotImplementedDescription: 'La page pour "{linkName}" n\'est pas encore implémentée. Vous pouvez la demander dans votre prochain message ! 🚀',
   
+  navPricing: "Tarifs",
+  navSupport: "Assistance",
+
   // Page Tarifs
 // ==========================
 pricingPageTitle: "Choisissez votre forfait idéal",

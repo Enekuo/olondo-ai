@@ -108,6 +108,9 @@ export const de = {
   toastFeatureNotImplementedDescription: 'Diese Funktion ist noch nicht implementiert – aber keine Sorge! Sie können sie in Ihrer nächsten Nachricht anfordern! 🚀',
   toastPageNotImplementedDescription: 'Die Seite für "{linkName}" ist noch nicht implementiert. Sie können sie in Ihrer nächsten Nachricht anfordern! 🚀',
   
+  navPricing: "Preise",
+  navSupport: "Support",
+
   // Preisseite
 // ==========================
 pricingPageTitle: "Wähle deinen perfekten Plan",

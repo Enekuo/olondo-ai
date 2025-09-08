@@ -108,6 +108,9 @@ export const pt = {
   toastFeatureNotImplementedDescription: 'Esta funcionalidade ainda não está implementada, mas não se preocupe! Pode solicitá-la na sua próxima mensagem. 🚀',
   toastPageNotImplementedDescription: 'A página para "{linkName}" ainda não está implementada. Pode solicitá-la na sua próxima mensagem! 🚀',
   
+  navPricing: "Planos",
+  navSupport: "Suporte",
+
   // Página de Preços
 // ==========================
 pricingPageTitle: "Escolha o plano perfeito",
