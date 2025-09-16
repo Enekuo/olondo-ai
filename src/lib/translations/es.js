@@ -569,5 +569,67 @@ dashboard_nav_settings: "Configuración",
 theme_toggle: "Cambiar tema",
 user_menu: "Menú de usuario",
 
+// --- Ajustes (Settings) ---
+settings: {
+  title: "Ajustes",
+  subtitle: "Personaliza tu experiencia en Olondo.AI.",
+
+  profile: {
+    title: "Perfil",
+    desc: "Información básica para identificar tu cuenta.",
+    display_name: "Nombre visible",
+    display_name_ph: "Ej. Eneko",
+    email: "Correo electrónico",
+    security_hint: "La edición de contraseña se gestiona desde tu área segura.",
+  },
+
+  appearance: {
+    title: "Apariencia",
+    desc: "Elige cómo se ve la interfaz.",
+    theme: "Tema",
+    system: "Sistema",
+    light: "Claro",
+    dark: "Oscuro",
+    language: "Idioma",
+    language_hint: "Cambia el idioma desde aquí.",
+  },
+
+  audio: {
+    title: "Audio por defecto",
+    desc: "Configura la reproducción y la voz para tus escuchas.",
+    voice: "Voz",
+    voice_female: "Olondo Femenina",
+    voice_male: "Olondo Masculina",
+    voice_podcast: "Podcast Pro",
+    rate: "Velocidad (x)",
+    rate_hint: "Rango recomendado: 0.5 – 1.5",
+    pitch: "Tono",
+    pitch_hint: "Rango: -6 a +6",
+    autoplay_next: "Reproducir el siguiente automáticamente",
+    normalize: "Normalizar volumen automáticamente",
+  },
+
+  notifications: {
+    title: "Notificaciones",
+    desc: "Elige qué correos o avisos quieres recibir.",
+    product: "Novedades de producto",
+    product_hint: "Lanzamientos, mejoras y anuncios importantes.",
+    tips: "Consejos y buenas prácticas",
+    tips_hint: "Emails breves para aprovechar mejor Olondo.AI.",
+    billing: "Facturación",
+    billing_hint: "Recibos, cambios de plan y recordatorios de pago.",
+  },
+
+  cta: {
+    manage_plan: "Gestionar plan",
+    view_plans: "Ver planes",
+    save: "Guardar cambios",
+  },
+
+  footer_hint: "Estos cambios afectan solo a tu experiencia de usuario.",
+  toast_saved: "Configuración guardada con éxito.",
+},
+
+
 
 }
