@@ -18,6 +18,7 @@ import SyntheticVoiceUsagePage from '@/pages/SyntheticVoiceUsagePage';
 import CookiesPolicyPage from '@/pages/CookiesPolicyPage';
 import SupportPage from "@/pages/SupportPage";
 import Dashboard from "@/pages/Dashboard";
+import SettingsPage from "@/pages/SettingsPage";
 
 function AppContent() {
   const location = useLocation();
@@ -41,6 +42,7 @@ function AppContent() {
           <Route path="/cookies" element={<CookiesPolicyPage />} />
           <Route path="/soporte" element={<SupportPage />} />
           <Route path="/app/dashboard" element={<Dashboard />} />
+          <Route path="/settings" element={<SettingsPage />} />
         </Routes>
       </main>
       {!hideLayout && <Footer />}
