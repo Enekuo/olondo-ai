@@ -19,6 +19,8 @@ import CookiesPolicyPage from '@/pages/CookiesPolicyPage';
 import SupportPage from "@/pages/SupportPage";
 import Dashboard from "@/pages/Dashboard";
 import SettingsPage from "@/pages/SettingsPage";
+import CreateNewPage from "@/pages/CreateNewPage";
+import LibraryPage from "@/pages/LibraryPage";
 
 function AppContent() {
   const location = useLocation();
@@ -43,6 +45,8 @@ function AppContent() {
           <Route path="/soporte" element={<SupportPage />} />
           <Route path="/app/dashboard" element={<Dashboard />} />
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/create" element={<CreateNewPage />} />
+          <Route path="/library" element={<LibraryPage />} />
         </Routes>
       </main>
       {!hideLayout && <Footer />}
