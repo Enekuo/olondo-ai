@@ -17,7 +17,7 @@ export const es = {
   authModalRegisterNameLabel: 'Nombre (opcional)',
   authModalRegisterNamePlaceholder: 'Tu Nombre', 
   authModalRegisterPasswordPlaceholder: 'Crea una contraseña segura',
-  welcome_part1: 'Creador De Texto Y Resumen En Voz',
+  welcome_part1: 'Creador De Texto Y Resumen En Voz 1',
   homeSubtitle: "Genera resúmenes y textos con IA y escúchalos con voz natural para estudiar, trabajar o inspirarte.", 
   homeBtnCreateText: '✍ Crear Texto',
   homeBtnCreateSummary: '📝 Crear Resumen',
