@@ -593,20 +593,6 @@ user_menu: "Menú de usuario",
   settings_appearance_language: "Idioma",
   settings_appearance_language_hint: "Cambia el idioma desde aquí.",
 
-  // Audio
-  settings_audio_title: "Audio por defecto",
-  settings_audio_desc: "Configura la reproducción y la voz para tus escuchas.",
-  settings_audio_voice: "Voz",
-  settings_audio_voice_female: "Olondo Femenina",
-  settings_audio_voice_male: "Olondo Masculina",
-  settings_audio_voice_podcast: "Podcast Pro",
-  settings_audio_rate: "Velocidad (x)",
-  settings_audio_rate_hint: "0.5–1.5",
-  settings_audio_pitch: "Tono",
-  settings_audio_pitch_hint: "-6 a +6",
-  settings_audio_autoplay_next: "Reproducir el siguiente automáticamente",
-  settings_audio_normalize: "Normalizar volumen automáticamente",
-
   // Notificaciones
   settings_notifications_title: "Notificaciones",
   settings_notifications_desc: "Elige qué correos o avisos quieres recibir.",
