@@ -24,32 +24,35 @@ import LibraryPage from "@/pages/LibraryPage";
 
 function AppContent() {
   const location = useLocation();
-  const hideLayout = location.pathname.startsWith("/app/dashboard"); // ocultar navbar/footer en dashboard
+
+  // rutas internas donde ocultar Navbar y Footer
+  const hideOn = ["/app/dashboard", "/create", "/settings", "/library"];
+  const shouldHideLayout = hideOn.some(path => location.pathname.startsWith(path));
 
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
-      {!hideLayout && <Navbar />}
-      <main className="flex-grow">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/create-text" element={<CreateTextPage />} />
-          <Route path="/create-summary" element={<CreateSummaryPage />} />
-          <Route path="/free-trial" element={<FreeTrialPage />} />
-          <Route path="/pricing" element={<PricingPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/aviso-legal" element={<LegalNoticePage />} />
-          <Route path="/politica-de-privacidad" element={<PrivacyPolicyPage />} />
-          <Route path="/terminos-condiciones" element={<TermsConditionsPage />} />
-          <Route path="/synthetic-voice-use" element={<SyntheticVoiceUsagePage />} />
-          <Route path="/cookies" element={<CookiesPolicyPage />} />
-          <Route path="/soporte" element={<SupportPage />} />
-          <Route path="/app/dashboard" element={<Dashboard />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/create" element={<CreateNewPage />} />
-          <Route path="/library" element={<LibraryPage />} />
-        </Routes>
-      </main>
-      {!hideLayout && <Footer />}
+      {!shouldHideLayout && <Navbar />}
+
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/create-text" element={<CreateTextPage />} />
+        <Route path="/create-summary" element={<CreateSummaryPage />} />
+        <Route path="/free-trial" element={<FreeTrialPage />} />
+        <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/aviso-legal" element={<LegalNoticePage />} />
+        <Route path="/politica-de-privacidad" element={<PrivacyPolicyPage />} />
+        <Route path="/terminos-condiciones" element={<TermsConditionsPage />} />
+        <Route path="/synthetic-voice-use" element={<SyntheticVoiceUsagePage />} />
+        <Route path="/cookies" element={<CookiesPolicyPage />} />
+        <Route path="/soporte" element={<SupportPage />} />
+        <Route path="/app/dashboard" element={<Dashboard />} />
+        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/create" element={<CreateNewPage />} />
+        <Route path="/library" element={<LibraryPage />} />
+      </Routes>
+
+      {!shouldHideLayout && <Footer />}
       <Toaster />
     </div>
   );
