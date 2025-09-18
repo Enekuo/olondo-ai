@@ -11,7 +11,7 @@ const CreateSummaryPage = () => {
   const speechText = t("create_summary_speech");
 
   return (
-    <section className="w-full bg-white dark:bg-slate-950">
+    <section className="w-full bg-white dark:bg-slate-900">
       <div className="container mx-auto px-6 py-16 max-w-6xl">
         {/* SOLO TÍTULO (sin badge ni subtitle) */}
         <div className="mb-12 text-center">
@@ -27,17 +27,17 @@ const CreateSummaryPage = () => {
             <div className="relative">
               {/* Bocadillo justo encima de la cabeza */}
               {speechText && speechText !== "create_summary_speech" && (
-                <div className="absolute -top-2 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-md px-4 py-2 rounded-2xl text-sm text-slate-800 dark:text-slate-200 relative">
+                <div className="absolute -top-2 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-md px-4 py-2 rounded-2xl text-sm text-slate-800 dark:text-slate-200 relative">
                   {speechText}
                   {/* Triángulo apuntando hacia abajo */}
-                  <div className="absolute left-1/2 top-full -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-white dark:border-b-slate-900"></div>
+                  <div className="absolute left-1/2 top-full -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-white dark:border-b-slate-800"></div>
                 </div>
               )}
 
               <img
                 src="olondo-mascota2.png" // ajusta ruta/nombre si es distinto
                 alt={t("create_summary_image_alt")}
-                className="w-[320px] sm:w-[360px] md:w-[380px] h-auto select-none"
+                className="w-[320px] sm:w-[360px] md:w-[380px] h-auto select-none dark:brightness-95"
                 draggable="false"
                 loading="eager"
               />
