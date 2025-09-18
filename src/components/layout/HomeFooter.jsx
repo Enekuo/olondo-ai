@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { Instagram, Twitter, Linkedin, Mail, Sparkles } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 
-
 const HomeFooter = () => {
   const { t } = useLanguage();
   const { toast } = useToast();
@@ -35,16 +34,15 @@ const HomeFooter = () => {
       variant: "default",
     });
   };
-  
+
   const handleLegalLinkClick = (e, path) => {
     e.preventDefault();
-     toast({
+    toast({
       title: t('toastFeatureNotImplementedTitle', '🚧 Funcionalidad no implementada'),
       description: t('toastPageNotImplementedDescription', 'La página para "{linkName}" aún no está implementada. ¡Puedes solicitarla en tu próximo mensaje! 🚀', {linkName: t(legalItems.find(item => item.path === path)?.titleKey || path)}),
       variant: "default",
     });
-  }
-
+  };
 
   return (
     <footer className="bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 py-12 md:py-16">
@@ -78,8 +76,8 @@ const HomeFooter = () => {
             <ul className="space-y-2">
               {legalItems.map((item) => (
                 <li key={item.titleKey}>
-                  <Link 
-                    to={item.path} 
+                  <Link
+                    to={item.path}
                     className="text-sm text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors"
                   >
                     {t(item.titleKey)}
@@ -109,20 +107,22 @@ const HomeFooter = () => {
                 </a>
               </div>
             </div>
-            
+
             <div className="mb-6">
               <h4 className="text-sm font-medium mb-2 text-slate-800 dark:text-slate-200">{t('footerLanguageTitle', 'Idioma')}</h4>
               <LanguageSwitcher />
             </div>
 
+            {/* Reemplazo: Botón discreto "Planes" que enlaza a /pricing */}
             <div>
-              <h4 className="text-sm font-medium mb-2 text-slate-800 dark:text-slate-200">{t('footerSubscriptionTitle', 'Plan Pro')}</h4>
-              <Button 
-                onClick={handleSubscriptionClick}
-                className="w-full bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90 text-white text-sm"
-              >
-                <Sparkles size={16} className="mr-2" />
-                {t('footerSubscribeButton', 'Suscribirse al Plan Pro')}
+              <h4 className="text-sm font-medium mb-2 text-slate-800 dark:text-slate-200">
+                {t('footerSubscriptionTitle', 'Planes')}
+              </h4>
+              <Button asChild variant="secondary" className="w-full text-sm">
+                <Link to="/pricing">
+                  <Sparkles size={16} className="mr-2" />
+                  {t('footerSubscribeButton', 'Ver planes')}
+                </Link>
               </Button>
             </div>
           </div>
