@@ -30,14 +30,14 @@ const SupportPage = () => {
   };
 
   return (
-    <div className="min-h-[70vh] bg-gradient-to-b from-[#F6FAFF] to-white dark:from-slate-950 dark:to-slate-950">
+    <div className="min-h-[70vh] bg-gradient-to-b from-[#F6FAFF] to-white dark:from-slate-900 dark:to-slate-900">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14">
 
         <div className="grid gap-10 md:grid-cols-2 items-start">
           {/* Left: compact "Contáctanos" + heading + mascot */}
           <div>
             {/* Contáctanos (compacto, solo en la columna izquierda) */}
-            <section className="mb-8 rounded-2xl border border-slate-200 bg-[#F7F8FC] p-5 sm:p-6 dark:bg-slate-900 dark:border-slate-800">
+            <section className="mb-8 rounded-2xl border border-slate-200 bg-[#F7F8FC] p-5 sm:p-6 dark:bg-slate-800 dark:border-slate-700">
               <div className="flex items-center justify-between gap-4">
                 <div>
                   <h2 className="text-3xl sm:text-4xl font-extrabold leading-tight text-slate-900 dark:text-slate-100">
@@ -58,9 +58,6 @@ const SupportPage = () => {
             <p className="text-sm font-semibold tracking-wider text-blue-600 mb-3 dark:text-blue-400">
               {t("support_kicker")}
             </p>
-            {/* <h1 className="text-4xl sm:text-5xl font-extrabold leading-tight text-slate-900">
-              {t("support_title")}
-            </h1> */}
             <p className="mt-4 text-slate-600 text-lg dark:text-slate-300">
               {t("support_subtitle")}
             </p>
@@ -68,18 +65,16 @@ const SupportPage = () => {
             {/* Mascota + burbuja a la derecha */}
             <div className="relative mt-10 inline-block">
               <img
-                src="/olondo.mascota.png"   // asegúrate de tenerla en /public
+                src="/olondo.mascota.png"
                 alt="Soporte Olondo.AI"
-                className="h-[260px] sm:h-[320px] w-auto select-none pointer-events-none dark:brightness-90"
+                className="h-[260px] sm:h-[320px] w-auto select-none pointer-events-none dark:brightness-95"
                 draggable={false}
               />
 
-              {/* Burbuja (solo desktop/tablet) */}
+              {/* Burbuja */}
               <div className="absolute left-[calc(100%+12px)] top-6 hidden md:block">
-                {/* “pico” de la burbuja */}
-                <div className="absolute -left-2 top-4 h-3 w-3 rotate-45 bg-white border-l border-t border-slate-200 shadow-[0_1px_2px_rgba(15,23,42,0.06)] dark:bg-slate-800 dark:border-slate-700 dark:shadow-[0_1px_2px_rgba(2,6,23,0.4)]" />
-                {/* cuerpo de la burbuja */}
-                <div className="rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+                <div className="absolute -left-2 top-4 h-3 w-3 rotate-45 bg-white border-l border-t border-slate-200 shadow-[0_1px_2px_rgba(15,23,42,0.06)] dark:bg-slate-700 dark:border-slate-600 dark:shadow-[0_1px_2px_rgba(0,0,0,0.4)]" />
+                <div className="rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm dark:border-slate-600 dark:bg-slate-700">
                   <span className="text-slate-700 dark:text-slate-200">
                     {t("support_bubble_text")}
                   </span>
@@ -88,11 +83,11 @@ const SupportPage = () => {
             </div>
           </div>
 
-          {/* Right: form card (sin cambios de estructura, con dark) */}
+          {/* Right: form card */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-2xl border bg-white p-6 sm:p-8 shadow-[0_10px_40px_rgba(15,23,42,0.06)] border-slate-200 dark:bg-slate-900 dark:border-slate-800"
+            className="rounded-2xl border bg-white p-6 sm:p-8 shadow-[0_10px_40px_rgba(15,23,42,0.06)] border-slate-200 dark:bg-slate-800 dark:border-slate-700"
           >
             <form onSubmit={onSubmit} className="space-y-5">
               {/* Honeypot */}
@@ -117,7 +112,7 @@ const SupportPage = () => {
                   onChange={onChange}
                   placeholder={t("support_form_name_placeholder")}
                   required
-                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none ring-0 focus:border-blue-500 text-slate-900 placeholder-slate-400 dark:bg-slate-950 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500"
+                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none ring-0 focus:border-blue-500 text-slate-900 placeholder-slate-400 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-100 dark:placeholder-slate-400"
                 />
               </div>
 
@@ -132,7 +127,7 @@ const SupportPage = () => {
                   onChange={onChange}
                   placeholder="email@ejemplo.com"
                   required
-                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none ring-0 focus:border-blue-500 text-slate-900 placeholder-slate-400 dark:bg-slate-950 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500"
+                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none ring-0 focus:border-blue-500 text-slate-900 placeholder-slate-400 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-100 dark:placeholder-slate-400"
                 />
               </div>
 
@@ -146,7 +141,7 @@ const SupportPage = () => {
                   value={form.subject}
                   onChange={onChange}
                   placeholder={t("support_form_subject_placeholder")}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none ring-0 focus:border-blue-500 text-slate-900 placeholder-slate-400 dark:bg-slate-950 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500"
+                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none ring-0 focus:border-blue-500 text-slate-900 placeholder-slate-400 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-100 dark:placeholder-slate-400"
                 />
               </div>
 
@@ -161,7 +156,7 @@ const SupportPage = () => {
                   placeholder={t("support_form_message_placeholder")}
                   required
                   rows={6}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none ring-0 focus:border-blue-500 text-slate-900 placeholder-slate-400 dark:bg-slate-950 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500"
+                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none ring-0 focus:border-blue-500 text-slate-900 placeholder-slate-400 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-100 dark:placeholder-slate-400"
                 />
               </div>
 
