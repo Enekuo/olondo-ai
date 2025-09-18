@@ -25,9 +25,13 @@ import LibraryPage from "@/pages/LibraryPage";
 function AppContent() {
   const location = useLocation();
 
-  // rutas internas donde ocultar Navbar y Footer
+  // Rutas donde se OCULTAN Navbar y Footer.
+  // Importante: solo coinciden si es exactamente la ruta o un subpath ("/ruta/..."),
+  // NO por compartir prefijo. Así evitamos ocultar en "/create-text" y "/create-summary".
   const hideOn = ["/app/dashboard", "/create", "/settings", "/library"];
-  const shouldHideLayout = hideOn.some(path => location.pathname.startsWith(path));
+  const shouldHideLayout = hideOn.some((path) => {
+    return location.pathname === path || location.pathname.startsWith(`${path}/`);
+  });
 
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
@@ -46,6 +50,8 @@ function AppContent() {
         <Route path="/synthetic-voice-use" element={<SyntheticVoiceUsagePage />} />
         <Route path="/cookies" element={<CookiesPolicyPage />} />
         <Route path="/soporte" element={<SupportPage />} />
+
+        {/* Vistas internas sin header/footer */}
         <Route path="/app/dashboard" element={<Dashboard />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/create" element={<CreateNewPage />} />
