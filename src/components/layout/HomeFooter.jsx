@@ -35,15 +35,6 @@ const HomeFooter = () => {
     });
   };
 
-  const handleLegalLinkClick = (e, path) => {
-    e.preventDefault();
-    toast({
-      title: t('toastFeatureNotImplementedTitle', '🚧 Funcionalidad no implementada'),
-      description: t('toastPageNotImplementedDescription', 'La página para "{linkName}" aún no está implementada. ¡Puedes solicitarla en tu próximo mensaje! 🚀', {linkName: t(legalItems.find(item => item.path === path)?.titleKey || path)}),
-      variant: "default",
-    });
-  };
-
   return (
     <footer className="bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 py-12 md:py-16">
       <div className="container mx-auto px-4 md:px-6">
@@ -113,15 +104,12 @@ const HomeFooter = () => {
               <LanguageSwitcher />
             </div>
 
-            {/* Reemplazo: Botón discreto "Planes" que enlaza a /pricing */}
+            {/* Nuevo botón "Planes" */}
             <div>
-              <h4 className="text-sm font-medium mb-2 text-slate-800 dark:text-slate-200">
-                {t('footerSubscriptionTitle', 'Planes')}
-              </h4>
-              <Button asChild variant="secondary" className="w-full text-sm">
+              <Button asChild className="w-full text-sm bg-primary text-white hover:bg-primary/90">
                 <Link to="/pricing">
                   <Sparkles size={16} className="mr-2" />
-                  {t('footerSubscribeButton', 'Ver planes')}
+                  {t('footerPlansButton', 'Planes')}
                 </Link>
               </Button>
             </div>
