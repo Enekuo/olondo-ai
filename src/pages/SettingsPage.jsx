@@ -40,7 +40,7 @@ const SettingsPage = () => {
   // === Colores y dimensiones (idénticos al Dashboard, adaptados por tema) ===
   const HEADER_COLOR     = theme === "dark" ? "#262F3F" : "#ffffff";  // header
   const SIDEBAR_COLOR    = theme === "dark" ? "#354153" : "#f8f9fb";  // sidebar
-  const ACTIVE_BG_COLOR  = theme === "dark" ? "#262F3F" : "#e9eef5";  // item activo en sidebar
+  const ACTIVE_BG_COLOR  = theme === "dark" ? "#262F3F" : "#e9eef5";  // activo sidebar
   const BORDER_COLOR     = theme === "dark" ? "#1f2937" : "#e5e7eb";  // bordes
   const HEADER_HEIGHT_PX = 72;
   const SIDEBAR_WIDTH_PX = 190;
@@ -59,8 +59,8 @@ const SettingsPage = () => {
 
   const [audio, setAudio] = useState({
     voice: "olondo_standard_female",
-    rate: 1.0,      // 0.5 - 1.5
-    pitch: 0,       // -6 - +6 (semitonos aprox. visual)
+    rate: 1.0,
+    pitch: 0,
     autoplayNext: true,
     autoNormalize: true,
   });
@@ -73,13 +73,12 @@ const SettingsPage = () => {
 
   const saveAll = (e) => {
     e?.preventDefault?.();
-    // Aquí integrarías tu persistencia real (API o local)
     alert(t("settings_toast_saved") || "Configuración guardada.");
   };
 
   return (
     <div className="min-h-screen w-full bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
-      {/* === HEADER (idéntico al del Dashboard) === */}
+      {/* === HEADER === */}
       <header
         className="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-slate-800"
         style={{ backgroundColor: HEADER_COLOR, height: HEADER_HEIGHT_PX, borderColor: BORDER_COLOR }}
@@ -156,7 +155,7 @@ const SettingsPage = () => {
           {/* SIDEBAR */}
           <aside className="border-r border-slate-200 dark:border-slate-800" style={{ borderColor: BORDER_COLOR }}>
             <div
-              className="sticky text-slate-100 ps-2 pe-5 py-6"
+              className="sticky ps-2 pe-5 py-6 text-slate-800 dark:text-slate-100"
               style={{
                 backgroundColor: SIDEBAR_COLOR,
                 top: HEADER_HEIGHT_PX,
@@ -290,7 +289,6 @@ const SettingsPage = () => {
                         label={t("settings_appearance_language") || "Idioma"}
                         hint={t("settings_appearance_language_hint") || "Cambia el idioma desde aquí."}
                       >
-                        {/* Reutilizamos tu conmutador de idioma existente para no duplicar lógica */}
                         <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-2">
                           <LanguageSwitcher />
                         </div>
