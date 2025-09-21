@@ -190,7 +190,7 @@ const CreateTextPage = () => {
               <li>{t('ct_flow_4_b2')}</li>
               <li>{t('ct_flow_4_b3')}</li>
               <li>{t('ct_flow_4_b4')}</li>
-            </ul>
+            </ul> 
             {/* Chips visuales (mismos textos, solo presentación) */}
             <div className="flex flex-wrap gap-2">
               <Badge>{t('ct_flow_4_b1')}</Badge>
