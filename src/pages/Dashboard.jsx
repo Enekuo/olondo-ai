@@ -47,8 +47,8 @@ const Dashboard = () => {
               <div
                 className="inline-flex items-center justify-center rounded-[10px]"
                 style={{
-                  width: 44,
-                  height: 44,
+                  width: 36,
+                  height: 36,
                   backgroundColor: "rgba(255,255,255,0.22)",
                   boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)"
                 }}
