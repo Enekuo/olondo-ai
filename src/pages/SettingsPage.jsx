@@ -37,9 +37,11 @@ const SettingsPage = () => {
   const { theme, setTheme } = useTheme();
   const location = useLocation();
 
-  // === Colores y dimensiones (idénticos al Dashboard) ===
-  const HEADER_COLOR  = "#262F3F"; // header y item activo
-  const SIDEBAR_COLOR = "#354153"; // base sidebar
+  // === Colores y dimensiones (idénticos al Dashboard, adaptados por tema) ===
+  const HEADER_COLOR     = theme === "dark" ? "#262F3F" : "#ffffff";  // header
+  const SIDEBAR_COLOR    = theme === "dark" ? "#354153" : "#f8f9fb";  // sidebar
+  const ACTIVE_BG_COLOR  = theme === "dark" ? "#262F3F" : "#e9eef5";  // item activo en sidebar
+  const BORDER_COLOR     = theme === "dark" ? "#1f2937" : "#e5e7eb";  // bordes
   const HEADER_HEIGHT_PX = 72;
   const SIDEBAR_WIDTH_PX = 190;
 
@@ -79,8 +81,8 @@ const SettingsPage = () => {
     <div className="min-h-screen w-full bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
       {/* === HEADER (idéntico al del Dashboard) === */}
       <header
-        className="sticky top-0 z-40 w-full border-b border-slate-800"
-        style={{ backgroundColor: HEADER_COLOR, height: HEADER_HEIGHT_PX }}
+        className="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-slate-800"
+        style={{ backgroundColor: HEADER_COLOR, height: HEADER_HEIGHT_PX, borderColor: BORDER_COLOR }}
       >
         <div className="w-full h-full px-4 sm:px-6 flex items-center justify-between">
           {/* Logo */}
@@ -121,8 +123,12 @@ const SettingsPage = () => {
             {/* Toggle claro/oscuro */}
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl hover:opacity-90 text-white transition-colors"
-              style={{ backgroundColor: "#1f2937" }}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl hover:opacity-90 transition-colors"
+              style={{
+                backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff",
+                border: theme === "dark" ? "none" : "1px solid #e5e7eb",
+                color: theme === "dark" ? "#ffffff" : "#1f2937"
+              }}
               aria-label={t("theme_toggle")}
             >
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
@@ -130,8 +136,12 @@ const SettingsPage = () => {
 
             {/* Avatar */}
             <button
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:opacity-90 text-white transition-colors"
-              style={{ backgroundColor: "#1f2937" }}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:opacity-90 transition-colors"
+              style={{
+                backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff",
+                border: theme === "dark" ? "none" : "1px solid #e5e7eb",
+                color: theme === "dark" ? "#ffffff" : "#1f2937"
+              }}
               aria-label={t("user_menu")}
             >
               <User className="w-5 h-5" />
@@ -144,7 +154,7 @@ const SettingsPage = () => {
       <div className="w-full">
         <div className="grid gap-0 md:grid-cols-[190px_1fr]">
           {/* SIDEBAR */}
-          <aside className="border-r border-slate-800">
+          <aside className="border-r border-slate-200 dark:border-slate-800" style={{ borderColor: BORDER_COLOR }}>
             <div
               className="sticky text-slate-100 ps-2 pe-5 py-6"
               style={{
@@ -158,7 +168,7 @@ const SettingsPage = () => {
                 <Link
                   to="/app/dashboard"
                   className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
-                  style={{ backgroundColor: isActive("/app/dashboard") ? HEADER_COLOR : "transparent" }}
+                  style={{ backgroundColor: isActive("/app/dashboard") ? ACTIVE_BG_COLOR : "transparent" }}
                 >
                   <Home className="w-5 h-5 shrink-0" />
                   <span className="truncate">{t("dashboard_nav_home")}</span>
@@ -167,7 +177,7 @@ const SettingsPage = () => {
                 <Link
                   to="/create"
                   className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
-                  style={{ backgroundColor: isActive("/create") ? HEADER_COLOR : "transparent" }}
+                  style={{ backgroundColor: isActive("/create") ? ACTIVE_BG_COLOR : "transparent" }}
                 >
                   <PlusCircle className="w-5 h-5 shrink-0" />
                   <span className="truncate">{t("dashboard_nav_create")}</span>
@@ -176,7 +186,7 @@ const SettingsPage = () => {
                 <Link
                   to="/library"
                   className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
-                  style={{ backgroundColor: isActive("/library") ? HEADER_COLOR : "transparent" }}
+                  style={{ backgroundColor: isActive("/library") ? ACTIVE_BG_COLOR : "transparent" }}
                 >
                   <Folder className="w-5 h-5 shrink-0" />
                   <span className="truncate">{t("dashboard_nav_library")}</span>
@@ -185,7 +195,7 @@ const SettingsPage = () => {
                 <Link
                   to="/pricing"
                   className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
-                  style={{ backgroundColor: isActive("/pricing") ? HEADER_COLOR : "transparent" }}
+                  style={{ backgroundColor: isActive("/pricing") ? ACTIVE_BG_COLOR : "transparent" }}
                 >
                   <CreditCard className="w-5 h-5 shrink-0" />
                   <span className="truncate">{t("dashboard_nav_plans")}</span>
@@ -194,7 +204,7 @@ const SettingsPage = () => {
                 <Link
                   to="/settings"
                   className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
-                  style={{ backgroundColor: isActive("/settings") ? HEADER_COLOR : "transparent" }}
+                  style={{ backgroundColor: isActive("/settings") ? ACTIVE_BG_COLOR : "transparent" }}
                 >
                   <SettingsIcon className="w-5 h-5 shrink-0" />
                   <span className="truncate">{t("dashboard_nav_settings")}</span>
