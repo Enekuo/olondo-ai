@@ -74,8 +74,12 @@ const CreateNewPage = () => {
             {/* Toggle claro/oscuro */}
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl hover:opacity-90 text-white transition-colors"
-              style={{ backgroundColor: "#1f2937" }}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl hover:opacity-90 transition-colors"
+              style={{
+                backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff",
+                border: theme === "dark" ? "none" : "1px solid #e5e7eb",
+                color: theme === "dark" ? "#ffffff" : "#1f2937"
+              }}
               aria-label={t("theme_toggle")}
             >
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
@@ -83,8 +87,12 @@ const CreateNewPage = () => {
 
             {/* Avatar */}
             <button
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:opacity-90 text-white transition-colors"
-              style={{ backgroundColor: "#1f2937" }}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:opacity-90 transition-colors"
+              style={{
+                backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff",
+                border: theme === "dark" ? "none" : "1px solid #e5e7eb",
+                color: theme === "dark" ? "#ffffff" : "#1f2937"
+              }}
               aria-label={t("user_menu")}
             >
               <User className="w-5 h-5" />
