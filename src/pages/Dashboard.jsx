@@ -27,33 +27,48 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen w-full bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+      {/* HEADER */}
       <header
         className="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-slate-800"
         style={{ backgroundColor: HEADER_COLOR, height: HEADER_HEIGHT_PX, borderColor: BORDER_COLOR }}
       >
         <div className="w-full h-full px-4 sm:px-6 flex items-center justify-between">
+          {/* Logo */}
           <Link to="/" className="font-extrabold text-lg tracking-tight text-sky-400">
             Olondo.ai
           </Link>
+
+          {/* Controles */}
           <div className="flex items-center gap-3 sm:gap-4">
+            {/* Indicador de plan */}
             <div className="hidden sm:flex items-center gap-2 select-none">
-              <div className="inline-flex items-center justify-center rounded-[10px]"
+              <div
+                className="inline-flex items-center justify-center rounded-[10px]"
                 style={{
-                  width: 30, height: 30,
+                  width: 30,
+                  height: 30,
                   backgroundColor: "rgba(255,255,255,0.22)",
                   boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)"
-                }}>
+                }}
+                aria-hidden="true"
+              >
                 <Gem className="w-5 h-5 text-white/90" />
               </div>
-              <div className="rounded-xl px-3 py-1.5 text-sm font-medium text-slate-100/90"
+              <div
+                className="rounded-xl px-3 py-1.5 text-sm font-medium text-slate-100/90"
                 style={{
                   backgroundColor: "rgba(255,255,255,0.06)",
                   boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)"
-                }}>
+                }}
+              >
                 {planLabel}
               </div>
             </div>
+
+            {/* Selector idioma */}
             <LanguageSwitcher />
+
+            {/* Toggle claro/oscuro */}
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="inline-flex h-10 w-10 items-center justify-center rounded-xl hover:opacity-90 transition-colors"
@@ -66,6 +81,8 @@ const Dashboard = () => {
             >
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
+
+            {/* Avatar */}
             <button
               className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:opacity-90 transition-colors"
               style={{
@@ -81,42 +98,67 @@ const Dashboard = () => {
         </div>
       </header>
 
+      {/* LAYOUT principal */}
       <div className="w-full">
         <div className="grid gap-0 md:grid-cols-[190px_1fr]">
+          {/* SIDEBAR */}
           <aside className="border-r border-slate-200 dark:border-slate-800" style={{ borderColor: BORDER_COLOR }}>
-            <div className="sticky ps-2 pe-3 py-6 text-slate-800 dark:text-slate-100"
+            <div
+              className="sticky ps-2 pe-3 py-6 text-slate-800 dark:text-slate-100"
               style={{
                 backgroundColor: SIDEBAR_COLOR,
                 top: HEADER_HEIGHT_PX,
                 height: `calc(100vh - ${HEADER_HEIGHT_PX}px)`,
                 width: SIDEBAR_WIDTH_PX
-              }}>
+              }}
+            >
               <div className="h-full flex flex-col justify-between">
+                {/* NAV */}
                 <nav className="space-y-1">
-                  <Link to="/app/dashboard" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
-                    style={{ backgroundColor: isActive("/app/dashboard") ? ACTIVE_BG_COLOR : "transparent" }}>
+                  <Link
+                    to="/app/dashboard"
+                    className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
+                    style={{ backgroundColor: isActive("/app/dashboard") ? ACTIVE_BG_COLOR : "transparent" }}
+                  >
                     <Home className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_home")}</span>
                   </Link>
-                  <Link to="/create" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
-                    style={{ backgroundColor: isActive("/create") ? ACTIVE_BG_COLOR : "transparent" }}>
+
+                  <Link
+                    to="/create"
+                    className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
+                    style={{ backgroundColor: isActive("/create") ? ACTIVE_BG_COLOR : "transparent" }}
+                  >
                     <PlusCircle className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_create")}</span>
                   </Link>
-                  <Link to="/library" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
-                    style={{ backgroundColor: isActive("/library") ? ACTIVE_BG_COLOR : "transparent" }}>
+
+                  <Link
+                    to="/library"
+                    className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
+                    style={{ backgroundColor: isActive("/library") ? ACTIVE_BG_COLOR : "transparent" }}
+                  >
                     <Folder className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_library")}</span>
                   </Link>
-                  <Link to="/pricing" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
-                    style={{ backgroundColor: isActive("/pricing") ? ACTIVE_BG_COLOR : "transparent" }}>
+
+                  <Link
+                    to="/pricing"
+                    className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
+                    style={{ backgroundColor: isActive("/pricing") ? ACTIVE_BG_COLOR : "transparent" }}
+                  >
                     <CreditCard className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_plans")}</span>
                   </Link>
                 </nav>
-                <div className="pb-6">
-                  <Link to="/settings" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
-                    style={{ backgroundColor: isActive("/settings") ? ACTIVE_BG_COLOR : "transparent" }}>
+
+                {/* CONFIGURACIÓN más abajo */}
+                <div className="pb-10">
+                  <Link
+                    to="/settings"
+                    className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
+                    style={{ backgroundColor: isActive("/settings") ? ACTIVE_BG_COLOR : "transparent" }}
+                  >
                     <Settings className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_settings")}</span>
                   </Link>
@@ -125,6 +167,7 @@ const Dashboard = () => {
             </div>
           </aside>
 
+          {/* CONTENIDO */}
           <main>
             <section className="py-8 md:py-10 px-4 md:px-8">
               {/* Contenido principal */}
