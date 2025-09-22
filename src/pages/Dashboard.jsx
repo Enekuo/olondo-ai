@@ -104,7 +104,7 @@ const Dashboard = () => {
           {/* SIDEBAR */}
           <aside className="border-r border-slate-200 dark:border-slate-800" style={{ borderColor: BORDER_COLOR }}>
             <div
-              className="sticky ps-2 pe-3 py-6 text-slate-800 dark:text-slate-100"
+              className="sticky ps-2 pe-3 pt-6 pb-0 text-slate-800 dark:text-slate-100"
               style={{
                 backgroundColor: SIDEBAR_COLOR,
                 top: HEADER_HEIGHT_PX,
@@ -152,8 +152,8 @@ const Dashboard = () => {
                   </Link>
                 </nav>
 
-                {/* CONFIGURACIÓN más abajo */}
-                <div className="pb-10">
+                {/* CONFIGURACIÓN MÁS ABAJO */}
+                <div className="pb-0">
                   <Link
                     to="/settings"
                     className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
