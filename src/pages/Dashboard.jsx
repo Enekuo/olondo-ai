@@ -114,7 +114,7 @@ const Dashboard = () => {
                     <span className="truncate">{t("dashboard_nav_plans")}</span>
                   </Link>
                 </nav>
-                <div className="mt-auto mb-4 pt-4">
+                <div className="mt-auto pt-4">
                   <Link to="/settings" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
                     style={{ backgroundColor: isActive("/settings") ? ACTIVE_BG_COLOR : "transparent" }}>
                     <Settings className="w-5 h-5 shrink-0" />
