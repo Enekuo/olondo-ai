@@ -91,7 +91,7 @@ const Dashboard = () => {
                 height: `calc(100vh - ${HEADER_HEIGHT_PX}px)`,
                 width: SIDEBAR_WIDTH_PX
               }}>
-              <div className="h-full flex flex-col">
+              <div className="h-full flex flex-col justify-between">
                 <nav className="space-y-1">
                   <Link to="/app/dashboard" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
                     style={{ backgroundColor: isActive("/app/dashboard") ? ACTIVE_BG_COLOR : "transparent" }}>
@@ -114,7 +114,7 @@ const Dashboard = () => {
                     <span className="truncate">{t("dashboard_nav_plans")}</span>
                   </Link>
                 </nav>
-                <div className="mt-auto pt-4">
+                <div className="pb-6">
                   <Link to="/settings" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
                     style={{ backgroundColor: isActive("/settings") ? ACTIVE_BG_COLOR : "transparent" }}>
                     <Settings className="w-5 h-5 shrink-0" />
@@ -127,7 +127,7 @@ const Dashboard = () => {
 
           <main>
             <section className="py-8 md:py-10 px-4 md:px-8">
-              {/* Contenido principal desactivado temporalmente */}
+              {/* Contenido principal */}
             </section>
           </main>
         </div>
