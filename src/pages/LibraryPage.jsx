@@ -25,6 +25,32 @@ const LibraryPage = () => {
 
   const isActive = (path) => location.pathname === path;
 
+  const planPillStyle =
+    theme === "dark"
+      ? {
+          backgroundColor: "rgba(255,255,255,0.06)",
+          boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)",
+          color: "#E5E7EB",
+        }
+      : {
+          backgroundColor: "#f3f4f6",
+          boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12)",
+          color: "#0f172a",
+        };
+
+  const planIconBoxStyle =
+    theme === "dark"
+      ? {
+          backgroundColor: "rgba(255,255,255,0.22)",
+          boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)",
+        }
+      : {
+          backgroundColor: "#ffffff",
+          boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)",
+        };
+
+  const planIconColor = theme === "dark" ? "#ffffff" : "#334155";
+
   return (
     <div className="min-h-screen w-full bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
       {/* HEADER */}
@@ -41,22 +67,11 @@ const LibraryPage = () => {
             <div className="hidden sm:flex items-center gap-2 select-none">
               <div
                 className="inline-flex items-center justify-center rounded-[10px]"
-                style={{
-                  width: 30,
-                  height: 30,
-                  backgroundColor: "rgba(255,255,255,0.22)",
-                  boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)"
-                }}
+                style={{ width: 30, height: 30, ...planIconBoxStyle }}
               >
-                <Gem className="w-5 h-5 text-white/90" />
+                <Gem className="w-5 h-5" style={{ color: planIconColor }} />
               </div>
-              <div
-                className="rounded-xl px-3 py-1.5 text-sm font-medium text-slate-100/90"
-                style={{
-                  backgroundColor: "rgba(255,255,255,0.06)",
-                  boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)"
-                }}
-              >
+              <div className="rounded-xl px-3 py-1.5 text-sm font-medium" style={planPillStyle}>
                 {planLabel}
               </div>
             </div>

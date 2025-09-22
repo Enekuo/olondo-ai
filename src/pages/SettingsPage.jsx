@@ -36,7 +36,6 @@ const SettingsPage = () => {
   const { theme, setTheme } = useTheme();
   const location = useLocation();
 
-  // Colores / layout
   const HEADER_COLOR     = theme === "dark" ? "#262F3F" : "#ffffff";
   const SIDEBAR_COLOR    = theme === "dark" ? "#354153" : "#f8f9fb";
   const ACTIVE_BG_COLOR  = theme === "dark" ? "#262F3F" : "#e9eef5";
@@ -44,24 +43,45 @@ const SettingsPage = () => {
   const HEADER_HEIGHT_PX = 72;
   const SIDEBAR_WIDTH_PX = 190;
 
-  // Simulación de plan (para la píldora del header)
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
 
   const isActive = (path) => location.pathname === path;
 
-  // Estado
   const [profile, setProfile] = useState({ displayName: "", email: "" });
-  const [notifications, setNotifications] = useState({
-    product: true,
-    tips: true,
-    billing: true,
-  });
+  const [notifications, setNotifications] = useState({ product: true, tips: true, billing: true });
 
   const saveAll = (e) => {
     e?.preventDefault?.();
     alert(t("settings_toast_saved") || "Configuración guardada.");
   };
+
+  // Estilos de la píldora/ícono del plan por tema
+  const planPillStyle =
+    theme === "dark"
+      ? {
+          backgroundColor: "rgba(255,255,255,0.06)",
+          boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)",
+          color: "#E5E7EB",
+        }
+      : {
+          backgroundColor: "#f3f4f6",
+          boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12)",
+          color: "#0f172a",
+        };
+
+  const planIconBoxStyle =
+    theme === "dark"
+      ? {
+          backgroundColor: "rgba(255,255,255,0.22)",
+          boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)",
+        }
+      : {
+          backgroundColor: "#ffffff",
+          boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)",
+        };
+
+  const planIconColor = theme === "dark" ? "#ffffff" : "#334155";
 
   return (
     <div className="min-h-screen w-full bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -76,35 +96,22 @@ const SettingsPage = () => {
           </Link>
 
           <div className="flex items-center gap-3 sm:gap-4">
-            {/* Píldora de plan */}
+            {/* Indicador de plan */}
             <div className="hidden sm:flex items-center gap-2 select-none">
               <div
                 className="inline-flex items-center justify-center rounded-[10px]"
-                style={{
-                  width: 30,
-                  height: 30,
-                  backgroundColor: "rgba(255,255,255,0.22)",
-                  boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)"
-                }}
+                style={{ width: 30, height: 30, ...planIconBoxStyle }}
                 aria-hidden="true"
               >
-                <Gem className="w-5 h-5 text-white/90" />
+                <Gem className="w-5 h-5" style={{ color: planIconColor }} />
               </div>
-              <div
-                className="rounded-xl px-3 py-1.5 text-sm font-medium text-slate-100/90"
-                style={{
-                  backgroundColor: "rgba(255,255,255,0.06)",
-                  boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)"
-                }}
-              >
+              <div className="rounded-xl px-3 py-1.5 text-sm font-medium" style={planPillStyle}>
                 {planLabel}
               </div>
             </div>
 
-            {/* Idioma */}
             <LanguageSwitcher />
 
-            {/* Tema */}
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="inline-flex h-10 w-10 items-center justify-center rounded-xl hover:opacity-90 transition-colors"
@@ -118,7 +125,6 @@ const SettingsPage = () => {
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
 
-            {/* Avatar */}
             <button
               className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:opacity-90 transition-colors"
               style={{
