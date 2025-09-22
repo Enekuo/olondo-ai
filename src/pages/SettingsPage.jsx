@@ -36,6 +36,7 @@ const SettingsPage = () => {
   const { theme, setTheme } = useTheme();
   const location = useLocation();
 
+  // Colores / layout
   const HEADER_COLOR     = theme === "dark" ? "#262F3F" : "#ffffff";
   const SIDEBAR_COLOR    = theme === "dark" ? "#354153" : "#f8f9fb";
   const ACTIVE_BG_COLOR  = theme === "dark" ? "#262F3F" : "#e9eef5";
@@ -43,13 +44,19 @@ const SettingsPage = () => {
   const HEADER_HEIGHT_PX = 72;
   const SIDEBAR_WIDTH_PX = 190;
 
+  // Simulación de plan (para la píldora del header)
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
 
   const isActive = (path) => location.pathname === path;
 
+  // Estado
   const [profile, setProfile] = useState({ displayName: "", email: "" });
-  const [notifications, setNotifications] = useState({ product: true, tips: true, billing: true });
+  const [notifications, setNotifications] = useState({
+    product: true,
+    tips: true,
+    billing: true,
+  });
 
   const saveAll = (e) => {
     e?.preventDefault?.();
@@ -67,7 +74,9 @@ const SettingsPage = () => {
           <Link to="/" className="font-extrabold text-lg tracking-tight text-sky-400">
             Olondo.ai
           </Link>
+
           <div className="flex items-center gap-3 sm:gap-4">
+            {/* Píldora de plan */}
             <div className="hidden sm:flex items-center gap-2 select-none">
               <div
                 className="inline-flex items-center justify-center rounded-[10px]"
@@ -77,6 +86,7 @@ const SettingsPage = () => {
                   backgroundColor: "rgba(255,255,255,0.22)",
                   boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)"
                 }}
+                aria-hidden="true"
               >
                 <Gem className="w-5 h-5 text-white/90" />
               </div>
@@ -90,7 +100,11 @@ const SettingsPage = () => {
                 {planLabel}
               </div>
             </div>
+
+            {/* Idioma */}
             <LanguageSwitcher />
+
+            {/* Tema */}
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="inline-flex h-10 w-10 items-center justify-center rounded-xl hover:opacity-90 transition-colors"
@@ -103,6 +117,8 @@ const SettingsPage = () => {
             >
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
+
+            {/* Avatar */}
             <button
               className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:opacity-90 transition-colors"
               style={{
@@ -118,7 +134,7 @@ const SettingsPage = () => {
         </div>
       </header>
 
-      {/* LAYOUT */}
+      {/* LAYOUT principal */}
       <div className="w-full">
         <div className="grid gap-0 md:grid-cols-[190px_1fr]">
           {/* SIDEBAR */}
@@ -134,28 +150,35 @@ const SettingsPage = () => {
             >
               <div className="h-full flex flex-col justify-between">
                 <nav className="space-y-1">
-                  <Link to="/app/dashboard"
+                  <Link
+                    to="/app/dashboard"
                     className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
                     style={{ backgroundColor: isActive("/app/dashboard") ? ACTIVE_BG_COLOR : "transparent" }}
                   >
                     <Home className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_home")}</span>
                   </Link>
-                  <Link to="/create"
+
+                  <Link
+                    to="/create"
                     className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
                     style={{ backgroundColor: isActive("/create") ? ACTIVE_BG_COLOR : "transparent" }}
                   >
                     <PlusCircle className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_create")}</span>
                   </Link>
-                  <Link to="/library"
+
+                  <Link
+                    to="/library"
                     className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
                     style={{ backgroundColor: isActive("/library") ? ACTIVE_BG_COLOR : "transparent" }}
                   >
                     <Folder className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_library")}</span>
                   </Link>
-                  <Link to="/pricing"
+
+                  <Link
+                    to="/pricing"
                     className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
                     style={{ backgroundColor: isActive("/pricing") ? ACTIVE_BG_COLOR : "transparent" }}
                   >
@@ -164,9 +187,10 @@ const SettingsPage = () => {
                   </Link>
                 </nav>
 
-                {/* CONFIGURACIÓN MÁS ABAJO */}
+                {/* Configuración bien abajo */}
                 <div className="pb-0">
-                  <Link to="/settings"
+                  <Link
+                    to="/settings"
                     className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
                     style={{ backgroundColor: isActive("/settings") ? ACTIVE_BG_COLOR : "transparent" }}
                   >
@@ -178,10 +202,11 @@ const SettingsPage = () => {
             </div>
           </aside>
 
-          {/* CONTENIDO AJUSTES */}
+          {/* CONTENIDO */}
           <main>
             <div className="w-full bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
               <div className="mx-auto max-w-5xl px-6 md:px-10 lg:px-12 py-8 md:py-12">
+                {/* Título y subtítulo */}
                 <div className="mb-6 md:mb-8">
                   <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
                     {t("settings_title") || "Ajustes"}
@@ -192,9 +217,10 @@ const SettingsPage = () => {
                 </div>
 
                 <form onSubmit={saveAll} className="space-y-6 md:space-y-8">
+                  {/* Perfil */}
                   <Section
                     title={t("settings_profile_title") || "Perfil"}
-                    description={t("settings_profile_desc") || "Información básica de tu cuenta."}
+                    description={t("settings_profile_desc") || "Información básica para identificar tu cuenta."}
                   >
                     <Row>
                       <Field label={t("settings_profile_display_name") || "Nombre visible"}>
@@ -203,9 +229,10 @@ const SettingsPage = () => {
                           className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-sky-500"
                           value={profile.displayName}
                           onChange={(e) => setProfile({ ...profile, displayName: e.target.value })}
-                          placeholder="Ej. Eneko"
+                          placeholder={t("settings_profile_display_name_ph") || "Ej. Eneko"}
                         />
                       </Field>
+
                       <Field label={t("settings_profile_email") || "Email"}>
                         <input
                           type="email"
@@ -216,11 +243,53 @@ const SettingsPage = () => {
                         />
                       </Field>
                     </Row>
+
+                    <div className="flex items-center justify-between gap-3 pt-2">
+                      <div className="text-xs text-slate-500 dark:text-slate-400">
+                        {t("settings_profile_security_hint") || "La edición de contraseña se gestiona desde tu área segura."}
+                      </div>
+                      <Link
+                        to="/pricing"
+                        className="inline-flex items-center justify-center rounded-lg border border-slate-300 dark:border-slate-700 px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-900"
+                      >
+                        {t("settings_cta_manage_plan") || "Gestionar plan"}
+                      </Link>
+                    </div>
                   </Section>
 
+                  {/* Apariencia */}
+                  <Section
+                    title={t("settings_appearance_title") || "Apariencia"}
+                    description={t("settings_appearance_desc") || "Elige cómo se ve la interfaz."}
+                  >
+                    <Row>
+                      <Field label={t("settings_appearance_theme") || "Tema"}>
+                        <select
+                          className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-sky-500"
+                          value={theme}
+                          onChange={(e) => setTheme(e.target.value)}
+                        >
+                          <option value="system">{t("settings_appearance_system") || "Sistema"}</option>
+                          <option value="light">{t("settings_appearance_light") || "Claro"}</option>
+                          <option value="dark">{t("settings_appearance_dark") || "Oscuro"}</option>
+                        </select>
+                      </Field>
+
+                      <Field
+                        label={t("settings_appearance_language") || "Idioma"}
+                        hint={t("settings_appearance_language_hint") || "Cambia el idioma desde aquí."}
+                      >
+                        <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-2">
+                          <LanguageSwitcher />
+                        </div>
+                      </Field>
+                    </Row>
+                  </Section>
+
+                  {/* Notificaciones */}
                   <Section
                     title={t("settings_notifications_title") || "Notificaciones"}
-                    description={t("settings_notifications_desc") || "Elige qué correos recibir."}
+                    description={t("settings_notifications_desc") || "Elige qué correos o avisos quieres recibir."}
                   >
                     <div className="space-y-3">
                       <label className="flex items-start gap-3">
@@ -232,8 +301,12 @@ const SettingsPage = () => {
                         />
                         <div>
                           <div className="text-sm font-medium">{t("settings_notifications_product") || "Novedades de producto"}</div>
+                          <p className="text-xs text-slate-500 dark:text-slate-400">
+                            {t("settings_notifications_product_hint") || "Lanzamientos, mejoras y anuncios importantes."}
+                          </p>
                         </div>
                       </label>
+
                       <label className="flex items-start gap-3">
                         <input
                           type="checkbox"
@@ -243,8 +316,12 @@ const SettingsPage = () => {
                         />
                         <div>
                           <div className="text-sm font-medium">{t("settings_notifications_tips") || "Consejos y buenas prácticas"}</div>
+                          <p className="text-xs text-slate-500 dark:text-slate-400">
+                            {t("settings_notifications_tips_hint") || "Emails breves para aprovechar mejor Olondo.AI."}
+                          </p>
                         </div>
                       </label>
+
                       <label className="flex items-start gap-3">
                         <input
                           type="checkbox"
@@ -254,15 +331,19 @@ const SettingsPage = () => {
                         />
                         <div>
                           <div className="text-sm font-medium">{t("settings_notifications_billing") || "Facturación"}</div>
+                          <p className="text-xs text-slate-500 dark:text-slate-400">
+                            {t("settings_notifications_billing_hint") || "Recibos, cambios de plan y recordatorios de pago."}
+                          </p>
                         </div>
                       </label>
                     </div>
                   </Section>
 
-                  <div className="flex justify-end">
+                  {/* Acciones (solo Guardar cambios) */}
+                  <div className="flex items-center justify-end gap-3">
                     <button
                       type="submit"
-                      className="inline-flex items-center justify-center rounded-lg bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 text-sm font-medium"
+                      className="inline-flex items-center justify-center rounded-lg bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-sky-500"
                     >
                       {t("settings_cta_save") || "Guardar cambios"}
                     </button>
