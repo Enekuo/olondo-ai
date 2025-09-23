@@ -25,36 +25,21 @@ const Dashboard = () => {
 
   const isActive = (path) => location.pathname === path;
 
-  // Hover visual (fondo suave + texto) sin navegación
+  // Clases de hover (fondo + texto)
   const hoverBg  = theme === "dark" ? "hover:bg-[#262F3F]" : "hover:bg-[#e9eef5]";
   const hoverTxt = theme === "dark" ? "hover:text-white"  : "hover:text-slate-900";
 
-  // Estilos de la píldora/ícono del plan por tema
   const planPillStyle =
     theme === "dark"
-      ? {
-          backgroundColor: "rgba(255,255,255,0.06)",
-          boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)",
-          color: "#E5E7EB",
-        }
-      : {
-          backgroundColor: "#f3f4f6", // slate-100
-          boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12)",
-          color: "#0f172a", // slate-900
-        };
+      ? { backgroundColor: "rgba(255,255,255,0.06)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)", color: "#E5E7EB" }
+      : { backgroundColor: "#f3f4f6", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12)", color: "#0f172a" };
 
   const planIconBoxStyle =
     theme === "dark"
-      ? {
-          backgroundColor: "rgba(255,255,255,0.22)",
-          boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)",
-        }
-      : {
-          backgroundColor: "#ffffff",
-          boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)",
-        };
+      ? { backgroundColor: "rgba(255,255,255,0.22)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)" }
+      : { backgroundColor: "#ffffff", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)" };
 
-  const planIconColor = theme === "dark" ? "#ffffff" : "#334155"; // slate-600
+  const planIconColor = theme === "dark" ? "#ffffff" : "#334155";
 
   return (
     <div className="min-h-screen w-full bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -85,12 +70,12 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Selector idioma (envoltura con hover) */}
-            <div className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition-colors ${hoverBg}`}>
+            {/* Selector idioma con hover */}
+            <div className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition-colors cursor-pointer ${hoverBg}`}>
               <LanguageSwitcher />
             </div>
 
-            {/* Toggle claro/oscuro */}
+            {/* Toggle claro/oscuro con hover */}
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition-colors cursor-pointer ${hoverBg}`}
@@ -104,7 +89,7 @@ const Dashboard = () => {
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
 
-            {/* Avatar */}
+            {/* Avatar con hover */}
             <button
               className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors cursor-pointer ${hoverBg}`}
               style={{
@@ -140,7 +125,7 @@ const Dashboard = () => {
                   <Link
                     to="/app/dashboard"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${hoverBg} ${hoverTxt}`}
-                    style={{ backgroundColor: isActive("/app/dashboard") ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={isActive("/app/dashboard") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <Home className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_home")}</span>
@@ -149,7 +134,7 @@ const Dashboard = () => {
                   <Link
                     to="/create"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${hoverBg} ${hoverTxt}`}
-                    style={{ backgroundColor: isActive("/create") ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={isActive("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <PlusCircle className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_create")}</span>
@@ -158,7 +143,7 @@ const Dashboard = () => {
                   <Link
                     to="/library"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${hoverBg} ${hoverTxt}`}
-                    style={{ backgroundColor: isActive("/library") ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={isActive("/library") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <Folder className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_library")}</span>
@@ -167,7 +152,7 @@ const Dashboard = () => {
                   <Link
                     to="/pricing"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${hoverBg} ${hoverTxt}`}
-                    style={{ backgroundColor: isActive("/pricing") ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={isActive("/pricing") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <CreditCard className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_plans")}</span>
@@ -179,7 +164,7 @@ const Dashboard = () => {
                   <Link
                     to="/settings"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${hoverBg} ${hoverTxt}`}
-                    style={{ backgroundColor: isActive("/settings") ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={isActive("/settings") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <Settings className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_settings")}</span>
