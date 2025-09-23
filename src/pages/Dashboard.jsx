@@ -29,15 +29,36 @@ const Dashboard = () => {
   const hoverBg  = theme === "dark" ? "hover:bg-[#262F3F]" : "hover:bg-[#e9eef5]";
   const hoverTxt = theme === "dark" ? "hover:text-white"  : "hover:text-slate-900";
 
+  // Base para botones del header (sin inline style -> permite hover)
+  const headerBtnBase =
+    theme === "dark"
+      ? "bg-slate-800 text-white border-0"
+      : "bg-white text-slate-800 border border-slate-200";
+
+  // Estilos de la píldora/ícono del plan por tema
   const planPillStyle =
     theme === "dark"
-      ? { backgroundColor: "rgba(255,255,255,0.06)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)", color: "#E5E7EB" }
-      : { backgroundColor: "#f3f4f6", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12)", color: "#0f172a" };
+      ? {
+          backgroundColor: "rgba(255,255,255,0.06)",
+          boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)",
+          color: "#E5E7EB",
+        }
+      : {
+          backgroundColor: "#f3f4f6",
+          boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12)",
+          color: "#0f172a",
+        };
 
   const planIconBoxStyle =
     theme === "dark"
-      ? { backgroundColor: "rgba(255,255,255,0.22)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)" }
-      : { backgroundColor: "#ffffff", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)" };
+      ? {
+          backgroundColor: "rgba(255,255,255,0.22)",
+          boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)",
+        }
+      : {
+          backgroundColor: "#ffffff",
+          boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)",
+        };
 
   const planIconColor = theme === "dark" ? "#ffffff" : "#334155";
 
@@ -70,33 +91,23 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Selector idioma con hover */}
+            {/* Selector idioma (envoltura con hover) */}
             <div className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition-colors cursor-pointer ${hoverBg}`}>
               <LanguageSwitcher />
             </div>
 
-            {/* Toggle claro/oscuro con hover */}
+            {/* Toggle claro/oscuro (CORREGIDO: sin inline bg -> permite hover) */}
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition-colors cursor-pointer ${hoverBg}`}
-              style={{
-                backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff",
-                border: theme === "dark" ? "none" : "1px solid #e5e7eb",
-                color: theme === "dark" ? "#ffffff" : "#1f2937"
-              }}
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition-colors cursor-pointer ${headerBtnBase} ${hoverBg}`}
               aria-label={t("theme_toggle")}
             >
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
 
-            {/* Avatar con hover */}
+            {/* Avatar */}
             <button
-              className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors cursor-pointer ${hoverBg}`}
-              style={{
-                backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff",
-                border: theme === "dark" ? "none" : "1px solid #e5e7eb",
-                color: theme === "dark" ? "#ffffff" : "#1f2937"
-              }}
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors cursor-pointer ${headerBtnBase} ${hoverBg}`}
               aria-label={t("user_menu")}
             >
               <User className="w-5 h-5" />
