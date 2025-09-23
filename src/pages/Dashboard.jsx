@@ -25,6 +25,10 @@ const Dashboard = () => {
 
   const isActive = (path) => location.pathname === path;
 
+  // Hover visual (fondo suave + texto) sin navegación
+  const hoverBg  = theme === "dark" ? "hover:bg-[#262F3F]" : "hover:bg-[#e9eef5]";
+  const hoverTxt = theme === "dark" ? "hover:text-white"  : "hover:text-slate-900";
+
   // Estilos de la píldora/ícono del plan por tema
   const planPillStyle =
     theme === "dark"
@@ -81,13 +85,15 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Selector idioma */}
-            <LanguageSwitcher />
+            {/* Selector idioma (envoltura con hover) */}
+            <div className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition-colors ${hoverBg}`}>
+              <LanguageSwitcher />
+            </div>
 
             {/* Toggle claro/oscuro */}
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl hover:opacity-90 transition-colors"
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition-colors cursor-pointer ${hoverBg}`}
               style={{
                 backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff",
                 border: theme === "dark" ? "none" : "1px solid #e5e7eb",
@@ -100,7 +106,7 @@ const Dashboard = () => {
 
             {/* Avatar */}
             <button
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:opacity-90 transition-colors"
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors cursor-pointer ${hoverBg}`}
               style={{
                 backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff",
                 border: theme === "dark" ? "none" : "1px solid #e5e7eb",
@@ -133,7 +139,7 @@ const Dashboard = () => {
                 <nav className="space-y-1">
                   <Link
                     to="/app/dashboard"
-                    className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${hoverBg} ${hoverTxt}`}
                     style={{ backgroundColor: isActive("/app/dashboard") ? ACTIVE_BG_COLOR : "transparent" }}
                   >
                     <Home className="w-5 h-5 shrink-0" />
@@ -142,7 +148,7 @@ const Dashboard = () => {
 
                   <Link
                     to="/create"
-                    className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${hoverBg} ${hoverTxt}`}
                     style={{ backgroundColor: isActive("/create") ? ACTIVE_BG_COLOR : "transparent" }}
                   >
                     <PlusCircle className="w-5 h-5 shrink-0" />
@@ -151,7 +157,7 @@ const Dashboard = () => {
 
                   <Link
                     to="/library"
-                    className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${hoverBg} ${hoverTxt}`}
                     style={{ backgroundColor: isActive("/library") ? ACTIVE_BG_COLOR : "transparent" }}
                   >
                     <Folder className="w-5 h-5 shrink-0" />
@@ -160,7 +166,7 @@ const Dashboard = () => {
 
                   <Link
                     to="/pricing"
-                    className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${hoverBg} ${hoverTxt}`}
                     style={{ backgroundColor: isActive("/pricing") ? ACTIVE_BG_COLOR : "transparent" }}
                   >
                     <CreditCard className="w-5 h-5 shrink-0" />
@@ -172,7 +178,7 @@ const Dashboard = () => {
                 <div className="pb-0">
                   <Link
                     to="/settings"
-                    className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${hoverBg} ${hoverTxt}`}
                     style={{ backgroundColor: isActive("/settings") ? ACTIVE_BG_COLOR : "transparent" }}
                   >
                     <Settings className="w-5 h-5 shrink-0" />
