@@ -60,11 +60,11 @@ const CreateNewPage = () => {
     out: { opacity: 0, y: -20 },
   };
   const cardVariants = {
-    initial: { opacity: 0, scale: 0.9 },
+    initial: { opacity: 0, scale: 0.96 },
     in: (i) => ({
       opacity: 1,
       scale: 1,
-      transition: { delay: i * 0.15 + 0.3, type: "spring", stiffness: 100 },
+      transition: { delay: i * 0.12 + 0.25, type: "spring", stiffness: 110, damping: 16 },
     }),
   };
 
@@ -77,6 +77,7 @@ const CreateNewPage = () => {
       icon: <FileText className="h-10 w-10 mb-4 text-blue-500" />,
       to: "/create-text",
       gradient: "from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600",
+      cta: "🚀 Crear Texto",
     },
     {
       titleKey: "freeTrialCreateSummaryButton",
@@ -86,6 +87,7 @@ const CreateNewPage = () => {
       icon: <BookOpen className="h-10 w-10 mb-4 text-purple-500" />,
       to: "/create-summary",
       gradient: "from-purple-500 to-fuchsia-500 hover:from-purple-600 hover:to-fuchsia-600",
+      cta: "✨ Crear Resumen",
     },
   ];
 
@@ -97,23 +99,14 @@ const CreateNewPage = () => {
         style={{ backgroundColor: HEADER_COLOR, height: HEADER_HEIGHT_PX, borderColor: BORDER_COLOR }}
       >
         <div className="w-full h-full px-4 sm:px-6 flex items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="font-extrabold text-lg tracking-tight text-sky-400">
-            Olondo.ai
-          </Link>
+          <Link to="/" className="font-extrabold text-lg tracking-tight text-sky-400">Olondo.ai</Link>
 
-          {/* Controles */}
           <div className="flex items-center gap-3 sm:gap-4">
             <div className="hidden sm:flex items-center gap-2 select-none">
-              <div
-                className="inline-flex items-center justify-center rounded-[10px]"
-                style={{ width: 30, height: 30, ...planIconBoxStyle }}
-              >
+              <div className="inline-flex items-center justify-center rounded-[10px]" style={{ width: 30, height: 30, ...planIconBoxStyle }}>
                 <Gem className="w-5 h-5" style={{ color: planIconColor }} />
               </div>
-              <div className="rounded-xl px-3 py-1.5 text-sm font-medium" style={planPillStyle}>
-                {planLabel}
-              </div>
+              <div className="rounded-xl px-3 py-1.5 text-sm font-medium" style={planPillStyle}>{planLabel}</div>
             </div>
 
             <LanguageSwitcher />
@@ -162,49 +155,29 @@ const CreateNewPage = () => {
             >
               <div className="h-full flex flex-col justify-between">
                 <nav className="space-y-1">
-                  <Link
-                    to="/app/dashboard"
-                    className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
-                    style={{ backgroundColor: isActive("/app/dashboard") ? ACTIVE_BG_COLOR : "transparent" }}
-                  >
+                  <Link to="/app/dashboard" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/app/dashboard") ? ACTIVE_BG_COLOR : "transparent" }}>
                     <Home className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_home")}</span>
                   </Link>
 
-                  <Link
-                    to="/create"
-                    className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
-                    style={{ backgroundColor: isActive("/create") ? ACTIVE_BG_COLOR : "transparent" }}
-                  >
+                  <Link to="/create" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/create") ? ACTIVE_BG_COLOR : "transparent" }}>
                     <PlusCircle className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_create")}</span>
                   </Link>
 
-                  <Link
-                    to="/library"
-                    className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
-                    style={{ backgroundColor: isActive("/library") ? ACTIVE_BG_COLOR : "transparent" }}
-                  >
+                  <Link to="/library" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/library") ? ACTIVE_BG_COLOR : "transparent" }}>
                     <Folder className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_library")}</span>
                   </Link>
 
-                  <Link
-                    to="/pricing"
-                    className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
-                    style={{ backgroundColor: isActive("/pricing") ? ACTIVE_BG_COLOR : "transparent" }}
-                  >
+                  <Link to="/pricing" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/pricing") ? ACTIVE_BG_COLOR : "transparent" }}>
                     <CreditCard className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_plans")}</span>
                   </Link>
                 </nav>
 
                 <div className="pb-0">
-                  <Link
-                    to="/settings"
-                    className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
-                    style={{ backgroundColor: isActive("/settings") ? ACTIVE_BG_COLOR : "transparent" }}
-                  >
+                  <Link to="/settings" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/settings") ? ACTIVE_BG_COLOR : "transparent" }}>
                     <Settings className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_settings")}</span>
                   </Link>
@@ -222,25 +195,27 @@ const CreateNewPage = () => {
                 exit="out"
                 variants={pageVariants}
                 transition={{ duration: 0.5 }}
-                className="rounded-2xl p-6 md:p-10 bg-gradient-to-br from-slate-100 via-sky-50 to-blue-100 dark:from-slate-900 dark:via-slate-800 dark:to-sky-900"
+                className="rounded-2xl py-12 md:py-16 px-6 md:px-10 bg-gradient-to-br from-slate-100 via-sky-50 to-blue-100 dark:from-slate-900 dark:via-slate-800 dark:to-sky-900"
               >
-                {/* Título y subtítulo */}
+                {/* Título + subtítulo con más jerarquía */}
                 <motion.div
-                  className="text-center mb-10"
-                  initial={{ opacity: 0, y: -20 }}
+                  className="text-center mb-12 md:mb-14"
+                  initial={{ opacity: 0, y: -18 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1, duration: 0.5, type: "spring" }}
+                  transition={{ delay: 0.08, duration: 0.45, type: "spring" }}
                 >
-                  <Gem className="h-14 w-14 text-blue-500 mx-auto mb-3" />
-                  <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-2">
-                    {t("plan_premium", "Plan Premium")}
-                  </h1>
-                  <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+                  <div className="flex items-center justify-center gap-3 md:gap-4 mb-3">
+                    <Gem className="h-7 w-7 md:h-8 md:w-8 text-blue-500" />
+                    <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                      {t("plan_premium", "Plan Premium")}
+                    </h1>
+                  </div>
+                  <p className="text-slate-700 dark:text-slate-300 text-base md:text-xl leading-snug max-w-2xl mx-auto">
                     {t("freeTrialPageSubtitle", "Explora el poder de Olondo AI. Elige una opción para empezar:")}
                   </p>
                 </motion.div>
 
-                {/* Tarjetas */}
+                {/* Tarjetas con mayor contraste */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                   {options.map((opt, index) => (
                     <motion.div
@@ -249,21 +224,21 @@ const CreateNewPage = () => {
                       variants={cardVariants}
                       initial="initial"
                       animate="in"
-                      className="bg-white dark:bg-slate-800/70 backdrop-blur-md p-8 rounded-xl shadow-2xl border border-transparent hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-1 flex flex-col items-center text-center"
+                      className="bg-white dark:bg-slate-800/70 backdrop-blur-md p-8 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-[0_18px_45px_-20px_rgba(2,6,23,0.25)] hover:shadow-[0_24px_60px_-20px_rgba(2,6,23,0.35)] hover:ring-1 hover:ring-slate-200 dark:hover:ring-slate-700 transition-all duration-300 transform hover:-translate-y-1.5 flex flex-col items-center text-center"
                     >
                       {opt.icon}
                       <h2 className="text-2xl font-semibold text-slate-800 dark:text-white mb-2">
                         {t(opt.titleKey, opt.defaultTitle)}
                       </h2>
-                      <p className="text-slate-500 dark:text-slate-400 mb-6 text-sm">
+                      <p className="text-slate-600 dark:text-slate-400 mb-6 text-sm md:text-[15px]">
                         {t(opt.descriptionKey, opt.defaultDescription)}
                       </p>
                       <Link to={opt.to} className="w-full">
                         <Button
                           size="lg"
-                          className={`w-full text-base font-semibold bg-gradient-to-r ${opt.gradient} text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-lg`}
+                          className={`w-full text-base font-semibold bg-gradient-to-r ${opt.gradient} text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] rounded-lg`}
                         >
-                          {t("freeTrialSelectOption", "Seleccionar Opción")}
+                          {opt.cta}
                         </Button>
                       </Link>
                     </motion.div>
