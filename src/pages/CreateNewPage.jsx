@@ -62,7 +62,7 @@ const CreateNewPage = () => {
   };
 
   const cardVariants = {
-    initial: { opacity: 0, scale: 0.9 },
+    initial: { opacity: 0, scale: 0.95 },
     in: (i) => ({
       opacity: 1,
       scale: 1,
@@ -263,7 +263,8 @@ const CreateNewPage = () => {
             <motion.section
               className="py-16 md:py-20 px-4 md:px-8 flex flex-col items-center 
                          bg-gradient-to-br from-slate-100 via-sky-50 to-blue-100 
-                         dark:from-slate-900 dark:via-slate-800 dark:to-sky-900 rounded-2xl mx-4 md:mx-8"
+                         dark:from-slate-900 dark:via-slate-800 dark:to-sky-900 
+                         rounded-b-2xl max-w-6xl mx-auto"
               initial="initial"
               animate="in"
               exit="out"
@@ -294,7 +295,7 @@ const CreateNewPage = () => {
                     variants={cardVariants}
                     initial="initial"
                     animate="in"
-                    className="bg-white dark:bg-slate-800/70 backdrop-blur-md p-8 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-[0_18px_45px_-20px_rgba(2,6,23,0.25)] hover:shadow-[0_24px_60px_-20px_rgba(2,6,23,0.35)] hover:ring-1 hover:ring-slate-200 dark:hover:ring-slate-700 transition-all duration-300 transform hover:-translate-y-1.5 flex flex-col justify-between h-full text-center"
+                    className="bg-white dark:bg-slate-800/70 backdrop-blur-md p-8 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-[0_18px_45px_-20px_rgba(2,6,23,0.25)] hover:shadow-[0_24px_60px_-20px_rgba(2,6,23,0.35)] hover:ring-1 hover:ring-slate-200 dark:hover:ring-slate-700 transition-all duration-300 transform hover:-translate-y-1.5 hover:scale-[1.01] flex flex-col justify-between h-full text-center"
                   >
                     <div className="flex flex-col items-center">
                       {opt.icon}
