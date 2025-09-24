@@ -261,7 +261,9 @@ const CreateNewPage = () => {
 
           <main>
             <motion.section
-              className="py-16 md:py-20 px-4 md:px-8 flex flex-col items-center"
+              className="py-16 md:py-20 px-4 md:px-8 flex flex-col items-center 
+                         bg-gradient-to-br from-slate-100 via-sky-50 to-blue-100 
+                         dark:from-slate-900 dark:via-slate-800 dark:to-sky-900 rounded-2xl mx-4 md:mx-8"
               initial="initial"
               animate="in"
               exit="out"
