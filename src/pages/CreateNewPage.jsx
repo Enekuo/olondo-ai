@@ -66,6 +66,7 @@ const CreateNewPage = () => {
       to: "/create-text",
       gradient: "from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600",
       cta: "🚀 Crear Texto",
+      emoji: "🚀",
     },
     {
       titleKey: "freeTrialCreateSummaryButton",
@@ -76,6 +77,7 @@ const CreateNewPage = () => {
       to: "/create-summary",
       gradient: "from-purple-500 to-fuchsia-500 hover:from-purple-600 hover:to-fuchsia-600",
       cta: "✨ Crear Resumen",
+      emoji: "✨",
     },
   ];
 
@@ -166,7 +168,7 @@ const CreateNewPage = () => {
           {/* CONTENIDO */}
           <main>
             <motion.section
-              className="py-16 md:py-20 px-4 md:px-8 flex flex-col items-center 
+              className="py-20 md:py-24 px-4 md:px-8 flex flex-col items-center 
                          bg-gradient-to-br from-slate-100 via-sky-50 to-blue-100 
                          dark:from-slate-900 dark:via-slate-800 dark:to-sky-900 
                          rounded-b-2xl max-w-6xl mx-auto mb-10 md:mb-16"
@@ -186,7 +188,7 @@ const CreateNewPage = () => {
                 <h1 className="flex items-center justify-center text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4 gap-3">
                   <Gem className="h-9 w-9 text-blue-500" /> {planLabel}
                 </h1>
-                <p className="text-lg md:text-xl text-slate-700 dark:text-slate-300 max-w-xl mx-auto leading-relaxed">
+                <p className="text-lg md:text-xl text-slate-800 dark:text-slate-200 max-w-xl mx-auto leading-relaxed">
                   Explora el poder de Olondo AI. Elige una opción para empezar:
                 </p>
               </motion.div>
@@ -211,6 +213,7 @@ const CreateNewPage = () => {
                     <div className="flex flex-col items-center">
                       {opt.icon}
                       <h2 className="text-2xl font-semibold text-slate-800 dark:text-white mb-2">
+                        <span className="mr-1">{opt.emoji}</span>
                         {t(opt.titleKey, opt.defaultTitle)}
                       </h2>
                       <p className="text-slate-600 dark:text-slate-400 mb-6 text-sm md:text-[15px]">
