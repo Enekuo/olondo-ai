@@ -135,7 +135,7 @@ const PricingPage = () => {
       >
         {/* Botón temporal hacia el Dashboard (se eliminará cuando el dashboard esté listo) */}
         <button
-          onClick={() => navigate('/app/dashboard')} 
+          onClick={() => navigate('/dashboard')} 
           className="absolute right-6 top-20 z-30 px-4 py-2 bg-sky-600 text-white rounded-lg"
         >
           Ir al Dashboard
