@@ -134,7 +134,7 @@ const Dashboard = () => {
                 {/* NAV */}
                 <nav className="space-y-1">
                   <Link
-                    to="//dashboard"
+                    to="/dashboard"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${hoverBg} ${hoverTxt}`}
                     style={isActive("/dashboard") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
