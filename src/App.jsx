@@ -22,8 +22,8 @@ import PremiumDashboard        from "./pages/PremiumPlan/Dashboard.jsx";
 import PremiumSettingsPage     from "./pages/PremiumPlan/SettingsPage.jsx";
 import PremiumLibraryPage      from "./pages/PremiumPlan/LibraryPage.jsx";
 import PremiumCreateNewPage    from "./pages/PremiumPlan/CreateNewPage.jsx";
-import PremiumCreateSummaryPage from "./pages/PremiumPlan/CreateSummaryPagePre.jsx";
-import PremiumCreateTextPage    from "./pages/PremiumPlan/CreateTextPagePre.jsx";
+import PremiumCreateSummaryPage from "./pages/PremiumPlan/CreateSummaryPage.jsx";
+import PremiumCreateTextPage    from "./pages/PremiumPlan/CreateTextPage.jsx";
 
 function AppContent() {
   const location = useLocation();
