@@ -23,7 +23,9 @@ const Dashboard = () => {
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
 
-  const isActive = (path) => location.pathname === path;
+  // ✅ Cambiado: marca activo también en subrutas
+  const isActive = (path) =>
+    location.pathname === path || location.pathname.startsWith(path + "/");
 
   // Clases de hover (fondo + texto)
   const hoverBg  = theme === "dark" ? "hover:bg-[#262F3F]" : "hover:bg-[#e9eef5]";
@@ -133,10 +135,11 @@ const Dashboard = () => {
               <div className="h-full flex flex-col justify-between">
                 {/* NAV */}
                 <nav className="space-y-1">
+                  {/* ✅ Cambiado: Home va a /app/dashboard y se marca activo con ese path */}
                   <Link
-                    to="/dashboard"
+                    to="/app/dashboard"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${hoverBg} ${hoverTxt}`}
-                    style={isActive("/dashboard") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
+                    style={isActive("/app/dashboard") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <Home className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_home")}</span>
