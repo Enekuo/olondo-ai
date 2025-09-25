@@ -10,7 +10,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 import { useTheme } from "@/components/layout/ThemeProvider";
 
-const CreateSummaryPagePre = () => {
+const CreateSummaryPage = () => {
   const { t } = useLanguage();
   const { theme, setTheme } = useTheme();
   const location = useLocation();
@@ -229,4 +229,4 @@ const CreateSummaryPagePre = () => {
   );
 };
 
-export default CreateSummaryPagePre;
+export default CreateSummaryPage;

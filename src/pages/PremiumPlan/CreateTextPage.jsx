@@ -10,7 +10,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 import { useTheme } from "@/components/layout/ThemeProvider";
 
-const CreateTextPagePre = () => {
+const CreateTextPage = () => {
   const { t } = useLanguage();
   const { theme, setTheme } = useTheme();
   const location = useLocation();
@@ -239,4 +239,4 @@ const CreateTextPagePre = () => {
   );
 };
 
-export default CreateTextPagePre;
+export default CreateTextPage;

@@ -17,10 +17,13 @@ import TermsConditionsPage from '@/pages/TermsConditionsPage';
 import SyntheticVoiceUsagePage from '@/pages/SyntheticVoiceUsagePage';
 import CookiesPolicyPage from '@/pages/CookiesPolicyPage';
 import SupportPage from "@/pages/SupportPage";
-import Dashboard from "@/pages/Dashboard";
-import SettingsPage from "@/pages/SettingsPage";
-import CreateNewPage from "@/pages/CreateNewPage";
-import LibraryPage from "@/pages/LibraryPage";
+// Premium Pages
+import PremiumDashboard        from "./pages/PremiumPlan/Dashboard.jsx";
+import PremiumSettingsPage     from "./pages/PremiumPlan/SettingsPage.jsx";
+import PremiumLibraryPage      from "./pages/PremiumPlan/LibraryPage.jsx";
+import PremiumCreateNewPage    from "./pages/PremiumPlan/CreateNewPage.jsx";
+import PremiumCreateSummaryPage from "./pages/PremiumPlan/CreateSummaryPagePre.jsx";
+import PremiumCreateTextPage    from "./pages/PremiumPlan/CreateTextPagePre.jsx";
 
 function AppContent() {
   const location = useLocation();
@@ -51,11 +54,13 @@ function AppContent() {
         <Route path="/cookies" element={<CookiesPolicyPage />} />
         <Route path="/soporte" element={<SupportPage />} />
 
-        {/* Vistas internas sin header/footer */}
-        <Route path="/app/dashboard" element={<Dashboard />} />
-        <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/create" element={<CreateNewPage />} />
-        <Route path="/library" element={<LibraryPage />} />
+        {/* Premium Routes */}
+        <Route path="/dashboard"        element={<PremiumDashboard />} />
+        <Route path="/settings"         element={<PremiumSettingsPage />} />
+        <Route path="/library"          element={<PremiumLibraryPage />} />
+        <Route path="/create"           element={<PremiumCreateNewPage />} />
+        <Route path="/create/summary"   element={<PremiumCreateSummaryPage />} />
+        <Route path="/create/text"      element={<PremiumCreateTextPage />} />
       </Routes>
 
       {!shouldHideLayout && <Footer />}
