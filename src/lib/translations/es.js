@@ -617,12 +617,15 @@ dashboard_sources_discover: "Descubrir",
 dashboard_sources_empty: "Las fuentes guardadas aparecerán aquí",
 dashboard_sources_hint: "Haz clic en “Añadir” para subir PDFs, enlaces, texto o audio.",
 
-// Dashboard - Chat
+// Dashboard 
 dashboard_chat_title: "Chat",
 dashboard_chat_add_source_title: "Añade una fuente para comenzar",
 dashboard_chat_upload_btn: "Subir una fuente",
 dashboard_chat_input_placeholder: "Sube una fuente para empezar",
 dashboard_chat_sources_count: "0 fuentes",
 
+// CreateNew
+plan_premium_title: "Plan Premium",
+create_new_intro: "Explora el poder de Olondo AI. Elige una opción para empezar:",
 
 }

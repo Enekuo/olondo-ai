@@ -23,7 +23,10 @@ const CreateNewPage = () => {
   const SIDEBAR_WIDTH_PX = 190;
 
   const USER_PLAN = "premium";
-  const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
+  const planLabel =
+    USER_PLAN === "premium"
+      ? t("plan_premium_title", "Plan Premium")
+      : t("plan_basic_title", "Plan Básico");
 
   const isActive = (path) => location.pathname === path;
 
@@ -187,7 +190,7 @@ const CreateNewPage = () => {
                   <Gem className="h-9 w-9 text-blue-500" /> {planLabel}
                 </h1>
                 <p className="text-lg md:text-xl text-slate-700 dark:text-slate-300 max-w-xl mx-auto leading-relaxed">
-                  Explora el poder de Olondo AI. Elige una opción para empezar:
+                  {t("create_new_intro", "Explora el poder de Olondo AI. Elige una opción para empezar:")}
                 </p>
               </motion.div>
 
