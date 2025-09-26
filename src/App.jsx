@@ -1,10 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { ThemeProvider } from '@/components/layout/ThemeProvider';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-// import HomePage from '@/pages/HomePage'; // ⛔ ya no se usa como "/"
+import HomePage from '@/pages/HomePage';
 import CreateTextPage from '@/pages/CreateTextPage';
 import CreateSummaryPage from '@/pages/CreateSummaryPage';
 import FreeTrialPage from '@/pages/FreeTrialPage';
@@ -28,20 +28,32 @@ import PremiumCreateTextPage    from "./pages/PremiumPlan/CreateTextPage.jsx";
 function AppContent() {
   const location = useLocation();
 
-  // ⬇️ Ocultar Navbar/Footer en rutas internas REALES
+  // Ocultamos Navbar/Footer en el área privada REAL
   const hideOn = ["/dashboard", "/create", "/settings", "/library"];
-  const shouldHideLayout = hideOn.some((path) => {
-    return location.pathname === path || location.pathname.startsWith(`${path}/`);
-  });
+  const shouldHideLayout = hideOn.some((path) =>
+    location.pathname === path || location.pathname.startsWith(`${path}/`)
+  );
 
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       {!shouldHideLayout && <Navbar />}
 
       <Routes>
-        {/* ⬇️ HOME MUESTRA EL DASHBOARD */}
-        <Route path="/" element={<PremiumDashboard />} />
+        {/* Home pública intacta */}
+        <Route path="/" element={<HomePage />} />
 
+        {/* Premium / App (dashboard y resto) */}
+        <Route path="/dashboard"        element={<PremiumDashboard />} />
+        <Route path="/settings"         element={<PremiumSettingsPage />} />
+        <Route path="/library"          element={<PremiumLibraryPage />} />
+        <Route path="/create"           element={<PremiumCreateNewPage />} />
+        <Route path="/create/summary"   element={<PremiumCreateSummaryPage />} />
+        <Route path="/create/text"      element={<PremiumCreateTextPage />} />
+
+        {/* Capturamos la ruta antigua y redirigimos */}
+        <Route path="/app/dashboard" element={<Navigate to="/dashboard" replace />} />
+
+        {/* Rutas públicas */}
         <Route path="/create-text" element={<CreateTextPage />} />
         <Route path="/create-summary" element={<CreateSummaryPage />} />
         <Route path="/free-trial" element={<FreeTrialPage />} />
@@ -54,13 +66,8 @@ function AppContent() {
         <Route path="/cookies" element={<CookiesPolicyPage />} />
         <Route path="/soporte" element={<SupportPage />} />
 
-        {/* Premium Routes */}
-        <Route path="/dashboard"        element={<PremiumDashboard />} />
-        <Route path="/settings"         element={<PremiumSettingsPage />} />
-        <Route path="/library"          element={<PremiumLibraryPage />} />
-        <Route path="/create"           element={<PremiumCreateNewPage />} />
-        <Route path="/create/summary"   element={<PremiumCreateSummaryPage />} />
-        <Route path="/create/text"      element={<PremiumCreateTextPage />} />
+        {/* 404 → Home pública */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 
       {!shouldHideLayout && <Footer />}
