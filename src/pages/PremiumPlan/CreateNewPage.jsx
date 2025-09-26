@@ -23,10 +23,7 @@ const CreateNewPage = () => {
   const SIDEBAR_WIDTH_PX = 190;
 
   const USER_PLAN = "premium";
-  const planLabel =
-    USER_PLAN === "premium"
-      ? t("plan_premium_title", "Plan Premium")
-      : t("plan_basic_title", "Plan Básico");
+  const planLabel = USER_PLAN === "premium" ? t("plan_premium_title") : t("plan_basic_title");
 
   const isActive = (path) => location.pathname === path;
 
@@ -58,27 +55,23 @@ const CreateNewPage = () => {
     }),
   };
 
-  // Opciones
+  // Opciones (solo claves)
   const options = [
     {
       titleKey: "freeTrialCreateTextButton",
-      defaultTitle: "Crear Texto",
       descriptionKey: "freeTrialCreateTextDescription",
-      defaultDescription: "Genera contenido original a partir de tus ideas o documentos.",
       icon: <FileText className="h-10 w-10 mb-4 text-blue-500" />,
       to: "/create-text",
       gradient: "from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600",
-      cta: "🚀 Crear Texto",
+      ctaKey: "freeTrialCreateTextButton", // reutilizamos la misma clave del botón
     },
     {
       titleKey: "freeTrialCreateSummaryButton",
-      defaultTitle: "Crear Resumen",
       descriptionKey: "freeTrialCreateSummaryDescription",
-      defaultDescription: "Obtén resúmenes concisos de textos largos o archivos.",
       icon: <BookOpen className="h-10 w-10 mb-4 text-purple-500" />,
       to: "/create-summary",
       gradient: "from-purple-500 to-fuchsia-500 hover:from-purple-600 hover:to-fuchsia-600",
-      cta: "✨ Crear Resumen",
+      ctaKey: "freeTrialCreateSummaryButton",
     },
   ];
 
@@ -190,7 +183,7 @@ const CreateNewPage = () => {
                   <Gem className="h-9 w-9 text-blue-500" /> {planLabel}
                 </h1>
                 <p className="text-lg md:text-xl text-slate-700 dark:text-slate-300 max-w-xl mx-auto leading-relaxed">
-                  {t("create_new_intro", "Explora el poder de Olondo AI. Elige una opción para empezar:")}
+                  {t("create_new_intro")}
                 </p>
               </motion.div>
 
@@ -198,7 +191,7 @@ const CreateNewPage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 max-w-5xl mx-auto">
                 {options.map((opt, index) => (
                   <motion.div
-                    key={opt.defaultTitle}
+                    key={opt.titleKey}
                     custom={index}
                     variants={cardVariants}
                     initial="initial"
@@ -214,10 +207,10 @@ const CreateNewPage = () => {
                     <div className="flex flex-col items-center">
                       {opt.icon}
                       <h2 className="text-2xl font-semibold text-slate-800 dark:text-white mb-2">
-                        {t(opt.titleKey, opt.defaultTitle)}
+                        {t(opt.titleKey)}
                       </h2>
                       <p className="text-slate-600 dark:text-slate-400 mb-6 text-sm md:text-[15px]">
-                        {t(opt.descriptionKey, opt.defaultDescription)}
+                        {t(opt.descriptionKey)}
                       </p>
                     </div>
 
@@ -226,7 +219,7 @@ const CreateNewPage = () => {
                         size="lg"
                         className={`w-full text-base font-semibold bg-gradient-to-r ${opt.gradient} text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] rounded-lg`}
                       >
-                        {opt.cta}
+                        {t(opt.ctaKey)}
                       </Button>
                     </Link>
                   </motion.div>
