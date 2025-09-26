@@ -23,44 +23,27 @@ const Dashboard = () => {
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
 
-  // ✅ Cambiado: marca activo también en subrutas
+  // Marca activo también en subrutas
   const isActive = (path) =>
     location.pathname === path || location.pathname.startsWith(path + "/");
 
-  // Clases de hover (fondo + texto)
   const hoverBg  = theme === "dark" ? "hover:bg-[#262F3F]" : "hover:bg-[#e9eef5]";
   const hoverTxt = theme === "dark" ? "hover:text-white"  : "hover:text-slate-900";
 
-  // Base para botones del header (sin inline style -> permite hover)
   const headerBtnBase =
     theme === "dark"
       ? "bg-slate-800 text-white border-0"
       : "bg-white text-slate-800 border border-slate-200";
 
-  // Estilos de la píldora/ícono del plan por tema
   const planPillStyle =
     theme === "dark"
-      ? {
-          backgroundColor: "rgba(255,255,255,0.06)",
-          boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)",
-          color: "#E5E7EB",
-        }
-      : {
-          backgroundColor: "#f3f4f6",
-          boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12)",
-          color: "#0f172a",
-        };
+      ? { backgroundColor: "rgba(255,255,255,0.06)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)", color: "#E5E7EB" }
+      : { backgroundColor: "#f3f4f6", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12)", color: "#0f172a" };
 
   const planIconBoxStyle =
     theme === "dark"
-      ? {
-          backgroundColor: "rgba(255,255,255,0.22)",
-          boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)",
-        }
-      : {
-          backgroundColor: "#ffffff",
-          boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)",
-        };
+      ? { backgroundColor: "rgba(255,255,255,0.22)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)" }
+      : { backgroundColor: "#ffffff", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)" };
 
   const planIconColor = theme === "dark" ? "#ffffff" : "#334155";
 
@@ -79,7 +62,6 @@ const Dashboard = () => {
 
           {/* Controles */}
           <div className="flex items-center gap-3 sm:gap-4">
-            {/* Indicador de plan */}
             <div className="hidden sm:flex items-center gap-2 select-none">
               <div
                 className="inline-flex items-center justify-center rounded-[10px]"
@@ -93,12 +75,10 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Selector idioma (envoltura con hover) */}
             <div className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition-colors cursor-pointer ${hoverBg}`}>
               <LanguageSwitcher />
             </div>
 
-            {/* Toggle claro/oscuro (CORREGIDO: sin inline bg -> permite hover) */}
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition-colors cursor-pointer ${headerBtnBase} ${hoverBg}`}
@@ -107,7 +87,6 @@ const Dashboard = () => {
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
 
-            {/* Avatar */}
             <button
               className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors cursor-pointer ${headerBtnBase} ${hoverBg}`}
               aria-label={t("user_menu")}
@@ -135,11 +114,11 @@ const Dashboard = () => {
               <div className="h-full flex flex-col justify-between">
                 {/* NAV */}
                 <nav className="space-y-1">
-                  {/* ✅ Cambiado: Home va a /app/dashboard y se marca activo con ese path */}
+                  {/* ⬇️ HOME → /dashboard (ruta real) */}
                   <Link
-                    to="/app/dashboard"
+                    to="/dashboard"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${hoverBg} ${hoverTxt}`}
-                    style={isActive("/app/dashboard") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
+                    style={isActive("/dashboard") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <Home className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_home")}</span>
@@ -173,7 +152,6 @@ const Dashboard = () => {
                   </Link>
                 </nav>
 
-                {/* CONFIGURACIÓN MÁS ABAJO */}
                 <div className="pb-0">
                   <Link
                     to="/settings"

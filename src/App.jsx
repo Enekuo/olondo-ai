@@ -4,7 +4,7 @@ import { ThemeProvider } from '@/components/layout/ThemeProvider';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import HomePage from '@/pages/HomePage';
+// import HomePage from '@/pages/HomePage'; // ⛔ ya no se usa como "/"
 import CreateTextPage from '@/pages/CreateTextPage';
 import CreateSummaryPage from '@/pages/CreateSummaryPage';
 import FreeTrialPage from '@/pages/FreeTrialPage';
@@ -28,10 +28,8 @@ import PremiumCreateTextPage    from "./pages/PremiumPlan/CreateTextPage.jsx";
 function AppContent() {
   const location = useLocation();
 
-  // Rutas donde se OCULTAN Navbar y Footer.
-  // Importante: solo coinciden si es exactamente la ruta o un subpath ("/ruta/..."),
-  // NO por compartir prefijo. Así evitamos ocultar en "/create-text" y "/create-summary".
-  const hideOn = ["/app/dashboard", "/create", "/settings", "/library"];
+  // ⬇️ Ocultar Navbar/Footer en rutas internas REALES
+  const hideOn = ["/dashboard", "/create", "/settings", "/library"];
   const shouldHideLayout = hideOn.some((path) => {
     return location.pathname === path || location.pathname.startsWith(`${path}/`);
   });
@@ -41,7 +39,9 @@ function AppContent() {
       {!shouldHideLayout && <Navbar />}
 
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        {/* ⬇️ HOME MUESTRA EL DASHBOARD */}
+        <Route path="/" element={<PremiumDashboard />} />
+
         <Route path="/create-text" element={<CreateTextPage />} />
         <Route path="/create-summary" element={<CreateSummaryPage />} />
         <Route path="/free-trial" element={<FreeTrialPage />} />
