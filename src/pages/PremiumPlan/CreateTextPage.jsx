@@ -21,7 +21,7 @@ const CreateTextPage = () => {
   const [urlDraft, setUrlDraft] = useState("");
   const fileInputRef = useRef(null);
 
-  // Estilos base
+  // Estilos base (coherentes con el resto del área premium)
   const HEADER_COLOR    = theme === "dark" ? "#262F3F" : "#ffffff";
   const SIDEBAR_COLOR   = theme === "dark" ? "#354153" : "#f8f9fb";
   const ACTIVE_BG_COLOR = theme === "dark" ? "#262F3F" : "#e9eef5";
@@ -54,6 +54,7 @@ const CreateTextPage = () => {
 
   // Handlers
   const clickUpload = () => fileInputRef.current?.click();
+
   const onFiles = (e) => {
     const files = Array.from(e.target?.files || []);
     if (!files.length) return;
@@ -81,7 +82,7 @@ const CreateTextPage = () => {
   const sendChat = (e) => {
     e?.preventDefault();
     if (!chatInput.trim()) return;
-    // Conectar API aquí
+    // Conectar tu API aquí (chatInput + sources)
     setChatInput("");
   };
 
@@ -169,129 +170,151 @@ const CreateTextPage = () => {
             </div>
           </aside>
 
-          {/* LIENZO: encabezado con degradado + paneles */}
+          {/* LIENZO */}
           <main className="min-h-[calc(100vh-72px)]">
-            {/* Encabezado estilo “versión antigua”: degradado azul suave */}
+            {/* Encabezado mejorado (degradado + aire) */}
             <div
-              className="px-6 pt-10 pb-8 text-center rounded-b-2xl
-                         bg-gradient-to-b from-sky-50 to-blue-50
-                         dark:from-slate-900 dark:to-sky-900"
+              className="px-6 md:px-8 pt-12 pb-10 text-center rounded-b-[28px]
+                         bg-gradient-to-b from-sky-50 via-sky-50 to-blue-50
+                         dark:from-slate-900 dark:via-slate-900 dark:to-sky-900
+                         shadow-[inset_0_-1px_0_rgba(2,6,23,0.06)]"
             >
-              <h1 className="inline-flex items-center justify-center gap-3 text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white">
+              <h1 className="inline-flex items-center justify-center gap-3 text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white drop-shadow-sm">
                 <FileText className="h-8 w-8 text-blue-500" />
                 {t("create_text_title")}
               </h1>
-              <p className="mt-3 text-lg text-slate-700 dark:text-slate-300 max-w-3xl mx-auto">
+              <p className="mt-3 text-lg text-slate-700 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
                 {t("create_text_sub")}
               </p>
             </div>
 
-            {/* Doble panel: Fuentes | Chat */}
-            <motion.section
-              className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-0 h-[calc(100vh-240px)] max-h-[calc(100vh-240px)]"
-              initial="initial" animate="in" exit="out" variants={pageVariants} transition={{ duration: 0.45 }}
-            >
-              {/* Panel Fuentes (izq.) */}
-              <aside className="border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 flex flex-col">
-                {/* Botón “Añadir” (sin Descubrir) */}
-                <div className="p-3 flex items-center gap-2 border-b border-slate-200 dark:border-slate-800">
-                  <Button onClick={clickUpload} variant="secondary" className="h-9 gap-2 rounded-xl">
-                    <Upload className="w-4 h-4" />
-                    {t("sources_add")}
-                  </Button>
-                  <input type="file" ref={fileInputRef} className="hidden" multiple onChange={onFiles} />
-                </div>
-
-                {/* Lista / vacío */}
-                <div className="flex-1 overflow-y-auto px-4 pb-6">
-                  {sources.length === 0 ? (
-                    <div className="mt-16 text-center text-slate-600 dark:text-slate-400">
-                      <div className="mx-auto mb-3 w-12 h-12 rounded-xl border border-dashed border-slate-300 dark:border-slate-600 flex items-center justify-center">
-                        <Paperclip className="w-6 h-6" />
-                      </div>
-                      <p className="text-sm font-medium">{t("sources_empty_title")}</p>
-                      <p className="text-xs mt-1">{t("sources_empty_help")}</p>
-                    </div>
-                  ) : (
-                    <ul className="space-y-2">
-                      {sources.map((s) => (
-                        <li
-                          key={s.id}
-                          className="group flex items-center justify-between rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2"
-                        >
-                          <div className="flex items-center gap-2">
-                            {s.type === "url" ? <Link2 className="w-4 h-4 text-slate-500" /> : <Paperclip className="w-4 h-4 text-slate-500" />}
-                            <span className="text-sm truncate max-w-[220px]" title={s.name}>{s.name}</span>
-                          </div>
-                          <button
-                            onClick={() => removeSource(s.id)}
-                            className="opacity-70 hover:opacity-100 transition"
-                            title={t("remove")}
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-
-                {/* Añadir URL rápida */}
-                <div className="border-t border-slate-200 dark:border-slate-800 p-3">
-                  <div className="flex gap-2">
-                    <input
-                      value={urlDraft}
-                      onChange={(e) => setUrlDraft(e.target.value)}
-                      className="flex-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white/90 dark:bg-slate-900/40 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-sky-400"
-                      placeholder={t("add_url_placeholder")}
-                    />
-                    <Button onClick={addUrl} className="h-10 px-3">+</Button>
+            {/* Contenedor centrado para los paneles */}
+            <div className="max-w-7xl mx-auto w-full px-4 md:px-6">
+              <motion.section
+                className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-0 h-[calc(100vh-240px)] max-h-[calc(100vh-240px)]"
+                initial="initial" animate="in" exit="out" variants={pageVariants} transition={{ duration: 0.45 }}
+              >
+                {/* Panel Fuentes */}
+                <aside className="border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 flex flex-col rounded-xl shadow-sm overflow-hidden">
+                  {/* Barra superior (solo Añadir) */}
+                  <div className="p-3 flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/30">
+                    <Button
+                      onClick={clickUpload}
+                      variant="secondary"
+                      className="h-9 gap-2 rounded-xl bg-white dark:bg-slate-800
+                                 border border-slate-200 dark:border-slate-700
+                                 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700"
+                    >
+                      <Upload className="w-4 h-4" />
+                      {t("sources_add")}
+                    </Button>
+                    <input type="file" ref={fileInputRef} className="hidden" multiple onChange={onFiles} />
                   </div>
-                </div>
-              </aside>
 
-              {/* Panel Chat (dcha.) */}
-              <section className="relative bg-slate-50/80 dark:bg-slate-900/30">
-                {/* Estado vacío */}
-                {sources.length === 0 && (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="mx-auto mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-                        <Upload className="w-6 h-6 text-slate-600 dark:text-slate-300" />
+                  {/* Lista / vacío */}
+                  <div className="flex-1 overflow-y-auto px-4 pb-6">
+                    {sources.length === 0 ? (
+                      <div className="mt-16 text-center text-slate-600 dark:text-slate-400">
+                        <div className="mx-auto mb-3 w-12 h-12 rounded-xl border border-dashed border-slate-300 dark:border-slate-600 flex items-center justify-center">
+                          <Paperclip className="w-6 h-6 opacity-80" />
+                        </div>
+                        <p className="text-sm font-semibold">{t("sources_empty_title")}</p>
+                        <p className="text-xs mt-1 leading-relaxed">{t("sources_empty_help")}</p>
                       </div>
-                      <h3 className="text-xl font-semibold text-slate-800 dark:text-slate-100">
-                        {t("chat_add_source")}
-                      </h3>
-                      <Button
-                        onClick={clickUpload}
-                        className="mt-3 bg-gradient-to-r from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600 text-white rounded-xl"
-                      >
-                        {t("upload_source_btn")}
+                    ) : (
+                      <ul className="space-y-2">
+                        {sources.map((s) => (
+                          <li
+                            key={s.id}
+                            className="group flex items-center justify-between rounded-lg border border-slate-200 dark:border-slate-700
+                                       bg-white dark:bg-slate-800 px-3 py-2 hover:shadow-sm transition"
+                          >
+                            <div className="flex items-center gap-2">
+                              {s.type === "url" ? <Link2 className="w-4 h-4 text-slate-500" /> : <Paperclip className="w-4 h-4 text-slate-500" />}
+                              <span className="text-sm truncate max-w-[220px]" title={s.name}>{s.name}</span>
+                            </div>
+                            <button
+                              onClick={() => removeSource(s.id)}
+                              className="opacity-70 hover:opacity-100 transition"
+                              title={t("remove")}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+
+                  {/* Añadir URL integrada */}
+                  <div className="border-t border-slate-200 dark:border-slate-800 p-3">
+                    <div className="flex">
+                      <input
+                        value={urlDraft}
+                        onChange={(e) => setUrlDraft(e.target.value)}
+                        className="flex-1 rounded-l-lg border border-slate-200 dark:border-slate-700
+                                   bg-white/90 dark:bg-slate-900/40 px-3 py-2 text-sm outline-none
+                                   focus:ring-2 focus:ring-sky-400"
+                        placeholder={t("add_url_placeholder")}
+                      />
+                      <Button onClick={addUrl} className="h-10 px-4 rounded-r-lg bg-sky-600 hover:bg-sky-700 text-white">
+                        +
                       </Button>
                     </div>
                   </div>
-                )}
+                </aside>
 
-                {/* Barra inferior */}
-                <form onSubmit={sendChat} className="absolute bottom-0 left-0 right-0 p-4">
-                  <div className="mx-auto max-w-3xl flex items-center gap-2 rounded-2xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2">
-                    <input
-                      value={chatInput}
-                      onChange={(e) => setChatInput(e.target.value)}
-                      placeholder={t("bottom_input_ph")}
-                      className="flex-1 bg-transparent outline-none text-sm md:text-base"
-                      disabled={sources.length === 0}
-                    />
-                    <div className="text-xs text-slate-500 mr-2">
-                      {sources.length} {t("sources_count")}
+                {/* Panel Chat */}
+                <section className="relative bg-slate-50/80 dark:bg-slate-900/30 rounded-xl overflow-hidden">
+                  {/* CTA vacío */}
+                  {sources.length === 0 && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="mx-auto mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                          <Upload className="w-6 h-6 text-slate-600 dark:text-slate-300" />
+                        </div>
+                        <h3 className="text-xl font-semibold text-slate-800 dark:text-slate-100">
+                          {t("chat_add_source")}
+                        </h3>
+                        <Button
+                          onClick={clickUpload}
+                          className="mt-3 rounded-xl bg-gradient-to-r from-blue-500 to-sky-500
+                                     hover:from-blue-600 hover:to-sky-600 text-white shadow-md hover:shadow-lg"
+                        >
+                          {t("upload_source_btn")}
+                        </Button>
+                      </div>
                     </div>
-                    <Button type="submit" disabled={!chatInput.trim() || sources.length === 0} className="h-10 px-3" title={t("send")}>
-                      <Send className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </form>
-              </section>
-            </motion.section>
+                  )}
+
+                  {/* Barra de entrada inferior */}
+                  <form onSubmit={sendChat} className="absolute bottom-0 left-0 right-0 p-4">
+                    <div className="mx-auto max-w-3xl flex items-center gap-2 rounded-full border
+                                    border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900
+                                    px-4 py-2 shadow-sm focus-within:ring-2 focus-within:ring-sky-400/40">
+                      <input
+                        value={chatInput}
+                        onChange={(e) => setChatInput(e.target.value)}
+                        placeholder={t("bottom_input_ph")}
+                        className="flex-1 bg-transparent outline-none text-sm md:text-base placeholder:text-slate-400"
+                        disabled={sources.length === 0}
+                      />
+                      <div className="text-xs text-slate-500 mr-2">
+                        {sources.length} {t("sources_count")}
+                      </div>
+                      <Button
+                        type="submit"
+                        disabled={!chatInput.trim() || sources.length === 0}
+                        className="h-10 px-3 rounded-full"
+                        title={t("send")}
+                      >
+                        <Send className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </form>
+                </section>
+              </motion.section>
+            </div>
           </main>
         </div>
       </div>
