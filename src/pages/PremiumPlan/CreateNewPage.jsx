@@ -61,7 +61,7 @@ const CreateNewPage = () => {
       titleKey: "freeTrialCreateTextButton",
       descriptionKey: "freeTrialCreateTextDescription",
       icon: <FileText className="h-10 w-10 mb-4 text-blue-500" />,
-      to: "/premium-plan/create-text",
+      to: "/create/text",
       gradient: "from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600",
       ctaKey: "freeTrialCreateTextButton", // reutilizamos la misma clave del botón
     },
@@ -69,7 +69,7 @@ const CreateNewPage = () => {
       titleKey: "freeTrialCreateSummaryButton",
       descriptionKey: "freeTrialCreateSummaryDescription",
       icon: <BookOpen className="h-10 w-10 mb-4 text-purple-500" />,
-      to: "/premium-plan/create-summary",
+      to: "/create/summary",
       gradient: "from-purple-500 to-fuchsia-500 hover:from-purple-600 hover:to-fuchsia-600",
       ctaKey: "freeTrialCreateSummaryButton",
     },
