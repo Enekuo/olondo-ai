@@ -632,7 +632,6 @@ create_new_intro: "Explora el poder de Olondo AI. Elige una opción para empezar
   create_text_title: "Crear Texto",
   create_text_sub: "Escribe, pega contenido o añade fuentes para generar texto de alta calidad.",
   sources_add: "Añadir",
-  sources_discover: "Descubrir",
   sources_empty_title: "Aquí aparecerán tus fuentes guardadas",
   sources_empty_help: "Pulsa “Añadir” para subir PDFs, webs, textos, vídeos o audios.",
   add_url_placeholder: "Pega una URL y pulsa +",

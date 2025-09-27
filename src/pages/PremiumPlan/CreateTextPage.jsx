@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon, Gem,
-  Upload, Search, FileText, Trash2, Link2, Paperclip, Send
+  Upload, FileText, Trash2, Link2, Paperclip, Send
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
@@ -81,7 +81,7 @@ const CreateTextPage = () => {
   const sendChat = (e) => {
     e?.preventDefault();
     if (!chatInput.trim()) return;
-    // Aquí conectarás tu API: enviar chatInput + sources
+    // Conectar API aquí
     setChatInput("");
   };
 
@@ -169,35 +169,35 @@ const CreateTextPage = () => {
             </div>
           </aside>
 
-          {/* LIENZO: Título centrado + paneles */}
+          {/* LIENZO: encabezado con degradado + paneles */}
           <main className="min-h-[calc(100vh-72px)]">
-            {/* Título centrado */}
-            <div className="px-6 pt-6 pb-2 text-center">
+            {/* Encabezado estilo “versión antigua”: degradado azul suave */}
+            <div
+              className="px-6 pt-10 pb-8 text-center rounded-b-2xl
+                         bg-gradient-to-b from-sky-50 to-blue-50
+                         dark:from-slate-900 dark:to-sky-900"
+            >
               <h1 className="inline-flex items-center justify-center gap-3 text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white">
                 <FileText className="h-8 w-8 text-blue-500" />
                 {t("create_text_title")}
               </h1>
-              <p className="mt-2 text-slate-700 dark:text-slate-300">
+              <p className="mt-3 text-lg text-slate-700 dark:text-slate-300 max-w-3xl mx-auto">
                 {t("create_text_sub")}
               </p>
             </div>
 
             {/* Doble panel: Fuentes | Chat */}
             <motion.section
-              className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-0 h-[calc(100vh-210px)] max-h-[calc(100vh-210px)]"
+              className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-0 h-[calc(100vh-240px)] max-h-[calc(100vh-240px)]"
               initial="initial" animate="in" exit="out" variants={pageVariants} transition={{ duration: 0.45 }}
             >
               {/* Panel Fuentes (izq.) */}
-              <aside className="border-t border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 flex flex-col">
-                {/* Botones arriba */}
+              <aside className="border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 flex flex-col">
+                {/* Botón “Añadir” (sin Descubrir) */}
                 <div className="p-3 flex items-center gap-2 border-b border-slate-200 dark:border-slate-800">
-                  <Button onClick={clickUpload} variant="secondary" className="h-9 gap-2">
+                  <Button onClick={clickUpload} variant="secondary" className="h-9 gap-2 rounded-xl">
                     <Upload className="w-4 h-4" />
                     {t("sources_add")}
-                  </Button>
-                  <Button variant="secondary" className="h-9 gap-2">
-                    <Search className="w-4 h-4" />
-                    {t("sources_discover")}
                   </Button>
                   <input type="file" ref={fileInputRef} className="hidden" multiple onChange={onFiles} />
                 </div>
@@ -205,7 +205,7 @@ const CreateTextPage = () => {
                 {/* Lista / vacío */}
                 <div className="flex-1 overflow-y-auto px-4 pb-6">
                   {sources.length === 0 ? (
-                    <div className="mt-16 text-center text-slate-500 dark:text-slate-400">
+                    <div className="mt-16 text-center text-slate-600 dark:text-slate-400">
                       <div className="mx-auto mb-3 w-12 h-12 rounded-xl border border-dashed border-slate-300 dark:border-slate-600 flex items-center justify-center">
                         <Paperclip className="w-6 h-6" />
                       </div>
@@ -251,7 +251,7 @@ const CreateTextPage = () => {
               </aside>
 
               {/* Panel Chat (dcha.) */}
-              <section className="relative border-t border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/30">
+              <section className="relative bg-slate-50/80 dark:bg-slate-900/30">
                 {/* Estado vacío */}
                 {sources.length === 0 && (
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -262,7 +262,10 @@ const CreateTextPage = () => {
                       <h3 className="text-xl font-semibold text-slate-800 dark:text-slate-100">
                         {t("chat_add_source")}
                       </h3>
-                      <Button onClick={clickUpload} className="mt-3 bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-200 dark:text-slate-900 dark:hover:bg-white">
+                      <Button
+                        onClick={clickUpload}
+                        className="mt-3 bg-gradient-to-r from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600 text-white rounded-xl"
+                      >
                         {t("upload_source_btn")}
                       </Button>
                     </div>
