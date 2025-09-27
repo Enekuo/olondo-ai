@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon, Gem,
-  FileText, Upload, Clipboard, Link2, Trash2
+  Upload, Plus, Compass, FileText, Send, Paperclip
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -15,12 +15,9 @@ const CreateTextPage = () => {
   const { theme, setTheme } = useTheme();
   const location = useLocation();
 
-  // UI state (solo visual; conéctalo a tu API cuando quieras)
-  const [inputText, setInputText] = useState("");
-  const [sourceUrl, setSourceUrl] = useState("");
-  const [files, setFiles] = useState([]); // <-- JS puro
+  const [sources, setSources] = useState([]); // {id, name, type}
+  const [prompt, setPrompt] = useState("");
 
-  // Colors & layout constants
   const HEADER_COLOR    = theme === "dark" ? "#262F3F" : "#ffffff";
   const SIDEBAR_COLOR   = theme === "dark" ? "#354153" : "#f8f9fb";
   const ACTIVE_BG_COLOR = theme === "dark" ? "#262F3F" : "#e9eef5";
@@ -30,8 +27,8 @@ const CreateTextPage = () => {
   const SIDEBAR_WIDTH_PX = 190;
 
   const USER_PLAN = "premium";
-  const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
-  const isActive = (path) => location.pathname === path;
+  const planLabel = USER_PLAN === "premium" ? t("plan_premium_title") : t("plan_basic_title");
+  const isActive  = (path) => location.pathname === path;
 
   const planPillStyle =
     theme === "dark"
@@ -51,15 +48,15 @@ const CreateTextPage = () => {
     out:     { opacity: 0, y: -20 },
   };
 
-  // helpers visuales
-  const handleFiles = (e) => {
-    const next = Array.from(e.target?.files || []);
-    setFiles(next);
+  // Mock handlers
+  const onAddSource = (files) => {
+    const arr = Array.from(files || []).map((f, idx) => ({
+      id: `${Date.now()}-${idx}`, name: f.name, type: f.type || "file",
+    }));
+    if (arr.length) setSources((s) => [...s, ...arr]);
   };
-  const clearAll = () => {
-    setInputText("");
-    setSourceUrl("");
-    setFiles([]);
+  const onAddDemo = () => {
+    setSources((s) => [...s, { id: `${Date.now()}`, name: "demo.pdf", type: "application/pdf" }]);
   };
 
   return (
@@ -104,10 +101,10 @@ const CreateTextPage = () => {
         </div>
       </header>
 
-      {/* LAYOUT */}
+      {/* APP LAYOUT (Sidebar izquierda + Main) */}
       <div className="w-full">
         <div className="grid gap-0 md:grid-cols-[190px_1fr]">
-          {/* SIDEBAR */}
+          {/* SIDEBAR APP */}
           <aside className="border-r border-slate-200 dark:border-slate-800" style={{ borderColor: BORDER_COLOR }}>
             <div
               className="sticky ps-2 pe-3 pt-6 pb-0 text-slate-800 dark:text-slate-100"
@@ -119,23 +116,19 @@ const CreateTextPage = () => {
                     <Home className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_home")}</span>
                   </Link>
-
                   <Link to="/create" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/create") ? ACTIVE_BG_COLOR : "transparent" }}>
                     <PlusCircle className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_create")}</span>
                   </Link>
-
                   <Link to="/library" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/library") ? ACTIVE_BG_COLOR : "transparent" }}>
                     <Folder className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_library")}</span>
                   </Link>
-
                   <Link to="/pricing" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/pricing") ? ACTIVE_BG_COLOR : "transparent" }}>
                     <CreditCard className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_plans")}</span>
                   </Link>
                 </nav>
-
                 <div className="pb-0">
                   <Link to="/settings" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/settings") ? ACTIVE_BG_COLOR : "transparent" }}>
                     <Settings className="w-5 h-5 shrink-0" />
@@ -146,91 +139,107 @@ const CreateTextPage = () => {
             </div>
           </aside>
 
-          {/* CONTENIDO */}
-          <main>
+          {/* MAIN */}
+          <main className="px-0">
+            {/* Barra superior del documento */}
+            <div className="px-6 pt-6 pb-4">
+              <h1 className="flex items-center gap-3 text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white">
+                <FileText className="h-8 w-8 text-blue-500" />
+                {t("create_text_title", "Crear Texto (Premium)")}
+              </h1>
+              <p className="mt-2 text-slate-700 dark:text-slate-300">
+                {t("create_text_sub", "Escribe, pega contenido o añade fuentes para generar texto de alta calidad.")}
+              </p>
+            </div>
+
+            {/* Doble panel: Fuentes + Chat */}
             <motion.section
-              className="py-20 md:py-24 px-4 md:px-8 flex flex-col items-center 
-                         bg-gradient-to-br from-slate-100 via-sky-50 to-blue-100 
-                         dark:from-slate-900 dark:via-slate-800 dark:to-sky-900 
-                         rounded-b-2xl max-w-6xl mx-auto mb-10 md:mb-16"
-              initial="initial" animate="in" exit="out" variants={pageVariants} transition={{ duration: 0.5 }}
+              className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-0 h-[calc(100vh-210px)] max-h-[calc(100vh-210px)]"
+              initial="initial" animate="in" exit="out" variants={pageVariants} transition={{ duration: 0.45 }}
             >
-              {/* Title */}
-              <div className="text-center mb-10">
-                <h1 className="flex items-center justify-center text-3xl md:text-5xl font-extrabold gap-3 text-slate-900 dark:text-white mb-3">
-                  <FileText className="h-8 w-8 text-blue-500" /> {t("create_text_title", "Crear Texto (Premium)")}
-                </h1>
-                <p className="text-lg md:text-xl text-slate-800 dark:text-slate-200 max-w-xl mx-auto">
-                  {t("create_text_sub", "Escribe, pega contenido o añade fuentes para generar texto de alta calidad.")}
-                </p>
-              </div>
-
-              {/* Card */}
-              <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Inputs */}
-                <div className="bg-white dark:bg-slate-800/70 border border-slate-100 dark:border-slate-700/60 rounded-2xl p-6 shadow-[0_8px_25px_-10px_rgba(2,6,23,0.15)]">
-                  {/* Pegar texto */}
-                  <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">
-                    <Clipboard className="inline w-4 h-4 mr-2" />
-                    {t("paste_text", "Pegar texto")}
+              {/* Panel Fuentes (izquierda) */}
+              <aside className="border-t border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 flex flex-col">
+                {/* Botones arriba */}
+                <div className="p-3 flex items-center gap-2 border-b border-slate-200 dark:border-slate-800">
+                  <label className="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium bg-slate-100 dark:bg-slate-800 cursor-pointer hover:opacity-90">
+                    <Plus className="w-4 h-4" />
+                    {t("sources_add", "Añadir")}
+                    <input type="file" className="hidden" multiple onChange={(e) => onAddSource(e.target.files)} />
                   </label>
-                  <textarea
-                    value={inputText}
-                    onChange={(e) => setInputText(e.target.value)}
-                    rows={8}
-                    className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-900/40 px-4 py-3 outline-none focus:ring-2 focus:ring-sky-400"
-                    placeholder={t("paste_text_ph", "Pega aquí tu contenido o instrucciones...")}
-                  />
+                  <button
+                    onClick={onAddDemo}
+                    className="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium bg-slate-100 dark:bg-slate-800 hover:opacity-90"
+                  >
+                    <Compass className="w-4 h-4" />
+                    {t("sources_discover", "Descubrir")}
+                  </button>
+                </div>
 
-                  {/* URL */}
-                  <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mt-6 mb-2">
-                    <Link2 className="inline w-4 h-4 mr-2" />
-                    {t("source_url", "URL de referencia (opcional)")}
-                  </label>
-                  <input
-                    value={sourceUrl}
-                    onChange={(e) => setSourceUrl(e.target.value)}
-                    className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-900/40 px-4 py-3 outline-none focus:ring-2 focus:ring-sky-400"
-                    placeholder="https://..."
-                  />
-
-                  {/* Archivos */}
-                  <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mt-6 mb-2">
-                    <Upload className="inline w-4 h-4 mr-2" />
-                    {t("attach_files", "Adjuntar archivos")}
-                  </label>
-                  <input
-                    type="file"
-                    className="block w-full text-sm text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 dark:file:bg-slate-700 dark:file:text-slate-200"
-                    multiple
-                    onChange={handleFiles}
-                  />
-                  {files.length > 0 && (
-                    <div className="mt-3 text-sm text-slate-600 dark:text-slate-300">
-                      {files.length} {t("files_selected", "archivo(s) seleccionado(s)")}
+                {/* Lista fuentes */}
+                <div className="flex-1 overflow-auto p-4">
+                  {sources.length === 0 ? (
+                    <div className="h-full w-full flex flex-col items-center justify-center text-center text-slate-500 dark:text-slate-400">
+                      <Paperclip className="w-10 h-10 mb-3" />
+                      <p className="font-medium">{t("sources_empty_title", "Aquí aparecerán tus fuentes guardadas")}</p>
+                      <p className="text-sm mt-1 max-w-[260px]">
+                        {t("sources_empty_help", "Pulsa “Añadir” para subir PDFs, webs, textos, vídeos o audios.")}
+                      </p>
                     </div>
+                  ) : (
+                    <ul className="space-y-2">
+                      {sources.map((s) => (
+                        <li key={s.id} className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2">
+                          <div className="flex items-center gap-2">
+                            <Paperclip className="w-4 h-4" />
+                            <span className="text-sm">{s.name}</span>
+                          </div>
+                          <span className="text-xs text-slate-500">{s.type?.split("/")[1] || "file"}</span>
+                        </li>
+                      ))}
+                    </ul>
                   )}
                 </div>
+              </aside>
 
-                {/* Actions / Preview placeholder */}
-                <div className="bg-white dark:bg-slate-800/70 border border-slate-100 dark:border-slate-700/60 rounded-2xl p-6 shadow-[0_8px_25px_-10px_rgba(2,6,23,0.15)] flex flex-col">
-                  <div className="mb-6">
-                    <h3 className="text-lg font-semibold mb-1">{t("generation_settings", "Configuración rápida")}</h3>
-                    <p className="text-slate-600 dark:text-slate-400 text-sm">
-                      {t("generation_settings_sub", "Ajustes mínimos para una primera generación. (Conéctalo a tu API)")}
-                    </p>
+              {/* Panel Chat (derecha) */}
+              <section className="relative border-t border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/30">
+                {/* CTA central cuando no hay fuentes */}
+                {sources.length === 0 && (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="mx-auto mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                        <Upload className="w-6 h-6 text-slate-600 dark:text-slate-300" />
+                      </div>
+                      <h3 className="text-xl font-semibold text-slate-800 dark:text-slate-100">
+                        {t("chat_add_source", "Añade una fuente para comenzar")}
+                      </h3>
+                      <label className="mt-3 inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600 cursor-pointer">
+                        <Upload className="w-4 h-4" />
+                        {t("upload_source_btn", "Subir una fuente")}
+                        <input type="file" className="hidden" multiple onChange={(e) => onAddSource(e.target.files)} />
+                      </label>
+                    </div>
                   </div>
+                )}
 
-                  <div className="mt-auto grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <Button className="h-11 font-semibold bg-gradient-to-r from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600">
-                      🚀 {t("generate_text", "Generar texto")}
-                    </Button>
-                    <Button variant="secondary" className="h-11 font-semibold" onClick={clearAll}>
-                      <Trash2 className="w-4 h-4 mr-2" /> {t("clear", "Limpiar")}
+                {/* Barra inferior (input) */}
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <div className="mx-auto max-w-3xl flex items-center gap-2 rounded-2xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2">
+                    <input
+                      value={prompt}
+                      onChange={(e) => setPrompt(e.target.value)}
+                      placeholder={t("bottom_input_ph", "Escribe un mensaje o sube una fuente para empezar")}
+                      className="flex-1 bg-transparent outline-none text-sm md:text-base"
+                    />
+                    <div className="text-xs text-slate-500 mr-2">
+                      {sources.length} {t("sources_count", "fuentes")}
+                    </div>
+                    <Button className="h-9 px-3">
+                      <Send className="w-4 h-4" />
                     </Button>
                   </div>
                 </div>
-              </div>
+              </section>
             </motion.section>
           </main>
         </div>
