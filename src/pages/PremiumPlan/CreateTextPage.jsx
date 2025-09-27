@@ -21,7 +21,7 @@ const CreateTextPage = () => {
   const [urlDraft, setUrlDraft] = useState("");
   const fileInputRef = useRef(null);
 
-  // Estilos base (coherentes con el resto del área premium)
+  // Estilos base
   const HEADER_COLOR    = theme === "dark" ? "#262F3F" : "#ffffff";
   const SIDEBAR_COLOR   = theme === "dark" ? "#354153" : "#f8f9fb";
   const ACTIVE_BG_COLOR = theme === "dark" ? "#262F3F" : "#e9eef5";
@@ -172,9 +172,9 @@ const CreateTextPage = () => {
 
           {/* LIENZO */}
           <main className="min-h-[calc(100vh-72px)]">
-            {/* Encabezado mejorado (degradado + aire) */}
+            {/* Encabezado azul SIN esquinas + overlay blanco redondeado */}
             <div
-              className="px-6 md:px-8 pt-12 pb-10 text-center rounded-b-[28px]
+              className="relative px-6 md:px-8 pt-12 pb-16 text-center
                          bg-gradient-to-b from-sky-50 via-sky-50 to-blue-50
                          dark:from-slate-900 dark:via-slate-900 dark:to-sky-900
                          shadow-[inset_0_-1px_0_rgba(2,6,23,0.06)]"
@@ -183,9 +183,13 @@ const CreateTextPage = () => {
                 <FileText className="h-8 w-8 text-blue-500" />
                 {t("create_text_title")}
               </h1>
-              <p className="mt-3 text-lg text-slate-700 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
-                {t("create_text_sub")}
-              </p>
+
+              {/* Overlay blanco con esquinas superiores redondeadas (hace el "recorte") */}
+              <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-10 md:h-12">
+                <div className="mx-auto max-w-7xl px-4 md:px-6">
+                  <div className="h-full bg-white dark:bg-slate-950 rounded-t-[28px]" />
+                </div>
+              </div>
             </div>
 
             {/* Contenedor centrado para los paneles */}
