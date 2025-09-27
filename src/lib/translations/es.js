@@ -628,4 +628,19 @@ dashboard_chat_sources_count: "0 fuentes",
 plan_premium_title: "Plan Premium",
 create_new_intro: "Explora el poder de Olondo AI. Elige una opción para empezar:",
 
+// Create Text
+  create_text_title: "Crear Texto",
+  create_text_sub: "Escribe, pega contenido o añade fuentes para generar texto de alta calidad.",
+  sources_add: "Añadir",
+  sources_discover: "Descubrir",
+  sources_empty_title: "Aquí aparecerán tus fuentes guardadas",
+  sources_empty_help: "Pulsa “Añadir” para subir PDFs, webs, textos, vídeos o audios.",
+  add_url_placeholder: "Pega una URL y pulsa +",
+  remove: "Eliminar",
+  chat_add_source: "Añade una fuente para comenzar",
+  upload_source_btn: "Subir una fuente",
+  bottom_input_ph: "Escribe un mensaje o sube una fuente para empezar",
+  sources_count: "fuentes",
+  send: "Enviar",
+
 }
