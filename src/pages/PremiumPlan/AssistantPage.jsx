@@ -1,8 +1,8 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon, Gem, MessageSquare,
-  Plus, Timer, ChevronDown, Mic, AudioWaveform
+  Plus, Timer, ChevronDown, Mic
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
@@ -44,6 +44,7 @@ const AssistantPage = () => {
   // ------- Estado UI del chat -------
   const [messages, setMessages] = useState([]); // {role:'user'|'assistant', content:string}
   const [input, setInput] = useState("");
+  const inputRef = useRef(null);
   const isEmpty = messages.length === 0 && input.trim().length === 0;
 
   // Chips de sugerencias
@@ -62,9 +63,13 @@ const AssistantPage = () => {
     // Conecta tu API de chat aquí
     setMessages((prev) => [...prev, { role: "user", content: input.trim() }]);
     setInput("");
+    inputRef.current?.focus();
   };
 
-  const fillFromChip = (text) => setInput(text);
+  const fillFromChip = (text) => {
+    setInput(text);
+    inputRef.current?.focus();
+  };
 
   return (
     <div className="min-h-screen w-full bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -200,109 +205,113 @@ const AssistantPage = () => {
             </div>
           </aside>
 
-          {/* CONTENIDO (interior) */}
+          {/* CONTENIDO */}
           <main className="relative min-h-[calc(100vh-72px)]">
-            <div className="max-w-3xl mx-auto w-full px-4 md:px-6 pt-12 pb-40">
-              <AnimatePresence>
-                {isEmpty && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    className="flex flex-col items-center text-center select-none"
-                  >
-                    {/* Mascota desde /public */}
-                    <img
-                      src="/olondo.mascota.png"
-                      alt="Olondo asistente"
-                      className="w-20 h-20 rounded-xl shadow-sm mb-3"
-                      draggable={false}
-                    />
-                    <h2 className="text-xl md:text-2xl font-semibold">
-                      {t("assistant_mascot_greeting", "¿Cómo puedo ayudarte?")}
-                    </h2>
+            <div className="h-full flex flex-col">
+              {/* Contenido scrollable */}
+              <div className="flex-1 overflow-y-auto">
+                <div className="max-w-3xl mx-auto w-full px-4 md:px-6 pt-12 pb-12">
+                  <AnimatePresence>
+                    {isEmpty && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        className="flex flex-col items-center text-center select-none"
+                      >
+                        {/* Mascota desde /public */}
+                        <img
+                          src="/olondo.mascota.png"
+                          alt="Olondo asistente"
+                          className="w-20 h-20 rounded-xl shadow-sm mb-3"
+                          draggable={false}
+                        />
+                        <h2 className="text-xl md:text-2xl font-semibold">
+                          {t("assistant_mascot_greeting", "¿Cómo puedo ayudarte?")}
+                        </h2>
 
-                    <div className="mt-4 flex flex-wrap justify-center gap-2">
-                      {suggestions.map((s, i) => (
-                        <button
-                          key={i}
-                          onClick={() => fillFromChip(s)}
-                          className="px-3 py-1.5 rounded-full text-sm border border-slate-200 dark:border-slate-700
-                                     bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition"
-                        >
-                          {s}
-                        </button>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            {/* Barra de entrada inferior */}
-            <form onSubmit={handleSend} className="fixed bottom-4 left-0 right-0">
-              <div className="mx-auto max-w-3xl px-4 md:px-6">
-                <div
-                  className="flex items-center gap-2 rounded-[28px] border
-                             border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900
-                             shadow-sm px-3 py-2"
-                >
-                  <button
-                    type="button"
-                    className="h-10 w-10 inline-flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
-                    title={t("assistant_add", "Añadir")}
-                  >
-                    <Plus className="w-5 h-5" />
-                  </button>
-
-                  <input
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    placeholder={t("assistant_placeholder", "Pregunta lo que quieras")}
-                    className="flex-1 bg-transparent outline-none text-[15px] placeholder:text-slate-400"
-                  />
-
-                  <button
-                    type="button"
-                    className="hidden sm:inline-flex items-center gap-1 text-sky-600 hover:opacity-90 px-2 py-1 rounded-md"
-                    title={t("assistant_mode_title", "Modo")}
-                  >
-                    <Timer className="w-4 h-4" />
-                    <span className="text-sm">{t("assistant_mode_thinking", "Pensando")}</span>
-                    <ChevronDown className="w-4 h-4 opacity-70" />
-                  </button>
-
-                  <button
-                    type="button"
-                    className="h-10 w-10 inline-flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
-                    title={t("assistant_voice", "Dictar por voz")}
-                  >
-                    <Mic className="w-5 h-5" />
-                  </button>
-
-                  <div
-                    className="h-10 w-10 inline-flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
-                    title={t("assistant_listen", "Escuchando")}
-                  >
-                    <AudioWaveform className="w-5 h-5" />
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={!input.trim()}
-                    className="ml-1 inline-flex items-center justify-center rounded-full bg-sky-600 hover:bg-sky-700
-                               text-white h-10 px-5 text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
-                    aria-label={t("assistant_send", "Enviar")}
-                  >
-                    {t("assistant_send", "Enviar")}
-                  </button>
+                        <div className="mt-4 flex flex-wrap justify-center gap-2">
+                          {suggestions.map((s, i) => (
+                            <button
+                              key={i}
+                              onClick={() => fillFromChip(s)}
+                              className="px-3 py-1.5 rounded-full text-sm border border-slate-200 dark:border-slate-700
+                                         bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition"
+                            >
+                              {s}
+                            </button>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
-
-                <p className="mt-2 text-center text-xs text-slate-500">
-                  {t("assistant_hint", "Pregunta lo que quieras")}
-                </p>
               </div>
-            </form>
+
+              {/* Pie sticky con la barra de entrada */}
+              <div className="sticky bottom-0 w-full z-10">
+                {/* Fondo degradado tipo “glass” */}
+                <div className="bg-gradient-to-t from-white/90 dark:from-slate-950/90 to-transparent backdrop-blur">
+                  <div className="max-w-3xl mx-auto px-4 md:px-6 py-4">
+                    <form onSubmit={handleSend}>
+                      <div
+                        className="flex items-center gap-2 rounded-[28px] border
+                                   border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900
+                                   shadow-sm px-3 py-2"
+                      >
+                        <button
+                          type="button"
+                          className="h-10 w-10 inline-flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
+                          title={t("assistant_add", "Añadir")}
+                        >
+                          <Plus className="w-5 h-5" />
+                        </button>
+
+                        <input
+                          ref={inputRef}
+                          value={input}
+                          onChange={(e) => setInput(e.target.value)}
+                          placeholder={t("assistant_placeholder", "Pregunta lo que quieras")}
+                          className="flex-1 bg-transparent outline-none text-[15px] placeholder:text-slate-400"
+                        />
+
+                        <button
+                          type="button"
+                          className="hidden sm:inline-flex items-center gap-1 text-sky-600 hover:opacity-90 px-2 py-1 rounded-md"
+                          title={t("assistant_mode_title", "Modo")}
+                        >
+                          <Timer className="w-4 h-4" />
+                          <span className="text-sm">{t("assistant_mode_thinking", "Pensando")}</span>
+                          <ChevronDown className="w-4 h-4 opacity-70" />
+                        </button>
+
+                        <button
+                          type="button"
+                          className="h-10 w-10 inline-flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
+                          title={t("assistant_voice", "Dictar por voz")}
+                        >
+                          <Mic className="w-5 h-5" />
+                        </button>
+
+                        <button
+                          type="submit"
+                          disabled={!input.trim()}
+                          className="ml-1 inline-flex items-center justify-center rounded-full bg-sky-600 hover:bg-sky-700
+                                     text-white h-10 px-5 text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
+                          aria-label={t("assistant_send", "Enviar")}
+                        >
+                          {t("assistant_send", "Enviar")}
+                        </button>
+                      </div>
+
+                      <p className="mt-2 text-center text-xs text-slate-500">
+                        {t("assistant_hint", "Pregunta lo que quieras")}
+                      </p>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
           </main>
         </div>
       </div>
