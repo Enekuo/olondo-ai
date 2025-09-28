@@ -18,12 +18,13 @@ import SyntheticVoiceUsagePage from '@/pages/SyntheticVoiceUsagePage';
 import CookiesPolicyPage from '@/pages/CookiesPolicyPage';
 import SupportPage from "@/pages/SupportPage";
 // Premium Pages
-import PremiumDashboard        from "./pages/PremiumPlan/Dashboard.jsx";
-import PremiumSettingsPage     from "./pages/PremiumPlan/SettingsPage.jsx";
-import PremiumLibraryPage      from "./pages/PremiumPlan/LibraryPage.jsx";
-import PremiumCreateNewPage    from "./pages/PremiumPlan/CreateNewPage.jsx";
+import PremiumDashboard         from "./pages/PremiumPlan/Dashboard.jsx";
+import PremiumSettingsPage      from "./pages/PremiumPlan/SettingsPage.jsx";
+import PremiumLibraryPage       from "./pages/PremiumPlan/LibraryPage.jsx";
+import PremiumCreateNewPage     from "./pages/PremiumPlan/CreateNewPage.jsx";
 import PremiumCreateSummaryPage from "./pages/PremiumPlan/CreateSummaryPage.jsx";
 import PremiumCreateTextPage    from "./pages/PremiumPlan/CreateTextPage.jsx";
+import AssistantPage            from "./pages/PremiumPlan/AssistantPage.jsx";
 
 function AppContent() {
   const location = useLocation();
@@ -49,11 +50,12 @@ function AppContent() {
         <Route path="/create"           element={<PremiumCreateNewPage />} />
         <Route path="/create/summary"   element={<PremiumCreateSummaryPage />} />
         <Route path="/create/text"      element={<PremiumCreateTextPage />} />
+        <Route path="/assistant"        element={<AssistantPage />} />
 
-        {/* Capturamos la ruta antigua y redirigimos */}
+        
         <Route path="/app/dashboard" element={<Navigate to="/dashboard" replace />} />
 
-        {/* Rutas públicas */}
+        {/* Public routes */}
         <Route path="/create-text" element={<CreateTextPage />} />
         <Route path="/create-summary" element={<CreateSummaryPage />} />
         <Route path="/free-trial" element={<FreeTrialPage />} />
