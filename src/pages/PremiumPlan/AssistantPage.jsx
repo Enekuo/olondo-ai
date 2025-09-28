@@ -1,18 +1,28 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
-  Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon, Gem, MessageSquare
+  Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon, Gem, MessageSquare,
+  Plus, Timer, ChevronDown, Mic, AudioLines
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 import { useTheme } from "@/components/layout/ThemeProvider";
+import { motion, AnimatePresence } from "framer-motion";
+
+// ⚠️ Ajusta la ruta a donde guardes la imagen
+import olondoMascota from "@/assets/olondo.mascota.png";
 
 const AssistantPage = () => {
   const { t } = useLanguage();
   const { theme, setTheme } = useTheme();
   const location = useLocation();
 
-  // Colores/constantes
+  // ---- Estado básico del chat (UI) ----
+  const [messages, setMessages] = useState([]); // {role:'user'|'assistant', content:string}
+  const [input, setInput] = useState("");
+  const isEmpty = messages.length === 0 && input.trim().length === 0;
+
+  // ---- Constantes de estilo ----
   const HEADER_COLOR    = theme === "dark" ? "#262F3F" : "#ffffff";
   const SIDEBAR_COLOR   = theme === "dark" ? "#354153" : "#f8f9fb";
   const ACTIVE_BG_COLOR = theme === "dark" ? "#262F3F" : "#e9eef5";
@@ -24,9 +34,9 @@ const AssistantPage = () => {
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
 
-  const isActive = (path) => location.pathname === path;
+  const isActive = (path) =>
+    location.pathname === path || location.pathname.startsWith(path + "/");
 
-  // Estilos plan
   const planPillStyle =
     theme === "dark"
       ? { backgroundColor: "rgba(255,255,255,0.06)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)", color: "#E5E7EB" }
@@ -38,6 +48,27 @@ const AssistantPage = () => {
       : { backgroundColor: "#ffffff", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)" };
 
   const planIconColor = theme === "dark" ? "#ffffff" : "#334155";
+
+  // ---- Sugerencias (chips) ----
+  const suggestions = useMemo(
+    () => [
+      t("assistant_chip_email", "Escribe un email profesional"),
+      t("assistant_chip_resume", "Resume este texto/PDF"),
+      t("assistant_chip_ideas", "Dame ideas para un post"),
+    ],
+    [t]
+  );
+
+  // ---- Handlers ----
+  const handleSend = (e) => {
+    e?.preventDefault?.();
+    if (!input.trim()) return;
+    // Aquí conectarías tu API de chat:
+    setMessages((prev) => [...prev, { role: "user", content: input.trim() }]);
+    setInput("");
+  };
+
+  const fillFromChip = (text) => setInput(text);
 
   return (
     <div className="min-h-screen w-full bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -52,7 +83,7 @@ const AssistantPage = () => {
           </Link>
 
           <div className="flex items-center gap-3 sm:gap-4">
-            {/* Plan */}
+            {/* Plan pill */}
             <div className="hidden sm:flex items-center gap-2 select-none">
               <div
                 className="inline-flex items-center justify-center rounded-[10px]"
@@ -139,7 +170,7 @@ const AssistantPage = () => {
                     <span className="truncate">{t("dashboard_nav_library")}</span>
                   </Link>
 
-                  {/* Chat con IA (activo aquí) */}
+                  {/* Chat con IA (activo) */}
                   <Link
                     to="/assistant"
                     className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
@@ -173,11 +204,120 @@ const AssistantPage = () => {
             </div>
           </aside>
 
-          {/* CONTENIDO (placeholder por ahora) */}
-          <main>
-            <section className="py-8 md:py-10 px-4 md:px-8">
-              {/* Aquí montaremos el chat más adelante */}
-            </section>
+          {/* CONTENIDO */}
+          <main className="relative min-h-[calc(100vh-72px)]">
+            {/* Contenedor central */}
+            <div className="max-w-3xl mx-auto w-full px-4 md:px-6 pt-12 pb-40">
+              {/* Placeholder con mascota (solo cuando no hay chat) */}
+              <AnimatePresence>
+                {isEmpty && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    className="flex flex-col items-center text-center select-none"
+                  >
+                    <img
+                      src={olondoMascota}
+                      alt="Olondo asistente"
+                      className="w-20 h-20 rounded-xl shadow-sm mb-3"
+                      draggable={false}
+                    />
+                    <h2 className="text-xl md:text-2xl font-semibold">
+                      {t("assistant_mascot_greeting", "¿Cómo puedo ayudarte?")}
+                    </h2>
+
+                    {/* Chips de sugerencias */}
+                    <div className="mt-4 flex flex-wrap justify-center gap-2">
+                      {suggestions.map((s, i) => (
+                        <button
+                          key={i}
+                          onClick={() => fillFromChip(s)}
+                          className="px-3 py-1.5 rounded-full text-sm border border-slate-200 dark:border-slate-700
+                                     bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition"
+                        >
+                          {s}
+                        </button>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Barra de input flotante inferior */}
+            <form
+              onSubmit={handleSend}
+              className="fixed bottom-4 left-0 right-0"
+            >
+              <div className="mx-auto max-w-3xl px-4 md:px-6">
+                <div
+                  className="flex items-center gap-2 rounded-[28px] border
+                             border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900
+                             shadow-sm px-3 py-2"
+                >
+                  {/* + */}
+                  <button
+                    type="button"
+                    className="h-10 w-10 inline-flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
+                    title={t("assistant_add", "Añadir")}
+                  >
+                    <Plus className="w-5 h-5" />
+                  </button>
+
+                  {/* Input */}
+                  <input
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder={t("assistant_placeholder", "Pregunta lo que quieras")}
+                    className="flex-1 bg-transparent outline-none text-[15px] placeholder:text-slate-400"
+                  />
+
+                  {/* “Pensando” (modo) */}
+                  <button
+                    type="button"
+                    className="hidden sm:inline-flex items-center gap-1 text-sky-600 hover:opacity-90 px-2 py-1 rounded-md"
+                    title={t("assistant_mode_title", "Modo")}
+                  >
+                    <Timer className="w-4 h-4" />
+                    <span className="text-sm">{t("assistant_mode_thinking", "Pensando")}</span>
+                    <ChevronDown className="w-4 h-4 opacity-70" />
+                  </button>
+
+                  {/* Mic */}
+                  <button
+                    type="button"
+                    className="h-10 w-10 inline-flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
+                    title={t("assistant_voice", "Dictar por voz")}
+                  >
+                    <Mic className="w-5 h-5" />
+                  </button>
+
+                  {/* Ondas (placeholder de transcripción) */}
+                  <div
+                    className="h-10 w-10 inline-flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
+                    title={t("assistant_listen", "Escuchando")}
+                  >
+                    <AudioLines className="w-5 h-5" />
+                  </div>
+
+                  {/* Enviar */}
+                  <button
+                    type="submit"
+                    disabled={!input.trim()}
+                    className="ml-1 inline-flex items-center justify-center rounded-full bg-sky-600 hover:bg-sky-700
+                               text-white h-10 px-5 text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
+                    aria-label={t("send")}
+                  >
+                    {t("assistant_send", "Enviar")}
+                  </button>
+                </div>
+
+                <p className="mt-2 text-center text-xs text-slate-500">
+                  {t("assistant_hint", "Pregunta lo que quieras")}
+                </p>
+              </div>
+            </form>
           </main>
         </div>
       </div>
