@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
-  Home, PlusCircle, Folder, CreditCard, Settings as SettingsIcon, User, Sun, Moon, Gem
+  Home, PlusCircle, Folder, CreditCard, Settings as SettingsIcon, User, Sun, Moon, Gem, MessageSquare
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
@@ -95,7 +95,7 @@ const SettingsPage = () => {
             Olondo.ai
           </Link>
 
-          <div className="flex items-center gap-3 sm:gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
             {/* Indicador de plan */}
             <div className="hidden sm:flex items-center gap-2 select-none">
               <div
@@ -181,6 +181,16 @@ const SettingsPage = () => {
                   >
                     <Folder className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_library")}</span>
+                  </Link>
+
+                  {/* NUEVO: Chat con IA */}
+                  <Link
+                    to="/assistant"
+                    className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
+                    style={{ backgroundColor: isActive("/assistant") ? ACTIVE_BG_COLOR : "transparent" }}
+                  >
+                    <MessageSquare className="w-5 h-5 shrink-0" />
+                    <span className="truncate">{t("dashboard_nav_ai_chat")}</span>
                   </Link>
 
                   <Link
