@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
-  Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon, Gem
+  Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon, Gem, MessageSquare
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
@@ -114,7 +114,7 @@ const Dashboard = () => {
               <div className="h-full flex flex-col justify-between">
                 {/* NAV */}
                 <nav className="space-y-1">
-                  {/* ⬇️ HOME → /dashboard (ruta real) */}
+                  {/* Home */}
                   <Link
                     to="/dashboard"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${hoverBg} ${hoverTxt}`}
@@ -124,6 +124,7 @@ const Dashboard = () => {
                     <span className="truncate">{t("dashboard_nav_home")}</span>
                   </Link>
 
+                  {/* Crear nuevo */}
                   <Link
                     to="/create"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${hoverBg} ${hoverTxt}`}
@@ -133,6 +134,7 @@ const Dashboard = () => {
                     <span className="truncate">{t("dashboard_nav_create")}</span>
                   </Link>
 
+                  {/* Biblioteca */}
                   <Link
                     to="/library"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${hoverBg} ${hoverTxt}`}
@@ -142,6 +144,17 @@ const Dashboard = () => {
                     <span className="truncate">{t("dashboard_nav_library")}</span>
                   </Link>
 
+                  {/* Chat con IA (nuevo) */}
+                  <Link
+                    to="/assistant"  // ajusta la ruta si usarás otra (/chat, /ai-chat, etc.)
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${hoverBg} ${hoverTxt}`}
+                    style={isActive("/assistant") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
+                  >
+                    <MessageSquare className="w-5 h-5 shrink-0" />
+                    <span className="truncate">{t("dashboard_nav_ai_chat")}</span>
+                  </Link>
+
+                  {/* Planes */}
                   <Link
                     to="/pricing"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${hoverBg} ${hoverTxt}`}

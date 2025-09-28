@@ -624,6 +624,9 @@ dashboard_chat_upload_btn: "Subir una fuente",
 dashboard_chat_input_placeholder: "Sube una fuente para empezar",
 dashboard_chat_sources_count: "0 fuentes",
 
+// AI Chat
+dashboard_nav_ai_chat: "Chat con IA",
+
 // CreateNew
 plan_premium_title: "Plan Premium",
 create_new_intro: "Explora el poder de Olondo AI. Elige una opción para empezar:",
@@ -640,5 +643,7 @@ create_new_intro: "Explora el poder de Olondo AI. Elige una opción para empezar
   bottom_input_ph: "Escribe un mensaje o sube una fuente para empezar",
   sources_count: "fuentes",
   send: "Enviar",
+
+
 
 }
