@@ -30,7 +30,7 @@ function AppContent() {
   const location = useLocation();
 
   // Ocultamos Navbar/Footer en el área privada REAL
-  const hideOn = ["/dashboard", "/create", "/settings", "/library"];
+  const hideOn = ["/dashboard", "/create", "/settings", "/library", "/assistant"];
   const shouldHideLayout = hideOn.some((path) =>
     location.pathname === path || location.pathname.startsWith(`${path}/`)
   );
