@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon, Gem, MessageSquare,
-  Plus, Timer, ChevronDown, Mic, AudioLines
+  Plus, Timer, ChevronDown, Mic, AudioWaveform
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
@@ -200,7 +200,7 @@ const AssistantPage = () => {
             </div>
           </aside>
 
-          {/* CONTENIDO (nuevo interior) */}
+          {/* CONTENIDO (interior) */}
           <main className="relative min-h-[calc(100vh-72px)]">
             <div className="max-w-3xl mx-auto w-full px-4 md:px-6 pt-12 pb-40">
               <AnimatePresence>
@@ -284,7 +284,7 @@ const AssistantPage = () => {
                     className="h-10 w-10 inline-flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
                     title={t("assistant_listen", "Escuchando")}
                   >
-                    <AudioLines className="w-5 h-5" />
+                    <AudioWaveform className="w-5 h-5" />
                   </div>
 
                   <button
