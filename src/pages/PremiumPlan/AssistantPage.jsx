@@ -28,7 +28,7 @@ const AssistantPage = () => {
 
   const isActive = (path) => location.pathname === path;
 
-  // Estado chat
+  // Estatus chat
   const [messages, setMessages] = useState([]); // {role:'user'|'assistant', content:string}
   const [input, setInput] = useState("");
   const inputRef = useRef(null);
@@ -60,26 +60,16 @@ const AssistantPage = () => {
             <div className="hidden sm:flex items-center gap-2 select-none">
               <div
                 className="inline-flex items-center justify-center rounded-[10px]"
-                style={{
-                  width: 30,
-                  height: 30,
-                  backgroundColor: theme === "dark" ? "rgba(255,255,255,0.22)" : "#ffffff",
-                  boxShadow:
-                    theme === "dark"
-                      ? "inset 0 0 0 1px rgba(255,255,255,0.45)"
-                      : "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)"
-                }}
+                style={{ width: 30, height: 30, backgroundColor: theme === "dark" ? "rgba(255,255,255,0.22)" : "#ffffff", boxShadow: theme === "dark" ? "inset 0 0 0 1px rgba(255,255,255,0.45)" : "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)" }}
                 aria-hidden="true"
               >
                 <Gem className="w-5 h-5" style={{ color: theme === "dark" ? "#ffffff" : "#334155" }} />
               </div>
               <div
                 className="rounded-xl px-3 py-1.5 text-sm font-medium"
-                style={
-                  theme === "dark"
-                    ? { backgroundColor: "rgba(255,255,255,0.06)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)", color: "#E5E7EB" }
-                    : { backgroundColor: "#f3f4f6", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12)", color: "#0f172a" }
-                }
+                style={ theme === "dark"
+                  ? { backgroundColor: "rgba(255,255,255,0.06)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)", color: "#E5E7EB" }
+                  : { backgroundColor: "#f3f4f6", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12)", color: "#0f172a" } }
               >
                 {planLabel}
               </div>
@@ -197,7 +187,7 @@ const AssistantPage = () => {
             <div className="h-full flex flex-col">
               {/* Contenido scrollable */}
               <div className="flex-1 overflow-y-auto">
-                <div className="max-w-2xl mx-auto w-full px-4 md:px-6 pt-12 pb-12">
+                <div className="max-w-3xl mx-auto w-full px-4 md:px-6 pt-12 pb-12">
                   <AnimatePresence>
                     {isEmpty && (
                       <motion.div
@@ -210,21 +200,19 @@ const AssistantPage = () => {
                         <img
                           src="/olondo.mascota.png"
                           alt="Olondo asistente"
-                          className="w-16 h-16 rounded-xl shadow-sm mb-2"
+                          className="w-20 h-20 rounded-xl shadow-sm mb-3"
                           draggable={false}
                         />
-                        <h2 className="text-2xl md:text-3xl font-semibold mt-1 mb-2">
+                        <h2 className="text-xl md:text-2xl font-semibold">
                           {t("assistant_mascot_greeting", "¿Cómo puedo ayudarte?")}
                         </h2>
 
                         {/* INPUT CENTRADO (como ChatGPT) */}
                         <form onSubmit={handleSend} className="w-full mt-6">
                           <div
-                            className="mx-auto max-w-2xl flex items-center gap-2 rounded-[28px] border
+                            className="mx-auto max-w-3xl flex items-center gap-2 rounded-[28px] border
                                        border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900
-                                       shadow-sm px-3 py-2 h-12
-                                       focus-within:ring-2 focus-within:ring-sky-500/20 focus-within:border-slate-300
-                                       dark:focus-within:ring-sky-400/20 dark:focus-within:border-slate-600"
+                                       shadow-sm px-3 py-2"
                           >
                             <button
                               type="button"
@@ -242,6 +230,7 @@ const AssistantPage = () => {
                               className="flex-1 bg-transparent outline-none text-[15px] placeholder:text-slate-400"
                             />
 
+                            {/* Eliminado “Pensando” */}
                             <button
                               type="button"
                               className="h-10 w-10 inline-flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
@@ -254,7 +243,7 @@ const AssistantPage = () => {
                               type="submit"
                               disabled={!input.trim()}
                               className="ml-1 inline-flex items-center justify-center rounded-full bg-sky-600 hover:bg-sky-700
-                                         text-white h-10 px-4 text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
+                                         text-white h-10 px-5 text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
                               aria-label={t("assistant_send", "Enviar")}
                             >
                               {t("assistant_send", "Enviar")}
@@ -294,6 +283,7 @@ const AssistantPage = () => {
                             className="flex-1 bg-transparent outline-none text-[15px] placeholder:text-slate-400"
                           />
 
+                          {/* Eliminado “Pensando” */}
                           <button
                             type="button"
                             className="h-10 w-10 inline-flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
@@ -306,13 +296,13 @@ const AssistantPage = () => {
                             type="submit"
                             disabled={!input.trim()}
                             className="ml-1 inline-flex items-center justify-center rounded-full bg-sky-600 hover:bg-sky-700
-                                       text-white h-10 px-4 text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
+                                       text-white h-10 px-5 text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
                             aria-label={t("assistant_send", "Enviar")}
                           >
                             {t("assistant_send", "Enviar")}
                           </button>
                         </div>
-                        {/* Sin texto inferior */}
+                        {/* Eliminado el texto inferior “Pregunta lo que quieras” */}
                       </form>
                     </div>
                   </div>
