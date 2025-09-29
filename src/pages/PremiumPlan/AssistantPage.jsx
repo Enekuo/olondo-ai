@@ -235,7 +235,7 @@ const AssistantPage = () => {
                         className="flex flex-col items-center text-center select-none"
                       >
                         {/* Mascota y título */}
-                        <img src="/olondo.mascota.png" alt="Olondo asistente" className="w-20 h-20 rounded-xl shadow-sm mb-3" draggable={false} />
+                        <img src="/olondo.mascota.png" alt="Olondo asistente" className="w-32 h-32 rounded-xl shadow-sm mb-3" draggable={false} />
                         <h2 className="text-xl md:text-2xl font-semibold">
                           {t("assistant_mascot_greeting", "¿Cómo puedo ayudarte?")}
                         </h2>
