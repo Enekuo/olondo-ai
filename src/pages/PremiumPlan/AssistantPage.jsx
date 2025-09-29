@@ -1,8 +1,8 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon, Gem, MessageSquare,
-  Plus, Timer, ChevronDown, Mic
+  Plus, Mic
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
@@ -28,34 +28,11 @@ const AssistantPage = () => {
 
   const isActive = (path) => location.pathname === path;
 
-  // Estilos plan
-  const planPillStyle =
-    theme === "dark"
-      ? { backgroundColor: "rgba(255,255,255,0.06)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)", color: "#E5E7EB" }
-      : { backgroundColor: "#f3f4f6", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12)", color: "#0f172a" };
-
-  const planIconBoxStyle =
-    theme === "dark"
-      ? { backgroundColor: "rgba(255,255,255,0.22)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)" }
-      : { backgroundColor: "#ffffff", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)" };
-
-  const planIconColor = theme === "dark" ? "#ffffff" : "#334155";
-
-  // ------- Estado UI del chat -------
+  // Estatus chat
   const [messages, setMessages] = useState([]); // {role:'user'|'assistant', content:string}
   const [input, setInput] = useState("");
   const inputRef = useRef(null);
   const isEmpty = messages.length === 0 && input.trim().length === 0;
-
-  // Chips de sugerencias
-  const suggestions = useMemo(
-    () => [
-      t("assistant_chip_email", "Escribe un email profesional"),
-      t("assistant_chip_resume", "Resume este texto/PDF"),
-      t("assistant_chip_ideas", "Dame ideas para un post"),
-    ],
-    [t]
-  );
 
   const handleSend = (e) => {
     e?.preventDefault?.();
@@ -63,11 +40,6 @@ const AssistantPage = () => {
     // Conecta tu API de chat aquí
     setMessages((prev) => [...prev, { role: "user", content: input.trim() }]);
     setInput("");
-    inputRef.current?.focus();
-  };
-
-  const fillFromChip = (text) => {
-    setInput(text);
     inputRef.current?.focus();
   };
 
@@ -88,12 +60,17 @@ const AssistantPage = () => {
             <div className="hidden sm:flex items-center gap-2 select-none">
               <div
                 className="inline-flex items-center justify-center rounded-[10px]"
-                style={{ width: 30, height: 30, ...planIconBoxStyle }}
+                style={{ width: 30, height: 30, backgroundColor: theme === "dark" ? "rgba(255,255,255,0.22)" : "#ffffff", boxShadow: theme === "dark" ? "inset 0 0 0 1px rgba(255,255,255,0.45)" : "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)" }}
                 aria-hidden="true"
               >
-                <Gem className="w-5 h-5" style={{ color: planIconColor }} />
+                <Gem className="w-5 h-5" style={{ color: theme === "dark" ? "#ffffff" : "#334155" }} />
               </div>
-              <div className="rounded-xl px-3 py-1.5 text-sm font-medium" style={planPillStyle}>
+              <div
+                className="rounded-xl px-3 py-1.5 text-sm font-medium"
+                style={ theme === "dark"
+                  ? { backgroundColor: "rgba(255,255,255,0.06)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)", color: "#E5E7EB" }
+                  : { backgroundColor: "#f3f4f6", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12)", color: "#0f172a" } }
+              >
                 {planLabel}
               </div>
             </div>
@@ -219,7 +196,7 @@ const AssistantPage = () => {
                         exit={{ opacity: 0, y: -8 }}
                         className="flex flex-col items-center text-center select-none"
                       >
-                        {/* Mascota desde /public */}
+                        {/* Mascota */}
                         <img
                           src="/olondo.mascota.png"
                           alt="Olondo asistente"
@@ -230,87 +207,107 @@ const AssistantPage = () => {
                           {t("assistant_mascot_greeting", "¿Cómo puedo ayudarte?")}
                         </h2>
 
-                        <div className="mt-4 flex flex-wrap justify-center gap-2">
-                          {suggestions.map((s, i) => (
+                        {/* INPUT CENTRADO (como ChatGPT) */}
+                        <form onSubmit={handleSend} className="w-full mt-6">
+                          <div
+                            className="mx-auto max-w-3xl flex items-center gap-2 rounded-[28px] border
+                                       border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900
+                                       shadow-sm px-3 py-2"
+                          >
                             <button
-                              key={i}
-                              onClick={() => fillFromChip(s)}
-                              className="px-3 py-1.5 rounded-full text-sm border border-slate-200 dark:border-slate-700
-                                         bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition"
+                              type="button"
+                              className="h-10 w-10 inline-flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
+                              title={t("assistant_add", "Añadir")}
                             >
-                              {s}
+                              <Plus className="w-5 h-5" />
                             </button>
-                          ))}
-                        </div>
+
+                            <input
+                              ref={inputRef}
+                              value={input}
+                              onChange={(e) => setInput(e.target.value)}
+                              placeholder={t("assistant_placeholder", "Pregunta lo que quieras")}
+                              className="flex-1 bg-transparent outline-none text-[15px] placeholder:text-slate-400"
+                            />
+
+                            {/* Eliminado “Pensando” */}
+                            <button
+                              type="button"
+                              className="h-10 w-10 inline-flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
+                              title={t("assistant_voice", "Dictar por voz")}
+                            >
+                              <Mic className="w-5 h-5" />
+                            </button>
+
+                            <button
+                              type="submit"
+                              disabled={!input.trim()}
+                              className="ml-1 inline-flex items-center justify-center rounded-full bg-sky-600 hover:bg-sky-700
+                                         text-white h-10 px-5 text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
+                              aria-label={t("assistant_send", "Enviar")}
+                            >
+                              {t("assistant_send", "Enviar")}
+                            </button>
+                          </div>
+                        </form>
                       </motion.div>
                     )}
                   </AnimatePresence>
                 </div>
               </div>
 
-              {/* Pie sticky con la barra de entrada */}
-              <div className="sticky bottom-0 w-full z-10">
-                {/* Fondo degradado tipo “glass” */}
-                <div className="bg-gradient-to-t from-white/90 dark:from-slate-950/90 to-transparent backdrop-blur">
-                  <div className="max-w-3xl mx-auto px-4 md:px-6 py-4">
-                    <form onSubmit={handleSend}>
-                      <div
-                        className="flex items-center gap-2 rounded-[28px] border
-                                   border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900
-                                   shadow-sm px-3 py-2"
-                      >
-                        <button
-                          type="button"
-                          className="h-10 w-10 inline-flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
-                          title={t("assistant_add", "Añadir")}
+              {/* Pie sticky con la barra de entrada (SOLO si ya hay mensajes) */}
+              {!isEmpty && (
+                <div className="sticky bottom-0 w-full z-10">
+                  <div className="bg-gradient-to-t from-white/90 dark:from-slate-950/90 to-transparent backdrop-blur">
+                    <div className="max-w-3xl mx-auto px-4 md:px-6 py-4">
+                      <form onSubmit={handleSend}>
+                        <div
+                          className="flex items-center gap-2 rounded-[28px] border
+                                     border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900
+                                     shadow-sm px-3 py-2"
                         >
-                          <Plus className="w-5 h-5" />
-                        </button>
+                          <button
+                            type="button"
+                            className="h-10 w-10 inline-flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
+                            title={t("assistant_add", "Añadir")}
+                          >
+                            <Plus className="w-5 h-5" />
+                          </button>
 
-                        <input
-                          ref={inputRef}
-                          value={input}
-                          onChange={(e) => setInput(e.target.value)}
-                          placeholder={t("assistant_placeholder", "Pregunta lo que quieras")}
-                          className="flex-1 bg-transparent outline-none text-[15px] placeholder:text-slate-400"
-                        />
+                          <input
+                            ref={inputRef}
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            placeholder={t("assistant_placeholder", "Pregunta lo que quieras")}
+                            className="flex-1 bg-transparent outline-none text-[15px] placeholder:text-slate-400"
+                          />
 
-                        <button
-                          type="button"
-                          className="hidden sm:inline-flex items-center gap-1 text-sky-600 hover:opacity-90 px-2 py-1 rounded-md"
-                          title={t("assistant_mode_title", "Modo")}
-                        >
-                          <Timer className="w-4 h-4" />
-                          <span className="text-sm">{t("assistant_mode_thinking", "Pensando")}</span>
-                          <ChevronDown className="w-4 h-4 opacity-70" />
-                        </button>
+                          {/* Eliminado “Pensando” */}
+                          <button
+                            type="button"
+                            className="h-10 w-10 inline-flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
+                            title={t("assistant_voice", "Dictar por voz")}
+                          >
+                            <Mic className="w-5 h-5" />
+                          </button>
 
-                        <button
-                          type="button"
-                          className="h-10 w-10 inline-flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
-                          title={t("assistant_voice", "Dictar por voz")}
-                        >
-                          <Mic className="w-5 h-5" />
-                        </button>
-
-                        <button
-                          type="submit"
-                          disabled={!input.trim()}
-                          className="ml-1 inline-flex items-center justify-center rounded-full bg-sky-600 hover:bg-sky-700
-                                     text-white h-10 px-5 text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
-                          aria-label={t("assistant_send", "Enviar")}
-                        >
-                          {t("assistant_send", "Enviar")}
-                        </button>
-                      </div>
-
-                      <p className="mt-2 text-center text-xs text-slate-500">
-                        {t("assistant_hint", "Pregunta lo que quieras")}
-                      </p>
-                    </form>
+                          <button
+                            type="submit"
+                            disabled={!input.trim()}
+                            className="ml-1 inline-flex items-center justify-center rounded-full bg-sky-600 hover:bg-sky-700
+                                       text-white h-10 px-5 text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
+                            aria-label={t("assistant_send", "Enviar")}
+                          >
+                            {t("assistant_send", "Enviar")}
+                          </button>
+                        </div>
+                        {/* Eliminado el texto inferior “Pregunta lo que quieras” */}
+                      </form>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </main>
         </div>
