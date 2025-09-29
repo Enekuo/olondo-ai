@@ -247,7 +247,7 @@ const AssistantPage = () => {
                 {/* Empty state centrado */}
                 {isEmpty && (
                   <div className="max-w-3xl mx-auto w-full px-4 md:px-6 py-10">
-                    <div className="flex flex-col items-center text-center select-none">
+                    <div className="flex flex-col items-center text-center select-none mt-[16vh] md:mt-[20vh]">
                       <img
                         src="/olondo.mascota.png"
                         alt="Olondo asistente"
