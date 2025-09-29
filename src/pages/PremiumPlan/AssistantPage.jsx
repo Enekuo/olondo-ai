@@ -49,13 +49,12 @@ const AssistantPage = () => {
     e.target.value = "";
   };
 
-  // Nuevo chat + abrir archivos
+  // ✅ Nuevo chat SOLO resetea (no abre selector)
   const handleNewChat = () => {
     setMessages([]);
     setInput("");
     setAttachments([]);
-    const inputEl = document.getElementById(FILE_INPUT_ID);
-    if (inputEl) inputEl.click();
+    // nada más
   };
 
   // Enviar
@@ -94,7 +93,7 @@ const AssistantPage = () => {
             Olondo.ai
           </Link>
 
-          <div className="flex items-center gap-3 sm:gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
             {/* Plan */}
             <div className="hidden sm:flex items-center gap-2 select-none">
               <div
@@ -235,7 +234,7 @@ const AssistantPage = () => {
                         exit={{ opacity: 0, y: -8 }}
                         className="flex flex-col items-center text-center select-none"
                       >
-                        {/* Mascota y título (como lo tenías) */}
+                        {/* Mascota y título */}
                         <img src="/olondo.mascota.png" alt="Olondo asistente" className="w-20 h-20 rounded-xl shadow-sm mb-3" draggable={false} />
                         <h2 className="text-xl md:text-2xl font-semibold">
                           {t("assistant_mascot_greeting", "¿Cómo puedo ayudarte?")}
@@ -244,6 +243,7 @@ const AssistantPage = () => {
                         {/* INPUT CENTRADO */}
                         <form onSubmit={handleSend} className="w-full mt-6">
                           <div className="mx-auto max-w-3xl flex items-center gap-2 rounded-[28px] border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm px-3 py-2">
+                            {/* “+” abre selector */}
                             <label
                               htmlFor={FILE_INPUT_ID}
                               className="h-10 w-10 inline-flex items-center justify-center rounded-full cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800"
