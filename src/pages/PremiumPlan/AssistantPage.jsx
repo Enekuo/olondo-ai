@@ -13,7 +13,7 @@ const AssistantPage = () => {
   const { theme, setTheme } = useTheme();
   const location = useLocation();
 
-  // Colores/constantes
+  // UI constants
   const HEADER_COLOR    = theme === "dark" ? "#262F3F" : "#ffffff";
   const SIDEBAR_COLOR   = theme === "dark" ? "#354153" : "#f8f9fb";
   const ACTIVE_BG_COLOR = theme === "dark" ? "#262F3F" : "#e9eef5";
@@ -25,9 +25,8 @@ const AssistantPage = () => {
   const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
   const isActive = (path) => location.pathname === path;
 
-  // ------- Estado del chat -------
-  // message: { id, role: 'user'|'assistant', content: string }
-  const [messages, setMessages] = useState([]);
+  // Chat state
+  const [messages, setMessages] = useState([]); // { id, role: 'user'|'assistant', content }
   const [input, setInput] = useState("");
   const [attachments, setAttachments] = useState([]); // File[]
   const inputRef = useRef(null);
@@ -35,27 +34,38 @@ const AssistantPage = () => {
 
   const isEmpty = messages.length === 0;
 
-  // ------- Archivos -------
+  // Files
   const FILE_INPUT_ID = "assistant-file-input";
   const onFiles = (e) => {
     const files = Array.from(e.target.files || []);
     if (files.length) {
       setAttachments(files);
-      // pista visual opcional: muestra nombres si no hay texto
       if (!input.trim()) setInput(files.map((f) => f.name).join(", "));
       inputRef.current?.focus();
     }
-    e.target.value = ""; // permite volver a elegir los mismos
+    e.target.value = "";
   };
 
-  // ------- Nuevo chat (reset total) -------
+  // New chat
   const handleNewChat = () => {
     setMessages([]);
     setInput("");
     setAttachments([]);
   };
 
-  // ------- Enviar (Enter), Shift+Enter = salto -------
+  // Send
+  const handleSend = () => {
+    const text = input.trim();
+    if (!text && attachments.length === 0) return;
+    const userMsg = { id: crypto.randomUUID(), role: "user", content: text };
+    setMessages((prev) => [...prev, userMsg]);
+    setInput("");
+    setAttachments([]);
+    inputRef.current?.focus();
+    // Conecta tu backend aquí si deseas respuesta del asistente
+  };
+
+  // Enter to send / Shift+Enter new line
   const onKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -63,47 +73,34 @@ const AssistantPage = () => {
     }
   };
 
-  const handleSend = async () => {
-    const text = input.trim();
-    if (!text && attachments.length === 0) return;
-
-    const userMsg = { id: crypto.randomUUID(), role: "user", content: text };
-    setMessages((prev) => [...prev, userMsg]);
-    setInput("");
-    setAttachments([]);
-    inputRef.current?.focus();
-
-    // 🔌 Aquí conectas tu backend (stream/SSE o request normal).
-    // Ejemplo mínimo (placeholder):
-    // const reply = await callYourAPI([...messages, userMsg], attachments)
-    // setMessages(prev => [...prev, { id: crypto.randomUUID(), role: "assistant", content: reply }])
-  };
-
-  // ------- Autoscroll -------
+  // autoscroll
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [messages.length]);
 
-  // ------- UI helpers -------
+  // Bubble
   const Bubble = ({ role, children }) => {
     const isUser = role === "user";
-    const base =
-      "max-w-[85%] md:max-w-[70%] rounded-2xl px-4 py-2 text-sm md:text-base whitespace-pre-wrap leading-relaxed";
-    const userCls = "bg-sky-600 text-white rounded-br-md";
-    const asstCls =
-      theme === "dark"
-        ? "bg-slate-800 text-slate-100 rounded-bl-md"
-        : "bg-slate-100 text-slate-800 rounded-bl-md";
     return (
       <div className={`w-full flex ${isUser ? "justify-end" : "justify-start"} mb-3`}>
-        <div className={`${base} ${isUser ? userCls : asstCls}`}>{children}</div>
+        <div
+          className={`max-w-[85%] md:max-w-[70%] rounded-2xl px-4 py-2 text-sm md:text-base whitespace-pre-wrap leading-relaxed ${
+            isUser
+              ? "bg-sky-600 text-white rounded-br-md"
+              : theme === "dark"
+              ? "bg-slate-800 text-slate-100 rounded-bl-md"
+              : "bg-slate-100 text-slate-800 rounded-bl-md"
+          }`}
+        >
+          {children}
+        </div>
       </div>
     );
   };
 
   return (
     <div className="min-h-screen w-full bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
-      {/* INPUT DE ARCHIVOS (global, oculto) */}
+      {/* Hidden file input */}
       <input
         id={FILE_INPUT_ID}
         type="file"
@@ -113,7 +110,7 @@ const AssistantPage = () => {
         accept=".pdf,.txt,.doc,.docx,.md,.rtf,.json,.csv,image/*,audio/*,video/*"
       />
 
-      {/* HEADER */}
+      {/* Header */}
       <header
         className="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-slate-800"
         style={{ backgroundColor: HEADER_COLOR, height: HEADER_HEIGHT_PX, borderColor: BORDER_COLOR }}
@@ -124,7 +121,6 @@ const AssistantPage = () => {
           </Link>
 
           <div className="flex items-center gap-3 sm:gap-4">
-            {/* Plan */}
             <div className="hidden sm:flex items-center gap-2 select-none">
               <div
                 className="inline-flex items-center justify-center rounded-[10px]"
@@ -181,27 +177,10 @@ const AssistantPage = () => {
         </div>
       </header>
 
-      {/* BOTÓN NUEVO CHAT – justo debajo del header */}
-      <div className="w-full px-4 sm:px-6 mt-3">
-        <div className="flex justify-end">
-          <button
-            onClick={handleNewChat}
-            className="inline-flex items-center gap-2 rounded-full border border-slate-200 dark:border-slate-700
-                       bg-white dark:bg-slate-900 px-3.5 h-10 text-sm font-medium
-                       hover:bg-slate-50 dark:hover:bg-slate-800"
-            aria-label={t("assistant_new_chat", "Nuevo chat")}
-            title={t("assistant_new_chat", "Nuevo chat")}
-          >
-            <Plus className="w-4 h-4" />
-            {t("assistant_new_chat", "Nuevo chat")}
-          </button>
-        </div>
-      </div>
-
-      {/* LAYOUT */}
+      {/* GRID LAYOUT */}
       <div className="w-full">
         <div className="grid gap-0 md:grid-cols-[190px_1fr]">
-          {/* SIDEBAR */}
+          {/* Sidebar */}
           <aside className="border-r border-slate-200 dark:border-slate-800" style={{ borderColor: BORDER_COLOR }}>
             <div
               className="sticky ps-2 pe-3 pt-6 pb-0 text-slate-800 dark:text-slate-100"
@@ -218,28 +197,23 @@ const AssistantPage = () => {
                     <Home className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_home")}</span>
                   </Link>
-
                   <Link to="/create" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/create") ? ACTIVE_BG_COLOR : "transparent" }}>
                     <PlusCircle className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_create")}</span>
                   </Link>
-
                   <Link to="/library" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/library") ? ACTIVE_BG_COLOR : "transparent" }}>
                     <Folder className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_library")}</span>
                   </Link>
-
                   <Link to="/assistant" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/assistant") ? ACTIVE_BG_COLOR : "transparent" }}>
                     <MessageSquare className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_ai_chat")}</span>
                   </Link>
-
                   <Link to="/pricing" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/pricing") ? ACTIVE_BG_COLOR : "transparent" }}>
                     <CreditCard className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_plans")}</span>
                   </Link>
                 </nav>
-
                 <div className="pb-0">
                   <Link to="/settings" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/settings") ? ACTIVE_BG_COLOR : "transparent" }}>
                     <Settings className="w-5 h-5 shrink-0" />
@@ -250,14 +224,29 @@ const AssistantPage = () => {
             </div>
           </aside>
 
-          {/* CONTENIDO */}
-          <main className="relative min-h-[calc(100vh-72px)]">
+          {/* MAIN */}
+          <main className="relative h-[calc(100vh-72px)] overflow-hidden">
+            {/* Botón Nuevo chat posicionado y sin ocupar flujo */}
+            <div className="absolute right-4 top-4 z-10">
+              <button
+                onClick={handleNewChat}
+                className="inline-flex items-center gap-2 rounded-full border border-slate-200 dark:border-slate-700
+                           bg-white dark:bg-slate-900 px-3.5 h-10 text-sm font-medium
+                           hover:bg-slate-50 dark:hover:bg-slate-800"
+                aria-label={t("assistant_new_chat", "Nuevo chat")}
+                title={t("assistant_new_chat", "Nuevo chat")}
+              >
+                <Plus className="w-4 h-4" />
+                {t("assistant_new_chat", "Nuevo chat")}
+              </button>
+            </div>
+
+            {/* Scroll area interno (solo si hay chat) */}
             <div className="h-full flex flex-col">
-              {/* ZONA SCROLLABLE */}
-              <div className="flex-1 overflow-y-auto">
-                {/* Estado vacío (input centrado bajo la mascota) */}
+              <div className={`flex-1 ${isEmpty ? "overflow-hidden" : "overflow-y-auto"}`}>
+                {/* Empty state centrado */}
                 {isEmpty && (
-                  <div className="max-w-3xl mx-auto w-full px-4 md:px-6 pt-12 pb-12">
+                  <div className="max-w-3xl mx-auto w-full px-4 md:px-6 py-10">
                     <div className="flex flex-col items-center text-center select-none">
                       <img
                         src="/olondo.mascota.png"
@@ -272,7 +261,6 @@ const AssistantPage = () => {
                       {/* Input centrado */}
                       <form onSubmit={(e)=>{e.preventDefault();handleSend();}} className="w-full mt-6">
                         <div className="mx-auto max-w-3xl flex items-center gap-2 rounded-[28px] border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm px-3 py-2">
-                          {/* “+” abre selector */}
                           <label
                             htmlFor={FILE_INPUT_ID}
                             className="h-10 w-10 inline-flex items-center justify-center rounded-full cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800"
@@ -285,7 +273,7 @@ const AssistantPage = () => {
                             ref={inputRef}
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
-                            onKeyDown={onKeyDown}
+                            onKeyDown={(e)=>{ if(e.key==="Enter" && !e.shiftKey){ e.preventDefault(); handleSend(); } }}
                             placeholder={t("assistant_placeholder", "Pregunta lo que quieras")}
                             rows={1}
                             className="flex-1 bg-transparent outline-none text-[15px] placeholder:text-slate-400 resize-none"
@@ -313,7 +301,7 @@ const AssistantPage = () => {
                   </div>
                 )}
 
-                {/* Lista de mensajes (tras primer envío) */}
+                {/* Mensajes (cuando ya hay chat) */}
                 {!isEmpty && (
                   <div className="max-w-3xl mx-auto w-full px-4 md:px-6 pt-6 pb-24">
                     {messages.map((m) => (
@@ -324,7 +312,7 @@ const AssistantPage = () => {
                 )}
               </div>
 
-              {/* Composer abajo (sticky) cuando ya hay chat */}
+              {/* Composer abajo cuando hay chat */}
               {!isEmpty && (
                 <div className="sticky bottom-0 w-full z-10">
                   <div className="bg-gradient-to-t from-white/90 dark:from-slate-950/90 to-transparent backdrop-blur">
@@ -343,7 +331,7 @@ const AssistantPage = () => {
                             ref={inputRef}
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
-                            onKeyDown={onKeyDown}
+                            onKeyDown={(e)=>{ if(e.key==="Enter" && !e.shiftKey){ e.preventDefault(); handleSend(); } }}
                             placeholder={t("assistant_placeholder", "Escribe tu mensaje")}
                             rows={1}
                             className="flex-1 bg-transparent outline-none text-[15px] placeholder:text-slate-400 resize-none"
