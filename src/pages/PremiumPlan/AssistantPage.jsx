@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon, Gem, MessageSquare,
@@ -7,7 +7,6 @@ import {
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 import { useTheme } from "@/components/layout/ThemeProvider";
-import { AnimatePresence, motion } from "framer-motion";
 
 const AssistantPage = () => {
   const { t } = useLanguage();
@@ -19,56 +18,87 @@ const AssistantPage = () => {
   const SIDEBAR_COLOR   = theme === "dark" ? "#354153" : "#f8f9fb";
   const ACTIVE_BG_COLOR = theme === "dark" ? "#262F3F" : "#e9eef5";
   const BORDER_COLOR    = theme === "dark" ? "#1f2937" : "#e5e7eb";
-
   const HEADER_HEIGHT_PX = 72;
   const SIDEBAR_WIDTH_PX = 190;
 
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
-
   const isActive = (path) => location.pathname === path;
 
-  // Estado chat
-  const [messages, setMessages] = useState([]); // {role:'user'|'assistant', content, attachments?}
+  // ------- Estado del chat -------
+  // message: { id, role: 'user'|'assistant', content: string }
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [attachments, setAttachments] = useState([]); // File[]
   const inputRef = useRef(null);
+  const endRef = useRef(null);
 
-  const isEmpty = messages.length === 0 && input.trim().length === 0;
+  const isEmpty = messages.length === 0;
 
-  // --- archivos ---
+  // ------- Archivos -------
   const FILE_INPUT_ID = "assistant-file-input";
-
-  const handleFilesSelected = (e) => {
+  const onFiles = (e) => {
     const files = Array.from(e.target.files || []);
     if (files.length) {
       setAttachments(files);
-      setInput(files.map((f) => f.name).join(", "));
+      // pista visual opcional: muestra nombres si no hay texto
+      if (!input.trim()) setInput(files.map((f) => f.name).join(", "));
       inputRef.current?.focus();
     }
-    e.target.value = "";
+    e.target.value = ""; // permite volver a elegir los mismos
   };
 
-  // ✅ Nuevo chat SOLO resetea (no abre selector)
+  // ------- Nuevo chat (reset total) -------
   const handleNewChat = () => {
     setMessages([]);
     setInput("");
     setAttachments([]);
-    // nada más
   };
 
-  // Enviar
-  const handleSend = (e) => {
-    e?.preventDefault?.();
-    if (!input.trim() && attachments.length === 0) return;
+  // ------- Enviar (Enter), Shift+Enter = salto -------
+  const onKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
 
-    setMessages((prev) => [
-      ...prev,
-      { role: "user", content: input.trim(), attachments }
-    ]);
+  const handleSend = async () => {
+    const text = input.trim();
+    if (!text && attachments.length === 0) return;
+
+    const userMsg = { id: crypto.randomUUID(), role: "user", content: text };
+    setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setAttachments([]);
     inputRef.current?.focus();
+
+    // 🔌 Aquí conectas tu backend (stream/SSE o request normal).
+    // Ejemplo mínimo (placeholder):
+    // const reply = await callYourAPI([...messages, userMsg], attachments)
+    // setMessages(prev => [...prev, { id: crypto.randomUUID(), role: "assistant", content: reply }])
+  };
+
+  // ------- Autoscroll -------
+  useEffect(() => {
+    endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [messages.length]);
+
+  // ------- UI helpers -------
+  const Bubble = ({ role, children }) => {
+    const isUser = role === "user";
+    const base =
+      "max-w-[85%] md:max-w-[70%] rounded-2xl px-4 py-2 text-sm md:text-base whitespace-pre-wrap leading-relaxed";
+    const userCls = "bg-sky-600 text-white rounded-br-md";
+    const asstCls =
+      theme === "dark"
+        ? "bg-slate-800 text-slate-100 rounded-bl-md"
+        : "bg-slate-100 text-slate-800 rounded-bl-md";
+    return (
+      <div className={`w-full flex ${isUser ? "justify-end" : "justify-start"} mb-3`}>
+        <div className={`${base} ${isUser ? userCls : asstCls}`}>{children}</div>
+      </div>
+    );
   };
 
   return (
@@ -79,7 +109,7 @@ const AssistantPage = () => {
         type="file"
         multiple
         hidden
-        onChange={handleFilesSelected}
+        onChange={onFiles}
         accept=".pdf,.txt,.doc,.docx,.md,.rtf,.json,.csv,image/*,audio/*,video/*"
       />
 
@@ -93,7 +123,7 @@ const AssistantPage = () => {
             Olondo.ai
           </Link>
 
-        <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-3 sm:gap-4">
             {/* Plan */}
             <div className="hidden sm:flex items-center gap-2 select-none">
               <div
@@ -151,7 +181,7 @@ const AssistantPage = () => {
         </div>
       </header>
 
-      {/* BARRA JUSTO DEBAJO DEL HEADER */}
+      {/* BOTÓN NUEVO CHAT – justo debajo del header */}
       <div className="w-full px-4 sm:px-6 mt-3">
         <div className="flex justify-end">
           <button
@@ -223,73 +253,83 @@ const AssistantPage = () => {
           {/* CONTENIDO */}
           <main className="relative min-h-[calc(100vh-72px)]">
             <div className="h-full flex flex-col">
-              {/* Contenido scrollable */}
+              {/* ZONA SCROLLABLE */}
               <div className="flex-1 overflow-y-auto">
-                <div className="max-w-3xl mx-auto w-full px-4 md:px-6 pt-12 pb-12">
-                  <AnimatePresence>
-                    {isEmpty && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -8 }}
-                        className="flex flex-col items-center text-center select-none"
-                      >
-                        {/* Mascota y título */}
-                        <img src="/olondo.mascota.png" alt="Olondo asistente" className="w-24 h-24 rounded-xl shadow-sm mb-3" draggable={false} />
-                        <h2 className="text-xl md:text-2xl font-semibold">
-                          {t("assistant_mascot_greeting", "¿Cómo puedo ayudarte?")}
-                        </h2>
+                {/* Estado vacío (input centrado bajo la mascota) */}
+                {isEmpty && (
+                  <div className="max-w-3xl mx-auto w-full px-4 md:px-6 pt-12 pb-12">
+                    <div className="flex flex-col items-center text-center select-none">
+                      <img
+                        src="/olondo.mascota.png"
+                        alt="Olondo asistente"
+                        className="w-20 h-20 rounded-xl shadow-sm mb-3"
+                        draggable={false}
+                      />
+                      <h2 className="text-xl md:text-2xl font-semibold">
+                        {t("assistant_mascot_greeting", "¿Cómo puedo ayudarte?")}
+                      </h2>
 
-                        {/* INPUT CENTRADO */}
-                        <form onSubmit={handleSend} className="w-full mt-6">
-                          <div className="mx-auto max-w-3xl flex items-center gap-2 rounded-[28px] border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm px-3 py-2">
-                            {/* “+” abre selector */}
-                            <label
-                              htmlFor={FILE_INPUT_ID}
-                              className="h-10 w-10 inline-flex items-center justify-center rounded-full cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800"
-                              title={t("assistant_add", "Añadir")}
-                            >
-                              <Plus className="w-5 h-5" />
-                            </label>
+                      {/* Input centrado */}
+                      <form onSubmit={(e)=>{e.preventDefault();handleSend();}} className="w-full mt-6">
+                        <div className="mx-auto max-w-3xl flex items-center gap-2 rounded-[28px] border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm px-3 py-2">
+                          {/* “+” abre selector */}
+                          <label
+                            htmlFor={FILE_INPUT_ID}
+                            className="h-10 w-10 inline-flex items-center justify-center rounded-full cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800"
+                            title={t("assistant_add", "Añadir")}
+                          >
+                            <Plus className="w-5 h-5" />
+                          </label>
 
-                            <input
-                              ref={inputRef}
-                              value={input}
-                              onChange={(e) => setInput(e.target.value)}
-                              placeholder={t("assistant_placeholder", "Pregunta lo que quieras")}
-                              className="flex-1 bg-transparent outline-none text-[15px] placeholder:text-slate-400"
-                            />
+                          <textarea
+                            ref={inputRef}
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            onKeyDown={onKeyDown}
+                            placeholder={t("assistant_placeholder", "Pregunta lo que quieras")}
+                            rows={1}
+                            className="flex-1 bg-transparent outline-none text-[15px] placeholder:text-slate-400 resize-none"
+                          />
 
-                            <button
-                              type="button"
-                              className="h-10 w-10 inline-flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
-                              title={t("assistant_voice", "Dictar por voz")}
-                            >
-                              <Mic className="w-5 h-5" />
-                            </button>
+                          <button
+                            type="button"
+                            className="h-10 w-10 inline-flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
+                            title={t("assistant_voice", "Dictar por voz")}
+                          >
+                            <Mic className="w-5 h-5" />
+                          </button>
 
-                            <button
-                              type="submit"
-                              disabled={!input.trim() && attachments.length === 0}
-                              className="ml-1 inline-flex items-center justify-center rounded-full bg-sky-600 hover:bg-sky-700 text-white h-10 px-5 text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
-                              aria-label={t("assistant_send", "Enviar")}
-                            >
-                              {t("assistant_send", "Enviar")}
-                            </button>
-                          </div>
-                        </form>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
+                          <button
+                            type="submit"
+                            disabled={!input.trim() && attachments.length === 0}
+                            className="ml-1 inline-flex items-center justify-center rounded-full bg-sky-600 hover:bg-sky-700 text-white h-10 px-5 text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
+                            aria-label={t("assistant_send", "Enviar")}
+                          >
+                            {t("assistant_send", "Enviar")}
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                )}
+
+                {/* Lista de mensajes (tras primer envío) */}
+                {!isEmpty && (
+                  <div className="max-w-3xl mx-auto w-full px-4 md:px-6 pt-6 pb-24">
+                    {messages.map((m) => (
+                      <Bubble key={m.id} role={m.role}>{m.content}</Bubble>
+                    ))}
+                    <div ref={endRef} />
+                  </div>
+                )}
               </div>
 
-              {/* Pie sticky con la barra de entrada (si hay mensajes) */}
+              {/* Composer abajo (sticky) cuando ya hay chat */}
               {!isEmpty && (
                 <div className="sticky bottom-0 w-full z-10">
                   <div className="bg-gradient-to-t from-white/90 dark:from-slate-950/90 to-transparent backdrop-blur">
                     <div className="max-w-3xl mx-auto px-4 md:px-6 py-4">
-                      <form onSubmit={handleSend}>
+                      <form onSubmit={(e)=>{e.preventDefault();handleSend();}}>
                         <div className="flex items-center gap-2 rounded-[28px] border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm px-3 py-2">
                           <label
                             htmlFor={FILE_INPUT_ID}
@@ -299,12 +339,14 @@ const AssistantPage = () => {
                             <Plus className="w-5 h-5" />
                           </label>
 
-                          <input
+                          <textarea
                             ref={inputRef}
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
-                            placeholder={t("assistant_placeholder", "Pregunta lo que quieras")}
-                            className="flex-1 bg-transparent outline-none text-[15px] placeholder:text-slate-400"
+                            onKeyDown={onKeyDown}
+                            placeholder={t("assistant_placeholder", "Escribe tu mensaje")}
+                            rows={1}
+                            className="flex-1 bg-transparent outline-none text-[15px] placeholder:text-slate-400 resize-none"
                           />
 
                           <button
