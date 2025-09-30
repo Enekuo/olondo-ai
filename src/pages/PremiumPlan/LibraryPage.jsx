@@ -182,9 +182,10 @@ const LibraryPage = () => {
 
               {/* Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {/* Tarjeta “Crear carpeta” — CUADRO TOTALMENTE CUADRADO */}
+                {/* Tarjeta “Crear carpeta” — cuadrado forzado */}
                 <button
-                  className="h-56 rounded-none border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 transition hover:bg-slate-50 dark:hover:bg-slate-900/60"
+                  className="h-56 border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 transition hover:bg-slate-50 dark:hover:bg-slate-900/60 !rounded-none"
+                  style={{ borderRadius: 0 }}
                 >
                   <div className="h-full w-full flex flex-col items-center justify-center">
                     <div className="flex items-center justify-center w-20 h-20 rounded-full bg-indigo-50 dark:bg-slate-800">
