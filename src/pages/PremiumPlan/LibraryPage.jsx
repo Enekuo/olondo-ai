@@ -178,7 +178,44 @@ const LibraryPage = () => {
 
           <main>
             <section className="py-8 md:py-10 px-4 md:px-8">
-              {/* Página Library vacía */}
+              {/* Top bar: título + CTA */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium px-3 py-1.5 rounded-full bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-100">
+                    Carpetas
+                  </span>
+                </div>
+
+                <button
+                  className="inline-flex items-center gap-2 rounded-xl px-3.5 py-2.5 text-sm font-medium shadow-sm border border-slate-200 bg-white hover:shadow-md active:scale-[0.99] transition dark:bg-slate-900 dark:border-slate-800"
+                >
+                  <PlusCircle className="w-4 h-4" />
+                  <span>Crear nueva carpeta</span>
+                </button>
+              </div>
+
+              {/* Título de sección */}
+              <h1 className="text-[22px] font-semibold tracking-tight mb-4">Carpetas</h1>
+
+              {/* Grid de tarjetas */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {/* Tarjeta “Crear carpeta” */}
+                <button
+                  className="group relative h-44 rounded-2xl border border-slate-200 bg-white hover:shadow-xl transition dark:bg-slate-900 dark:border-slate-800"
+                >
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-black/0 to-black/0 group-hover:to-black/[0.02]" />
+                  <div className="h-full w-full flex flex-col items-center justify-center gap-3">
+                    <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl border border-slate-200 bg-white shadow-sm dark:bg-slate-900 dark:border-slate-800">
+                      <PlusCircle className="w-6 h-6 text-slate-600 dark:text-slate-300" />
+                    </div>
+                    <span className="text-[15px] font-medium text-slate-800 dark:text-slate-100">
+                      Crear carpeta
+                    </span>
+                  </div>
+                </button>
+
+                {/* Aquí irán las tarjetas de carpeta existentes (vacío por ahora) */}
+              </div>
             </section>
           </main>
         </div>
