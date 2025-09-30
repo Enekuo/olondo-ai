@@ -169,7 +169,6 @@ const LibraryPage = () => {
                   })}
                 </div>
 
-                {/* AHORA NAVEGA A /create */}
                 <Link to="/create" className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[15px] font-medium bg-black text-white hover:opacity-95 active:scale-[0.99] transition">
                   <Plus className="w-5 h-5" />
                   Crear nuevo
@@ -183,14 +182,15 @@ const LibraryPage = () => {
 
               {/* Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {/* Tarjeta “Crear carpeta” */}
-                <button className="group relative h-44 rounded-2xl border border-slate-200 bg-white hover:shadow-xl transition dark:bg-slate-900 dark:border-slate-800">
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-black/0 to-black/0 group-hover:to-black/[0.02]" />
-                  <div className="h-full w-full flex flex-col items-center justify-center gap-3">
-                    <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl border border-slate-200 bg-white shadow-sm dark:bg-slate-900 dark:border-slate-800">
-                      <PlusCircle className="w-6 h-6 text-slate-600 dark:text-slate-300" />
+                {/* === Tarjeta “Crear carpeta” estilo NotebookLM === */}
+                <button
+                  className="h-56 rounded-2xl border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 transition hover:bg-slate-50 dark:hover:bg-slate-900/60"
+                >
+                  <div className="h-full w-full flex flex-col items-center justify-center">
+                    <div className="flex items-center justify-center w-20 h-20 rounded-full bg-indigo-50 dark:bg-slate-800">
+                      <Plus className="w-6 h-6 text-indigo-600 dark:text-sky-400" />
                     </div>
-                    <span className="text-[15px] font-medium text-slate-800 dark:text-slate-100">
+                    <span className="mt-4 text-[22px] leading-6 text-slate-900 dark:text-slate-100">
                       Crear carpeta
                     </span>
                   </div>
