@@ -190,7 +190,7 @@ const LibraryPage = () => {
                   </span>
                 </div>
 
-                <button className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[14px] font-medium bg-black text-white hover:opacity-95 active:scale-[0.99] transition">
+                <button className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[12px] font-medium bg-black text-white hover:opacity-95 active:scale-[0.99] transition">
                   <Plus className="w-5 h-5" />
                   Crear nuevo
                 </button>
