@@ -192,7 +192,7 @@ const LibraryPage = () => {
 
                 <button className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[15px] font-medium bg-black text-white hover:opacity-95 active:scale-[0.99] transition">
                   {/* Plus grande y SIN círculo */}
-                  <Plus className="w-6 h-6" />
+                  <Plus className="w-5 h-5" />
                   Crear nuevo
                 </button>
               </div>
