@@ -71,7 +71,7 @@ export const es = {
   freeTrialPageTitle: 'Comienza tu Prueba Gratis',
   freeTrialPageSubtitle: 'Explora el poder de Olondo AI. Elige una opción para empezar:',
   freeTrialCreateTextButton: 'Crear Texto',
-  freeTrialCreateTextDescription: 'Genera textos auditibos  apartir de diferentes textos o documentos.',
+  freeTrialCreateTextDescription: 'Genera contenidos audibles a partir de diferentes documentos o textos.',
   freeTrialCreateSummaryButton: 'Crear Resumen',
   freeTrialCreateSummaryDescription: 'Genera resúmenes desde textos largos o archivos.',
   freeTrialSelectOption: 'Seleccionar Opción',
