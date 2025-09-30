@@ -1,5 +1,5 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useMemo } from "react";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import {
   Home, PlusCircle, Plus, Folder, CreditCard, Settings, User, Sun, Moon, Gem, MessageSquare
 } from "lucide-react";
@@ -11,6 +11,7 @@ const LibraryPage = () => {
   const { t } = useLanguage();
   const { theme, setTheme } = useTheme();
   const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const HEADER_COLOR    = theme === "dark" ? "#262F3F" : "#ffffff";
   const SIDEBAR_COLOR   = theme === "dark" ? "#354153" : "#f8f9fb";
@@ -50,6 +51,14 @@ const LibraryPage = () => {
         };
 
   const planIconColor = theme === "dark" ? "#ffffff" : "#334155";
+
+  // --------- Tabs con URL (default 'all') ----------
+  const tab = useMemo(() => searchParams.get("tab") || "all", [searchParams]);
+  const setTab = (next) => {
+    const sp = new URLSearchParams(searchParams);
+    sp.set("tab", next);
+    setSearchParams(sp, { replace: true });
+  };
 
   return (
     <div className="min-h-screen w-full bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -96,7 +105,7 @@ const LibraryPage = () => {
               style={{
                 backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff",
                 border: theme === "dark" ? "none" : "1px solid #e5e7eb",
-                color: theme === "dark" ? "#ffffff" : "#1f2937"
+                color: "#1f2937"
               }}
               aria-label={t("user_menu")}
             >
@@ -145,7 +154,7 @@ const LibraryPage = () => {
                     <span className="truncate">{t("dashboard_nav_library")}</span>
                   </Link>
 
-                  {/* NUEVO: Chat con IA */}
+                  {/* Chat con IA */}
                   <Link to="/assistant"
                     className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
                     style={{ backgroundColor: isActive("/assistant") ? ACTIVE_BG_COLOR : "transparent" }}
@@ -178,30 +187,52 @@ const LibraryPage = () => {
 
           <main>
             <section className="py-8 md:py-10 px-4 md:px-8">
-              {/* Barra superior: "Todos | Mis carpetas" + botón negro "Crear nuevo" sin círculo */}
-              <div className="flex items-center justify-between mb-6">
+              {/* Barra superior: "Todos | Mis carpetas" + botón negro "Crear nuevo" */}
+              <div className="flex items-center justify-between mb-6" role="tablist" aria-label="Biblioteca">
                 <div className="flex items-center gap-6">
-                  <button className="text-[15px] leading-[22px] text-slate-700 dark:text-slate-200">
+                  <button
+                    role="tab"
+                    aria-selected={tab === "all"}
+                    onClick={() => setTab("all")}
+                    className={
+                      tab === "all"
+                        ? "text-[15px] leading-[22px] font-medium px-4 py-2 rounded-full bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-100"
+                        : "text-[15px] leading-[22px] text-slate-700 dark:text-slate-200"
+                    }
+                  >
                     Todos
                   </button>
 
-                  <span className="text-[15px] leading-[22px] font-medium px-4 py-2 rounded-full bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-100">
+                  <button
+                    role="tab"
+                    aria-selected={tab === "folders"}
+                    onClick={() => setTab("folders")}
+                    className={
+                      tab === "folders"
+                        ? "text-[15px] leading-[22px] font-medium px-4 py-2 rounded-full bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-100"
+                        : "text-[15px] leading-[22px] text-slate-700 dark:text-slate-200"
+                    }
+                  >
                     Mis carpetas
-                  </span>
+                  </button>
                 </div>
 
-                <button className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-medium bg-black text-white hover:opacity-95 active:scale-[0.99] transition">
+                <button className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[15px] font-medium bg-black text-white hover:opacity-95 active:scale-[0.99] transition">
                   <Plus className="w-5 h-5" />
                   Crear nuevo
                 </button>
               </div>
 
-              {/* Título de sección */}
-              <h1 className="text-[22px] font-semibold tracking-tight mb-4">Carpetas</h1>
+              {/* Título de sección:
+                  - En "folders": mostrar "Carpetas"
+                  - En "all": NO mostrar nada (exactamente igual pero sin la palabra) */}
+              {tab === "folders" && (
+                <h1 className="text-[22px] font-semibold tracking-tight mb-4">Carpetas</h1>
+              )}
 
-              {/* Grid de tarjetas */}
+              {/* Grid de tarjetas (igual para ambos tabs, de momento) */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {/* Tarjeta “Crear carpeta” (se mantiene con círculo, no lo pediste cambiar) */}
+                {/* Tarjeta “Crear carpeta” */}
                 <button
                   className="group relative h-44 rounded-2xl border border-slate-200 bg-white hover:shadow-xl transition dark:bg-slate-900 dark:border-slate-800"
                 >
@@ -216,7 +247,7 @@ const LibraryPage = () => {
                   </div>
                 </button>
 
-                {/* Más tarjetas de carpeta irán aquí */}
+                {/* Aquí irán las tarjetas existentes cuando las tengas */}
               </div>
             </section>
           </main>
