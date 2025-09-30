@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
-  Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon, Gem, MessageSquare
+  Home, PlusCircle, Plus, Folder, CreditCard, Settings, User, Sun, Moon, Gem, MessageSquare
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
@@ -178,7 +178,7 @@ const LibraryPage = () => {
 
           <main>
             <section className="py-8 md:py-10 px-4 md:px-8">
-              {/* Barra superior EXACTA: "Todos | Mis carpetas" + botón negro "Crear nuevo" */}
+              {/* Barra superior: "Todos | Mis carpetas" + botón negro "Crear nuevo" sin círculo */}
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-6">
                   <button className="text-[15px] leading-[22px] text-slate-700 dark:text-slate-200">
@@ -191,7 +191,8 @@ const LibraryPage = () => {
                 </div>
 
                 <button className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[15px] font-medium bg-black text-white hover:opacity-95 active:scale-[0.99] transition">
-                  <PlusCircle className="w-4 h-4" />
+                  {/* Plus grande y SIN círculo */}
+                  <Plus className="w-6 h-6" />
                   Crear nuevo
                 </button>
               </div>
@@ -201,7 +202,7 @@ const LibraryPage = () => {
 
               {/* Grid de tarjetas */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {/* Tarjeta “Crear carpeta” */}
+                {/* Tarjeta “Crear carpeta” (se mantiene con círculo, no lo pediste cambiar) */}
                 <button
                   className="group relative h-44 rounded-2xl border border-slate-200 bg-white hover:shadow-xl transition dark:bg-slate-900 dark:border-slate-800"
                 >
