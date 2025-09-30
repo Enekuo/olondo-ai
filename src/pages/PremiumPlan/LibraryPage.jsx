@@ -52,7 +52,7 @@ const LibraryPage = () => {
 
   const planIconColor = theme === "dark" ? "#ffffff" : "#334155";
 
-  // --------- Tabs con URL (default 'all') ----------
+  // Tabs sincronizadas con URL (?tab=all|folders). Por defecto: "all"
   const tab = useMemo(() => searchParams.get("tab") || "all", [searchParams]);
   const setTab = (next) => {
     const sp = new URLSearchParams(searchParams);
@@ -154,7 +154,6 @@ const LibraryPage = () => {
                     <span className="truncate">{t("dashboard_nav_library")}</span>
                   </Link>
 
-                  {/* Chat con IA */}
                   <Link to="/assistant"
                     className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
                     style={{ backgroundColor: isActive("/assistant") ? ACTIVE_BG_COLOR : "transparent" }}
@@ -187,34 +186,27 @@ const LibraryPage = () => {
 
           <main>
             <section className="py-8 md:py-10 px-4 md:px-8">
-              {/* Barra superior: "Todos | Mis carpetas" + botón negro "Crear nuevo" */}
+              {/* Pestañas: iguales en peso/altura; sólo cambia fondo/color */}
               <div className="flex items-center justify-between mb-6" role="tablist" aria-label="Biblioteca">
                 <div className="flex items-center gap-6">
-                  <button
-                    role="tab"
-                    aria-selected={tab === "all"}
-                    onClick={() => setTab("all")}
-                    className={
-                      tab === "all"
-                        ? "text-[15px] leading-[22px] font-medium px-4 py-2 rounded-full bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-100"
-                        : "text-[15px] leading-[22px] text-slate-700 dark:text-slate-200"
-                    }
-                  >
-                    Todos
-                  </button>
-
-                  <button
-                    role="tab"
-                    aria-selected={tab === "folders"}
-                    onClick={() => setTab("folders")}
-                    className={
-                      tab === "folders"
-                        ? "text-[15px] leading-[22px] font-medium px-4 py-2 rounded-full bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-100"
-                        : "text-[15px] leading-[22px] text-slate-700 dark:text-slate-200"
-                    }
-                  >
-                    Mis carpetas
-                  </button>
+                  {["all","folders"].map((key) => {
+                    const active = tab === key;
+                    const base = "text-[15px] leading-[22px] font-medium px-4 py-2 rounded-full transition-colors";
+                    const cls = active
+                      ? `${base} bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-slate-100`
+                      : `${base} text-slate-700 dark:text-slate-200`;
+                    return (
+                      <button
+                        key={key}
+                        role="tab"
+                        aria-selected={active}
+                        onClick={() => setTab(key)}
+                        className={cls}
+                      >
+                        {key === "all" ? "Todos" : "Mis carpetas"}
+                      </button>
+                    );
+                  })}
                 </div>
 
                 <button className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[15px] font-medium bg-black text-white hover:opacity-95 active:scale-[0.99] transition">
@@ -223,14 +215,12 @@ const LibraryPage = () => {
                 </button>
               </div>
 
-              {/* Título de sección:
-                  - En "folders": mostrar "Carpetas"
-                  - En "all": NO mostrar nada (exactamente igual pero sin la palabra) */}
+              {/* Título: solo en "Mis carpetas" */}
               {tab === "folders" && (
                 <h1 className="text-[22px] font-semibold tracking-tight mb-4">Carpetas</h1>
               )}
 
-              {/* Grid de tarjetas (igual para ambos tabs, de momento) */}
+              {/* Grid de tarjetas */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {/* Tarjeta “Crear carpeta” */}
                 <button
@@ -247,7 +237,7 @@ const LibraryPage = () => {
                   </div>
                 </button>
 
-                {/* Aquí irán las tarjetas existentes cuando las tengas */}
+                {/* Aquí irán tarjetas de carpetas existentes */}
               </div>
             </section>
           </main>
