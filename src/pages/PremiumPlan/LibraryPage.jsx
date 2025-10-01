@@ -19,7 +19,6 @@ const LibraryPage = () => {
   const BORDER_COLOR    = theme === "dark" ? "#1f2937" : "#e5e7eb";
 
   const HEADER_HEIGHT_PX = 72;
-  const SIDEBAR_WIDTH_PX = 190;
 
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
@@ -38,13 +37,28 @@ const LibraryPage = () => {
 
   const planIconColor = theme === "dark" ? "#ffffff" : "#334155";
 
-  // ÚNICO filtro por tipo en URL (?type=all|text|summary|folders)
+  // Filtro único (?type=all|text|summary|folders)
   const type = useMemo(() => searchParams.get("type") || "all", [searchParams]);
   const setType = (next) => {
     const sp = new URLSearchParams(searchParams);
     sp.set("type", next);
     setSearchParams(sp, { replace: true });
   };
+
+  // Texto del CTA y destino según type
+  const createAction = useMemo(() => {
+    switch (type) {
+      case "text":
+        return { label: t("library_create_text"), href: "/create?mode=text" };
+      case "summary":
+        return { label: t("library_create_summary"), href: "/create?mode=summary" };
+      case "folders":
+        return { label: t("library_create_folder"), href: "/library/folders/new" };
+      case "all":
+      default:
+        return { label: t("library_create_new"), href: "/create" };
+    }
+  }, [type, t]);
 
   return (
     <div className="min-h-screen w-full bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -152,13 +166,13 @@ const LibraryPage = () => {
 
           <main>
             <section className="py-8 md:py-10 px-4 md:px-8">
-              {/* Chips de filtro (únicos) */}
+              {/* Chips de filtro */}
               <div className="flex items-center gap-2 mb-5">
                 {[
                   { id: "all",     label: t("library_filter_all") },
                   { id: "text",    label: t("library_filter_texts") },
                   { id: "summary", label: t("library_filter_summaries") },
-                  { id: "folders", label: t("library_filter_folders") }, // Mis carpetas
+                  { id: "folders", label: t("library_filter_folders") },
                 ].map(({ id, label }) => {
                   const active = type === id;
                   const base = "px-3 py-1.5 rounded-full text-sm border transition-colors";
@@ -182,26 +196,24 @@ const LibraryPage = () => {
 
               {/* Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {/* Card Crear carpeta (reducida, misma proporción) */}
-                <button
+                {/* Card dinámica (texto + destino según filtro) */}
+                <Link
+                  to={createAction.href}
                   className="mx-auto rounded-2xl border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 shadow-sm hover:shadow-md transition"
                   style={{ width: 280, height: 196, borderRadius: 16 }}
+                  role="button"
                 >
                   <div className="h-full w-full flex flex-col items-center justify-center">
                     <div className="flex items-center justify-center rounded-full bg-indigo-50 dark:bg-slate-800" style={{ width: 70, height: 70 }}>
                       <Plus className="text-indigo-600 dark:text-sky-400" style={{ width: 21, height: 21 }} />
                     </div>
                     <span className="mt-4 text-[20px] leading-6 text-slate-900 dark:text-slate-100">
-                      {t("library_create_folder")}
+                      {createAction.label}
                     </span>
                   </div>
-                </button>
+                </Link>
 
-                {/* Aquí mapearás items según `type`:
-                   - all: todos (ordenados nuevo -> antiguo)
-                   - text: solo textos
-                   - summary: solo resúmenes
-                   - folders: solo carpetas */}
+                {/* Aquí mapearás tus ítems */}
               </div>
             </section>
           </main>

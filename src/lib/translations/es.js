@@ -655,10 +655,14 @@ create_new_intro: "Explora el poder de Olondo AI. Elige una opción para empezar
  
   // Library
   library_filter_all: "Todos",
-  library_filter_texts: "Textos",
-  library_filter_summaries: "Resúmenes",
-  library_filter_folders: "Mis carpetas",   // NUEVA
+  library_filter_texts: "Texto",
+  library_filter_summaries: "Resumen",
+  library_filter_folders: "Mis carpetas",  
   library_folders_title: "Carpetas",
-  library_create_folder: "Crear carpeta",
   library_create_new: "Crear nuevo",
+
+  library_create_text: "Crear texto",
+  library_create_summary: "Crear resumen",
+  library_create_folder: "Crear nueva carpeta"
 }
+
