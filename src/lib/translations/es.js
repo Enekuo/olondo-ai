@@ -652,7 +652,12 @@ create_new_intro: "Explora el poder de Olondo AI. Elige una opción para empezar
   bottom_input_ph: "Escribe un mensaje o sube una fuente para empezar",
   sources_count: "fuentes",
   send: "Enviar",
-
+ 
+  // Library
+  library_tab_all: "Todos",
+  library_tab_folders: "Mis carpetas",
+  library_create_new: "Crear nuevo",
+  library_create_folder: "Crear carpeta",
 
 
 }

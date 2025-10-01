@@ -163,7 +163,7 @@ const LibraryPage = () => {
                       : `${base} text-slate-700 dark:text-slate-200`;
                     return (
                       <button key={key} role="tab" aria-selected={active} onClick={() => setTab(key)} className={cls}>
-                        {key === "all" ? "Todos" : "Mis carpetas"}
+                        {key === "all" ? t("library_tab_all") : t("library_tab_folders")}
                       </button>
                     );
                   })}
@@ -171,7 +171,7 @@ const LibraryPage = () => {
 
                 <Link to="/create" className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[15px] font-medium bg-black text-white hover:opacity-95 active:scale-[0.99] transition">
                   <Plus className="w-5 h-5" />
-                  Crear nuevo
+                  {t("library_create_new")}
                 </Link>
               </div>
 
@@ -182,9 +182,9 @@ const LibraryPage = () => {
 
               {/* Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {/* Tarjeta “Crear carpeta” — cuadrado forzado */}
+                {/* Tarjeta “Crear carpeta” — cuadrado h-56 (mismo alto que antes) */}
                 <button
-                  className="w-full aspect-square border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 transition hover:bg-slate-50 dark:hover:bg-slate-900/60 !rounded-none"
+                  className="h-56 w-56 mx-auto border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 transition hover:bg-slate-50 dark:hover:bg-slate-900/60 !rounded-none"
                   style={{ borderRadius: 0 }}
                 >
                   <div className="h-full w-full flex flex-col items-center justify-center">
@@ -192,7 +192,7 @@ const LibraryPage = () => {
                       <Plus className="w-6 h-6 text-indigo-600 dark:text-sky-400" />
                     </div>
                     <span className="mt-4 text-[22px] leading-6 text-slate-900 dark:text-slate-100">
-                      Crear carpeta
+                      {t("library_create_folder")}
                     </span>
                   </div>
                 </button>
