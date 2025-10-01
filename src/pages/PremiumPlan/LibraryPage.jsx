@@ -38,18 +38,8 @@ const LibraryPage = () => {
 
   const planIconColor = theme === "dark" ? "#ffffff" : "#334155";
 
-  // Tabs (?tab=all|folders) -> vista principal
-  const tab = useMemo(() => searchParams.get("tab") || "all", [searchParams]);
-
-  // Filtro por tipo (?type=all|text|summary) -> aplica en tab=all
+  // ÚNICO filtro por tipo en URL (?type=all|text|summary|folders)
   const type = useMemo(() => searchParams.get("type") || "all", [searchParams]);
-
-  const setTab = (next) => {
-    const sp = new URLSearchParams(searchParams);
-    sp.set("tab", next);
-    setSearchParams(sp, { replace: true });
-  };
-
   const setType = (next) => {
     const sp = new URLSearchParams(searchParams);
     sp.set("type", next);
@@ -114,7 +104,7 @@ const LibraryPage = () => {
           <aside className="border-r border-slate-200 dark:border-slate-800" style={{ borderColor: BORDER_COLOR }}>
             <div
               className="sticky ps-2 pe-3 pt-6 pb-0 text-slate-800 dark:text-slate-100"
-              style={{ backgroundColor: SIDEBAR_COLOR, top: HEADER_HEIGHT_PX, height: `calc(100vh - ${HEADER_HEIGHT_PX}px)`, width: SIDEBAR_WIDTH_PX }}
+              style={{ backgroundColor: SIDEBAR_COLOR, top: HEADER_HEIGHT_PX, height: `calc(100vh - ${HEADER_HEIGHT_PX}px)`, width: 190 }}
             >
               <div className="h-full flex flex-col justify-between">
                 <nav className="space-y-1">
@@ -162,59 +152,37 @@ const LibraryPage = () => {
 
           <main>
             <section className="py-8 md:py-10 px-4 md:px-8">
-              {/* Tabs principales */}
-              <div className="flex items-center justify-between mb-6" role="tablist" aria-label={t("library_aria_label") || "Biblioteca"}>
-                <div className="flex items-center gap-6">
-                  {["all","folders"].map((key) => {
-                    const active = tab === key;
-                    const base = "text-[15px] leading-[22px] font-medium px-4 py-2 rounded-full transition-colors";
-                    const cls = active
-                      ? `${base} bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-slate-100`
-                      : `${base} text-slate-700 dark:text-slate-200`;
-                    return (
-                      <button key={key} role="tab" aria-selected={active} onClick={() => setTab(key)} className={cls}>
-                        {key === "all" ? t("library_tab_all") : t("library_tab_folders")}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <Link to="/create" className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[15px] font-medium bg-black text-white hover:opacity-95 active:scale-[0.99] transition">
-                  <Plus className="w-5 h-5" />
-                  {t("library_create_new")}
-                </Link>
+              {/* Chips de filtro (únicos) */}
+              <div className="flex items-center gap-2 mb-5">
+                {[
+                  { id: "all",     label: t("library_filter_all") },
+                  { id: "text",    label: t("library_filter_texts") },
+                  { id: "summary", label: t("library_filter_summaries") },
+                  { id: "folders", label: t("library_filter_folders") }, // Mis carpetas
+                ].map(({ id, label }) => {
+                  const active = type === id;
+                  const base = "px-3 py-1.5 rounded-full text-sm border transition-colors";
+                  const cls = active
+                    ? `${base} bg-slate-900 text-white dark:bg-white dark:text-slate-900 border-transparent`
+                    : `${base} bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700`;
+                  return (
+                    <button key={id} onClick={() => setType(id)} className={cls} aria-pressed={active}>
+                      {label}
+                    </button>
+                  );
+                })}
               </div>
 
-              {/* Filtros (solo en tab=all) */}
-              {tab === "all" && (
-                <div className="flex items-center gap-2 mb-5">
-                  {[
-                    { id: "all", label: t("library_filter_all") },
-                    { id: "text", label: t("library_filter_texts") },
-                    { id: "summary", label: t("library_filter_summaries") },
-                  ].map(({ id, label }) => {
-                    const active = type === id;
-                    const base = "px-3 py-1.5 rounded-full text-sm border transition-colors";
-                    const cls = active
-                      ? `${base} bg-slate-900 text-white dark:bg-white dark:text-slate-900 border-transparent`
-                      : `${base} bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700`;
-                    return (
-                      <button key={id} onClick={() => setType(id)} className={cls} aria-pressed={active}>
-                        {label}
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-
-              {/* Título solo en "Mis carpetas" */}
-              {tab === "folders" && (
-                <h1 className="text-[22px] font-semibold tracking-tight mb-4">{t("library_folders_title")}</h1>
+              {/* Título solo en “Mis carpetas” */}
+              {type === "folders" && (
+                <h1 className="text-[22px] font-semibold tracking-tight mb-4">
+                  {t("library_folders_title")}
+                </h1>
               )}
 
               {/* Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {/* Card “Crear …” (tamaño reducido manteniendo proporción) */}
+                {/* Card Crear carpeta (reducida, misma proporción) */}
                 <button
                   className="mx-auto rounded-2xl border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 shadow-sm hover:shadow-md transition"
                   style={{ width: 280, height: 196, borderRadius: 16 }}
@@ -229,8 +197,11 @@ const LibraryPage = () => {
                   </div>
                 </button>
 
-                {/* Aquí irán tus tarjetas. 
-                   Recuerda: ordenar del más nuevo al más antiguo en backend o al map() */}
+                {/* Aquí mapearás items según `type`:
+                   - all: todos (ordenados nuevo -> antiguo)
+                   - text: solo textos
+                   - summary: solo resúmenes
+                   - folders: solo carpetas */}
               </div>
             </section>
           </main>
