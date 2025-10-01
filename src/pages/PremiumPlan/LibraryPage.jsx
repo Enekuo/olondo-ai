@@ -1,7 +1,8 @@
 import React, { useMemo, useState } from "react";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import {
-  Home, PlusCircle, Plus, Folder, CreditCard, Settings, User, Sun, Moon, Gem, MessageSquare, X
+  Home, PlusCircle, Plus, Folder, CreditCard, Settings, User, Sun, Moon, Gem, MessageSquare, X,
+  Mic, MoreHorizontal
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
@@ -204,7 +205,6 @@ const LibraryPage = () => {
                 <div className="mb-4 flex items-center justify-between">
                   <h1 className="text-[22px] font-semibold tracking-tight">{t("library_folders_title")}</h1>
 
-                  {/* Botón estilo pill (solo texto “Crear nueva carpeta”) */}
                   <button
                     onClick={openFolderModal}
                     className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[15px] font-medium bg-black text-white hover:opacity-95 active:scale-[0.99] transition"
@@ -218,7 +218,7 @@ const LibraryPage = () => {
 
               {/* Grid principal */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {/* Card dinámica (solo cuando NO estamos en folders) */}
+                {/* Card Crear (solo cuando NO estamos en folders) */}
                 {type !== "folders" && (
                   <Link
                     to={createAction.href}
@@ -237,13 +237,48 @@ const LibraryPage = () => {
                   </Link>
                 )}
 
+                {/* ---- TARJETA DE EJEMPLO (AZUL CLARO) ---- */}
+                {(type === "all" || type === "text") && (
+                  <div
+                    className="mx-auto relative rounded-2xl shadow-sm border p-4"
+                    style={{
+                      width: 280,
+                      height: 196,
+                      borderRadius: 16,
+                      backgroundColor: "#EEF6FF", // azul claro
+                      borderColor: "#D6E7FF",
+                    }}
+                  >
+                    {/* Menú 3 puntos */}
+                    <button
+                      aria-label="Opciones"
+                      className="absolute top-3 right-3 h-8 w-8 inline-flex items-center justify-center rounded-full hover:bg-white/60"
+                    >
+                      <MoreHorizontal className="w-5 h-5 text-slate-600" />
+                    </button>
+
+                    {/* Icono */}
+                    <Mic className="w-8 h-8 mb-3 text-slate-700 opacity-90" />
+
+                    {/* Título (2 líneas máx, truncado) */}
+                    <h3 className="text-[18px] leading-6 font-semibold text-slate-900 pr-6"
+                        style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+                      Olondo.AI: Flujo y Valor de Creación de Contenidos
+                    </h3>
+
+                    {/* Meta */}
+                    <p className="mt-3 text-[13px] text-slate-700">
+                      23 sept 2025 · 1 fuente
+                    </p>
+                  </div>
+                )}
+
                 {/* LISTA de carpetas guardadas (solo en folders) */}
                 {type === "folders" && folders.length === 0 && (
                   <div className="rounded-xl border border-dashed border-slate-300 dark:border-slate-700 p-6 text-slate-500">
                     {t("library_no_folders") || "Aún no tienes carpetas. Crea la primera."}
                   </div>
                 )}
-
                 {type === "folders" && folders.map((f) => (
                   <div
                     key={f.id}
@@ -264,20 +299,14 @@ const LibraryPage = () => {
         </div>
       </div>
 
-      {/* MODAL Crear carpeta — réplica exacta de estilo */}
+      {/* MODAL Crear carpeta */}
       {isFolderModalOpen && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center" role="dialog" aria-modal="true">
-          {/* Backdrop gris (como en el ejemplo) */}
           <div className="absolute inset-0 bg-black/45" onClick={closeFolderModal} />
-
-          {/* Dialog */}
-          <div
-            className="relative w-full max-w-lg bg-white dark:bg-white rounded-[18px] border border-slate-200 shadow-[0_24px_80px_rgba(2,6,23,0.22)]"
-          >
-            {/* Header */}
+          <div className="relative w-full max-w-lg bg-white rounded-[18px] border border-slate-200 shadow-[0_24px_80px_rgba(2,6,23,0.22)]">
             <div className="px-6 pt-5 pb-3 flex items-center justify-between">
               <h3 className="text-[18px] leading-6 font-semibold text-slate-900">
-                {t("folder_modal_title") /* Crear nueva carpeta */}
+                {t("folder_modal_title")}
               </h3>
               <button
                 onClick={closeFolderModal}
@@ -287,35 +316,31 @@ const LibraryPage = () => {
                 <X className="w-4 h-4" />
               </button>
             </div>
-
-            {/* Body */}
             <div className="px-6 pb-5">
               <label className="block text-sm font-medium text-slate-700 mb-1">
-                {t("folder_modal_label") /* Nombre de la carpeta */}
+                {t("folder_modal_label")}
               </label>
               <input
                 autoFocus
                 value={folderName}
                 onChange={(e) => setFolderName(e.target.value)}
-                placeholder={t("folder_modal_placeholder") /* Ponle un nombre... */}
+                placeholder={t("folder_modal_placeholder")}
                 className="w-full rounded-[10px] border border-slate-300 bg-white px-3 py-2 text-[14px] leading-[22px] outline-none focus:ring-2 focus:ring-sky-500"
               />
             </div>
-
-            {/* Footer */}
             <div className="px-6 pb-6 flex items-center justify-end gap-3">
               <button
                 onClick={closeFolderModal}
                 className="px-4 py-2 text-[14px] font-medium rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 shadow-sm"
               >
-                {t("folder_modal_cancel") /* Cancelar */}
+                {t("folder_modal_cancel")}
               </button>
               <button
                 onClick={saveFolder}
                 disabled={!folderName.trim()}
                 className="px-4 py-2 text-[14px] font-medium rounded-lg bg-slate-900 text-white hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
               >
-                {t("folder_modal_save") /* Guardar */}
+                {t("folder_modal_save")}
               </button>
             </div>
           </div>
