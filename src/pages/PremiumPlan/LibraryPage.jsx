@@ -177,15 +177,15 @@ const LibraryPage = () => {
 
               {/* Título solo en "Mis carpetas" */}
               {tab === "folders" && (
-                <h1 className="text-[22px] font-semibold tracking-tight mb-4">Carpetas</h1>
+                <h1 className="text-[22px] font-semibold tracking-tight mb-4">{t("library_folders_title")}</h1>
               )}
 
               {/* Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {/* Tarjeta “Crear carpeta” — cuadrado h-56 (mismo alto que antes) */}
+                {/* Tarjeta “Crear carpeta” — misma altura (h-56) y proporción del ejemplo */}
                 <button
-                  className="h-56 w-56 mx-auto border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 transition hover:bg-slate-50 dark:hover:bg-slate-900/60 !rounded-none"
-                  style={{ borderRadius: 0 }}
+                  className="h-56 w-80 mx-auto rounded-2xl border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 shadow-sm hover:shadow-md transition"
+                  style={{ borderRadius: 16 }}
                 >
                   <div className="h-full w-full flex flex-col items-center justify-center">
                     <div className="flex items-center justify-center w-20 h-20 rounded-full bg-indigo-50 dark:bg-slate-800">
