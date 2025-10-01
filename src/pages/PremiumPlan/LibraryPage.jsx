@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import {
   Home, PlusCircle, Plus, Folder, CreditCard, Settings, User, Sun, Moon, Gem, MessageSquare, X,
-  Mic, MoreHorizontal
+  FileText, MoreHorizontal
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
@@ -216,8 +216,8 @@ const LibraryPage = () => {
                 </div>
               )}
 
-              {/* Grid principal */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {/* Grid principal: ajusto distancia con gap-8 */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 {/* Card Crear (solo cuando NO estamos en folders) */}
                 {type !== "folders" && (
                   <Link
@@ -237,7 +237,7 @@ const LibraryPage = () => {
                   </Link>
                 )}
 
-                {/* ---- TARJETA DE EJEMPLO (AZUL CLARO) ---- */}
+                {/* ---- TARJETA DE EJEMPLO (AZUL CLARO, documento, sin "· 1 fuente" y con tipografías del ejemplo) ---- */}
                 {(type === "all" || type === "text") && (
                   <div
                     className="mx-auto relative rounded-2xl shadow-sm border p-4"
@@ -245,8 +245,8 @@ const LibraryPage = () => {
                       width: 280,
                       height: 196,
                       borderRadius: 16,
-                      backgroundColor: "#EEF6FF", // azul claro
-                      borderColor: "#D6E7FF",
+                      backgroundColor: "#EDF5FF", // azul claro
+                      borderColor: "#D9E7FF",
                     }}
                   >
                     {/* Menú 3 puntos */}
@@ -257,18 +257,20 @@ const LibraryPage = () => {
                       <MoreHorizontal className="w-5 h-5 text-slate-600" />
                     </button>
 
-                    {/* Icono */}
-                    <Mic className="w-8 h-8 mb-3 text-slate-700 opacity-90" />
+                    {/* Icono documento (azul) */}
+                    <FileText className="w-8 h-8 mb-3 text-[#3B82F6]" />
 
-                    {/* Título (2 líneas máx, truncado) */}
-                    <h3 className="text-[18px] leading-6 font-semibold text-slate-900 pr-6"
-                        style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
-                      Olondo.AI: Flujo y Valor de Creación de Contenidos
+                    {/* Título — 2 líneas, proporción de letra del ejemplo */}
+                    <h3
+                      className="text-[20px] leading-[28px] font-semibold text-slate-900 pr-6"
+                      style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}
+                    >
+                      Olondo.ai
                     </h3>
 
-                    {/* Meta */}
-                    <p className="mt-3 text-[13px] text-slate-700">
-                      23 sept 2025 · 1 fuente
+                    {/* Meta — solo fecha (sin “· 1 fuente”) */}
+                    <p className="mt-3 text-[13px] leading-[18px] text-slate-700">
+                      23 sept 2025
                     </p>
                   </div>
                 )}
