@@ -38,7 +38,7 @@ const LibraryPage = () => {
 
   const planIconColor = theme === "dark" ? "#ffffff" : "#334155";
 
-  // Tabs sincronizadas con URL (?tab=all|folders). Por defecto: "all"
+  // Tabs (?tab=all|folders). Default: all
   const tab = useMemo(() => searchParams.get("tab") || "all", [searchParams]);
   const setTab = (next) => {
     const sp = new URLSearchParams(searchParams);
@@ -152,7 +152,7 @@ const LibraryPage = () => {
 
           <main>
             <section className="py-8 md:py-10 px-4 md:px-8">
-              {/* Pestañas */}
+              {/* Tabs */}
               <div className="flex items-center justify-between mb-6" role="tablist" aria-label="Biblioteca">
                 <div className="flex items-center gap-6">
                   {["all","folders"].map((key) => {
@@ -182,16 +182,19 @@ const LibraryPage = () => {
 
               {/* Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {/* Tarjeta “Crear carpeta” — misma altura (h-56) y proporción del ejemplo */}
+                {/* Tarjeta “Crear carpeta” — reducida manteniendo proporción */}
                 <button
-                  className="h-56 w-80 mx-auto rounded-2xl border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 shadow-sm hover:shadow-md transition"
-                  style={{ borderRadius: 16 }}
+                  className="mx-auto rounded-2xl border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 shadow-sm hover:shadow-md transition"
+                  style={{ width: 280, height: 196, borderRadius: 16 }}
                 >
                   <div className="h-full w-full flex flex-col items-center justify-center">
-                    <div className="flex items-center justify-center w-20 h-20 rounded-full bg-indigo-50 dark:bg-slate-800">
-                      <Plus className="w-6 h-6 text-indigo-600 dark:text-sky-400" />
+                    <div
+                      className="flex items-center justify-center rounded-full bg-indigo-50 dark:bg-slate-800"
+                      style={{ width: 70, height: 70 }}
+                    >
+                      <Plus className="text-indigo-600 dark:text-sky-400" style={{ width: 21, height: 21 }} />
                     </div>
-                    <span className="mt-4 text-[22px] leading-6 text-slate-900 dark:text-slate-100">
+                    <span className="mt-4 text-[20px] leading-6 text-slate-900 dark:text-slate-100">
                       {t("library_create_folder")}
                     </span>
                   </div>
