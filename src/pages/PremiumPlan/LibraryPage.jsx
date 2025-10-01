@@ -17,7 +17,6 @@ const LibraryPage = () => {
   const SIDEBAR_COLOR   = theme === "dark" ? "#354153" : "#f8f9fb";
   const ACTIVE_BG_COLOR = theme === "dark" ? "#262F3F" : "#e9eef5";
   const BORDER_COLOR    = theme === "dark" ? "#1f2937" : "#e5e7eb";
-
   const HEADER_HEIGHT_PX = 72;
 
   const USER_PLAN = "premium";
@@ -212,7 +211,7 @@ const LibraryPage = () => {
                     aria-haspopup="dialog"
                   >
                     <Plus className="w-5 h-5" />
-                    {t("library_create_folder")} {/* “Crear nueva carpeta” */}
+                    {t("library_create_folder")}
                   </button>
                 </div>
               )}
@@ -265,25 +264,24 @@ const LibraryPage = () => {
         </div>
       </div>
 
-      {/* MODAL Crear carpeta (idéntico al ejemplo) */}
+      {/* MODAL Crear carpeta — réplica exacta de estilo */}
       {isFolderModalOpen && (
-        <div
-          className="fixed inset-0 z-[60] flex items-center justify-center"
-          role="dialog"
-          aria-modal="true"
-        >
-          {/* Backdrop */}
-          <div className="absolute inset-0 bg-black/40" onClick={closeFolderModal} />
+        <div className="fixed inset-0 z-[60] flex items-center justify-center" role="dialog" aria-modal="true">
+          {/* Backdrop gris (como en el ejemplo) */}
+          <div className="absolute inset-0 bg-black/45" onClick={closeFolderModal} />
+
           {/* Dialog */}
-          <div className="relative w-full max-w-md rounded-2xl bg-white dark:bg-slate-900 shadow-xl border border-slate-200 dark:border-slate-800">
+          <div
+            className="relative w-full max-w-lg bg-white dark:bg-white rounded-[18px] border border-slate-200 shadow-[0_24px_80px_rgba(2,6,23,0.22)]"
+          >
             {/* Header */}
-            <div className="px-5 pt-5 pb-3 flex items-center justify-between">
-              <h3 className="text-[17px] font-semibold text-slate-900 dark:text-slate-100">
-                {t("folder_modal_title") /* “Crear nueva carpeta” */}
+            <div className="px-6 pt-5 pb-3 flex items-center justify-between">
+              <h3 className="text-[18px] leading-6 font-semibold text-slate-900">
+                {t("folder_modal_title") /* Crear nueva carpeta */}
               </h3>
               <button
                 onClick={closeFolderModal}
-                className="h-8 w-8 inline-flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
+                className="h-8 w-8 inline-flex items-center justify-center rounded-lg hover:bg-slate-100 text-slate-500"
                 aria-label={t("close") || "Cerrar"}
               >
                 <X className="w-4 h-4" />
@@ -291,32 +289,33 @@ const LibraryPage = () => {
             </div>
 
             {/* Body */}
-            <div className="px-5 pb-5">
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1">
-                {t("folder_modal_label") /* “Nombre de la carpeta” */}
+            <div className="px-6 pb-5">
+              <label className="block text-sm font-medium text-slate-700 mb-1">
+                {t("folder_modal_label") /* Nombre de la carpeta */}
               </label>
               <input
                 autoFocus
                 value={folderName}
                 onChange={(e) => setFolderName(e.target.value)}
-                placeholder={t("folder_modal_placeholder") /* “Ponle un nombre...” */}
-                className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-sky-500"
+                placeholder={t("folder_modal_placeholder") /* Ponle un nombre... */}
+                className="w-full rounded-[10px] border border-slate-300 bg-white px-3 py-2 text-[14px] leading-[22px] outline-none focus:ring-2 focus:ring-sky-500"
               />
             </div>
 
             {/* Footer */}
-            <div className="px-5 pb-5 flex items-center justify-end gap-2">
+            <div className="px-6 pb-6 flex items-center justify-end gap-3">
               <button
                 onClick={closeFolderModal}
-                className="px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800"
+                className="px-4 py-2 text-[14px] font-medium rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 shadow-sm"
               >
-                {t("folder_modal_cancel") /* “Cancelar” */}
+                {t("folder_modal_cancel") /* Cancelar */}
               </button>
               <button
                 onClick={saveFolder}
-                className="px-3 py-2 text-sm rounded-lg bg-slate-900 text-white hover:opacity-95 active:scale-[0.99]"
+                disabled={!folderName.trim()}
+                className="px-4 py-2 text-[14px] font-medium rounded-lg bg-slate-900 text-white hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
               >
-                {t("folder_modal_save") /* “Guardar” */}
+                {t("folder_modal_save") /* Guardar */}
               </button>
             </div>
           </div>
