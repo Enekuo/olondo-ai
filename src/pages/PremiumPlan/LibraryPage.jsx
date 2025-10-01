@@ -184,7 +184,7 @@ const LibraryPage = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {/* Tarjeta “Crear carpeta” — cuadrado forzado */}
                 <button
-                  className="h-56 border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 transition hover:bg-slate-50 dark:hover:bg-slate-900/60 !rounded-none"
+                  className="w-full aspect-square border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 transition hover:bg-slate-50 dark:hover:bg-slate-900/60 !rounded-none"
                   style={{ borderRadius: 0 }}
                 >
                   <div className="h-full w-full flex flex-col items-center justify-center">
