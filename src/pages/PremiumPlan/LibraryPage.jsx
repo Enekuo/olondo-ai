@@ -1,7 +1,7 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import {
-  Home, PlusCircle, Plus, Folder, CreditCard, Settings, User, Sun, Moon, Gem, MessageSquare
+  Home, PlusCircle, Plus, Folder, CreditCard, Settings, User, Sun, Moon, Gem, MessageSquare, X
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
@@ -45,20 +45,33 @@ const LibraryPage = () => {
     setSearchParams(sp, { replace: true });
   };
 
-  // Texto del CTA y destino según type
+  // CTA dinámico para tarjeta en vistas no-folders
   const createAction = useMemo(() => {
     switch (type) {
-      case "text":
-        return { label: t("library_create_text"), href: "/create?mode=text" };
-      case "summary":
-        return { label: t("library_create_summary"), href: "/create?mode=summary" };
-      case "folders":
-        return { label: t("library_create_folder"), href: "/library/folders/new" };
+      case "text":    return { label: t("library_create_text"),    href: "/create?mode=text" };
+      case "summary": return { label: t("library_create_summary"), href: "/create?mode=summary" };
+      case "folders": return { label: t("library_create_folder"),  href: "/library/folders/new" };
       case "all":
-      default:
-        return { label: t("library_create_new"), href: "/create" };
+      default:        return { label: t("library_create_new"),     href: "/create" };
     }
   }, [type, t]);
+
+  // ----- Estado local para Mis carpetas -----
+  const [isFolderModalOpen, setFolderModalOpen] = useState(false);
+  const [folderName, setFolderName] = useState("");
+  const [folders, setFolders] = useState([]); // [{id,name,createdAt}]
+
+  const openFolderModal = () => { setFolderName(""); setFolderModalOpen(true); };
+  const closeFolderModal = () => setFolderModalOpen(false);
+  const saveFolder = () => {
+    const name = folderName.trim();
+    if (!name) return;
+    setFolders((prev) => [
+      { id: crypto.randomUUID?.() || String(Date.now()), name, createdAt: new Date().toISOString() },
+      ...prev,
+    ]);
+    setFolderModalOpen(false);
+  };
 
   return (
     <div className="min-h-screen w-full bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -187,38 +200,128 @@ const LibraryPage = () => {
                 })}
               </div>
 
-              {/* Título solo en “Mis carpetas” */}
+              {/* Encabezado y botón exclusivo de "Mis carpetas" */}
               {type === "folders" && (
-                <h1 className="text-[22px] font-semibold tracking-tight mb-4">
-                  {t("library_folders_title")}
-                </h1>
+                <div className="mb-4 flex items-center justify-between">
+                  <h1 className="text-[22px] font-semibold tracking-tight">{t("library_folders_title")}</h1>
+
+                  {/* Botón estilo pill (solo texto “Crear nueva carpeta”) */}
+                  <button
+                    onClick={openFolderModal}
+                    className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[15px] font-medium bg-black text-white hover:opacity-95 active:scale-[0.99] transition"
+                    aria-haspopup="dialog"
+                  >
+                    <Plus className="w-5 h-5" />
+                    {t("library_create_folder")} {/* “Crear nueva carpeta” */}
+                  </button>
+                </div>
               )}
 
-              {/* Grid */}
+              {/* Grid principal */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {/* Card dinámica (texto + destino según filtro) */}
-                <Link
-                  to={createAction.href}
-                  className="mx-auto rounded-2xl border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 shadow-sm hover:shadow-md transition"
-                  style={{ width: 280, height: 196, borderRadius: 16 }}
-                  role="button"
-                >
-                  <div className="h-full w-full flex flex-col items-center justify-center">
-                    <div className="flex items-center justify-center rounded-full bg-indigo-50 dark:bg-slate-800" style={{ width: 70, height: 70 }}>
-                      <Plus className="text-indigo-600 dark:text-sky-400" style={{ width: 21, height: 21 }} />
+                {/* Card dinámica (solo cuando NO estamos en folders) */}
+                {type !== "folders" && (
+                  <Link
+                    to={createAction.href}
+                    className="mx-auto rounded-2xl border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 shadow-sm hover:shadow-md transition"
+                    style={{ width: 280, height: 196, borderRadius: 16 }}
+                    role="button"
+                  >
+                    <div className="h-full w-full flex flex-col items-center justify-center">
+                      <div className="flex items-center justify-center rounded-full bg-indigo-50 dark:bg-slate-800" style={{ width: 70, height: 70 }}>
+                        <Plus className="text-indigo-600 dark:text-sky-400" style={{ width: 21, height: 21 }} />
+                      </div>
+                      <span className="mt-4 text-[20px] leading-6 text-slate-900 dark:text-slate-100">
+                        {createAction.label}
+                      </span>
                     </div>
-                    <span className="mt-4 text-[20px] leading-6 text-slate-900 dark:text-slate-100">
-                      {createAction.label}
-                    </span>
-                  </div>
-                </Link>
+                  </Link>
+                )}
 
-                {/* Aquí mapearás tus ítems */}
+                {/* LISTA de carpetas guardadas (solo en folders) */}
+                {type === "folders" && folders.length === 0 && (
+                  <div className="rounded-xl border border-dashed border-slate-300 dark:border-slate-700 p-6 text-slate-500">
+                    {t("library_no_folders") || "Aún no tienes carpetas. Crea la primera."}
+                  </div>
+                )}
+
+                {type === "folders" && folders.map((f) => (
+                  <div
+                    key={f.id}
+                    className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm"
+                  >
+                    <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
+                      <Folder className="w-5 h-5 text-sky-500" />
+                      <span className="font-medium truncate">{f.name}</span>
+                    </div>
+                    <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
+                      {new Date(f.createdAt).toLocaleString()}
+                    </p>
+                  </div>
+                ))}
               </div>
             </section>
           </main>
         </div>
       </div>
+
+      {/* MODAL Crear carpeta (idéntico al ejemplo) */}
+      {isFolderModalOpen && (
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center"
+          role="dialog"
+          aria-modal="true"
+        >
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-black/40" onClick={closeFolderModal} />
+          {/* Dialog */}
+          <div className="relative w-full max-w-md rounded-2xl bg-white dark:bg-slate-900 shadow-xl border border-slate-200 dark:border-slate-800">
+            {/* Header */}
+            <div className="px-5 pt-5 pb-3 flex items-center justify-between">
+              <h3 className="text-[17px] font-semibold text-slate-900 dark:text-slate-100">
+                {t("folder_modal_title") /* “Crear nueva carpeta” */}
+              </h3>
+              <button
+                onClick={closeFolderModal}
+                className="h-8 w-8 inline-flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
+                aria-label={t("close") || "Cerrar"}
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Body */}
+            <div className="px-5 pb-5">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1">
+                {t("folder_modal_label") /* “Nombre de la carpeta” */}
+              </label>
+              <input
+                autoFocus
+                value={folderName}
+                onChange={(e) => setFolderName(e.target.value)}
+                placeholder={t("folder_modal_placeholder") /* “Ponle un nombre...” */}
+                className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-sky-500"
+              />
+            </div>
+
+            {/* Footer */}
+            <div className="px-5 pb-5 flex items-center justify-end gap-2">
+              <button
+                onClick={closeFolderModal}
+                className="px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800"
+              >
+                {t("folder_modal_cancel") /* “Cancelar” */}
+              </button>
+              <button
+                onClick={saveFolder}
+                className="px-3 py-2 text-sm rounded-lg bg-slate-900 text-white hover:opacity-95 active:scale-[0.99]"
+              >
+                {t("folder_modal_save") /* “Guardar” */}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
