@@ -657,7 +657,7 @@ create_new_intro: "Explora el poder de Olondo AI. Elige una opción para empezar
   library_tab_all: "Todos",
   library_tab_folders: "Mis carpetas",
   library_create_new: "Crear nuevo",
-  library_create_folder: "Crear carpeta",
-
+  library_create_folder: "Crear nuevo",
+  library_folders_title: " Carpeta"
 
 }
