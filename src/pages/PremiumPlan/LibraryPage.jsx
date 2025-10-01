@@ -38,11 +38,21 @@ const LibraryPage = () => {
 
   const planIconColor = theme === "dark" ? "#ffffff" : "#334155";
 
-  // Tabs (?tab=all|folders). Default: all
+  // Tabs (?tab=all|folders) -> vista principal
   const tab = useMemo(() => searchParams.get("tab") || "all", [searchParams]);
+
+  // Filtro por tipo (?type=all|text|summary) -> aplica en tab=all
+  const type = useMemo(() => searchParams.get("type") || "all", [searchParams]);
+
   const setTab = (next) => {
     const sp = new URLSearchParams(searchParams);
     sp.set("tab", next);
+    setSearchParams(sp, { replace: true });
+  };
+
+  const setType = (next) => {
+    const sp = new URLSearchParams(searchParams);
+    sp.set("type", next);
     setSearchParams(sp, { replace: true });
   };
 
@@ -152,8 +162,8 @@ const LibraryPage = () => {
 
           <main>
             <section className="py-8 md:py-10 px-4 md:px-8">
-              {/* Tabs */}
-              <div className="flex items-center justify-between mb-6" role="tablist" aria-label="Biblioteca">
+              {/* Tabs principales */}
+              <div className="flex items-center justify-between mb-6" role="tablist" aria-label={t("library_aria_label") || "Biblioteca"}>
                 <div className="flex items-center gap-6">
                   {["all","folders"].map((key) => {
                     const active = tab === key;
@@ -175,6 +185,28 @@ const LibraryPage = () => {
                 </Link>
               </div>
 
+              {/* Filtros (solo en tab=all) */}
+              {tab === "all" && (
+                <div className="flex items-center gap-2 mb-5">
+                  {[
+                    { id: "all", label: t("library_filter_all") },
+                    { id: "text", label: t("library_filter_texts") },
+                    { id: "summary", label: t("library_filter_summaries") },
+                  ].map(({ id, label }) => {
+                    const active = type === id;
+                    const base = "px-3 py-1.5 rounded-full text-sm border transition-colors";
+                    const cls = active
+                      ? `${base} bg-slate-900 text-white dark:bg-white dark:text-slate-900 border-transparent`
+                      : `${base} bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700`;
+                    return (
+                      <button key={id} onClick={() => setType(id)} className={cls} aria-pressed={active}>
+                        {label}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+
               {/* Título solo en "Mis carpetas" */}
               {tab === "folders" && (
                 <h1 className="text-[22px] font-semibold tracking-tight mb-4">{t("library_folders_title")}</h1>
@@ -182,16 +214,13 @@ const LibraryPage = () => {
 
               {/* Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {/* Tarjeta “Crear carpeta” — reducida manteniendo proporción */}
+                {/* Card “Crear …” (tamaño reducido manteniendo proporción) */}
                 <button
                   className="mx-auto rounded-2xl border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 shadow-sm hover:shadow-md transition"
                   style={{ width: 280, height: 196, borderRadius: 16 }}
                 >
                   <div className="h-full w-full flex flex-col items-center justify-center">
-                    <div
-                      className="flex items-center justify-center rounded-full bg-indigo-50 dark:bg-slate-800"
-                      style={{ width: 70, height: 70 }}
-                    >
+                    <div className="flex items-center justify-center rounded-full bg-indigo-50 dark:bg-slate-800" style={{ width: 70, height: 70 }}>
                       <Plus className="text-indigo-600 dark:text-sky-400" style={{ width: 21, height: 21 }} />
                     </div>
                     <span className="mt-4 text-[20px] leading-6 text-slate-900 dark:text-slate-100">
@@ -200,7 +229,8 @@ const LibraryPage = () => {
                   </div>
                 </button>
 
-                {/* Aquí irán las tarjetas existentes */}
+                {/* Aquí irán tus tarjetas. 
+                   Recuerda: ordenar del más nuevo al más antiguo en backend o al map() */}
               </div>
             </section>
           </main>
