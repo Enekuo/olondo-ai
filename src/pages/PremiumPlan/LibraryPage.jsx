@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import {
   Home, PlusCircle, Plus, Folder, CreditCard, Settings, User, Sun, Moon, Gem, MessageSquare, X,
-  FileText, MoreHorizontal
+  FileText, MoreHorizontal, BookOpen
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
@@ -216,9 +216,9 @@ const LibraryPage = () => {
                 </div>
               )}
 
-              {/* Grid principal: ajusto distancia con gap-8 */}
+              {/* Grid principal */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {/* Card Crear (solo cuando NO estamos en folders) */}
+                {/* Crear nuevo (no en folders) */}
                 {type !== "folders" && (
                   <Link
                     to={createAction.href}
@@ -237,7 +237,7 @@ const LibraryPage = () => {
                   </Link>
                 )}
 
-                {/* TARJETA DE EJEMPLO (azul claro, documento, sin “· 1 fuente”, tipografías del ejemplo) */}
+                {/* Modelo TEXTO (azul claro, sin "· fuentes") */}
                 {(type === "all" || type === "text") && (
                   <div
                     className="mx-auto relative rounded-2xl shadow-sm border p-4"
@@ -249,7 +249,6 @@ const LibraryPage = () => {
                       borderColor: "#D9E7FF",
                     }}
                   >
-                    {/* Menú 3 puntos */}
                     <button
                       aria-label="Opciones"
                       className="absolute top-3 right-3 h-8 w-8 inline-flex items-center justify-center rounded-full hover:bg-white/60"
@@ -257,10 +256,8 @@ const LibraryPage = () => {
                       <MoreHorizontal className="w-5 h-5 text-slate-600" />
                     </button>
 
-                    {/* Icono documento */}
                     <FileText className="w-8 h-8 mb-3 text-[#3B82F6]" />
 
-                    {/* Título — 2 líneas, tamaño y posición como ejemplo */}
                     <h3
                       className="text-[20px] leading-[28px] font-semibold text-slate-900 pr-6"
                       style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}
@@ -268,14 +265,50 @@ const LibraryPage = () => {
                       Olondo.ai
                     </h3>
 
-                    {/* Fecha — sin “· 1 fuente” */}
                     <p className="mt-3 text-[13px] leading-[18px] text-slate-700">
                       23 sept 2025
                     </p>
                   </div>
                 )}
 
-                {/* LISTA de carpetas guardadas (solo en folders) */}
+                {/* Modelo RESUMEN / NOTEBOOK (como el ejemplo: título grande + "· 0 fuentes") */}
+                {(type === "all" || type === "summary") && (
+                  <div
+                    className="mx-auto relative rounded-2xl shadow-sm border p-4"
+                    style={{
+                      width: 280,
+                      height: 196,
+                      borderRadius: 16,
+                      backgroundColor: "#EEF2FF",   // muy suave
+                      borderColor: "#E3E8FF",
+                    }}
+                  >
+                    <button
+                      aria-label="Opciones"
+                      className="absolute top-3 right-3 h-8 w-8 inline-flex items-center justify-center rounded-full hover:bg-white/60"
+                    >
+                      <MoreHorizontal className="w-5 h-5 text-slate-600" />
+                    </button>
+
+                    {/* Usamos BookOpen como cuaderno/notebook */}
+                    <BookOpen className="w-8 h-8 mb-3 text-[#6B5BD6]" />
+
+                    {/* Título más grande como en el ejemplo */}
+                    <h3
+                      className="text-[22px] leading-[30px] font-semibold text-slate-900 pr-6"
+                      style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}
+                    >
+                      Untitled notebook
+                    </h3>
+
+                    {/* Meta con fecha + "· 0 fuentes" */}
+                    <p className="mt-3 text-[13px] leading-[18px] text-slate-600">
+                      1 oct 2025 · 0 fuentes
+                    </p>
+                  </div>
+                )}
+
+                {/* LISTA de carpetas (solo en folders) */}
                 {type === "folders" && folders.length === 0 && (
                   <div className="rounded-xl border border-dashed border-slate-300 dark:border-slate-700 p-6 text-slate-500">
                     {t("library_no_folders") || "Aún no tienes carpetas. Crea la primera."}
