@@ -8,7 +8,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 import { useTheme } from "@/components/layout/ThemeProvider";
 
-/** Ruta del icono guardado en /public */
+/** Icono guardado en /public (raíz del proyecto) */
 const DOC_ICON_SRC = "/doc-blue.png";
 
 const LibraryPage = () => {
@@ -25,7 +25,6 @@ const LibraryPage = () => {
 
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
-
   const isActive = (path) => location.pathname === path;
 
   // Filtro (?type=all|text|summary|folders)
@@ -39,7 +38,7 @@ const LibraryPage = () => {
   const createAction = useMemo(() => {
     switch (type) {
       case "text":    return { label: t("library_create_text"),    href: "/create?mode=text" };
-    case "summary": return { label: t("library_create_summary"), href: "/create?mode=summary" };
+      case "summary": return { label: t("library_create_summary"), href: "/create?mode=summary" };
       case "folders": return { label: t("library_create_folder"),  href: "/library/folders/new" };
       case "all":
       default:        return { label: t("library_create_new"),     href: "/create" };
@@ -234,7 +233,7 @@ const LibraryPage = () => {
                   </Link>
                 )}
 
-                {/* Tarjeta documento con la imagen de /public y título/fecha más abajo */}
+                {/* Tarjeta documento: icono MÁS GRANDE y MÁS ARRIBA; título/fecha más abajo */}
                 {(type === "all" || type === "text") && (
                   <div
                     className="relative rounded-2xl shadow-sm border"
@@ -253,9 +252,15 @@ const LibraryPage = () => {
                       <MoreHorizontal className="w-5 h-5 text-slate-600" />
                     </button>
 
-                    {/* PT grande y márgenes amplios para que el contenido quede más abajo */}
+                    {/* PT grande para que el contenido empiece alto pero título/fecha queden abajo; icono 36px y -mt-3 */}
                     <div className="h-full w-full px-5 pt-12 pb-6">
-                      <img src={DOC_ICON_SRC} alt="" width={28} height={28} className="block select-none" />
+                      <img
+                        src={DOC_ICON_SRC}
+                        alt=""
+                        width={36}
+                        height={36}
+                        className="block select-none -mt-3"
+                      />
                       <h3
                         className="mt-8 text-[22px] leading-[30px] font-semibold text-slate-900 pr-8"
                         style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}
@@ -346,3 +351,9 @@ const LibraryPage = () => {
 };
 
 export default LibraryPage;
+
+
+
+
+
+
