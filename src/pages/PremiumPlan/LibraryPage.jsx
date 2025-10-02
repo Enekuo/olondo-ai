@@ -25,18 +25,6 @@ const LibraryPage = () => {
 
   const isActive = (path) => location.pathname === path;
 
-  const planPillStyle =
-    theme === "dark"
-      ? { backgroundColor: "rgba(255,255,255,0.06)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)", color: "#E5E7EB" }
-      : { backgroundColor: "#f3f4f6", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12)", color: "#0f172a" };
-
-  const planIconBoxStyle =
-    theme === "dark"
-      ? { backgroundColor: "rgba(255,255,255,0.22)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)" }
-      : { backgroundColor: "#ffffff", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)" };
-
-  const planIconColor = theme === "dark" ? "#ffffff" : "#334155";
-
   // Filtro único (?type=all|text|summary|folders)
   const type = useMemo(() => searchParams.get("type") || "all", [searchParams]);
   const setType = (next) => {
@@ -45,7 +33,7 @@ const LibraryPage = () => {
     setSearchParams(sp, { replace: true });
   };
 
-  // CTA dinámico para tarjeta en vistas no-folders
+  // CTA dinámico
   const createAction = useMemo(() => {
     switch (type) {
       case "text":    return { label: t("library_create_text"),    href: "/create?mode=text" };
@@ -56,7 +44,7 @@ const LibraryPage = () => {
     }
   }, [type, t]);
 
-  // ----- Estado local para Mis carpetas -----
+  // Estado local para carpetas
   const [isFolderModalOpen, setFolderModalOpen] = useState(false);
   const [folderName, setFolderName] = useState("");
   const [folders, setFolders] = useState([]); // [{id,name,createdAt}]
@@ -87,11 +75,32 @@ const LibraryPage = () => {
 
           <div className="flex items-center gap-3 sm:gap-4">
             <div className="hidden sm:flex items-center gap-2 select-none">
-              <div className="inline-flex items-center justify-center rounded-[10px]" style={{ width: 30, height: 30, ...planIconBoxStyle }}>
-                <Gem className="w-5 h-5" style={{ color: planIconColor }} />
+              <div
+                className="inline-flex items-center justify-center rounded-[10px]"
+                style={{
+                  width: 30,
+                  height: 30,
+                  backgroundColor: theme === "dark" ? "rgba(255,255,255,0.22)" : "#ffffff",
+                  boxShadow:
+                    theme === "dark"
+                      ? "inset 0 0 0 1px rgba(255,255,255,0.45)"
+                      : "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)"
+                }}
+              >
+                <Gem className="w-5 h-5" style={{ color: theme === "dark" ? "#ffffff" : "#334155" }} />
               </div>
-              <div className="rounded-xl px-3 py-1.5 text-sm font-medium" style={planPillStyle}>
-                {planLabel}
+              <div
+                className="rounded-xl px-3 py-1.5 text-sm font-medium"
+                style={{
+                  backgroundColor: theme === "dark" ? "rgba(255,255,255,0.06)" : "#f3f4f6",
+                  boxShadow:
+                    theme === "dark"
+                      ? "inset 0 0 0 1px rgba(255,255,255,0.10)"
+                      : "inset 0 0 0 1px rgba(15,23,42,0.12)",
+                  color: theme === "dark" ? "#E5E7EB" : "#0f172a",
+                }}
+              >
+                {USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico"}
               </div>
             </div>
 
@@ -200,13 +209,12 @@ const LibraryPage = () => {
                 })}
               </div>
 
-              {/* Encabezado y botón exclusivo de "Mis carpetas" */}
+              {/* Mis carpetas header */}
               {type === "folders" && (
                 <div className="mb-4 flex items-center justify-between">
                   <h1 className="text-[22px] font-semibold tracking-tight">{t("library_folders_title")}</h1>
-
                   <button
-                    onClick={openFolderModal}
+                    onClick={() => setFolderModalOpen(true)}
                     className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[15px] font-medium bg-black text-white hover:opacity-95 active:scale-[0.99] transition"
                     aria-haspopup="dialog"
                   >
@@ -216,13 +224,13 @@ const LibraryPage = () => {
                 </div>
               )}
 
-              {/* Grid principal — más junto (gap-6) */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Grid principal — alineado a la izquierda y ~1cm entre cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-start">
                 {/* Crear nuevo (no en folders) */}
                 {type !== "folders" && (
                   <Link
                     to={createAction.href}
-                    className="mx-auto rounded-2xl border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 shadow-sm hover:shadow-md transition"
+                    className="rounded-2xl border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 shadow-sm hover:shadow-md transition"
                     style={{ width: 280, height: 196, borderRadius: 16 }}
                     role="button"
                   >
@@ -237,10 +245,10 @@ const LibraryPage = () => {
                   </Link>
                 )}
 
-                {/* TEXTO: Olondo.ai -> título y fecha MUCHO más abajo; y más cerca de “Crear nuevo” */}
+                {/* TEXTO: Olondo.ai -> título y fecha más abajo; card pegada ~1cm a la izquierda */}
                 {(type === "all" || type === "text") && (
                   <div
-                    className="mx-auto relative rounded-2xl shadow-sm border"
+                    className="relative rounded-2xl shadow-sm border"
                     style={{
                       width: 280,
                       height: 196,
@@ -249,6 +257,7 @@ const LibraryPage = () => {
                       borderColor: "#D9E7FF",
                     }}
                   >
+                    {/* Kebab */}
                     <button
                       aria-label="Opciones"
                       className="absolute top-3 right-3 h-8 w-8 inline-flex items-center justify-center rounded-full hover:bg-white/60"
@@ -256,31 +265,25 @@ const LibraryPage = () => {
                       <MoreHorizontal className="w-5 h-5 text-slate-600" />
                     </button>
 
-                    {/* Contenido con más padding superior para bajar todo */}
-                    <div className="h-full w-full px-5 pt-8 pb-5">
+                    {/* Contenido: bajo todo para coincidir con tu referencia */}
+                    <div className="h-full w-full px-5 pt-12 pb-6">
                       {/* Icono */}
                       <FileText className="w-8 h-8 text-[#3B82F6]" />
 
-                      {/* Título grande y claramente más abajo */}
+                      {/* Título más abajo */}
                       <h3
-                        className="mt-6 text-[22px] leading-[30px] font-semibold text-slate-900 pr-8"
+                        className="mt-8 text-[22px] leading-[30px] font-semibold text-slate-900 pr-8"
                         style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}
                       >
                         Olondo.ai
                       </h3>
 
-                      {/* Fecha justo debajo del título */}
-                      <p className="mt-3 text-[14px] leading-[20px] text-slate-700">
+                      {/* Fecha separada del título */}
+                      <p className="mt-4 text-[14px] leading-[20px] text-slate-700">
                         23 sept 2025
                       </p>
                     </div>
                   </div>
-                )}
-
-                {/* NOTA: Eliminado el card de la derecha (notebook/resumen) en “Todos”.
-                        Si algún día lo necesitas, muéstralo solo cuando type === "summary". */}
-                {type === "summary" && (
-                  <div className="rounded-2xl border border-slate-200 p-4" style={{ display: "none" }} />
                 )}
 
                 {/* LISTA de carpetas (solo en folders) */}
