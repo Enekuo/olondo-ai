@@ -22,9 +22,10 @@ const LibraryPage = () => {
 
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
+
   const isActive = (path) => location.pathname === path;
 
-  // Filtro (?type=all|text|summary|folders)
+  // Filtro único (?type=all|text|summary|folders)
   const type = useMemo(() => searchParams.get("type") || "all", [searchParams]);
   const setType = (next) => {
     const sp = new URLSearchParams(searchParams);
@@ -32,20 +33,21 @@ const LibraryPage = () => {
     setSearchParams(sp, { replace: true });
   };
 
+  // CTA dinámico
   const createAction = useMemo(() => {
     switch (type) {
       case "text":    return { label: t("library_create_text"),    href: "/create?mode=text" };
-      case "summary": return { label: t("library_create_summary"), href: "/create?mode=summary" };
+    case "summary": return { label: t("library_create_summary"), href: "/create?mode=summary" };
       case "folders": return { label: t("library_create_folder"),  href: "/library/folders/new" };
       case "all":
       default:        return { label: t("library_create_new"),     href: "/create" };
     }
   }, [type, t]);
 
-  // Estado local carpetas
+  // ----- Estado local para Mis carpetas -----
   const [isFolderModalOpen, setFolderModalOpen] = useState(false);
   const [folderName, setFolderName] = useState("");
-  const [folders, setFolders] = useState([]);
+  const [folders, setFolders] = useState([]); // [{id,name,createdAt}]
 
   const openFolderModal = () => { setFolderName(""); setFolderModalOpen(true); };
   const closeFolderModal = () => setFolderModalOpen(false);
@@ -76,11 +78,13 @@ const LibraryPage = () => {
               <div
                 className="inline-flex items-center justify-center rounded-[10px]"
                 style={{
-                  width: 30, height: 30,
+                  width: 30,
+                  height: 30,
                   backgroundColor: theme === "dark" ? "rgba(255,255,255,0.22)" : "#ffffff",
-                  boxShadow: theme === "dark"
-                    ? "inset 0 0 0 1px rgba(255,255,255,0.45)"
-                    : "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)"
+                  boxShadow:
+                    theme === "dark"
+                      ? "inset 0 0 0 1px rgba(255,255,255,0.45)"
+                      : "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)"
                 }}
               >
                 <Gem className="w-5 h-5" style={{ color: theme === "dark" ? "#ffffff" : "#334155" }} />
@@ -89,9 +93,10 @@ const LibraryPage = () => {
                 className="rounded-xl px-3 py-1.5 text-sm font-medium"
                 style={{
                   backgroundColor: theme === "dark" ? "rgba(255,255,255,0.06)" : "#f3f4f6",
-                  boxShadow: theme === "dark"
-                    ? "inset 0 0 0 1px rgba(255,255,255,0.10)"
-                    : "inset 0 0 0 1px rgba(15,23,42,0.12)",
+                  boxShadow:
+                    theme === "dark"
+                      ? "inset 0 0 0 1px rgba(255,255,255,0.10)"
+                      : "inset 0 0 0 1px rgba(15,23,42,0.12)",
                   color: theme === "dark" ? "#E5E7EB" : "#0f172a",
                 }}
               >
@@ -183,7 +188,7 @@ const LibraryPage = () => {
 
           <main>
             <section className="py-8 md:py-10 px-4 md:px-8">
-              {/* Filtros */}
+              {/* Chips de filtro */}
               <div className="flex items-center gap-2 mb-5">
                 {[
                   { id: "all",     label: t("library_filter_all") },
@@ -204,9 +209,26 @@ const LibraryPage = () => {
                 })}
               </div>
 
-              {/* Grid principal — EXACTAMENTE ~1 cm entre tarjetas */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[38px] justify-items-start">
-                {/* Crear nuevo */}
+              {/* Encabezado y botón exclusivo de "Mis carpetas" */}
+              {type === "folders" && (
+                <div className="mb-4 flex items-center justify-between">
+                  <h1 className="text-[22px] font-semibold tracking-tight">{t("library_folders_title")}</h1>
+
+                  <button
+                    onClick={openFolderModal}
+                    className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[15px] font-medium bg-black text-white hover:opacity-95 active:scale-[0.99] transition"
+                    aria-haspopup="dialog"
+                  >
+                    <Plus className="w-5 h-5" />
+                    {t("library_create_folder")}
+                  </button>
+                </div>
+              )}
+
+              {/* ======= CONTENEDOR DE TARJETAS ======= */}
+              {/* Flex-wrap + gap fijo de ~1 cm (≈ 38px) */}
+              <div className="flex flex-wrap gap-[38px]">
+                {/* Card Crear (solo cuando NO estamos en folders) */}
                 {type !== "folders" && (
                   <Link
                     to={createAction.href}
@@ -225,7 +247,7 @@ const LibraryPage = () => {
                   </Link>
                 )}
 
-                {/* Tarjeta de TEXTO (Olondo.ai) */}
+                {/* ---- TARJETA TEXTO: OLONDO.AI ---- */}
                 {(type === "all" || type === "text") && (
                   <div
                     className="relative rounded-2xl shadow-sm border"
@@ -237,7 +259,7 @@ const LibraryPage = () => {
                       borderColor: "#D9E7FF",
                     }}
                   >
-                    {/* opciones */}
+                    {/* Menú 3 puntos */}
                     <button
                       aria-label="Opciones"
                       className="absolute top-3 right-3 h-8 w-8 inline-flex items-center justify-center rounded-full hover:bg-white/60"
@@ -245,7 +267,7 @@ const LibraryPage = () => {
                       <MoreHorizontal className="w-5 h-5 text-slate-600" />
                     </button>
 
-                    {/* Contenido: título/fecha más abajo */}
+                    {/* Espaciado para bajar título y fecha */}
                     <div className="h-full w-full px-5 pt-12 pb-6">
                       <FileText className="w-8 h-8 text-[#3B82F6]" />
                       <h3
@@ -261,7 +283,7 @@ const LibraryPage = () => {
                   </div>
                 )}
 
-                {/* Lista de carpetas (solo en folders) */}
+                {/* LISTA de carpetas guardadas (solo en folders) */}
                 {type === "folders" && folders.length === 0 && (
                   <div className="rounded-xl border border-dashed border-slate-300 dark:border-slate-700 p-6 text-slate-500">
                     {t("library_no_folders") || "Aún no tienes carpetas. Crea la primera."}
@@ -271,6 +293,7 @@ const LibraryPage = () => {
                   <div
                     key={f.id}
                     className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm"
+                    style={{ width: 280 }}
                   >
                     <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
                       <Folder className="w-5 h-5 text-sky-500" />
