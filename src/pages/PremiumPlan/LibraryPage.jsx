@@ -8,8 +8,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 import { useTheme } from "@/components/layout/ThemeProvider";
 
-/** Ruta del icono que guardaste en /public */
-const DOC_ICON_SRC = "/assets/img/doc-blue.png";
+/** Ruta del icono guardado en /public */
+const DOC_ICON_SRC = "/doc-blue.png";
 
 const LibraryPage = () => {
   const { t } = useLanguage();
@@ -25,6 +25,7 @@ const LibraryPage = () => {
 
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
+
   const isActive = (path) => location.pathname === path;
 
   // Filtro (?type=all|text|summary|folders)
@@ -38,7 +39,7 @@ const LibraryPage = () => {
   const createAction = useMemo(() => {
     switch (type) {
       case "text":    return { label: t("library_create_text"),    href: "/create?mode=text" };
-      case "summary": return { label: t("library_create_summary"), href: "/create?mode=summary" };
+    case "summary": return { label: t("library_create_summary"), href: "/create?mode=summary" };
       case "folders": return { label: t("library_create_folder"),  href: "/library/folders/new" };
       case "all":
       default:        return { label: t("library_create_new"),     href: "/create" };
@@ -212,7 +213,7 @@ const LibraryPage = () => {
                 })}
               </div>
 
-              {/* Contenedor de tarjetas (1 cm de separación aprox.) */}
+              {/* Contenedor de tarjetas (aprox 1 cm de separación) */}
               <div className="flex flex-wrap gap-[38px]">
                 {/* Crear nuevo */}
                 {type !== "folders" && (
@@ -233,7 +234,7 @@ const LibraryPage = () => {
                   </Link>
                 )}
 
-                {/* Tarjeta de documento — icono nuevo + TÍTULO/FECHA MÁS ABAJO */}
+                {/* Tarjeta documento con la imagen de /public y título/fecha más abajo */}
                 {(type === "all" || type === "text") && (
                   <div
                     className="relative rounded-2xl shadow-sm border"
@@ -252,7 +253,7 @@ const LibraryPage = () => {
                       <MoreHorizontal className="w-5 h-5 text-slate-600" />
                     </button>
 
-                    {/* Dejo más aire arriba: PT 12 y márgenes amplios */}
+                    {/* PT grande y márgenes amplios para que el contenido quede más abajo */}
                     <div className="h-full w-full px-5 pt-12 pb-6">
                       <img src={DOC_ICON_SRC} alt="" width={28} height={28} className="block select-none" />
                       <h3
