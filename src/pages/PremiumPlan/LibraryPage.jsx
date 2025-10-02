@@ -237,18 +237,19 @@ const LibraryPage = () => {
                   </Link>
                 )}
 
-                {/* Modelo TEXTO (azul claro, sin "· fuentes") */}
+                {/* TEXTO: Olondo.ai -> misma posición de título/fecha que el ejemplo */}
                 {(type === "all" || type === "text") && (
                   <div
-                    className="mx-auto relative rounded-2xl shadow-sm border p-4"
+                    className="mx-auto relative rounded-2xl shadow-sm border"
                     style={{
                       width: 280,
                       height: 196,
                       borderRadius: 16,
-                      backgroundColor: "#EDF5FF",
+                      backgroundColor: "#EDF5FF", // azul claro (igual)
                       borderColor: "#D9E7FF",
                     }}
                   >
+                    {/* Kebab */}
                     <button
                       aria-label="Opciones"
                       className="absolute top-3 right-3 h-8 w-8 inline-flex items-center justify-center rounded-full hover:bg-white/60"
@@ -256,22 +257,28 @@ const LibraryPage = () => {
                       <MoreHorizontal className="w-5 h-5 text-slate-600" />
                     </button>
 
-                    <FileText className="w-8 h-8 mb-3 text-[#3B82F6]" />
+                    {/* Contenido con padding como el ejemplo */}
+                    <div className="h-full w-full px-5 pt-5 pb-4">
+                      {/* Icono documento */}
+                      <FileText className="w-8 h-8 text-[#3B82F6]" />
 
-                    <h3
-                      className="text-[20px] leading-[28px] font-semibold text-slate-900 pr-6"
-                      style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}
-                    >
-                      Olondo.ai
-                    </h3>
+                      {/* Título grande y más abajo (como el notebook de ejemplo) */}
+                      <h3
+                        className="mt-4 text-[22px] leading-[30px] font-semibold text-slate-900 pr-8"
+                        style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}
+                      >
+                        Olondo.ai
+                      </h3>
 
-                    <p className="mt-3 text-[13px] leading-[18px] text-slate-700">
-                      23 sept 2025
-                    </p>
+                      {/* Fecha justo debajo */}
+                      <p className="mt-2 text-[14px] leading-[20px] text-slate-700">
+                        23 sept 2025
+                      </p>
+                    </div>
                   </div>
                 )}
 
-                {/* Modelo RESUMEN / NOTEBOOK (como el ejemplo: título grande + "· 0 fuentes") */}
+                {/* (Opcional) ejemplo de otra tarjeta tipo notebook/resumen */}
                 {(type === "all" || type === "summary") && (
                   <div
                     className="mx-auto relative rounded-2xl shadow-sm border p-4"
@@ -279,7 +286,7 @@ const LibraryPage = () => {
                       width: 280,
                       height: 196,
                       borderRadius: 16,
-                      backgroundColor: "#EEF2FF",   // muy suave
+                      backgroundColor: "#EEF2FF",
                       borderColor: "#E3E8FF",
                     }}
                   >
@@ -290,10 +297,8 @@ const LibraryPage = () => {
                       <MoreHorizontal className="w-5 h-5 text-slate-600" />
                     </button>
 
-                    {/* Usamos BookOpen como cuaderno/notebook */}
                     <BookOpen className="w-8 h-8 mb-3 text-[#6B5BD6]" />
 
-                    {/* Título más grande como en el ejemplo */}
                     <h3
                       className="text-[22px] leading-[30px] font-semibold text-slate-900 pr-6"
                       style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}
@@ -301,8 +306,7 @@ const LibraryPage = () => {
                       Untitled notebook
                     </h3>
 
-                    {/* Meta con fecha + "· 0 fuentes" */}
-                    <p className="mt-3 text-[13px] leading-[18px] text-slate-600">
+                    <p className="mt-2 text-[14px] leading-[20px] text-slate-600">
                       1 oct 2025 · 0 fuentes
                     </p>
                   </div>
