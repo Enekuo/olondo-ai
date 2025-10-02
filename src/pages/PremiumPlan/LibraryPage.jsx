@@ -237,7 +237,7 @@ const LibraryPage = () => {
                   </Link>
                 )}
 
-                {/* ---- TARJETA DE EJEMPLO (AZUL CLARO, documento, sin "· 1 fuente" y con tipografías del ejemplo) ---- */}
+                {/* TARJETA DE EJEMPLO (azul claro, documento, sin “· 1 fuente”, tipografías del ejemplo) */}
                 {(type === "all" || type === "text") && (
                   <div
                     className="mx-auto relative rounded-2xl shadow-sm border p-4"
@@ -245,7 +245,7 @@ const LibraryPage = () => {
                       width: 280,
                       height: 196,
                       borderRadius: 16,
-                      backgroundColor: "#EDF5FF", // azul claro
+                      backgroundColor: "#EDF5FF",
                       borderColor: "#D9E7FF",
                     }}
                   >
@@ -257,10 +257,10 @@ const LibraryPage = () => {
                       <MoreHorizontal className="w-5 h-5 text-slate-600" />
                     </button>
 
-                    {/* Icono documento (azul) */}
+                    {/* Icono documento */}
                     <FileText className="w-8 h-8 mb-3 text-[#3B82F6]" />
 
-                    {/* Título — 2 líneas, proporción de letra del ejemplo */}
+                    {/* Título — 2 líneas, tamaño y posición como ejemplo */}
                     <h3
                       className="text-[20px] leading-[28px] font-semibold text-slate-900 pr-6"
                       style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}
@@ -268,7 +268,7 @@ const LibraryPage = () => {
                       Olondo.ai
                     </h3>
 
-                    {/* Meta — solo fecha (sin “· 1 fuente”) */}
+                    {/* Fecha — sin “· 1 fuente” */}
                     <p className="mt-3 text-[13px] leading-[18px] text-slate-700">
                       23 sept 2025
                     </p>
