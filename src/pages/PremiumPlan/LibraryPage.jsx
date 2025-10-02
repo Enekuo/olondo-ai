@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import {
   Home, PlusCircle, Plus, Folder, CreditCard, Settings, User, Sun, Moon, Gem, MessageSquare, X,
-  FileText, MoreHorizontal, BookOpen
+  FileText, MoreHorizontal
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
@@ -216,8 +216,8 @@ const LibraryPage = () => {
                 </div>
               )}
 
-              {/* Grid principal */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {/* Grid principal — más junto (gap-6) */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {/* Crear nuevo (no en folders) */}
                 {type !== "folders" && (
                   <Link
@@ -237,7 +237,7 @@ const LibraryPage = () => {
                   </Link>
                 )}
 
-                {/* TEXTO: Olondo.ai -> misma posición de título/fecha que el ejemplo */}
+                {/* TEXTO: Olondo.ai -> título y fecha MUCHO más abajo; y más cerca de “Crear nuevo” */}
                 {(type === "all" || type === "text") && (
                   <div
                     className="mx-auto relative rounded-2xl shadow-sm border"
@@ -245,11 +245,10 @@ const LibraryPage = () => {
                       width: 280,
                       height: 196,
                       borderRadius: 16,
-                      backgroundColor: "#EDF5FF", // azul claro (igual)
+                      backgroundColor: "#EDF5FF",
                       borderColor: "#D9E7FF",
                     }}
                   >
-                    {/* Kebab */}
                     <button
                       aria-label="Opciones"
                       className="absolute top-3 right-3 h-8 w-8 inline-flex items-center justify-center rounded-full hover:bg-white/60"
@@ -257,59 +256,31 @@ const LibraryPage = () => {
                       <MoreHorizontal className="w-5 h-5 text-slate-600" />
                     </button>
 
-                    {/* Contenido con padding como el ejemplo */}
-                    <div className="h-full w-full px-5 pt-5 pb-4">
-                      {/* Icono documento */}
+                    {/* Contenido con más padding superior para bajar todo */}
+                    <div className="h-full w-full px-5 pt-8 pb-5">
+                      {/* Icono */}
                       <FileText className="w-8 h-8 text-[#3B82F6]" />
 
-                      {/* Título grande y más abajo (como el notebook de ejemplo) */}
+                      {/* Título grande y claramente más abajo */}
                       <h3
-                        className="mt-4 text-[22px] leading-[30px] font-semibold text-slate-900 pr-8"
+                        className="mt-6 text-[22px] leading-[30px] font-semibold text-slate-900 pr-8"
                         style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}
                       >
                         Olondo.ai
                       </h3>
 
-                      {/* Fecha justo debajo */}
-                      <p className="mt-2 text-[14px] leading-[20px] text-slate-700">
+                      {/* Fecha justo debajo del título */}
+                      <p className="mt-3 text-[14px] leading-[20px] text-slate-700">
                         23 sept 2025
                       </p>
                     </div>
                   </div>
                 )}
 
-                {/* (Opcional) ejemplo de otra tarjeta tipo notebook/resumen */}
-                {(type === "all" || type === "summary") && (
-                  <div
-                    className="mx-auto relative rounded-2xl shadow-sm border p-4"
-                    style={{
-                      width: 280,
-                      height: 196,
-                      borderRadius: 16,
-                      backgroundColor: "#EEF2FF",
-                      borderColor: "#E3E8FF",
-                    }}
-                  >
-                    <button
-                      aria-label="Opciones"
-                      className="absolute top-3 right-3 h-8 w-8 inline-flex items-center justify-center rounded-full hover:bg-white/60"
-                    >
-                      <MoreHorizontal className="w-5 h-5 text-slate-600" />
-                    </button>
-
-                    <BookOpen className="w-8 h-8 mb-3 text-[#6B5BD6]" />
-
-                    <h3
-                      className="text-[22px] leading-[30px] font-semibold text-slate-900 pr-6"
-                      style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}
-                    >
-                      Untitled notebook
-                    </h3>
-
-                    <p className="mt-2 text-[14px] leading-[20px] text-slate-600">
-                      1 oct 2025 · 0 fuentes
-                    </p>
-                  </div>
+                {/* NOTA: Eliminado el card de la derecha (notebook/resumen) en “Todos”.
+                        Si algún día lo necesitas, muéstralo solo cuando type === "summary". */}
+                {type === "summary" && (
+                  <div className="rounded-2xl border border-slate-200 p-4" style={{ display: "none" }} />
                 )}
 
                 {/* LISTA de carpetas (solo en folders) */}
