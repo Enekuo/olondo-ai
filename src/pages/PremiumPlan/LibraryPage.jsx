@@ -2,11 +2,14 @@ import React, { useMemo, useState } from "react";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import {
   Home, PlusCircle, Plus, Folder, CreditCard, Settings, User, Sun, Moon, Gem, MessageSquare, X,
-  FileText, MoreHorizontal
+  MoreHorizontal
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 import { useTheme } from "@/components/layout/ThemeProvider";
+
+/** Ruta del nuevo icono que nos pasaste */
+const DOC_ICON_SRC = "/assets/img/doc-blue.png"; // <-- cambia esta ruta a donde subas la imagen
 
 const LibraryPage = () => {
   const { t } = useLanguage();
@@ -22,10 +25,9 @@ const LibraryPage = () => {
 
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
-
   const isActive = (path) => location.pathname === path;
 
-  // Filtro único (?type=all|text|summary|folders)
+  // Filtro (?type=all|text|summary|folders)
   const type = useMemo(() => searchParams.get("type") || "all", [searchParams]);
   const setType = (next) => {
     const sp = new URLSearchParams(searchParams);
@@ -33,21 +35,20 @@ const LibraryPage = () => {
     setSearchParams(sp, { replace: true });
   };
 
-  // CTA dinámico
   const createAction = useMemo(() => {
     switch (type) {
       case "text":    return { label: t("library_create_text"),    href: "/create?mode=text" };
-    case "summary": return { label: t("library_create_summary"), href: "/create?mode=summary" };
+      case "summary": return { label: t("library_create_summary"), href: "/create?mode=summary" };
       case "folders": return { label: t("library_create_folder"),  href: "/library/folders/new" };
       case "all":
       default:        return { label: t("library_create_new"),     href: "/create" };
     }
   }, [type, t]);
 
-  // ----- Estado local para Mis carpetas -----
+  // Estado local carpetas
   const [isFolderModalOpen, setFolderModalOpen] = useState(false);
   const [folderName, setFolderName] = useState("");
-  const [folders, setFolders] = useState([]); // [{id,name,createdAt}]
+  const [folders, setFolders] = useState([]);
 
   const openFolderModal = () => { setFolderName(""); setFolderModalOpen(true); };
   const closeFolderModal = () => setFolderModalOpen(false);
@@ -60,6 +61,15 @@ const LibraryPage = () => {
     ]);
     setFolderModalOpen(false);
   };
+
+  // Documentos de ejemplo (incluye “Olondo.ai”)
+  const formatDate = (d) =>
+    d.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" }).replace(".", "");
+  const today = new Date();
+  const sampleDocs = Array.from({ length: 1 }).map((_, i) => {
+    const dt = new Date(today); dt.setDate(today.getDate() - i);
+    return { id: `doc-${i + 1}`, title: "Olondo.ai", date: formatDate(dt) };
+  });
 
   return (
     <div className="min-h-screen w-full bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -78,13 +88,11 @@ const LibraryPage = () => {
               <div
                 className="inline-flex items-center justify-center rounded-[10px]"
                 style={{
-                  width: 30,
-                  height: 30,
+                  width: 30, height: 30,
                   backgroundColor: theme === "dark" ? "rgba(255,255,255,0.22)" : "#ffffff",
-                  boxShadow:
-                    theme === "dark"
-                      ? "inset 0 0 0 1px rgba(255,255,255,0.45)"
-                      : "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)"
+                  boxShadow: theme === "dark"
+                    ? "inset 0 0 0 1px rgba(255,255,255,0.45)"
+                    : "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)"
                 }}
               >
                 <Gem className="w-5 h-5" style={{ color: theme === "dark" ? "#ffffff" : "#334155" }} />
@@ -93,10 +101,9 @@ const LibraryPage = () => {
                 className="rounded-xl px-3 py-1.5 text-sm font-medium"
                 style={{
                   backgroundColor: theme === "dark" ? "rgba(255,255,255,0.06)" : "#f3f4f6",
-                  boxShadow:
-                    theme === "dark"
-                      ? "inset 0 0 0 1px rgba(255,255,255,0.10)"
-                      : "inset 0 0 0 1px rgba(15,23,42,0.12)",
+                  boxShadow: theme === "dark"
+                    ? "inset 0 0 0 1px rgba(255,255,255,0.10)"
+                    : "inset 0 0 0 1px rgba(15,23,42,0.12)",
                   color: theme === "dark" ? "#E5E7EB" : "#0f172a",
                 }}
               >
@@ -188,7 +195,7 @@ const LibraryPage = () => {
 
           <main>
             <section className="py-8 md:py-10 px-4 md:px-8">
-              {/* Chips de filtro */}
+              {/* Filtros */}
               <div className="flex items-center gap-2 mb-5">
                 {[
                   { id: "all",     label: t("library_filter_all") },
@@ -209,7 +216,7 @@ const LibraryPage = () => {
                 })}
               </div>
 
-              {/* Encabezado y botón exclusivo de "Mis carpetas" */}
+              {/* Mis carpetas */}
               {type === "folders" && (
                 <div className="mb-4 flex items-center justify-between">
                   <h1 className="text-[22px] font-semibold tracking-tight">{t("library_folders_title")}</h1>
@@ -225,10 +232,9 @@ const LibraryPage = () => {
                 </div>
               )}
 
-              {/* ======= CONTENEDOR DE TARJETAS ======= */}
-              {/* Flex-wrap + gap fijo de ~1 cm (≈ 38px) */}
+              {/* Cards: flex wrap + ~1 cm entre tarjetas */}
               <div className="flex flex-wrap gap-[38px]">
-                {/* Card Crear (solo cuando NO estamos en folders) */}
+                {/* Crear nuevo */}
                 {type !== "folders" && (
                   <Link
                     to={createAction.href}
@@ -247,43 +253,44 @@ const LibraryPage = () => {
                   </Link>
                 )}
 
-                {/* ---- TARJETA TEXTO: OLONDO.AI ---- */}
-                {(type === "all" || type === "text") && (
-                  <div
-                    className="relative rounded-2xl shadow-sm border"
-                    style={{
-                      width: 280,
-                      height: 196,
-                      borderRadius: 16,
-                      backgroundColor: "#EDF5FF",
-                      borderColor: "#D9E7FF",
-                    }}
-                  >
-                    {/* Menú 3 puntos */}
-                    <button
-                      aria-label="Opciones"
-                      className="absolute top-3 right-3 h-8 w-8 inline-flex items-center justify-center rounded-full hover:bg-white/60"
+                {/* Tarjeta Olondo.ai – usando la NUEVA imagen y más arriba */}
+                {(type === "all" || type === "text") &&
+                  sampleDocs.map((d) => (
+                    <div
+                      key={d.id}
+                      className="relative rounded-2xl shadow-sm border"
+                      style={{
+                        width: 280,
+                        height: 196,
+                        borderRadius: 16,
+                        backgroundColor: "#EDF5FF",
+                        borderColor: "#D9E7FF",
+                      }}
                     >
-                      <MoreHorizontal className="w-5 h-5 text-slate-600" />
-                    </button>
-
-                    {/* Espaciado para bajar título y fecha */}
-                    <div className="h-full w-full px-5 pt-12 pb-6">
-                      <FileText className="w-8 h-8 text-[#3B82F6]" />
-                      <h3
-                        className="mt-8 text-[22px] leading-[30px] font-semibold text-slate-900 pr-8"
-                        style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}
+                      <button
+                        aria-label="Opciones"
+                        className="absolute top-3 right-3 h-8 w-8 inline-flex items-center justify-center rounded-full hover:bg-white/60"
                       >
-                        Olondo.ai
-                      </h3>
-                      <p className="mt-4 text-[14px] leading-[20px] text-slate-700">
-                        23 sept 2025
-                      </p>
-                    </div>
-                  </div>
-                )}
+                        <MoreHorizontal className="w-5 h-5 text-slate-600" />
+                      </button>
 
-                {/* LISTA de carpetas guardadas (solo en folders) */}
+                      {/* MÁS ARRIBA: menos padding top y menor margen antes del título */}
+                      <div className="h-full w-full px-5 pt-6 pb-6">
+                        <img src={DOC_ICON_SRC} alt="" width={28} height={28} className="block select-none" />
+                        <h3
+                          className="mt-4 text-[22px] leading-[30px] font-semibold text-slate-900 pr-8"
+                          style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}
+                        >
+                          {d.title}
+                        </h3>
+                        <p className="mt-3 text-[14px] leading-[20px] text-slate-700">
+                          {d.date}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+
+                {/* Carpetas (si las hay) */}
                 {type === "folders" && folders.length === 0 && (
                   <div className="rounded-xl border border-dashed border-slate-300 dark:border-slate-700 p-6 text-slate-500">
                     {t("library_no_folders") || "Aún no tienes carpetas. Crea la primera."}
