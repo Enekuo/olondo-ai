@@ -1,8 +1,8 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useRef, useEffect } from "react";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import {
   Home, PlusCircle, Plus, Folder, CreditCard, Settings, User, Sun, Moon, Gem, MessageSquare, X,
-  MoreHorizontal
+  MoreVertical, Pencil, Trash2
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
@@ -66,6 +66,21 @@ const LibraryPage = () => {
   const formatDate = (d) =>
     d.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" }).replace(".", "");
   const doc = { id: "doc-olondo", title: "Olondo.ai", date: formatDate(new Date()) };
+
+  // --- Menú contextual (tres puntos) ---
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
+  const menuBtnRef = useRef(null);
+  useEffect(() => {
+    const handle = (e) => {
+      if (!menuOpen) return;
+      if (menuRef.current?.contains(e.target)) return;
+      if (menuBtnRef.current?.contains(e.target)) return;
+      setMenuOpen(false);
+    };
+    document.addEventListener("mousedown", handle);
+    return () => document.removeEventListener("mousedown", handle);
+  }, [menuOpen]);
 
   return (
     <div className="min-h-screen w-full bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -233,7 +248,7 @@ const LibraryPage = () => {
                   </Link>
                 )}
 
-                {/* Tarjeta documento: icono MÁS GRANDE y MÁS ARRIBA; título/fecha más abajo */}
+                {/* Tarjeta documento */}
                 {(type === "all" || type === "text") && (
                   <div
                     className="relative rounded-2xl shadow-sm border"
@@ -245,14 +260,35 @@ const LibraryPage = () => {
                       borderColor: "#D9E7FF",
                     }}
                   >
+                    {/* Botón tres puntos (vertical) */}
                     <button
+                      ref={menuBtnRef}
                       aria-label="Opciones"
                       className="absolute top-3 right-3 h-8 w-8 inline-flex items-center justify-center rounded-full hover:bg-white/60"
+                      onClick={() => setMenuOpen(v => !v)}
+                      type="button"
                     >
-                      <MoreHorizontal className="w-5 h-5 text-slate-600" />
+                      <MoreVertical className="w-5 h-5 text-slate-600" />
                     </button>
 
-                    {/* PT grande para que el contenido empiece alto pero título/fecha queden abajo; icono 36px y -mt-3 */}
+                    {/* Menú contextual (solo mensaje) */}
+                    {menuOpen && (
+                      <div
+                        ref={menuRef}
+                        className="absolute right-2 top-10 w-[210px] rounded-xl border border-slate-200 bg-white shadow-lg py-2"
+                      >
+                        <div className="flex items-center gap-3 px-3 py-2 text-slate-800">
+                          <Pencil className="w-5 h-5 text-slate-600" />
+                          <span>Editar título</span>
+                        </div>
+                        <div className="flex items-center gap-3 px-3 py-2 text-slate-800">
+                          <Trash2 className="w-5 h-5 text-slate-600" />
+                          <span>Eliminar</span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Contenido tarjeta */}
                     <div className="h-full w-full px-5 pt-12 pb-6">
                       <img
                         src={DOC_ICON_SRC}
@@ -351,10 +387,3 @@ const LibraryPage = () => {
 };
 
 export default LibraryPage;
-
-
-
-
-
-
- 
