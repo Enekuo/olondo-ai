@@ -228,7 +228,7 @@ const LibraryPage = () => {
                 })}
               </div>
 
-              {/* Contenedor de tarjetas */}
+              {/* Contenedor de tarjetas (aprox 1 cm de separación) */}
               <div className="flex flex-wrap gap-[38px]">
                 {/* Crear nuevo */}
                 {type !== "folders" && (
@@ -249,7 +249,7 @@ const LibraryPage = () => {
                   </Link>
                 )}
 
-                {/* Tarjeta documento */}
+                {/* Tarjeta documento: icono 60x60 y menú centrado a la derecha */}
                 {(type === "all" || type === "text") && (
                   <div
                     className="relative rounded-2xl shadow-sm border"
@@ -272,14 +272,14 @@ const LibraryPage = () => {
                       <MoreVertical className="w-5 h-5 text-slate-600" />
                     </button>
 
-                    {/* Menú contextual a la derecha, con flechita */}
+                    {/* Menú contextual centrado verticalmente con flechita */}
                     {menuOpen && (
                       <div
                         ref={menuRef}
-                        className="absolute z-10 top-2 left-[calc(100%+10px)] w-[200px] rounded-xl border border-slate-200 bg-white shadow-lg py-2"
+                        className="absolute z-10 top-1/2 -translate-y-1/2 left-[calc(100%+12px)] w-[200px] rounded-xl border border-slate-200 bg-white shadow-lg py-2"
                       >
-                        {/* Flechita */}
-                        <span className="absolute -left-2 top-6 h-3 w-3 bg-white border-l border-t border-slate-200 rotate-45"></span>
+                        {/* Flechita centrada */}
+                        <span className="absolute -left-2 top-1/2 -translate-y-1/2 h-3 w-3 bg-white border-l border-t border-slate-200 rotate-45"></span>
 
                         <div className="flex items-center gap-3 px-3 py-2 text-slate-800">
                           <Pencil className="w-5 h-5 text-slate-600" />
