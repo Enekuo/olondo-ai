@@ -276,7 +276,7 @@ const LibraryPage = () => {
                     {menuOpen && (
                       <div
                         ref={menuRef}
-                        className="absolute z-10 top-1/2 -translate-y-1/2 left-[calc(100%+100px)] w-[200px] rounded-xl border border-slate-200 bg-white shadow-lg py-2"
+                        className="absolute z-10 top-1/2 -translate-y-1/2 left-[calc(100%-100px)] w-[200px] rounded-xl border border-slate-200 bg-white shadow-lg py-2"
                       >
                         <div className="flex items-center gap-3 px-3 py-2 text-slate-800">
                           <Pencil className="w-5 h-5 text-slate-600" />
