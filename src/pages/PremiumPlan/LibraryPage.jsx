@@ -228,7 +228,7 @@ const LibraryPage = () => {
                 })}
               </div>
 
-              {/* Contenedor de tarjetas (aprox 1 cm de separación) */}
+              {/* Contenedor de tarjetas */}
               <div className="flex flex-wrap gap-[38px]">
                 {/* Crear nuevo */}
                 {type !== "folders" && (
@@ -249,7 +249,7 @@ const LibraryPage = () => {
                   </Link>
                 )}
 
-                {/* Tarjeta documento: icono 60x60 y menú centrado a la derecha */}
+                {/* Tarjeta documento */}
                 {(type === "all" || type === "text") && (
                   <div
                     className="relative rounded-2xl shadow-sm border"
@@ -272,15 +272,12 @@ const LibraryPage = () => {
                       <MoreVertical className="w-5 h-5 text-slate-600" />
                     </button>
 
-                    {/* Menú contextual centrado verticalmente con flechita */}
+                    {/* Menú contextual SIN pico, centrado verticalmente */}
                     {menuOpen && (
                       <div
                         ref={menuRef}
-                        className="absolute z-10 top-1/2 -translate-y-1/2 left-[calc(100%+12px)] w-[200px] rounded-xl border border-slate-200 bg-white shadow-lg py-2"
+                        className="absolute z-10 top-1/2 -translate-y-1/2 left-[calc(100%+10px)] w-[200px] rounded-xl border border-slate-200 bg-white shadow-lg py-2"
                       >
-                        {/* Flechita centrada */}
-                        <span className="absolute -left-2 top-1/2 -translate-y-1/2 h-3 w-3 bg-white border-l border-t border-slate-200 rotate-45"></span>
-
                         <div className="flex items-center gap-3 px-3 py-2 text-slate-800">
                           <Pencil className="w-5 h-5 text-slate-600" />
                           <span>Editar título</span>
@@ -324,7 +321,7 @@ const LibraryPage = () => {
                     className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm"
                     style={{ width: 280 }}
                   >
-                    <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
+                    <div className="flex items中心 gap-2 text-slate-700 dark:text-slate-200">
                       <Folder className="w-5 h-5 text-sky-500" />
                       <span className="font-medium truncate">{f.name}</span>
                     </div>
