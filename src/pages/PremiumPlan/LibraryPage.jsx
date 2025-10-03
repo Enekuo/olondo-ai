@@ -71,15 +71,16 @@ const LibraryPage = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const menuBtnRef = useRef(null);
+
   useEffect(() => {
-    const handle = (e) => {
+    const onClickOutside = (e) => {
       if (!menuOpen) return;
       if (menuRef.current?.contains(e.target)) return;
       if (menuBtnRef.current?.contains(e.target)) return;
       setMenuOpen(false);
     };
-    document.addEventListener("mousedown", handle);
-    return () => document.removeEventListener("mousedown", handle);
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
   }, [menuOpen]);
 
   return (
@@ -227,7 +228,7 @@ const LibraryPage = () => {
                 })}
               </div>
 
-              {/* Contenedor de tarjetas (aprox 1 cm de separación) */}
+              {/* Contenedor de tarjetas */}
               <div className="flex flex-wrap gap-[38px]">
                 {/* Crear nuevo */}
                 {type !== "folders" && (
@@ -271,12 +272,15 @@ const LibraryPage = () => {
                       <MoreVertical className="w-5 h-5 text-slate-600" />
                     </button>
 
-                    {/* Menú contextual (solo mensaje) */}
+                    {/* Menú contextual a la derecha, con flechita */}
                     {menuOpen && (
                       <div
                         ref={menuRef}
-                        className="absolute right-2 top-10 w-[210px] rounded-xl border border-slate-200 bg-white shadow-lg py-2"
+                        className="absolute z-10 top-2 left-[calc(100%+10px)] w-[200px] rounded-xl border border-slate-200 bg-white shadow-lg py-2"
                       >
+                        {/* Flechita */}
+                        <span className="absolute -left-2 top-6 h-3 w-3 bg-white border-l border-t border-slate-200 rotate-45"></span>
+
                         <div className="flex items-center gap-3 px-3 py-2 text-slate-800">
                           <Pencil className="w-5 h-5 text-slate-600" />
                           <span>Editar título</span>
