@@ -257,9 +257,9 @@ const LibraryPage = () => {
                       <img
                         src={DOC_ICON_SRC}
                         alt=""
-                        width={70}
-                        height={70}
-                        className="block select-none -mt-7"
+                        width={56}
+                        height={56}
+                        className="block select-none -mt-5"
                       />
                       <h3
                         className="mt-8 text-[22px] leading-[30px] font-semibold text-slate-900 pr-8"
