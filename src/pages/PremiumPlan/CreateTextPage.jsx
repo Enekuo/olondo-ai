@@ -54,9 +54,9 @@ const CreateTextPage = () => {
   };
 
   // Labels con fallback
-  const labelSources   = t("sources_panel_title") === "sources_panel_title" ? "Fuentes" : t("sources_panel_title");
-  const labelDiscover  = t("sources_discover") === "sources_discover" ? "Descubrir" : t("sources_discover");
-  const labelChat      = t("chat_panel_title") === "chat_panel_title" ? "Chat" : t("chat_panel_title");
+  const labelSources  = t("sources_panel_title") === "sources_panel_title" ? "Fuentes" : t("sources_panel_title");
+  const labelDiscover = t("sources_discover")    === "sources_discover"    ? "Descubrir" : t("sources_discover");
+  const labelChat     = t("chat_panel_title")    === "chat_panel_title"    ? "Chat" : t("chat_panel_title");
 
   // Handlers
   const clickUpload = () => fileInputRef.current?.click();
@@ -102,10 +102,10 @@ const CreateTextPage = () => {
         <div className="w-full h-full px-4 sm:px-6 flex items-center justify-between relative">
           <Link to="/" className="font-extrabold text-lg tracking-tight text-sky-400">Olondo.ai</Link>
 
-          {/* Título centrado en el header */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none">
-            <div className="inline-flex items-center gap-2 text-sm sm:text-base md:text-lg font-semibold text-slate-900 dark:text-white">
-              <FileText className="w-5 h-5 text-blue-500" />
+          {/* Título centrado (microajustes de óptica) */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 translate-y-[2px] pointer-events-none select-none">
+            <div className="inline-flex items-center gap-2 text-sm sm:text-base md:text-lg font-semibold tracking-tight text-slate-900 dark:text-white">
+              <FileText className="w-5 h-5 relative -top-px text-blue-500" />
               <span>{t("create_text_title")}</span>
             </div>
           </div>
@@ -192,17 +192,16 @@ const CreateTextPage = () => {
 
           {/* LIENZO */}
           <main className="min-h-[calc(100vh-72px)]">
-            {/* Contenedor centrado para los paneles */}
             <div className="max-w-7xl mx-auto w-full px-4 md:px-6 py-4">
               <motion.section
-                className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-4"
+                className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6"
                 initial="initial" animate="in" exit="out" variants={pageVariants} transition={{ duration: 0.35 }}
-                style={{ minHeight: `calc(100vh - ${HEADER_HEIGHT_PX + 32}px)` }}  // 32px = py-4
+                style={{ minHeight: `calc(100vh - ${HEADER_HEIGHT_PX + 32}px)` }}  // header + py-4
               >
                 {/* Panel Fuentes */}
                 <aside className="h-full rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden flex flex-col">
-                  {/* Barra superior del panel */}
-                  <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/40">
+                  {/* Barra superior 44px */}
+                  <div className="h-11 flex items-center justify-between px-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/40">
                     <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelSources}</div>
                     <button className="p-2 rounded-lg hover:bg-white/60 dark:hover:bg-slate-800/60 transition" aria-label="Contraer/expandir">
                       <span className="block w-1.5 h-1.5 rounded-full bg-slate-400" />
@@ -214,7 +213,7 @@ const CreateTextPage = () => {
                     <Button
                       onClick={clickUpload}
                       variant="secondary"
-                      className="h-9 gap-2 rounded-xl bg-white dark:bg-slate-800
+                      className="h-10 gap-2 rounded-xl bg-white dark:bg-slate-800
                                  border border-slate-200 dark:border-slate-700
                                  shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700"
                     >
@@ -225,7 +224,7 @@ const CreateTextPage = () => {
                     <Button
                       type="button"
                       variant="ghost"
-                      className="h-9 gap-2 rounded-xl border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
+                      className="h-10 gap-2 rounded-xl border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
                     >
                       <Compass className="w-4 h-4" />
                       {labelDiscover}
@@ -239,10 +238,10 @@ const CreateTextPage = () => {
                     {sources.length === 0 ? (
                       <div className="mt-14 text-center text-slate-600 dark:text-slate-400">
                         <div className="mx-auto mb-3 w-12 h-12 rounded-xl border border-dashed border-slate-300 dark:border-slate-600 flex items-center justify-center">
-                          <Paperclip className="w-6 h-6 opacity-80" />
+                          <Paperclip className="w-[22px] h-[22px] opacity-80" />
                         </div>
                         <p className="text-sm font-semibold">{t("sources_empty_title")}</p>
-                        <p className="text-xs mt-1 leading-relaxed">{t("sources_empty_help")}</p>
+                        <p className="text-[13.5px] mt-1 leading-relaxed">{t("sources_empty_help")}</p>
                       </div>
                     ) : (
                       <ul className="space-y-2">
@@ -269,47 +268,47 @@ const CreateTextPage = () => {
                     )}
                   </div>
 
-                  {/* Añadir URL */}
+                  {/* Añadir URL (40px) */}
                   <div className="border-t border-slate-200 dark:border-slate-800 p-3 bg-slate-50/60 dark:bg-slate-900/40">
                     <div className="flex">
                       <input
                         value={urlDraft}
                         onChange={(e) => setUrlDraft(e.target.value)}
-                        className="flex-1 rounded-l-xl border border-slate-200 dark:border-slate-700
-                                   bg-white/90 dark:bg-slate-900/60 px-3 py-2 text-sm outline-none
+                        className="h-10 flex-1 rounded-l-xl border border-slate-200 dark:border-slate-700
+                                   bg-white/90 dark:bg-slate-900/60 px-3 text-sm outline-none
                                    focus:ring-2 focus:ring-sky-400"
                         placeholder={t("add_url_placeholder")}
                       />
-                      <Button onClick={addUrl} className="h-10 px-4 rounded-r-xl bg-sky-600 hover:bg-sky-700 text-white">
+                      <Button onClick={addUrl} className="h-10 px-4 rounded-r-xl bg-sky-600 hover:bg-sky-700 text-white shadow-sm">
                         +
                       </Button>
                     </div>
                   </div>
                 </aside>
 
-                {/* Panel Chat */}
-                <section className="h-full relative rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden">
-                  {/* Barra superior */}
-                  <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/40">
+                {/* Panel Chat (único divisor central con -ml-px) */}
+                <section className="h-full relative rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden -ml-px">
+                  {/* Barra superior 44px con título y sliders */}
+                  <div className="h-11 flex items-center justify-between px-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/40">
                     <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelChat}</div>
-                    <button className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/60 dark:hover:bg-slate-800/60 transition">
+                    <button className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/60 dark:hover:bg-slate-800/60 transition" title={t("settings") || "Ajustes"}>
                       <SlidersHorizontal className="w-4 h-4" />
                     </button>
                   </div>
 
-                  {/* CTA vacío */}
+                  {/* CTA vacío (subido 24px, icono 22px, botón 40px) */}
                   {sources.length === 0 && (
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="text-center">
+                      <div className="text-center -translate-y-6">
                         <div className="mx-auto mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-                          <Upload className="w-6 h-6 text-slate-600 dark:text-slate-300" />
+                          <Upload className="w-[22px] h-[22px] text-slate-600 dark:text-slate-300" />
                         </div>
                         <h3 className="text-lg md:text-xl font-semibold text-slate-800 dark:text-slate-100">
                           {t("chat_add_source")}
                         </h3>
                         <Button
                           onClick={clickUpload}
-                          className="mt-3 rounded-xl bg-gradient-to-r from-blue-500 to-sky-500
+                          className="mt-3 h-10 rounded-xl bg-gradient-to-r from-blue-500 to-sky-500
                                      hover:from-blue-600 hover:to-sky-600 text-white shadow-md hover:shadow-lg"
                         >
                           {t("upload_source_btn")}
@@ -318,11 +317,11 @@ const CreateTextPage = () => {
                     </div>
                   )}
 
-                  {/* Barra de entrada inferior */}
+                  {/* Barra de entrada inferior (max-w-4xl + safe area) */}
                   <form onSubmit={sendChat} className="absolute bottom-0 left-0 right-0 p-4">
-                    <div className="mx-auto max-w-3xl flex items-center gap-2 rounded-full border
+                    <div className="mx-auto max-w-4xl flex items-center gap-2 rounded-full border
                                     border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900
-                                    px-4 py-2 shadow-sm focus-within:ring-2 focus-within:ring-sky-400/40">
+                                    px-6 py-2 shadow-sm focus-within:ring-2 focus-within:ring-sky-400/40">
                       <input
                         value={chatInput}
                         onChange={(e) => setChatInput(e.target.value)}
