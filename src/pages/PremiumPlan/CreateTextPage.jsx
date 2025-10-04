@@ -88,7 +88,7 @@ const CreateTextPage = () => {
 
   return (
     <div className="min-h-screen w-full bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
-      {/* HEADER (privado) */}
+      {/* HEADER */}
       <header
         className="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-slate-800"
         style={{ backgroundColor: HEADER_COLOR, height: HEADER_HEIGHT_PX, borderColor: BORDER_COLOR }}
@@ -96,9 +96,9 @@ const CreateTextPage = () => {
         <div className="w-full h-full px-4 sm:px-6 flex items-center justify-between relative">
           <Link to="/" className="font-extrabold text-lg tracking-tight text-sky-400">Olondo.ai</Link>
 
-          {/* Título centrado en el header */}
+          {/* Título centrado en el header (tamaño adaptado al header) */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none">
-            <div className="inline-flex items-center gap-2 text-base sm:text-lg md:text-xl font-semibold text-slate-900 dark:text-white">
+            <div className="inline-flex items-center gap-2 text-sm sm:text-base md:text-lg font-semibold text-slate-900 dark:text-white">
               <FileText className="w-5 h-5 text-blue-500" />
               <span>{t("create_text_title")}</span>
             </div>
@@ -186,27 +186,12 @@ const CreateTextPage = () => {
 
           {/* LIENZO */}
           <main className="min-h-[calc(100vh-72px)]">
-            {/* Encabezado azul SIN esquinas + overlay blanco redondeado */}
-            <div
-              className="relative px-6 md:px-8 pt-12 pb-16 text-center
-                         bg-gradient-to-b from-sky-50 via-sky-50 to-blue-50
-                         dark:from-slate-900 dark:via-slate-900 dark:to-sky-900
-                         shadow-[inset_0_-1px_0_rgba(2,6,23,0.06)]"
-            >
-              {/* (Título movido al header) */}
-
-              {/* Overlay blanco con esquinas superiores redondeadas (hace el "recorte") */}
-              <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-10 md:h-12">
-                <div className="mx-auto max-w-7xl px-4 md:px-6">
-                  <div className="h-full bg-white dark:bg-slate-950 rounded-t-[28px]" />
-                </div>
-              </div>
-            </div>
+            {/* (El encabezado azul ha sido eliminado) */}
 
             {/* Contenedor centrado para los paneles */}
             <div className="max-w-7xl mx-auto w-full px-4 md:px-6">
               <motion.section
-                className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-0 h-[calc(100vh-240px)] max-h-[calc(100vh-240px)]"
+                className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-0 h-[calc(100vh-140px)] max-h-[calc(100vh-140px)]"
                 initial="initial" animate="in" exit="out" variants={pageVariants} transition={{ duration: 0.45 }}
               >
                 {/* Panel Fuentes */}
