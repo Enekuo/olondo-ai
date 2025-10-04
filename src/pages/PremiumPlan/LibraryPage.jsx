@@ -1,14 +1,14 @@
 import React, { useMemo, useState, useRef, useEffect } from "react";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import {
-  Home, PlusCircle, Plus, Folder, CreditCard, Settings, User, Sun, Moon, Gem, MessageSquare, X,
+  Home, PlusCircle, Plus, Folder, CreditCard, Settings, User, Sun, Moon, Gem, MessageSquare,
   MoreVertical, Pencil, Trash2
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 import { useTheme } from "@/components/layout/ThemeProvider";
 
-/** Icono guardado en /public (raíz del proyecto) */
+/** Icono guardado en /public */
 const DOC_ICON_SRC = "/doc-blue.png";
 
 const LibraryPage = () => {
@@ -17,21 +17,27 @@ const LibraryPage = () => {
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const HEADER_COLOR    = theme === "dark" ? "#262F3F" : "#ffffff";
-  const SIDEBAR_COLOR   = theme === "dark" ? "#354153" : "#f8f9fb";
-  const ACTIVE_BG_COLOR = theme === "dark" ? "#262F3F" : "#e9eef5";
-  const BORDER_COLOR    = theme === "dark" ? "#1f2937" : "#e5e7eb";
+  const HEADER_COLOR     = theme === "dark" ? "#262F3F" : "#ffffff";
+  const SIDEBAR_COLOR    = theme === "dark" ? "#354153" : "#f8f9fb";
+  const ACTIVE_BG_COLOR  = theme === "dark" ? "#262F3F" : "#e9eef5";
+  const BORDER_COLOR     = theme === "dark" ? "#1f2937" : "#e5e7eb";
   const HEADER_HEIGHT_PX = 72;
+  const SIDEBAR_WIDTH_PX = 190;
 
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
 
-  // Activo también en subrutas
-  const isActive = (basePath) =>
-    location.pathname === basePath || location.pathname.startsWith(basePath + "/");
+  // === Igual que Home: activo también en subrutas
+  const isActive = (path) =>
+    location.pathname === path || location.pathname.startsWith(path + "/");
 
-  // Hover del sidebar: solo fondo y más claro que el activo
+  // Sidebar: hover más claro que activo (solo fondo)
   const navHoverBg = theme === "dark" ? "hover:bg-[#2B384A]" : "hover:bg-[#eef3f9]";
+
+  // Header igual que Home
+  const headerHoverBg  = theme === "dark" ? "hover:bg-[#262F3F]" : "hover:bg-[#e9eef5]";
+  const headerBtnBase =
+    theme === "dark" ? "bg-slate-800 text-white border-0" : "bg-white text-slate-800 border border-slate-200";
 
   // Filtro (?type=all|text|summary|folders)
   const type = useMemo(() => searchParams.get("type") || "all", [searchParams]);
@@ -51,7 +57,7 @@ const LibraryPage = () => {
     }
   }, [type, t]);
 
-  // Estado local carpetas
+  // Estado carpetas
   const [isFolderModalOpen, setFolderModalOpen] = useState(false);
   const [folderName, setFolderName] = useState("");
   const [folders, setFolders] = useState([]);
@@ -68,12 +74,11 @@ const LibraryPage = () => {
     setFolderModalOpen(false);
   };
 
-  // Documento de ejemplo (Olondo.ai)
   const formatDate = (d) =>
     d.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" }).replace(".", "");
   const doc = { id: "doc-olondo", title: "Olondo.ai", date: formatDate(new Date()) };
 
-  // --- Menú contextual (tres puntos) ---
+  // Menú contextual
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const menuBtnRef = useRef(null);
@@ -129,28 +134,20 @@ const LibraryPage = () => {
               </div>
             </div>
 
-            <LanguageSwitcher />
+            <div className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition-colors cursor-pointer ${headerHoverBg}`}>
+              <LanguageSwitcher />
+            </div>
 
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl hover:opacity-90 transition-colors"
-              style={{
-                backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff",
-                border: theme === "dark" ? "none" : "1px solid #e5e7eb",
-                color: theme === "dark" ? "#ffffff" : "#1f2937"
-              }}
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition-colors cursor-pointer ${headerBtnBase} ${headerHoverBg}`}
               aria-label={t("theme_toggle")}
             >
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
 
             <button
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:opacity-90 transition-colors"
-              style={{
-                backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff",
-                border: theme === "dark" ? "none" : "1px solid #e5e7eb",
-                color: "#1f2937"
-              }}
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors cursor-pointer ${headerBtnBase} ${headerHoverBg}`}
               aria-label={t("user_menu")}
             >
               <User className="w-5 h-5" />
@@ -162,17 +159,18 @@ const LibraryPage = () => {
       {/* LAYOUT */}
       <div className="w-full">
         <div className="grid gap-0 md:grid-cols-[190px_1fr]">
+          {/* SIDEBAR */}
           <aside className="border-r border-slate-200 dark:border-slate-800" style={{ borderColor: BORDER_COLOR }}>
             <div
               className="sticky ps-2 pe-3 pt-6 pb-0 text-slate-800 dark:text-slate-100"
-              style={{ backgroundColor: SIDEBAR_COLOR, top: HEADER_HEIGHT_PX, height: `calc(100vh - ${HEADER_HEIGHT_PX}px)`, width: 190 }}
+              style={{ backgroundColor: SIDEBAR_COLOR, top: HEADER_HEIGHT_PX, height: `calc(100vh - ${HEADER_HEIGHT_PX}px)`, width: SIDEBAR_WIDTH_PX }}
             >
               <div className="h-full flex flex-col justify-between">
                 <nav className="space-y-1">
                   <Link
-                    to="/app/dashboard"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/app/dashboard") ? ACTIVE_BG_COLOR : "transparent" }}
+                    to="/dashboard"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={{ backgroundColor: isActive("/dashboard") ? ACTIVE_BG_COLOR : "transparent" }}
                   >
                     <Home className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_home")}</span>
@@ -180,7 +178,7 @@ const LibraryPage = () => {
 
                   <Link
                     to="/create"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
                     style={{ backgroundColor: isActive("/create") ? ACTIVE_BG_COLOR : "transparent" }}
                   >
                     <PlusCircle className="w-5 h-5 shrink-0" />
@@ -189,7 +187,7 @@ const LibraryPage = () => {
 
                   <Link
                     to="/library"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
                     style={{ backgroundColor: isActive("/library") ? ACTIVE_BG_COLOR : "transparent" }}
                   >
                     <Folder className="w-5 h-5 shrink-0" />
@@ -198,7 +196,7 @@ const LibraryPage = () => {
 
                   <Link
                     to="/assistant"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
                     style={{ backgroundColor: isActive("/assistant") ? ACTIVE_BG_COLOR : "transparent" }}
                   >
                     <MessageSquare className="w-5 h-5 shrink-0" />
@@ -207,7 +205,7 @@ const LibraryPage = () => {
 
                   <Link
                     to="/pricing"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
                     style={{ backgroundColor: isActive("/pricing") ? ACTIVE_BG_COLOR : "transparent" }}
                   >
                     <CreditCard className="w-5 h-5 shrink-0" />
@@ -218,7 +216,7 @@ const LibraryPage = () => {
                 <div className="pb-0">
                   <Link
                     to="/settings"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
                     style={{ backgroundColor: isActive("/settings") ? ACTIVE_BG_COLOR : "transparent" }}
                   >
                     <Settings className="w-5 h-5 shrink-0" />
@@ -229,6 +227,7 @@ const LibraryPage = () => {
             </div>
           </aside>
 
+          {/* CONTENIDO */}
           <main>
             <section className="py-8 md:py-10 px-4 md:px-8">
               {/* Filtros */}
@@ -273,7 +272,7 @@ const LibraryPage = () => {
                   </Link>
                 )}
 
-                {/* Tarjeta documento */}
+                {/* Tarjeta documento demo */}
                 {(type === "all" || type === "text") && (
                   <div
                     className="relative rounded-2xl shadow-sm border"
@@ -285,7 +284,7 @@ const LibraryPage = () => {
                       borderColor: "#D9E7FF",
                     }}
                   >
-                    {/* Botón tres puntos (vertical) */}
+                    {/* Menú (3 puntos) */}
                     <button
                       ref={menuBtnRef}
                       aria-label="Opciones"
@@ -296,17 +295,16 @@ const LibraryPage = () => {
                       <MoreVertical className="w-5 h-5 text-slate-600" />
                     </button>
 
-                    {/* Menú contextual SIN pico, centrado verticalmente */}
                     {menuOpen && (
                       <div
                         ref={menuRef}
                         className="absolute z-10 top-1/2 -translate-y-1/2 left-[calc(100%-100px)] w-[200px] rounded-xl border border-slate-200 bg-white shadow-lg py-2"
                       >
-                        <div className="flex items-center gap-3 px-3 py-2 text-slate-800">
+                        <div className="flex items-center gap-3 px-3 py-2 text-slate-800 cursor-pointer hover:bg-slate-50">
                           <Pencil className="w-5 h-5 text-slate-600" />
                           <span>Editar título</span>
                         </div>
-                        <div className="flex items-center gap-3 px-3 py-2 text-slate-800">
+                        <div className="flex items-center gap-3 px-3 py-2 text-slate-800 cursor-pointer hover:bg-slate-50">
                           <Trash2 className="w-5 h-5 text-slate-600" />
                           <span>Eliminar</span>
                         </div>
@@ -333,7 +331,7 @@ const LibraryPage = () => {
                   </div>
                 )}
 
-                {/* Carpetas (si las hay) */}
+                {/* Carpetas */}
                 {type === "folders" && folders.length === 0 && (
                   <div className="rounded-xl border border-dashed border-slate-300 dark:border-slate-700 p-6 text-slate-500">
                     {t("library_no_folders") || "Aún no tienes carpetas. Crea la primera."}
@@ -374,7 +372,7 @@ const LibraryPage = () => {
                 className="h-8 w-8 inline-flex items-center justify-center rounded-lg hover:bg-slate-100 text-slate-500"
                 aria-label={t("close") || "Cerrar"}
               >
-                <X className="w-4 h-4" />
+                <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/></svg>
               </button>
             </div>
             <div className="px-6 pb-5">
