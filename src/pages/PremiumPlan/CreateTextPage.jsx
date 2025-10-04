@@ -93,8 +93,16 @@ const CreateTextPage = () => {
         className="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-slate-800"
         style={{ backgroundColor: HEADER_COLOR, height: HEADER_HEIGHT_PX, borderColor: BORDER_COLOR }}
       >
-        <div className="w-full h-full px-4 sm:px-6 flex items-center justify-between">
+        <div className="w-full h-full px-4 sm:px-6 flex items-center justify-between relative">
           <Link to="/" className="font-extrabold text-lg tracking-tight text-sky-400">Olondo.ai</Link>
+
+          {/* Título centrado en el header */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none">
+            <div className="inline-flex items-center gap-2 text-base sm:text-lg md:text-xl font-semibold text-slate-900 dark:text-white">
+              <FileText className="w-5 h-5 text-blue-500" />
+              <span>{t("create_text_title")}</span>
+            </div>
+          </div>
 
           <div className="flex items-center gap-3 sm:gap-4">
             <div className="hidden sm:flex items-center gap-2 select-none">
@@ -185,10 +193,7 @@ const CreateTextPage = () => {
                          dark:from-slate-900 dark:via-slate-900 dark:to-sky-900
                          shadow-[inset_0_-1px_0_rgba(2,6,23,0.06)]"
             >
-              <h1 className="inline-flex items-center justify-center gap-3 text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white drop-shadow-sm">
-                <FileText className="h-8 w-8 text-blue-500" />
-                {t("create_text_title")}
-              </h1>
+              {/* (Título movido al header) */}
 
               {/* Overlay blanco con esquinas superiores redondeadas (hace el "recorte") */}
               <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-10 md:h-12">
@@ -224,7 +229,7 @@ const CreateTextPage = () => {
                   {/* Lista / vacío */}
                   <div className="flex-1 overflow-y-auto px-4 pb-6">
                     {sources.length === 0 ? (
-                      <div className="mt-16 text-center text-slate-600 dark:text-slate-400">
+                      <div className="mt-16 text-center text-sate-600 dark:text-slate-400">
                         <div className="mx-auto mb-3 w-12 h-12 rounded-xl border border-dashed border-slate-300 dark:border-slate-600 flex items-center justify-center">
                           <Paperclip className="w-6 h-6 opacity-80" />
                         </div>
