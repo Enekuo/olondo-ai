@@ -53,7 +53,7 @@ const CreateTextPage = () => {
     out:     { opacity: 0, y: -20 },
   };
 
-  // Labels con fallback (no rompe si no existen las claves)
+  // Labels con fallback
   const labelSources   = t("sources_panel_title") === "sources_panel_title" ? "Fuentes" : t("sources_panel_title");
   const labelDiscover  = t("sources_discover") === "sources_discover" ? "Descubrir" : t("sources_discover");
   const labelChat      = t("chat_panel_title") === "chat_panel_title" ? "Chat" : t("chat_panel_title");
@@ -192,15 +192,16 @@ const CreateTextPage = () => {
 
           {/* LIENZO */}
           <main className="min-h-[calc(100vh-72px)]">
-            {/* Contenedor centrado para los paneles (estructura tipo NotebookLM) */}
+            {/* Contenedor centrado para los paneles */}
             <div className="max-w-7xl mx-auto w-full px-4 md:px-6 py-4">
               <motion.section
                 className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-4"
                 initial="initial" animate="in" exit="out" variants={pageVariants} transition={{ duration: 0.35 }}
+                style={{ minHeight: `calc(100vh - ${HEADER_HEIGHT_PX + 32}px)` }}  // 32px = py-4
               >
                 {/* Panel Fuentes */}
-                <aside className="rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden flex flex-col">
-                  {/* Barra superior del panel (formas) */}
+                <aside className="h-full rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden flex flex-col">
+                  {/* Barra superior del panel */}
                   <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/40">
                     <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelSources}</div>
                     <button className="p-2 rounded-lg hover:bg-white/60 dark:hover:bg-slate-800/60 transition" aria-label="Contraer/expandir">
@@ -268,7 +269,7 @@ const CreateTextPage = () => {
                     )}
                   </div>
 
-                  {/* Añadir URL integrada */}
+                  {/* Añadir URL */}
                   <div className="border-t border-slate-200 dark:border-slate-800 p-3 bg-slate-50/60 dark:bg-slate-900/40">
                     <div className="flex">
                       <input
@@ -287,8 +288,8 @@ const CreateTextPage = () => {
                 </aside>
 
                 {/* Panel Chat */}
-                <section className="relative rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden">
-                  {/* Barra superior del panel (formas) */}
+                <section className="h-full relative rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden">
+                  {/* Barra superior */}
                   <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/40">
                     <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelChat}</div>
                     <button className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/60 dark:hover:bg-slate-800/60 transition">
