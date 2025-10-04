@@ -24,12 +24,19 @@ const AssistantPage = () => {
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
 
-  // ✅ activo también en subrutas
+  // Activo también en subrutas (igual que Home)
   const isActive = (path) =>
     location.pathname === path || location.pathname.startsWith(path + "/");
 
-  // ✅ hover solo fondo y más claro que activo
+  // Sidebar: hover un poco más claro que el activo (solo fondo)
   const navHoverBg = theme === "dark" ? "hover:bg-[#2B384A]" : "hover:bg-[#eef3f9]";
+
+  // Header: mismo patrón que Home
+  const headerHoverBg  = theme === "dark" ? "hover:bg-[#262F3F]" : "hover:bg-[#e9eef5]";
+  const headerBtnBase =
+    theme === "dark"
+      ? "bg-slate-800 text-white border-0"
+      : "bg-white text-slate-800 border border-slate-200";
 
   // Chat state
   const [messages, setMessages] = useState([]); // { id, role: 'user'|'assistant', content }
@@ -140,28 +147,20 @@ const AssistantPage = () => {
               </div>
             </div>
 
-            <LanguageSwitcher />
+            <div className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition-colors cursor-pointer ${headerHoverBg}`}>
+              <LanguageSwitcher />
+            </div>
 
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl hover:opacity-90 transition-colors"
-              style={{
-                backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff",
-                border: theme === "dark" ? "none" : "1px solid #e5e7eb",
-                color: theme === "dark" ? "#ffffff" : "#1f2937"
-              }}
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition-colors cursor-pointer ${headerBtnBase} ${headerHoverBg}`}
               aria-label={t("theme_toggle")}
             >
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
 
             <button
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:opacity-90 transition-colors"
-              style={{
-                backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff",
-                border: theme === "dark" ? "none" : "1px solid #e5e7eb",
-                color: theme === "dark" ? "#ffffff" : "#1f2937"
-              }}
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors cursor-pointer ${headerBtnBase} ${headerHoverBg}`}
               aria-label={t("user_menu")}
             >
               <User className="w-5 h-5" />
@@ -187,9 +186,9 @@ const AssistantPage = () => {
               <div className="h-full flex flex-col justify-between">
                 <nav className="space-y-1">
                   <Link
-                    to="/app/dashboard"
+                    to="/dashboard"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/app/dashboard") ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={{ backgroundColor: isActive("/dashboard") ? ACTIVE_BG_COLOR : "transparent" }}
                   >
                     <Home className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_home")}</span>
@@ -243,7 +242,7 @@ const AssistantPage = () => {
 
           {/* MAIN */}
           <main className="relative h-[calc(100vh-72px)] overflow-hidden">
-            {/* Botón Nuevo chat posicionado y sin ocupar flujo */}
+            {/* Botón Nuevo chat posicionado */}
             <div className="absolute right-4 top-4 z-10">
               <button
                 onClick={handleNewChat}
@@ -258,10 +257,10 @@ const AssistantPage = () => {
               </button>
             </div>
 
-            {/* Scroll area interno (solo si hay chat) */}
+            {/* Scroll area */}
             <div className="h-full flex flex-col">
               <div className={`flex-1 ${isEmpty ? "overflow-hidden" : "overflow-y-auto"}`}>
-                {/* Empty state centrado */}
+                {/* Empty state */}
                 {isEmpty && (
                   <div className="max-w-3xl mx-auto w-full px-4 md:px-6 py-10">
                     <div className="flex flex-col items-center text-center select-none mt-[10vh] md:mt-[14vh]">
@@ -318,7 +317,7 @@ const AssistantPage = () => {
                   </div>
                 )}
 
-                {/* Mensajes (cuando ya hay chat) */}
+                {/* Mensajes */}
                 {!isEmpty && (
                   <div className="max-w-3xl mx-auto w-full px-4 md:px-6 pt-6 pb-24">
                     {messages.map((m) => (
@@ -329,7 +328,7 @@ const AssistantPage = () => {
                 )}
               </div>
 
-              {/* Composer abajo cuando hay chat */}
+              {/* Composer abajo */}
               {!isEmpty && (
                 <div className="sticky bottom-0 w-full z-10">
                   <div className="bg-gradient-to-t from-white/90 dark:from-slate-950/90 to-transparent backdrop-blur">
