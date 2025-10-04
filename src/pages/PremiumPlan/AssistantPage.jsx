@@ -24,11 +24,11 @@ const AssistantPage = () => {
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
 
-  // Activo también en subrutas
-  const isActive = (basePath) =>
-    location.pathname === basePath || location.pathname.startsWith(basePath + "/");
+  // ✅ activo también en subrutas
+  const isActive = (path) =>
+    location.pathname === path || location.pathname.startsWith(path + "/");
 
-  // Sidebar hover SOLO fondo, un poco más claro que el activo
+  // ✅ hover solo fondo y más claro que activo
   const navHoverBg = theme === "dark" ? "hover:bg-[#2B384A]" : "hover:bg-[#eef3f9]";
 
   // Chat state
@@ -52,39 +52,26 @@ const AssistantPage = () => {
     e.target.value = "";
   };
 
-  // New chat
   const handleNewChat = () => {
     setMessages([]);
     setInput("");
     setAttachments([]);
   };
 
-  // Send
   const handleSend = () => {
     const text = input.trim();
     if (!text && attachments.length === 0) return;
-    const userMsg = { id: crypto.randomUUID(), role: "user", content: text };
+    const userMsg = { id: crypto.randomUUID?.() || String(Date.now()), role: "user", content: text };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setAttachments([]);
     inputRef.current?.focus();
-    // Conecta tu backend aquí si deseas respuesta del asistente
   };
 
-  // Enter to send / Shift+Enter new line
-  const onKeyDown = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
-    }
-  };
-
-  // autoscroll
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [messages.length]);
 
-  // Bubble
   const Bubble = ({ role, children }) => {
     const isUser = role === "user";
     return (
