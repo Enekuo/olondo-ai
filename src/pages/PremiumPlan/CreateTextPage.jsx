@@ -229,7 +229,7 @@ const CreateTextPage = () => {
                   {/* Lista / vacío */}
                   <div className="flex-1 overflow-y-auto px-4 pb-6">
                     {sources.length === 0 ? (
-                      <div className="mt-16 text-center text-sate-600 dark:text-slate-400">
+                      <div className="mt-16 text-center text-slate-600 dark:text-slate-400">
                         <div className="mx-auto mb-3 w-12 h-12 rounded-xl border border-dashed border-slate-300 dark:border-slate-600 flex items-center justify-center">
                           <Paperclip className="w-6 h-6 opacity-80" />
                         </div>
