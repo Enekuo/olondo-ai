@@ -17,7 +17,7 @@ const CreateSummaryPage = () => {
 
   const [inputText, setInputText] = useState("");
   const [sourceUrl, setSourceUrl] = useState("");
-  const [files, setFiles] = useState([]); // <-- JS puro
+  const [files, setFiles] = useState([]);
 
   const HEADER_COLOR    = theme === "dark" ? "#262F3F" : "#ffffff";
   const SIDEBAR_COLOR   = theme === "dark" ? "#354153" : "#f8f9fb";
@@ -29,7 +29,16 @@ const CreateSummaryPage = () => {
 
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
-  const isActive = (path) => location.pathname === path;
+
+  // === Igual que Home ===
+  const isActive = (path) =>
+    location.pathname === path || location.pathname.startsWith(path + "/");
+
+  const navHoverBg = theme === "dark" ? "hover:bg-[#2B384A]" : "hover:bg-[#eef3f9]";
+  const headerHoverBg  = theme === "dark" ? "hover:bg-[#262F3F]" : "hover:bg-[#e9eef5]";
+  const headerBtnBase =
+    theme === "dark" ? "bg-slate-800 text-white border-0" : "bg-white text-slate-800 border border-slate-200";
+  // ======================
 
   const planPillStyle =
     theme === "dark"
@@ -72,20 +81,20 @@ const CreateSummaryPage = () => {
               </div>
             </div>
 
-            <LanguageSwitcher />
+            <div className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition-colors cursor-pointer ${headerHoverBg}`}>
+              <LanguageSwitcher />
+            </div>
 
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl hover:opacity-90 transition-colors"
-              style={{ backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff", border: theme === "dark" ? "none" : "1px solid #e5e7eb", color: theme === "dark" ? "#ffffff" : "#1f2937" }}
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition-colors cursor-pointer ${headerBtnBase} ${headerHoverBg}`}
               aria-label={t("theme_toggle")}
             >
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
 
             <button
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:opacity-90 transition-colors"
-              style={{ backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff", border: theme === "dark" ? "none" : "1px solid #e5e7eb", color: theme === "dark" ? "#ffffff" : "#1f2937" }}
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors cursor-pointer ${headerBtnBase} ${headerHoverBg}`}
               aria-label={t("user_menu")}
             >
               <User className="w-5 h-5" />
@@ -105,35 +114,59 @@ const CreateSummaryPage = () => {
             >
               <div className="h-full flex flex-col justify-between">
                 <nav className="space-y-1">
-                  <Link to="/app/dashboard" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/app/dashboard") ? ACTIVE_BG_COLOR : "transparent" }}>
+                  <Link
+                    to="/dashboard"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={isActive("/dashboard") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
+                  >
                     <Home className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_home")}</span>
                   </Link>
 
-                  <Link to="/create" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/create") ? ACTIVE_BG_COLOR : "transparent" }}>
+                  <Link
+                    to="/create"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={isActive("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
+                  >
                     <PlusCircle className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_create")}</span>
                   </Link>
 
-                  <Link to="/library" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/library") ? ACTIVE_BG_COLOR : "transparent" }}>
+                  <Link
+                    to="/library"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={isActive("/library") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
+                  >
                     <Folder className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_library")}</span>
                   </Link>
 
-                  {/* NUEVO: Chat con IA */}
-                  <Link to="/assistant" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/assistant") ? ACTIVE_BG_COLOR : "transparent" }}>
+                  {/* Chat con IA */}
+                  <Link
+                    to="/assistant"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={isActive("/assistant") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
+                  >
                     <MessageSquare className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_ai_chat")}</span>
                   </Link>
 
-                  <Link to="/pricing" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/pricing") ? ACTIVE_BG_COLOR : "transparent" }}>
+                  <Link
+                    to="/pricing"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={isActive("/pricing") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
+                  >
                     <CreditCard className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_plans")}</span>
                   </Link>
                 </nav>
 
                 <div className="pb-0">
-                  <Link to="/settings" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/settings") ? ACTIVE_BG_COLOR : "transparent" }}>
+                  <Link
+                    to="/settings"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={isActive("/settings") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
+                  >
                     <Settings className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_settings")}</span>
                   </Link>
@@ -165,7 +198,6 @@ const CreateSummaryPage = () => {
               <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Inputs */}
                 <div className="bg-white dark:bg-slate-800/70 border border-slate-100 dark:border-slate-700/60 rounded-2xl p-6 shadow-[0_8px_25px_-10px_rgba(2,6,23,0.15)]">
-                  {/* Pegar texto */}
                   <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">
                     <Clipboard className="inline w-4 h-4 mr-2" />
                     {t("paste_text", "Pegar texto")}
@@ -178,7 +210,6 @@ const CreateSummaryPage = () => {
                     placeholder={t("paste_text_ph", "Pega aquí el contenido a resumir...")}
                   />
 
-                  {/* URL */}
                   <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mt-6 mb-2">
                     <Link2 className="inline w-4 h-4 mr-2" />
                     {t("source_url", "URL de referencia (opcional)")}
@@ -190,7 +221,6 @@ const CreateSummaryPage = () => {
                     placeholder="https://..."
                   />
 
-                  {/* Archivos */}
                   <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mt-6 mb-2">
                     <Upload className="inline w-4 h-4 mr-2" />
                     {t("attach_files", "Adjuntar archivos")}

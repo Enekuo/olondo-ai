@@ -1,28 +1,24 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon, Gem,
-  Upload, FileText, Trash2, Link2, Paperclip, Send, MessageSquare,
-  Compass, SlidersHorizontal
+  BookOpen, Upload, Clipboard, Link2, Trash2, MessageSquare
 } from "lucide-react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 import { useTheme } from "@/components/layout/ThemeProvider";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 
-const CreateTextPage = () => {
+const CreateSummaryPage = () => {
   const { t } = useLanguage();
   const { theme, setTheme } = useTheme();
   const location = useLocation();
 
-  // Estado
-  const [sources, setSources] = useState([]); // { id, type: 'file'|'url'|'text', name, meta }
-  const [chatInput, setChatInput] = useState("");
-  const [urlDraft, setUrlDraft] = useState("");
-  const fileInputRef = useRef(null);
+  const [inputText, setInputText] = useState("");
+  const [sourceUrl, setSourceUrl] = useState("");
+  const [files, setFiles] = useState([]);
 
-  // Estilos base
   const HEADER_COLOR    = theme === "dark" ? "#262F3F" : "#ffffff";
   const SIDEBAR_COLOR   = theme === "dark" ? "#354153" : "#f8f9fb";
   const ACTIVE_BG_COLOR = theme === "dark" ? "#262F3F" : "#e9eef5";
@@ -32,15 +28,29 @@ const CreateTextPage = () => {
   const SIDEBAR_WIDTH_PX = 190;
 
   const USER_PLAN = "premium";
-  const planLabel = USER_PLAN === "premium" ? t("plan_premium_title") : t("plan_basic_title");
+  const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
 
-  // Helpers para activo/hover
-  const isCurrentOrChild = (base) =>
-    location.pathname === base || location.pathname.startsWith(base + "/");
+  // === Igual que Home ===
+  const isActive = (path) =>
+    location.pathname === path || location.pathname.startsWith(path + "/");
 
-  const navClasses = (active) =>
-    `w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors
-     ${active ? "" : "hover:bg-slate-100 dark:hover:bg-slate-800/60"}`;
+  const navHoverBg = theme === "dark" ? "hover:bg-[#2B384A]" : "hover:bg-[#eef3f9]";
+  const headerHoverBg  = theme === "dark" ? "hover:bg-[#262F3F]" : "hover:bg-[#e9eef5]";
+  const headerBtnBase =
+    theme === "dark" ? "bg-slate-800 text-white border-0" : "bg-white text-slate-800 border border-slate-200";
+  // ======================
+
+  const planPillStyle =
+    theme === "dark"
+      ? { backgroundColor: "rgba(255,255,255,0.06)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)", color: "#E5E7EB" }
+      : { backgroundColor: "#f3f4f6", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12)", color: "#0f172a" };
+
+  const planIconBoxStyle =
+    theme === "dark"
+      ? { backgroundColor: "rgba(255,255,255,0.22)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)" }
+      : { backgroundColor: "#ffffff", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)" };
+
+  const planIconColor = theme === "dark" ? "#ffffff" : "#334155";
 
   const pageVariants = {
     initial: { opacity: 0, y: 20 },
@@ -48,103 +58,43 @@ const CreateTextPage = () => {
     out:     { opacity: 0, y: -20 },
   };
 
-  // Labels con fallback
-  const labelSources  = t("sources_panel_title") === "sources_panel_title" ? "Fuentes" : t("sources_panel_title");
-  const labelDiscover = t("sources_discover")    === "sources_discover"    ? "Descubrir" : t("sources_discover");
-  const labelChat     = t("chat_panel_title")    === "chat_panel_title"    ? "Chat" : t("chat_panel_title");
-
-  // Handlers
-  const clickUpload = () => fileInputRef.current?.click();
-
-  const onFiles = (e) => {
-    const files = Array.from(e.target?.files || []);
-    if (!files.length) return;
-    const mapped = files.map((f, idx) => ({
-      id: `${Date.now()}_${idx}`,
-      type: "file",
-      name: f.name,
-      meta: { size: f.size }
-    }));
-    setSources((prev) => [...prev, ...mapped]);
-    e.target.value = "";
-  };
-
-  const addUrl = () => {
-    if (!urlDraft.trim()) return;
-    setSources((prev) => [
-      ...prev,
-      { id: `${Date.now()}_url`, type: "url", name: urlDraft.trim(), meta: {} },
-    ]);
-    setUrlDraft("");
-  };
-
-  const removeSource = (id) => setSources((prev) => prev.filter((s) => s.id !== id));
-
-  const sendChat = (e) => {
-    e?.preventDefault();
-    if (!chatInput.trim()) return;
-    // Conectar tu API aquí (chatInput + sources)
-    setChatInput("");
-  };
+  const handleFiles = (e) => setFiles(Array.from(e.target?.files || []));
+  const clearAll = () => { setInputText(""); setSourceUrl(""); setFiles([]); };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-950 text-slate-900 dark:text-slate-100">
+    <div className="min-h-screen w-full bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
       {/* HEADER */}
       <header
         className="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-slate-800"
         style={{ backgroundColor: HEADER_COLOR, height: HEADER_HEIGHT_PX, borderColor: BORDER_COLOR }}
       >
-        <div className="w-full h-full px-4 sm:px-6 flex items-center justify-between relative">
+        <div className="w-full h-full px-4 sm:px-6 flex items-center justify-between">
           <Link to="/" className="font-extrabold text-lg tracking-tight text-sky-400">Olondo.ai</Link>
-
-          {/* Título centrado exacto */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
-            <div className="inline-flex items-center gap-2 text-sm sm:text-base md:text-lg font-semibold tracking-tight text-slate-900 dark:text-white">
-              <FileText className="w-5 h-5 relative -top-px text-blue-500" />
-              <span>{t("create_text_title")}</span>
-            </div>
-          </div>
 
           <div className="flex items-center gap-3 sm:gap-4">
             <div className="hidden sm:flex items-center gap-2 select-none">
-              <div
-                className="inline-flex items-center justify-center rounded-[10px]"
-                style={{
-                  width: 30,
-                  height: 30,
-                  ...(theme === "dark"
-                    ? { backgroundColor: "rgba(255,255,255,0.22)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)" }
-                    : { backgroundColor: "#ffffff", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)" }),
-                }}
-              >
-                <Gem className="w-5 h-5" style={{ color: theme === "dark" ? "#ffffff" : "#334155" }} />
+              <div className="inline-flex items-center justify-center rounded-[10px]" style={{ width: 30, height: 30, ...planIconBoxStyle }}>
+                <Gem className="w-5 h-5" style={{ color: planIconColor }} />
               </div>
-              <div
-                className="rounded-xl px-3 py-1.5 text-sm font-medium"
-                style={
-                  theme === "dark"
-                    ? { backgroundColor: "rgba(255,255,255,0.06)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)", color: "#E5E7EB" }
-                    : { backgroundColor: "#f3f4f6", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12)", color: "#0f172a" }
-                }
-              >
+              <div className="rounded-xl px-3 py-1.5 text-sm font-medium" style={planPillStyle}>
                 {planLabel}
               </div>
             </div>
 
-            <LanguageSwitcher />
+            <div className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition-colors cursor-pointer ${headerHoverBg}`}>
+              <LanguageSwitcher />
+            </div>
 
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl hover:opacity-90 transition-colors"
-              style={{ backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff", border: theme === "dark" ? "none" : "1px solid #e5e7eb", color: theme === "dark" ? "#ffffff" : "#1f2937" }}
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition-colors cursor-pointer ${headerBtnBase} ${headerHoverBg}`}
               aria-label={t("theme_toggle")}
             >
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
 
             <button
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:opacity-90 transition-colors"
-              style={{ backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff", border: theme === "dark" ? "none" : "1px solid #e5e7eb", color: theme === "dark" ? "#ffffff" : "#1f2937" }}
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors cursor-pointer ${headerBtnBase} ${headerHoverBg}`}
               aria-label={t("user_menu")}
             >
               <User className="w-5 h-5" />
@@ -153,7 +103,7 @@ const CreateTextPage = () => {
         </div>
       </header>
 
-      {/* LAYOUT con sidebar + lienzo */}
+      {/* LAYOUT */}
       <div className="w-full">
         <div className="grid gap-0 md:grid-cols-[190px_1fr]">
           {/* SIDEBAR */}
@@ -165,22 +115,18 @@ const CreateTextPage = () => {
               <div className="h-full flex flex-col justify-between">
                 <nav className="space-y-1">
                   <Link
-                    to="/app/dashboard"
-                    className={navClasses(location.pathname === "/app/dashboard")}
-                    style={{ backgroundColor: location.pathname === "/app/dashboard" ? ACTIVE_BG_COLOR : "transparent" }}
-                    aria-current={location.pathname === "/app/dashboard" ? "page" : undefined}
+                    to="/dashboard"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={isActive("/dashboard") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <Home className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_home")}</span>
                   </Link>
 
-                  {/* ACTIVO también en subrutas /create/* */}
                   <Link
                     to="/create"
-                    className={navClasses(isCurrentOrChild("/create"))}
-                    style={{ backgroundColor: isCurrentOrChild("/create") ? ACTIVE_BG_COLOR : "transparent" }}
-                    aria-current={isCurrentOrChild("/create") ? "page" : undefined}
-                    title={t("dashboard_nav_create")}
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={isActive("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <PlusCircle className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_create")}</span>
@@ -188,9 +134,8 @@ const CreateTextPage = () => {
 
                   <Link
                     to="/library"
-                    className={navClasses(isCurrentOrChild("/library"))}
-                    style={{ backgroundColor: isCurrentOrChild("/library") ? ACTIVE_BG_COLOR : "transparent" }}
-                    aria-current={isCurrentOrChild("/library") ? "page" : undefined}
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={isActive("/library") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <Folder className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_library")}</span>
@@ -199,9 +144,8 @@ const CreateTextPage = () => {
                   {/* Chat con IA */}
                   <Link
                     to="/assistant"
-                    className={navClasses(isCurrentOrChild("/assistant"))}
-                    style={{ backgroundColor: isCurrentOrChild("/assistant") ? ACTIVE_BG_COLOR : "transparent" }}
-                    aria-current={isCurrentOrChild("/assistant") ? "page" : undefined}
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={isActive("/assistant") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <MessageSquare className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_ai_chat")}</span>
@@ -209,9 +153,8 @@ const CreateTextPage = () => {
 
                   <Link
                     to="/pricing"
-                    className={navClasses(isCurrentOrChild("/pricing"))}
-                    style={{ backgroundColor: isCurrentOrChild("/pricing") ? ACTIVE_BG_COLOR : "transparent" }}
-                    aria-current={isCurrentOrChild("/pricing") ? "page" : undefined}
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={isActive("/pricing") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <CreditCard className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_plans")}</span>
@@ -221,9 +164,8 @@ const CreateTextPage = () => {
                 <div className="pb-0">
                   <Link
                     to="/settings"
-                    className={navClasses(isCurrentOrChild("/settings"))}
-                    style={{ backgroundColor: isCurrentOrChild("/settings") ? ACTIVE_BG_COLOR : "transparent" }}
-                    aria-current={isCurrentOrChild("/settings") ? "page" : undefined}
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={isActive("/settings") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <Settings className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_settings")}</span>
@@ -233,154 +175,89 @@ const CreateTextPage = () => {
             </div>
           </aside>
 
-          {/* LIENZO */}
-          <main className="min-h-[calc(100vh-72px)]">
-            <div className="max-w-7xl mx-auto w-full px-4 md:px-6 py-4">
-              <motion.section
-                className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6"
-                initial="initial" animate="in" exit="out" variants={pageVariants} transition={{ duration: 0.35 }}
-                style={{ minHeight: `calc(100vh - ${HEADER_HEIGHT_PX + 32}px)` }}
-              >
-                {/* Panel Fuentes */}
-                <aside className="h-full rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden flex flex-col">
-                  <div className="h-11 flex items-center justify-between px-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/40">
-                    <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelSources}</div>
-                    <button className="p-2 rounded-lg hover:bg-white/60 dark:hover:bg-slate-800/60 transition" aria-label="Contraer/expandir">
-                      <span className="block w-1.5 h-1.5 rounded-full bg-slate-400" />
-                    </button>
-                  </div>
+          {/* CONTENIDO */}
+          <main>
+            <motion.section
+              className="py-20 md:py-24 px-4 md:px-8 flex flex-col items-center 
+                         bg-gradient-to-br from-slate-100 via-sky-50 to-blue-100 
+                         dark:from-slate-900 dark:via-slate-800 dark:to-sky-900 
+                         rounded-b-2xl max-w-6xl mx-auto mb-10 md:mb-16"
+              initial="initial" animate="in" exit="out" variants={pageVariants} transition={{ duration: 0.5 }}
+            >
+              {/* Title */}
+              <div className="text-center mb-10">
+                <h1 className="flex items-center justify-center text-3xl md:text-5xl font-extrabold gap-3 text-slate-900 dark:text-white mb-3">
+                  <BookOpen className="h-8 w-8 text-purple-500" /> {t("create_summary_title", "Crear Resumen (Premium)")}
+                </h1>
+                <p className="text-lg md:text-xl text-slate-800 dark:text-slate-200 max-w-xl mx-auto">
+                  {t("create_summary_sub", "Sube archivos o pega texto para obtener resúmenes concisos y claros.")}
+                </p>
+              </div>
 
-                  <div className="flex items-center gap-2 px-3 pt-3 pb-2">
-                    <Button
-                      onClick={clickUpload}
-                      variant="secondary"
-                      className="h-10 gap-2 rounded-xl bg-white dark:bg-slate-800
-                                 border border-slate-200 dark:border-slate-700
-                                 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700"
-                    >
-                      <Upload className="w-4 h-4" />
-                      {t("sources_add")}
-                    </Button>
+              {/* Card */}
+              <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Inputs */}
+                <div className="bg-white dark:bg-slate-800/70 border border-slate-100 dark:border-slate-700/60 rounded-2xl p-6 shadow-[0_8px_25px_-10px_rgba(2,6,23,0.15)]">
+                  <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">
+                    <Clipboard className="inline w-4 h-4 mr-2" />
+                    {t("paste_text", "Pegar texto")}
+                  </label>
+                  <textarea
+                    value={inputText}
+                    onChange={(e) => setInputText(e.target.value)}
+                    rows={8}
+                    className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-900/40 px-4 py-3 outline-none focus:ring-2 focus:ring-fuchsia-400"
+                    placeholder={t("paste_text_ph", "Pega aquí el contenido a resumir...")}
+                  />
 
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      className="h-10 gap-2 rounded-xl border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
-                    >
-                      <Compass className="w-4 h-4" />
-                      {labelDiscover}
-                    </Button>
+                  <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mt-6 mb-2">
+                    <Link2 className="inline w-4 h-4 mr-2" />
+                    {t("source_url", "URL de referencia (opcional)")}
+                  </label>
+                  <input
+                    value={sourceUrl}
+                    onChange={(e) => setSourceUrl(e.target.value)}
+                    className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-900/40 px-4 py-3 outline-none focus:ring-2 focus:ring-fuchsia-400"
+                    placeholder="https://..."
+                  />
 
-                    <input type="file" ref={fileInputRef} className="hidden" multiple onChange={onFiles} />
-                  </div>
-
-                  <div className="flex-1 overflow-y-auto px-4 pb-6">
-                    {sources.length === 0 ? (
-                      <div className="mt-14 text-center text-slate-600 dark:text-slate-400">
-                        <div className="mx-auto mb-3 w-12 h-12 rounded-xl border border-dashed border-slate-300 dark:border-slate-600 flex items-center justify-center">
-                          <Paperclip className="w-[22px] h-[22px] opacity-80" />
-                        </div>
-                        <p className="text-sm font-semibold">{t("sources_empty_title")}</p>
-                        <p className="text-[13.5px] mt-1 leading-relaxed">{t("sources_empty_help")}</p>
-                      </div>
-                    ) : (
-                      <ul className="space-y-2">
-                        {sources.map((s) => (
-                          <li
-                            key={s.id}
-                            className="group flex items-center justify-between rounded-lg border border-slate-200 dark:border-slate-700
-                                       bg-white dark:bg-slate-800 px-3 py-2 hover:shadow-sm transition"
-                          >
-                            <div className="flex items-center gap-2">
-                              {s.type === "url" ? <Link2 className="w-4 h-4 text-slate-500" /> : <Paperclip className="w-4 h-4 text-slate-500" />}
-                              <span className="text-sm truncate max-w-[220px]" title={s.name}>{s.name}</span>
-                            </div>
-                            <button
-                              onClick={() => removeSource(s.id)}
-                              className="opacity-70 hover:opacity-100 transition"
-                              title={t("remove")}
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </button>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-
-                  <div className="border-t border-slate-200 dark:border-slate-800 p-3 bg-slate-50/60 dark:bg-slate-900/40">
-                    <div className="flex">
-                      <input
-                        value={urlDraft}
-                        onChange={(e) => setUrlDraft(e.target.value)}
-                        className="h-10 flex-1 rounded-l-xl border border-slate-200 dark:border-slate-700
-                                   bg-white/90 dark:bg-slate-900/60 px-3 text-sm outline-none
-                                   focus:ring-2 focus:ring-sky-400"
-                        placeholder={t("add_url_placeholder")}
-                      />
-                      <Button onClick={addUrl} className="h-10 px-4 rounded-r-xl bg-sky-600 hover:bg-sky-700 text-white shadow-sm">
-                        +
-                      </Button>
-                    </div>
-                  </div>
-                </aside>
-
-                {/* Panel Chat */}
-                <section className="h-full relative rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden -ml-px">
-                  <div className="h-11 flex items-center justify-between px-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/40">
-                    <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelChat}</div>
-                    <button className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/60 dark:hover:bg-slate-800/60 transition" title={t("settings") || "Ajustes"}>
-                      <SlidersHorizontal className="w-4 h-4" />
-                    </button>
-                  </div>
-
-                  {sources.length === 0 && (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="text-center -translate-y-6">
-                        <div className="mx-auto mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-                          <Upload className="w-[22px] h-[22px] text-slate-600 dark:text-slate-300" />
-                        </div>
-                        <h3 className="text-lg md:text-xl font-semibold text-slate-800 dark:text-slate-100">
-                          {t("chat_add_source")}
-                        </h3>
-                        <Button
-                          onClick={clickUpload}
-                          className="mt-3 h-10 rounded-xl bg-gradient-to-r from-blue-500 to-sky-500
-                                     hover:from-blue-600 hover:to-sky-600 text-white shadow-md hover:shadow-lg"
-                        >
-                          {t("upload_source_btn")}
-                        </Button>
-                      </div>
+                  <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mt-6 mb-2">
+                    <Upload className="inline w-4 h-4 mr-2" />
+                    {t("attach_files", "Adjuntar archivos")}
+                  </label>
+                  <input
+                    type="file"
+                    className="block w-full text-sm text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 dark:file:bg-slate-700 dark:file:text-slate-200"
+                    multiple
+                    onChange={handleFiles}
+                  />
+                  {files.length > 0 && (
+                    <div className="mt-3 text-sm text-slate-600 dark:text-slate-300">
+                      {files.length} {t("files_selected", "archivo(s) seleccionado(s)")}
                     </div>
                   )}
+                </div>
 
-                  <form onSubmit={sendChat} className="absolute bottom-0 left-0 right-0 p-4">
-                    <div className="mx-auto max-w-4xl flex items-center gap-2 rounded-full border
-                                    border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900
-                                    px-6 py-2 shadow-sm focus-within:ring-2 focus-within:ring-sky-400/40">
-                      <input
-                        value={chatInput}
-                        onChange={(e) => setChatInput(e.target.value)}
-                        placeholder={t("bottom_input_ph")}
-                        className="flex-1 bg-transparent outline-none text-sm md:text-base placeholder:text-slate-400"
-                        disabled={sources.length === 0}
-                      />
-                      <div className="text-xs text-slate-500 mr-2">
-                        {sources.length} {t("sources_count")}
-                      </div>
-                      <Button
-                        type="submit"
-                        disabled={!chatInput.trim() || sources.length === 0}
-                        className="h-10 px-3 rounded-full"
-                        title={t("send")}
-                      >
-                        <Send className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </form>
-                </section>
-              </motion.section>
-            </div>
+                {/* Actions */}
+                <div className="bg-white dark:bg-slate-800/70 border border-slate-100 dark:border-slate-700/60 rounded-2xl p-6 shadow-[0_8px_25px_-10px_rgba(2,6,23,0.15)] flex flex-col">
+                  <div className="mb-6">
+                    <h3 className="text-lg font-semibold mb-1">{t("summary_prefs", "Preferencias rápidas de resumen")}</h3>
+                    <p className="text-slate-600 dark:text-slate-400 text-sm">
+                      {t("summary_prefs_sub", "Longitud, enfoque y tono puedes afinarlos cuando integres la API.")}
+                    </p>
+                  </div>
+
+                  <div className="mt-auto grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <Button className="h-11 font-semibold bg-gradient-to-r from-purple-500 to-fuchsia-500 hover:from-purple-600 hover:to-fuchsia-600">
+                      ✨ {t("generate_summary", "Generar resumen")}
+                    </Button>
+                    <Button variant="secondary" className="h-11 font-semibold" onClick={clearAll}>
+                      <Trash2 className="w-4 h-4 mr-2" /> {t("clear", "Limpiar")}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </motion.section>
           </main>
         </div>
       </div>
@@ -388,4 +265,4 @@ const CreateTextPage = () => {
   );
 };
 
-export default CreateTextPage;
+export default CreateSummaryPage;
