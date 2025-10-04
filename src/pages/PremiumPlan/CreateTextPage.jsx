@@ -33,19 +33,14 @@ const CreateTextPage = () => {
 
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? t("plan_premium_title") : t("plan_basic_title");
-  const isActive = (path) => location.pathname === path;
 
-  const planPillStyle =
-    theme === "dark"
-      ? { backgroundColor: "rgba(255,255,255,0.06)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)", color: "#E5E7EB" }
-      : { backgroundColor: "#f3f4f6", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12)", color: "#0f172a" };
+  // Helpers para activo/hover
+  const isCurrentOrChild = (base) =>
+    location.pathname === base || location.pathname.startsWith(base + "/");
 
-  const planIconBoxStyle =
-    theme === "dark"
-      ? { backgroundColor: "rgba(255,255,255,0.22)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)" }
-      : { backgroundColor: "#ffffff", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)" };
-
-  const planIconColor = theme === "dark" ? "#ffffff" : "#334155";
+  const navClasses = (active) =>
+    `w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors
+     ${active ? "" : "hover:bg-slate-100 dark:hover:bg-slate-800/60"}`;
 
   const pageVariants = {
     initial: { opacity: 0, y: 20 },
@@ -112,10 +107,26 @@ const CreateTextPage = () => {
 
           <div className="flex items-center gap-3 sm:gap-4">
             <div className="hidden sm:flex items-center gap-2 select-none">
-              <div className="inline-flex items-center justify-center rounded-[10px]" style={{ width: 30, height: 30, ...planIconBoxStyle }}>
-                <Gem className="w-5 h-5" style={{ color: planIconColor }} />
+              <div
+                className="inline-flex items-center justify-center rounded-[10px]"
+                style={{
+                  width: 30,
+                  height: 30,
+                  ...(theme === "dark"
+                    ? { backgroundColor: "rgba(255,255,255,0.22)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)" }
+                    : { backgroundColor: "#ffffff", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)" }),
+                }}
+              >
+                <Gem className="w-5 h-5" style={{ color: theme === "dark" ? "#ffffff" : "#334155" }} />
               </div>
-              <div className="rounded-xl px-3 py-1.5 text-sm font-medium" style={planPillStyle}>
+              <div
+                className="rounded-xl px-3 py-1.5 text-sm font-medium"
+                style={
+                  theme === "dark"
+                    ? { backgroundColor: "rgba(255,255,255,0.06)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)", color: "#E5E7EB" }
+                    : { backgroundColor: "#f3f4f6", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12)", color: "#0f172a" }
+                }
+              >
                 {planLabel}
               </div>
             </div>
@@ -153,35 +164,67 @@ const CreateTextPage = () => {
             >
               <div className="h-full flex flex-col justify-between">
                 <nav className="space-y-1">
-                  <Link to="/app/dashboard" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/app/dashboard") ? ACTIVE_BG_COLOR : "transparent" }}>
+                  <Link
+                    to="/app/dashboard"
+                    className={navClasses(location.pathname === "/app/dashboard")}
+                    style={{ backgroundColor: location.pathname === "/app/dashboard" ? ACTIVE_BG_COLOR : "transparent" }}
+                    aria-current={location.pathname === "/app/dashboard" ? "page" : undefined}
+                  >
                     <Home className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_home")}</span>
                   </Link>
 
-                  <Link to="/create" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/create") ? ACTIVE_BG_COLOR : "transparent" }}>
+                  {/* ACTIVO también en subrutas /create/* */}
+                  <Link
+                    to="/create"
+                    className={navClasses(isCurrentOrChild("/create"))}
+                    style={{ backgroundColor: isCurrentOrChild("/create") ? ACTIVE_BG_COLOR : "transparent" }}
+                    aria-current={isCurrentOrChild("/create") ? "page" : undefined}
+                    title={t("dashboard_nav_create")}
+                  >
                     <PlusCircle className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_create")}</span>
                   </Link>
 
-                  <Link to="/library" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/library") ? ACTIVE_BG_COLOR : "transparent" }}>
+                  <Link
+                    to="/library"
+                    className={navClasses(isCurrentOrChild("/library"))}
+                    style={{ backgroundColor: isCurrentOrChild("/library") ? ACTIVE_BG_COLOR : "transparent" }}
+                    aria-current={isCurrentOrChild("/library") ? "page" : undefined}
+                  >
                     <Folder className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_library")}</span>
                   </Link>
 
-                  {/* NUEVO: Chat con IA */}
-                  <Link to="/assistant" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/assistant") ? ACTIVE_BG_COLOR : "transparent" }}>
+                  {/* Chat con IA */}
+                  <Link
+                    to="/assistant"
+                    className={navClasses(isCurrentOrChild("/assistant"))}
+                    style={{ backgroundColor: isCurrentOrChild("/assistant") ? ACTIVE_BG_COLOR : "transparent" }}
+                    aria-current={isCurrentOrChild("/assistant") ? "page" : undefined}
+                  >
                     <MessageSquare className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_ai_chat")}</span>
                   </Link>
 
-                  <Link to="/pricing" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/pricing") ? ACTIVE_BG_COLOR : "transparent" }}>
+                  <Link
+                    to="/pricing"
+                    className={navClasses(isCurrentOrChild("/pricing"))}
+                    style={{ backgroundColor: isCurrentOrChild("/pricing") ? ACTIVE_BG_COLOR : "transparent" }}
+                    aria-current={isCurrentOrChild("/pricing") ? "page" : undefined}
+                  >
                     <CreditCard className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_plans")}</span>
                   </Link>
                 </nav>
 
                 <div className="pb-0">
-                  <Link to="/settings" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/settings") ? ACTIVE_BG_COLOR : "transparent" }}>
+                  <Link
+                    to="/settings"
+                    className={navClasses(isCurrentOrChild("/settings"))}
+                    style={{ backgroundColor: isCurrentOrChild("/settings") ? ACTIVE_BG_COLOR : "transparent" }}
+                    aria-current={isCurrentOrChild("/settings") ? "page" : undefined}
+                  >
                     <Settings className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_settings")}</span>
                   </Link>
