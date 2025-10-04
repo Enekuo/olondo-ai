@@ -23,7 +23,13 @@ const AssistantPage = () => {
 
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
-  const isActive = (path) => location.pathname === path;
+
+  // Activo también en subrutas
+  const isActive = (basePath) =>
+    location.pathname === basePath || location.pathname.startsWith(basePath + "/");
+
+  // Sidebar hover SOLO fondo, un poco más claro que el activo
+  const navHoverBg = theme === "dark" ? "hover:bg-[#2B384A]" : "hover:bg-[#eef3f9]";
 
   // Chat state
   const [messages, setMessages] = useState([]); // { id, role: 'user'|'assistant', content }
@@ -193,29 +199,53 @@ const AssistantPage = () => {
             >
               <div className="h-full flex flex-col justify-between">
                 <nav className="space-y-1">
-                  <Link to="/app/dashboard" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/app/dashboard") ? ACTIVE_BG_COLOR : "transparent" }}>
+                  <Link
+                    to="/app/dashboard"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
+                    style={{ backgroundColor: isActive("/app/dashboard") ? ACTIVE_BG_COLOR : "transparent" }}
+                  >
                     <Home className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_home")}</span>
                   </Link>
-                  <Link to="/create" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/create") ? ACTIVE_BG_COLOR : "transparent" }}>
+                  <Link
+                    to="/create"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
+                    style={{ backgroundColor: isActive("/create") ? ACTIVE_BG_COLOR : "transparent" }}
+                  >
                     <PlusCircle className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_create")}</span>
                   </Link>
-                  <Link to="/library" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/library") ? ACTIVE_BG_COLOR : "transparent" }}>
+                  <Link
+                    to="/library"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
+                    style={{ backgroundColor: isActive("/library") ? ACTIVE_BG_COLOR : "transparent" }}
+                  >
                     <Folder className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_library")}</span>
                   </Link>
-                  <Link to="/assistant" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/assistant") ? ACTIVE_BG_COLOR : "transparent" }}>
+                  <Link
+                    to="/assistant"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
+                    style={{ backgroundColor: isActive("/assistant") ? ACTIVE_BG_COLOR : "transparent" }}
+                  >
                     <MessageSquare className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_ai_chat")}</span>
                   </Link>
-                  <Link to="/pricing" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/pricing") ? ACTIVE_BG_COLOR : "transparent" }}>
+                  <Link
+                    to="/pricing"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
+                    style={{ backgroundColor: isActive("/pricing") ? ACTIVE_BG_COLOR : "transparent" }}
+                  >
                     <CreditCard className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_plans")}</span>
                   </Link>
                 </nav>
                 <div className="pb-0">
-                  <Link to="/settings" className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors" style={{ backgroundColor: isActive("/settings") ? ACTIVE_BG_COLOR : "transparent" }}>
+                  <Link
+                    to="/settings"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
+                    style={{ backgroundColor: isActive("/settings") ? ACTIVE_BG_COLOR : "transparent" }}
+                  >
                     <Settings className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_settings")}</span>
                   </Link>

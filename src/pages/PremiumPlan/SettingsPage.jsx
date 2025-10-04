@@ -46,7 +46,12 @@ const SettingsPage = () => {
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
 
-  const isActive = (path) => location.pathname === path;
+  // Activo también en subrutas
+  const isActive = (basePath) =>
+    location.pathname === basePath || location.pathname.startsWith(basePath + "/");
+
+  // Hover del sidebar: solo fondo y un poco más claro que el activo
+  const navHoverBg = theme === "dark" ? "hover:bg-[#2B384A]" : "hover:bg-[#eef3f9]";
 
   const [profile, setProfile] = useState({ displayName: "", email: "" });
   const [notifications, setNotifications] = useState({ product: true, tips: true, billing: true });
@@ -95,7 +100,7 @@ const SettingsPage = () => {
             Olondo.ai
           </Link>
 
-        <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-3 sm:gap-4">
             {/* Indicador de plan */}
             <div className="hidden sm:flex items-center gap-2 select-none">
               <div
@@ -158,7 +163,7 @@ const SettingsPage = () => {
                 <nav className="space-y-1">
                   <Link
                     to="/app/dashboard"
-                    className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
                     style={{ backgroundColor: isActive("/app/dashboard") ? ACTIVE_BG_COLOR : "transparent" }}
                   >
                     <Home className="w-5 h-5 shrink-0" />
@@ -167,7 +172,7 @@ const SettingsPage = () => {
 
                   <Link
                     to="/create"
-                    className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
                     style={{ backgroundColor: isActive("/create") ? ACTIVE_BG_COLOR : "transparent" }}
                   >
                     <PlusCircle className="w-5 h-5 shrink-0" />
@@ -176,7 +181,7 @@ const SettingsPage = () => {
 
                   <Link
                     to="/library"
-                    className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
                     style={{ backgroundColor: isActive("/library") ? ACTIVE_BG_COLOR : "transparent" }}
                   >
                     <Folder className="w-5 h-5 shrink-0" />
@@ -186,7 +191,7 @@ const SettingsPage = () => {
                   {/* NUEVO: Chat con IA */}
                   <Link
                     to="/assistant"
-                    className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
                     style={{ backgroundColor: isActive("/assistant") ? ACTIVE_BG_COLOR : "transparent" }}
                   >
                     <MessageSquare className="w-5 h-5 shrink-0" />
@@ -195,7 +200,7 @@ const SettingsPage = () => {
 
                   <Link
                     to="/pricing"
-                    className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
                     style={{ backgroundColor: isActive("/pricing") ? ACTIVE_BG_COLOR : "transparent" }}
                   >
                     <CreditCard className="w-5 h-5 shrink-0" />
@@ -207,7 +212,7 @@ const SettingsPage = () => {
                 <div className="pb-0">
                   <Link
                     to="/settings"
-                    className="w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
                     style={{ backgroundColor: isActive("/settings") ? ACTIVE_BG_COLOR : "transparent" }}
                   >
                     <SettingsIcon className="w-5 h-5 shrink-0" />
