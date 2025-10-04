@@ -46,11 +46,11 @@ const SettingsPage = () => {
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
 
-  // Activo también en subrutas
+  // ✅ Activo también en subrutas
   const isActive = (basePath) =>
     location.pathname === basePath || location.pathname.startsWith(basePath + "/");
 
-  // Hover del sidebar: solo fondo y un poco más claro que el activo
+  // ✅ Hover SOLO fondo, más claro que el activo
   const navHoverBg = theme === "dark" ? "hover:bg-[#2B384A]" : "hover:bg-[#eef3f9]";
 
   const [profile, setProfile] = useState({ displayName: "", email: "" });
@@ -61,30 +61,15 @@ const SettingsPage = () => {
     alert(t("settings_toast_saved") || "Configuración guardada.");
   };
 
-  // Estilos de la píldora/ícono del plan por tema
   const planPillStyle =
     theme === "dark"
-      ? {
-          backgroundColor: "rgba(255,255,255,0.06)",
-          boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)",
-          color: "#E5E7EB",
-        }
-      : {
-          backgroundColor: "#f3f4f6",
-          boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12)",
-          color: "#0f172a",
-        };
+      ? { backgroundColor: "rgba(255,255,255,0.06)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)", color: "#E5E7EB" }
+      : { backgroundColor: "#f3f4f6", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12)", color: "#0f172a" };
 
   const planIconBoxStyle =
     theme === "dark"
-      ? {
-          backgroundColor: "rgba(255,255,255,0.22)",
-          boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)",
-        }
-      : {
-          backgroundColor: "#ffffff",
-          boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)",
-        };
+      ? { backgroundColor: "rgba(255,255,255,0.22)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)" }
+      : { backgroundColor: "#ffffff", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)" };
 
   const planIconColor = theme === "dark" ? "#ffffff" : "#334155";
 
@@ -101,13 +86,8 @@ const SettingsPage = () => {
           </Link>
 
           <div className="flex items-center gap-3 sm:gap-4">
-            {/* Indicador de plan */}
             <div className="hidden sm:flex items-center gap-2 select-none">
-              <div
-                className="inline-flex items-center justify-center rounded-[10px]"
-                style={{ width: 30, height: 30, ...planIconBoxStyle }}
-                aria-hidden="true"
-              >
+              <div className="inline-flex items-center justify-center rounded-[10px]" style={{ width: 30, height: 30, ...planIconBoxStyle }} aria-hidden="true">
                 <Gem className="w-5 h-5" style={{ color: planIconColor }} />
               </div>
               <div className="rounded-xl px-3 py-1.5 text-sm font-medium" style={planPillStyle}>
@@ -120,11 +100,7 @@ const SettingsPage = () => {
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="inline-flex h-10 w-10 items-center justify-center rounded-xl hover:opacity-90 transition-colors"
-              style={{
-                backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff",
-                border: theme === "dark" ? "none" : "1px solid #e5e7eb",
-                color: theme === "dark" ? "#ffffff" : "#1f2937"
-              }}
+              style={{ backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff", border: theme === "dark" ? "none" : "1px solid #e5e7eb", color: theme === "dark" ? "#ffffff" : "#1f2937" }}
               aria-label={t("theme_toggle")}
             >
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
@@ -132,11 +108,7 @@ const SettingsPage = () => {
 
             <button
               className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:opacity-90 transition-colors"
-              style={{
-                backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff",
-                border: theme === "dark" ? "none" : "1px solid #e5e7eb",
-                color: theme === "dark" ? "#ffffff" : "#1f2937"
-              }}
+              style={{ backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff", border: theme === "dark" ? "none" : "1px solid #e5e7eb", color: theme === "dark" ? "#ffffff" : "#1f2937" }}
               aria-label={t("user_menu")}
             >
               <User className="w-5 h-5" />
@@ -152,12 +124,7 @@ const SettingsPage = () => {
           <aside className="border-r border-slate-200 dark:border-slate-800" style={{ borderColor: BORDER_COLOR }}>
             <div
               className="sticky ps-2 pe-3 pt-6 pb-0 text-slate-800 dark:text-slate-100"
-              style={{
-                backgroundColor: SIDEBAR_COLOR,
-                top: HEADER_HEIGHT_PX,
-                height: `calc(100vh - ${HEADER_HEIGHT_PX}px)`,
-                width: SIDEBAR_WIDTH_PX
-              }}
+              style={{ backgroundColor: SIDEBAR_COLOR, top: HEADER_HEIGHT_PX, height: `calc(100vh - ${HEADER_HEIGHT_PX}px)`, width: SIDEBAR_WIDTH_PX }}
             >
               <div className="h-full flex flex-col justify-between">
                 <nav className="space-y-1">
@@ -360,7 +327,7 @@ const SettingsPage = () => {
                     </div>
                   </Section>
 
-                  {/* Acciones (solo Guardar cambios) */}
+                  {/* Acciones */}
                   <div className="flex items-center justify-end gap-3">
                     <button
                       type="submit"
