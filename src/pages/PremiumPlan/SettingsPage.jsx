@@ -46,12 +46,14 @@ const SettingsPage = () => {
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
 
-  // ✅ Activo también en subrutas
-  const isActive = (basePath) =>
-    location.pathname === basePath || location.pathname.startsWith(basePath + "/");
+  // Igual que Home
+  const isActive = (path) =>
+    location.pathname === path || location.pathname.startsWith(path + "/");
 
-  // ✅ Hover SOLO fondo, más claro que el activo
   const navHoverBg = theme === "dark" ? "hover:bg-[#2B384A]" : "hover:bg-[#eef3f9]";
+  const headerHoverBg  = theme === "dark" ? "hover:bg-[#262F3F]" : "hover:bg-[#e9eef5]";
+  const headerBtnBase =
+    theme === "dark" ? "bg-slate-800 text-white border-0" : "bg-white text-slate-800 border border-slate-200";
 
   const [profile, setProfile] = useState({ displayName: "", email: "" });
   const [notifications, setNotifications] = useState({ product: true, tips: true, billing: true });
@@ -87,7 +89,11 @@ const SettingsPage = () => {
 
           <div className="flex items-center gap-3 sm:gap-4">
             <div className="hidden sm:flex items-center gap-2 select-none">
-              <div className="inline-flex items-center justify-center rounded-[10px]" style={{ width: 30, height: 30, ...planIconBoxStyle }} aria-hidden="true">
+              <div
+                className="inline-flex items-center justify-center rounded-[10px]"
+                style={{ width: 30, height: 30, ...planIconBoxStyle }}
+                aria-hidden="true"
+              >
                 <Gem className="w-5 h-5" style={{ color: planIconColor }} />
               </div>
               <div className="rounded-xl px-3 py-1.5 text-sm font-medium" style={planPillStyle}>
@@ -95,20 +101,20 @@ const SettingsPage = () => {
               </div>
             </div>
 
-            <LanguageSwitcher />
+            <div className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition-colors cursor-pointer ${headerHoverBg}`}>
+              <LanguageSwitcher />
+            </div>
 
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl hover:opacity-90 transition-colors"
-              style={{ backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff", border: theme === "dark" ? "none" : "1px solid #e5e7eb", color: theme === "dark" ? "#ffffff" : "#1f2937" }}
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition-colors cursor-pointer ${headerBtnBase} ${headerHoverBg}`}
               aria-label={t("theme_toggle")}
             >
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
 
             <button
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:opacity-90 transition-colors"
-              style={{ backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff", border: theme === "dark" ? "none" : "1px solid #e5e7eb", color: theme === "dark" ? "#ffffff" : "#1f2937" }}
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors cursor-pointer ${headerBtnBase} ${headerHoverBg}`}
               aria-label={t("user_menu")}
             >
               <User className="w-5 h-5" />
@@ -124,14 +130,19 @@ const SettingsPage = () => {
           <aside className="border-r border-slate-200 dark:border-slate-800" style={{ borderColor: BORDER_COLOR }}>
             <div
               className="sticky ps-2 pe-3 pt-6 pb-0 text-slate-800 dark:text-slate-100"
-              style={{ backgroundColor: SIDEBAR_COLOR, top: HEADER_HEIGHT_PX, height: `calc(100vh - ${HEADER_HEIGHT_PX}px)`, width: SIDEBAR_WIDTH_PX }}
+              style={{
+                backgroundColor: SIDEBAR_COLOR,
+                top: HEADER_HEIGHT_PX,
+                height: `calc(100vh - ${HEADER_HEIGHT_PX}px)`,
+                width: SIDEBAR_WIDTH_PX
+              }}
             >
               <div className="h-full flex flex-col justify-between">
                 <nav className="space-y-1">
                   <Link
-                    to="/app/dashboard"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/app/dashboard") ? ACTIVE_BG_COLOR : "transparent" }}
+                    to="/dashboard"
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={isActive("/dashboard") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <Home className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_home")}</span>
@@ -139,8 +150,8 @@ const SettingsPage = () => {
 
                   <Link
                     to="/create"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/create") ? ACTIVE_BG_COLOR : "transparent" }}
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={isActive("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <PlusCircle className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_create")}</span>
@@ -148,18 +159,18 @@ const SettingsPage = () => {
 
                   <Link
                     to="/library"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/library") ? ACTIVE_BG_COLOR : "transparent" }}
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={isActive("/library") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <Folder className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_library")}</span>
                   </Link>
 
-                  {/* NUEVO: Chat con IA */}
+                  {/* Chat con IA */}
                   <Link
                     to="/assistant"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/assistant") ? ACTIVE_BG_COLOR : "transparent" }}
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={isActive("/assistant") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <MessageSquare className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_ai_chat")}</span>
@@ -167,20 +178,20 @@ const SettingsPage = () => {
 
                   <Link
                     to="/pricing"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/pricing") ? ACTIVE_BG_COLOR : "transparent" }}
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={isActive("/pricing") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <CreditCard className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_plans")}</span>
                   </Link>
                 </nav>
 
-                {/* Configuración bien abajo */}
+                {/* Settings abajo */}
                 <div className="pb-0">
                   <Link
                     to="/settings"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/settings") ? ACTIVE_BG_COLOR : "transparent" }}
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={isActive("/settings") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <SettingsIcon className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_settings")}</span>

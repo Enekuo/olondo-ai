@@ -24,7 +24,7 @@ const CreateNewPage = () => {
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? t("plan_premium_title") : t("plan_basic_title");
 
-  // === Igual que Home
+  // Igual que Home
   const isActive = (path) =>
     location.pathname === path || location.pathname.startsWith(path + "/");
 
@@ -145,7 +145,7 @@ const CreateNewPage = () => {
                   <Link
                     to="/dashboard"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/dashboard") ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={isActive("/dashboard") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <Home className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_home")}</span>
@@ -154,7 +154,7 @@ const CreateNewPage = () => {
                   <Link
                     to="/create"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/create") ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={isActive("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <PlusCircle className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_create")}</span>
@@ -163,7 +163,7 @@ const CreateNewPage = () => {
                   <Link
                     to="/library"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/library") ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={isActive("/library") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <Folder className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_library")}</span>
@@ -173,7 +173,7 @@ const CreateNewPage = () => {
                   <Link
                     to="/assistant"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/assistant") ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={isActive("/assistant") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <MessageSquare className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_ai_chat")}</span>
@@ -182,7 +182,7 @@ const CreateNewPage = () => {
                   <Link
                     to="/pricing"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/pricing") ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={isActive("/pricing") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <CreditCard className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_plans")}</span>
@@ -193,7 +193,7 @@ const CreateNewPage = () => {
                   <Link
                     to="/settings"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/settings") ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={isActive("/settings") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <Settings className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_settings")}</span>
