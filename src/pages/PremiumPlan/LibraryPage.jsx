@@ -27,7 +27,7 @@ const LibraryPage = () => {
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
 
-  // === Igual que Home: activo también en subrutas
+  // Igual que Home: activo también en subrutas
   const isActive = (path) =>
     location.pathname === path || location.pathname.startsWith(path + "/");
 
@@ -170,7 +170,7 @@ const LibraryPage = () => {
                   <Link
                     to="/dashboard"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/dashboard") ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={isActive("/dashboard") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <Home className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_home")}</span>
@@ -179,7 +179,7 @@ const LibraryPage = () => {
                   <Link
                     to="/create"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/create") ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={isActive("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <PlusCircle className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_create")}</span>
@@ -188,7 +188,7 @@ const LibraryPage = () => {
                   <Link
                     to="/library"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/library") ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={isActive("/library") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <Folder className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_library")}</span>
@@ -197,7 +197,7 @@ const LibraryPage = () => {
                   <Link
                     to="/assistant"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/assistant") ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={isActive("/assistant") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <MessageSquare className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_ai_chat")}</span>
@@ -206,7 +206,7 @@ const LibraryPage = () => {
                   <Link
                     to="/pricing"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/pricing") ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={isActive("/pricing") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <CreditCard className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_plans")}</span>
@@ -217,7 +217,7 @@ const LibraryPage = () => {
                   <Link
                     to="/settings"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/settings") ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={isActive("/settings") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <Settings className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_settings")}</span>
