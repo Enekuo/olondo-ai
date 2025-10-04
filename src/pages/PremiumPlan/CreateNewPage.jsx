@@ -14,35 +14,27 @@ const CreateNewPage = () => {
   const { theme, setTheme } = useTheme();
   const location = useLocation();
 
-  const HEADER_COLOR = theme === "dark" ? "#262F3F" : "#ffffff";
-  const SIDEBAR_COLOR = theme === "dark" ? "#354153" : "#f8f9fb";
-  const ACTIVE_BG_COLOR = theme === "dark" ? "#262F3F" : "#e9eef5";
-  const BORDER_COLOR = theme === "dark" ? "#1f2937" : "#e5e7eb";
-
+  const HEADER_COLOR     = theme === "dark" ? "#262F3F" : "#ffffff";
+  const SIDEBAR_COLOR    = theme === "dark" ? "#354153" : "#f8f9fb";
+  const ACTIVE_BG_COLOR  = theme === "dark" ? "#262F3F" : "#e9eef5";
+  const BORDER_COLOR     = theme === "dark" ? "#1f2937" : "#e5e7eb";
   const HEADER_HEIGHT_PX = 72;
   const SIDEBAR_WIDTH_PX = 190;
 
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? t("plan_premium_title") : t("plan_basic_title");
 
-  // Activo también en subrutas
-  const isActive = (basePath) =>
-    location.pathname === basePath || location.pathname.startsWith(basePath + "/");
+  // === Igual que Home
+  const isActive = (path) =>
+    location.pathname === path || location.pathname.startsWith(path + "/");
 
-  // Hover SOLO fondo del sidebar (más claro que el activo)
+  // Sidebar hover
   const navHoverBg = theme === "dark" ? "hover:bg-[#2B384A]" : "hover:bg-[#eef3f9]";
 
-  const planPillStyle =
-    theme === "dark"
-      ? { backgroundColor: "rgba(255,255,255,0.06)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)", color: "#E5E7EB" }
-      : { backgroundColor: "#f3f4f6", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12)", color: "#0f172a" };
-
-  const planIconBoxStyle =
-    theme === "dark"
-      ? { backgroundColor: "rgba(255,255,255,0.22)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)" }
-      : { backgroundColor: "#ffffff", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)" };
-
-  const planIconColor = theme === "dark" ? "#ffffff" : "#334155";
+  // Header hover/bases
+  const headerHoverBg  = theme === "dark" ? "hover:bg-[#262F3F]" : "hover:bg-[#e9eef5]";
+  const headerBtnBase =
+    theme === "dark" ? "bg-slate-800 text-white border-0" : "bg-white text-slate-800 border border-slate-200";
 
   // Animaciones
   const pageVariants = {
@@ -60,7 +52,6 @@ const CreateNewPage = () => {
     }),
   };
 
-  // Opciones (solo claves)
   const options = [
     {
       titleKey: "freeTrialCreateTextButton",
@@ -94,26 +85,44 @@ const CreateNewPage = () => {
           {/* Controles */}
           <div className="flex items-center gap-3 sm:gap-4">
             <div className="hidden sm:flex items-center gap-2 select-none">
-              <div className="inline-flex items-center justify-center rounded-[10px]" style={{ width: 30, height: 30, ...planIconBoxStyle }}>
-                <Gem className="w-5 h-5" style={{ color: planIconColor }} />
+              <div
+                className="inline-flex items-center justify-center rounded-[10px]"
+                style={{
+                  width: 30, height: 30,
+                  backgroundColor: theme === "dark" ? "rgba(255,255,255,0.22)" : "#ffffff",
+                  boxShadow: theme === "dark"
+                    ? "inset 0 0 0 1px rgba(255,255,255,0.45)"
+                    : "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)"
+                }}
+              >
+                <Gem className="w-5 h-5" style={{ color: theme === "dark" ? "#ffffff" : "#334155" }} />
               </div>
-              <div className="rounded-xl px-3 py-1.5 text-sm font-medium" style={planPillStyle}>{planLabel}</div>
+              <div
+                className="rounded-xl px-3 py-1.5 text-sm font-medium"
+                style={
+                  theme === "dark"
+                    ? { backgroundColor: "rgba(255,255,255,0.06)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)", color: "#E5E7EB" }
+                    : { backgroundColor: "#f3f4f6", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12)", color: "#0f172a" }
+                }
+              >
+                {planLabel}
+              </div>
             </div>
 
-            <LanguageSwitcher />
+            <div className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition-colors cursor-pointer ${headerHoverBg}`}>
+              <LanguageSwitcher />
+            </div>
 
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl hover:opacity-90 transition-colors"
-              style={{ backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff", border: theme === "dark" ? "none" : "1px solid #e5e7eb", color: theme === "dark" ? "#ffffff" : "#1f2937" }}
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition-colors cursor-pointer ${headerBtnBase} ${headerHoverBg}`}
               aria-label={t("theme_toggle")}
             >
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
 
             <button
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:opacity-90 transition-colors"
-              style={{ backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff", border: theme === "dark" ? "none" : "1px solid #e5e7eb", color: theme === "dark" ? "#ffffff" : "#1f2937" }}
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors cursor-pointer ${headerBtnBase} ${headerHoverBg}`}
               aria-label={t("user_menu")}
             >
               <User className="w-5 h-5" />
@@ -134,9 +143,9 @@ const CreateNewPage = () => {
               <div className="h-full flex flex-col justify-between">
                 <nav className="space-y-1">
                   <Link
-                    to="/app/dashboard"
+                    to="/dashboard"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/app/dashboard") ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={{ backgroundColor: isActive("/dashboard") ? ACTIVE_BG_COLOR : "transparent" }}
                   >
                     <Home className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_home")}</span>
@@ -160,7 +169,7 @@ const CreateNewPage = () => {
                     <span className="truncate">{t("dashboard_nav_library")}</span>
                   </Link>
 
-                  {/* NUEVO: Chat con IA */}
+                  {/* Chat con IA */}
                   <Link
                     to="/assistant"
                     className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
