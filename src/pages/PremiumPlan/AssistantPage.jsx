@@ -13,7 +13,6 @@ const AssistantPage = () => {
   const { theme, setTheme } = useTheme();
   const location = useLocation();
 
-  // UI constants
   const HEADER_COLOR    = theme === "dark" ? "#262F3F" : "#ffffff";
   const SIDEBAR_COLOR   = theme === "dark" ? "#354153" : "#f8f9fb";
   const ACTIVE_BG_COLOR = theme === "dark" ? "#262F3F" : "#e9eef5";
@@ -24,14 +23,14 @@ const AssistantPage = () => {
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
 
-  // Activo también en subrutas (igual que Home)
+  // === IGUAL QUE HOME ===
   const isActive = (path) =>
     location.pathname === path || location.pathname.startsWith(path + "/");
 
-  // Sidebar: hover un poco más claro que el activo (solo fondo)
+  // SOLO sidebar: hover un poco más claro que el activo (fondo únicamente)
   const navHoverBg = theme === "dark" ? "hover:bg-[#2B384A]" : "hover:bg-[#eef3f9]";
 
-  // Header: mismo patrón que Home
+  // Header (mismo patrón de Home)
   const headerHoverBg  = theme === "dark" ? "hover:bg-[#262F3F]" : "hover:bg-[#e9eef5]";
   const headerBtnBase =
     theme === "dark"
@@ -44,10 +43,8 @@ const AssistantPage = () => {
   const [attachments, setAttachments] = useState([]); // File[]
   const inputRef = useRef(null);
   const endRef = useRef(null);
-
   const isEmpty = messages.length === 0;
 
-  // Files
   const FILE_INPUT_ID = "assistant-file-input";
   const onFiles = (e) => {
     const files = Array.from(e.target.files || []);
@@ -187,50 +184,55 @@ const AssistantPage = () => {
                 <nav className="space-y-1">
                   <Link
                     to="/dashboard"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/dashboard") ? ACTIVE_BG_COLOR : "transparent" }}
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={isActive("/dashboard") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <Home className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_home")}</span>
                   </Link>
+
                   <Link
                     to="/create"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/create") ? ACTIVE_BG_COLOR : "transparent" }}
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={isActive("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <PlusCircle className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_create")}</span>
                   </Link>
+
                   <Link
                     to="/library"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/library") ? ACTIVE_BG_COLOR : "transparent" }}
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={isActive("/library") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <Folder className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_library")}</span>
                   </Link>
+
                   <Link
                     to="/assistant"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/assistant") ? ACTIVE_BG_COLOR : "transparent" }}
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={isActive("/assistant") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <MessageSquare className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_ai_chat")}</span>
                   </Link>
+
                   <Link
                     to="/pricing"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/pricing") ? ACTIVE_BG_COLOR : "transparent" }}
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={isActive("/pricing") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <CreditCard className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_plans")}</span>
                   </Link>
                 </nav>
+
                 <div className="pb-0">
                   <Link
                     to="/settings"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors ${navHoverBg}`}
-                    style={{ backgroundColor: isActive("/settings") ? ACTIVE_BG_COLOR : "transparent" }}
+                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
+                    style={isActive("/settings") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                   >
                     <Settings className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_settings")}</span>
@@ -242,7 +244,7 @@ const AssistantPage = () => {
 
           {/* MAIN */}
           <main className="relative h-[calc(100vh-72px)] overflow-hidden">
-            {/* Botón Nuevo chat posicionado */}
+            {/* Botón Nuevo chat */}
             <div className="absolute right-4 top-4 z-10">
               <button
                 onClick={handleNewChat}
@@ -257,10 +259,8 @@ const AssistantPage = () => {
               </button>
             </div>
 
-            {/* Scroll area */}
             <div className="h-full flex flex-col">
               <div className={`flex-1 ${isEmpty ? "overflow-hidden" : "overflow-y-auto"}`}>
-                {/* Empty state */}
                 {isEmpty && (
                   <div className="max-w-3xl mx-auto w-full px-4 md:px-6 py-10">
                     <div className="flex flex-col items-center text-center select-none mt-[10vh] md:mt-[14vh]">
@@ -274,7 +274,6 @@ const AssistantPage = () => {
                         {t("assistant_mascot_greeting", "¿Cómo puedo ayudarte?")}
                       </h2>
 
-                      {/* Input centrado */}
                       <form onSubmit={(e)=>{e.preventDefault();handleSend();}} className="w-full mt-6">
                         <div className="mx-auto max-w-3xl flex items-center gap-2 rounded-[28px] border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm px-3 py-2">
                           <label
@@ -317,7 +316,6 @@ const AssistantPage = () => {
                   </div>
                 )}
 
-                {/* Mensajes */}
                 {!isEmpty && (
                   <div className="max-w-3xl mx-auto w-full px-4 md:px-6 pt-6 pb-24">
                     {messages.map((m) => (
@@ -328,7 +326,6 @@ const AssistantPage = () => {
                 )}
               </div>
 
-              {/* Composer abajo */}
               {!isEmpty && (
                 <div className="sticky bottom-0 w-full z-10">
                   <div className="bg-gradient-to-t from-white/90 dark:from-slate-950/90 to-transparent backdrop-blur">
