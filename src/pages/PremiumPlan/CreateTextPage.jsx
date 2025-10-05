@@ -20,12 +20,11 @@ const CreateTextPage = () => {
   const [sources, setSources] = useState([]); // { id, type: 'file'|'url'|'text'|'image', name, meta }
   const [chatInput, setChatInput] = useState("");
   const [urlDraft, setUrlDraft] = useState("");
-  const [textDraft, setTextDraft] = useState("");
-  const [sourceMode, setSourceMode] = useState("url"); // 'url' | 'text' | 'image'
+  const [sourceMode, setSourceMode] = useState("url"); // solo para marcar activo arriba
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
 
-  // Estilos base
+  // Colores
   const HEADER_COLOR    = theme === "dark" ? "#262F3F" : "#ffffff";
   const SIDEBAR_COLOR   = theme === "dark" ? "#354153" : "#f8f9fb";
   const ACTIVE_BG_COLOR = theme === "dark" ? "#262F3F" : "#e9eef5";
@@ -33,24 +32,17 @@ const CreateTextPage = () => {
   const HEADER_HEIGHT_PX = 72;
   const SIDEBAR_WIDTH_PX = 190;
 
-  // Helpers
   const isCurrentOrChild = (base) =>
     location.pathname === base || location.pathname.startsWith(base + "/");
   const navHoverBg = theme === "dark" ? "hover:bg-[#2B384A]" : "hover:bg-[#eef3f9]";
   const navClasses = () =>
     `w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`;
 
-  const pageVariants = {
-    initial: { opacity: 0, y: 20 },
-    in:      { opacity: 1, y: 0 },
-    out:     { opacity: 0, y: -20 },
-  };
+  const pageVariants = { initial: { opacity: 0, y: 20 }, in: { opacity: 1, y: 0 }, out: { opacity: 0, y: -20 } };
 
-  // Labels
-  const labelSources  = t("sources_title") === "sources_title" ? "Fuentes" : t("sources_title");
-  const labelChat     = t("chat_panel_title") === "chat_panel_title" ? "Chat" : t("chat_panel_title");
+  const labelSources = t("sources_title") === "sources_title" ? "Fuentes" : t("sources_title");
+  const labelChat    = t("chat_panel_title") === "chat_panel_title" ? "Chat" : t("chat_panel_title");
 
-  // Handlers subir
   const clickUpload = () => fileInputRef.current?.click();
   const clickUploadImage = () => imageInputRef.current?.click();
 
@@ -76,55 +68,26 @@ const CreateTextPage = () => {
     setUrlDraft("");
   };
 
-  const addText = () => {
-    if (!textDraft.trim()) return;
-    setSources((prev) => [
-      ...prev,
-      { id: `${Date.now()}_text`, type: "text", name: textDraft.slice(0, 40) + (textDraft.length > 40 ? "…" : ""), meta: { chars: textDraft.length } },
-    ]);
-    setTextDraft("");
-  };
-
   const removeSource = (id) => setSources((prev) => prev.filter((s) => s.id !== id));
 
   const sendChat = (e) => {
     e?.preventDefault();
     if (!chatInput.trim()) return;
-    // Conectar tu API aquí (chatInput + sources)
     setChatInput("");
   };
 
-  // Botón de pestaña
+  // Botón de pestaña compacto y responsive (siempre caben 3)
   const TabBtn = ({ active, icon: Icon, label, onClick }) => (
     <button
       onClick={onClick}
-      className={`relative inline-flex items-center gap-2 px-3 sm:px-4 h-11 text-sm font-medium transition
-        ${active
-          ? "text-blue-600 dark:text-blue-400"
-          : "text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"}`}
       type="button"
+      className={`relative flex-1 min-w-0 inline-flex items-center justify-center gap-2
+                  h-11 px-2 sm:px-3 text-[13.5px] font-medium truncate transition
+                  ${active ? "text-blue-600 dark:text-blue-400" : "text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"}`}
     >
-      <Icon className={`w-[18px] h-[18px] ${active ? "" : "opacity-80"}`} />
-      <span className="whitespace-nowrap">{label}</span>
-      {active && (
-        <span className="absolute -bottom-px left-3 right-3 h-[2px] bg-blue-600 dark:bg-blue-400 rounded-full" />
-      )}
-    </button>
-  );
-
-  // Botón grande central (tarjeta)
-  const TileBtn = ({ icon: Icon, label, onClick, active }) => (
-    <button
-      onClick={onClick}
-      className={`flex-1 min-w-[140px] max-w-[220px] h-20 rounded-xl border transition
-                  inline-flex items-center justify-center gap-3 px-4
-                  ${active
-                    ? "border-blue-500/40 bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-300"
-                    : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200"}`}
-      type="button"
-    >
-      <Icon className="w-5 h-5" />
-      <span className="text-[15px] font-medium">{label}</span>
+      <Icon className={`shrink-0 ${active ? "w-[18px] h-[18px]" : "w-[16px] h-[16px]"}`} />
+      <span className="truncate">{label}</span>
+      {active && <span className="absolute -bottom-px left-3 right-3 h-[2px] bg-blue-600 dark:bg-blue-400 rounded-full" />}
     </button>
   );
 
@@ -138,7 +101,6 @@ const CreateTextPage = () => {
         <div className="w-full h-full px-4 sm:px-6 flex items-center justify-between relative">
           <Link to="/" className="font-extrabold text-lg tracking-tight text-sky-400">Olondo.ai</Link>
 
-          {/* Título centrado exacto */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
             <div className="inline-flex items-center gap-2 text-sm sm:text-base md:text-lg font-semibold tracking-tight text-slate-900 dark:text-white">
               <FileText className="w-5 h-5 relative -top-px text-blue-500" />
@@ -147,23 +109,7 @@ const CreateTextPage = () => {
           </div>
 
           <div className="flex items-center gap-3 sm:gap-4">
-            <div className="hidden sm:flex items-center gap-2 select-none">
-              <div
-                className="inline-flex items-center justify-center rounded-[10px]"
-                style={{
-                  width: 30,
-                  height: 30,
-                  ...(theme === "dark"
-                    ? { backgroundColor: "rgba(255,255,255,0.22)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)" }
-                    : { backgroundColor: "#ffffff", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)" }),
-                }}
-              >
-                <Gem className="w-5 h-5" style={{ color: theme === "dark" ? "#ffffff" : "#334155" }} />
-              </div>
-            </div>
-
             <LanguageSwitcher />
-
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="inline-flex h-10 w-10 items-center justify-center rounded-xl hover:opacity-90 transition-colors"
@@ -172,7 +118,6 @@ const CreateTextPage = () => {
             >
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
-
             <button
               className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:opacity-90 transition-colors"
               style={{ backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff", border: theme === "dark" ? "none" : "1px solid #e5e7eb", color: theme === "dark" ? "#ffffff" : "#1f2937" }}
@@ -184,7 +129,7 @@ const CreateTextPage = () => {
         </div>
       </header>
 
-      {/* LAYOUT con sidebar + lienzo */}
+      {/* LAYOUT */}
       <div className="w-full">
         <div className="grid gap-0 md:grid-cols-[190px_1fr]">
           {/* SIDEBAR */}
@@ -200,65 +145,30 @@ const CreateTextPage = () => {
             >
               <div className="h-full flex flex-col justify-between">
                 <nav className="space-y-1">
-                  <Link
-                    to="/app/dashboard"
-                    className={navClasses()}
-                    style={location.pathname === "/app/dashboard" ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
-                    aria-current={location.pathname === "/app/dashboard" ? "page" : undefined}
-                  >
+                  <Link to="/app/dashboard" className={navClasses()} style={location.pathname === "/app/dashboard" ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <Home className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_home")}</span>
                   </Link>
-
-                  <Link
-                    to="/create"
-                    className={navClasses()}
-                    style={isCurrentOrChild("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
-                    aria-current={isCurrentOrChild("/create") ? "page" : undefined}
-                    title={t("dashboard_nav_create")}
-                  >
+                  <Link to="/create" className={navClasses()} style={isCurrentOrChild("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined} aria-current={isCurrentOrChild("/create") ? "page" : undefined}>
                     <PlusCircle className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_create")}</span>
                   </Link>
-
-                  <Link
-                    to="/library"
-                    className={navClasses()}
-                    style={isCurrentOrChild("/library") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
-                    aria-current={isCurrentOrChild("/library") ? "page" : undefined}
-                  >
+                  <Link to="/library" className={navClasses()} style={isCurrentOrChild("/library") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <Folder className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_library")}</span>
                   </Link>
-
-                  <Link
-                    to="/assistant"
-                    className={navClasses()}
-                    style={isCurrentOrChild("/assistant") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
-                    aria-current={isCurrentOrChild("/assistant") ? "page" : undefined}
-                  >
+                  <Link to="/assistant" className={navClasses()} style={isCurrentOrChild("/assistant") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <MessageSquare className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_ai_chat")}</span>
                   </Link>
-
-                  <Link
-                    to="/pricing"
-                    className={navClasses()}
-                    style={isCurrentOrChild("/pricing") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
-                    aria-current={isCurrentOrChild("/pricing") ? "page" : undefined}
-                  >
+                  <Link to="/pricing" className={navClasses()} style={isCurrentOrChild("/pricing") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <CreditCard className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_plans")}</span>
                   </Link>
                 </nav>
 
                 <div className="pb-0">
-                  <Link
-                    to="/settings"
-                    className={navClasses()}
-                    style={isCurrentOrChild("/settings") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
-                    aria-current={isCurrentOrChild("/settings") ? "page" : undefined}
-                  >
+                  <Link to="/settings" className={navClasses()} style={isCurrentOrChild("/settings") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <Settings className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_settings")}</span>
                   </Link>
@@ -267,7 +177,7 @@ const CreateTextPage = () => {
             </div>
           </aside>
 
-          {/* LIENZO */}
+          {/* MAIN */}
           <main className="min-h-[calc(100vh-72px)]">
             <div className="max-w-7xl mx-auto w-full px-4 md:px-6 py-4">
               <motion.section
@@ -282,59 +192,18 @@ const CreateTextPage = () => {
                     <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelSources}</div>
                   </div>
 
-                  {/* Pestañas arriba */}
-                  <div className="flex items-center gap-2 px-3 border-b border-slate-200 dark:border-slate-800">
-                    <TabBtn
-                      active={sourceMode === "url"}
-                      icon={Link2}
-                      label={t("sources_tab_url")}
-                      onClick={() => setSourceMode("url")}
-                    />
-                    <TabBtn
-                      active={sourceMode === "text"}
-                      icon={Clipboard}
-                      label={t("sources_tab_text")}
-                      onClick={() => setSourceMode("text")}
-                    />
-                    <TabBtn
-                      active={sourceMode === "image"}
-                      icon={ImageIcon}
-                      label={t("sources_tab_image")}
-                      onClick={() => setSourceMode("image")}
-                    />
+                  {/* Pestañas — SIEMPRE CABEN */}
+                  <div className="flex items-center gap-1 px-2 border-b border-slate-200 dark:border-slate-800">
+                    <TabBtn active={sourceMode === "url"}   icon={Link2}      label={t("sources_tab_url")}   onClick={() => setSourceMode("url")} />
+                    <TabBtn active={sourceMode === "text"}  icon={Clipboard}  label={t("sources_tab_text")}  onClick={() => setSourceMode("text")} />
+                    <TabBtn active={sourceMode === "image"} icon={ImageIcon}  label={t("sources_tab_image")} onClick={() => setSourceMode("image")} />
                   </div>
 
                   {/* inputs ocultos */}
                   <input type="file" ref={fileInputRef} className="hidden" multiple onChange={onFiles} />
                   <input type="file" ref={imageInputRef} className="hidden" accept="image/*" multiple onChange={(e) => onFiles(e, "image")} />
 
-                  {/* Centro: 3 botones grandes SIEMPRE visibles cuando no hay fuentes */}
-                  {sources.length === 0 && (
-                    <div className="px-4 pt-6">
-                      <div className="flex items-center justify-center gap-3 md:gap-4">
-                        <TileBtn
-                          icon={Link2}
-                          label={t("sources_center_url")}
-                          onClick={() => setSourceMode("url")}
-                          active={sourceMode === "url"}
-                        />
-                        <TileBtn
-                          icon={Clipboard}
-                          label={t("sources_center_text")}
-                          onClick={() => setSourceMode("text")}
-                          active={sourceMode === "text"}
-                        />
-                        <TileBtn
-                          icon={ImageIcon}
-                          label={t("sources_center_image")}
-                          onClick={() => setSourceMode("image")}
-                          active={sourceMode === "image"}
-                        />
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Lista de fuentes (si hay) */}
+                  {/* Lista de fuentes */}
                   <div className="flex-1 overflow-y-auto px-4 pb-6">
                     {sources.length > 0 && (
                       <ul className="space-y-2 mt-3">
@@ -364,57 +233,21 @@ const CreateTextPage = () => {
                     )}
                   </div>
 
-                  {/* Abajo: cambia según pestaña */}
+                  {/* ABAJO — RESTAURADO COMO LO TENÍAS */}
                   <div className="border-t border-slate-200 dark:border-slate-800 p-3 bg-slate-50/60 dark:bg-slate-900/40">
-                    {sourceMode === "url" && (
-                      <div className="flex">
-                        <input
-                          value={urlDraft}
-                          onChange={(e) => setUrlDraft(e.target.value)}
-                          className="h-10 flex-1 rounded-l-xl border border-slate-200 dark:border-slate-700
-                                     bg-white/90 dark:bg-slate-900/60 px-3 text-sm outline-none
-                                     focus:ring-2 focus:ring-sky-400"
-                          placeholder={t("add_url_placeholder")}
-                        />
-                        <Button onClick={addUrl} className="h-10 px-4 rounded-r-xl bg-sky-600 hover:bg-sky-700 text-white shadow-sm">
-                          +
-                        </Button>
-                      </div>
-                    )}
-
-                    {sourceMode === "text" && (
-                      <div className="flex flex-col gap-2">
-                        <textarea
-                          value={textDraft}
-                          onChange={(e) => setTextDraft(e.target.value)}
-                          className="min-h-[80px] max-h-[180px] rounded-xl border border-slate-200 dark:border-slate-700
-                                     bg-white/90 dark:bg-slate-900/60 px-3 py-2 text-sm outline-none
-                                     focus:ring-2 focus:ring-sky-400 resize-y"
-                          placeholder={t("enter_text_here")}
-                        />
-                        <div className="flex justify-end">
-                          <Button onClick={addText} className="h-10 px-4 rounded-xl bg-sky-600 hover:bg-sky-700 text-white shadow-sm">
-                            +
-                          </Button>
-                        </div>
-                      </div>
-                    )}
-
-                    {sourceMode === "image" && (
-                      <div className="flex items-center justify-between gap-3">
-                        <Button
-                          type="button"
-                          onClick={clickUploadImage}
-                          className="h-10 rounded-xl bg-sky-600 hover:bg-sky-700 text-white shadow-sm inline-flex items-center gap-2"
-                        >
-                          <ImageIcon className="w-4 h-4" />
-                          {t("select_image_btn")}
-                        </Button>
-                        <div className="text-xs text-slate-500">
-                          {sources.filter(s => s.type === "image").length} img
-                        </div>
-                      </div>
-                    )}
+                    <div className="flex">
+                      <input
+                        value={urlDraft}
+                        onChange={(e) => setUrlDraft(e.target.value)}
+                        className="h-10 flex-1 rounded-l-xl border border-slate-200 dark:border-slate-700
+                                   bg-white/90 dark:bg-slate-900/60 px-3 text-sm outline-none
+                                   focus:ring-2 focus:ring-sky-400"
+                        placeholder={t("enter_text_here")}
+                      />
+                      <Button onClick={addUrl} className="h-10 px-4 rounded-r-xl bg-sky-600 hover:bg-sky-700 text-white shadow-sm">
+                        +
+                      </Button>
+                    </div>
                   </div>
                 </aside>
 
@@ -437,7 +270,7 @@ const CreateTextPage = () => {
                           {t("chat_add_source")}
                         </h3>
                         <Button
-                          onClick={() => fileInputRef.current?.click()}
+                          onClick={clickUpload}
                           className="mt-3 h-10 rounded-xl bg-gradient-to-r from-blue-500 to-sky-500
                                      hover:from-blue-600 hover:to-sky-600 text-white shadow-md hover:shadow-lg"
                         >
@@ -465,6 +298,7 @@ const CreateTextPage = () => {
                         type="submit"
                         disabled={!chatInput.trim() || sources.length === 0}
                         className="h-10 px-3 rounded-full"
+                        title={t("send")}
                       >
                         <Send className="w-4 h-4" />
                       </Button>
