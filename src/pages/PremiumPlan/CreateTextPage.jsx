@@ -252,45 +252,13 @@ const CreateTextPage = () => {
                 <aside className="h-full rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden flex flex-col">
                   <div className="h-11 flex items-center justify-between px-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/40">
                     <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelSources}</div>
-                    <button className="p-2 rounded-lg hover:bg-white/60 dark:hover:bg-slate-800/60 transition" aria-label="Contraer/expandir">
-                      <span className="block w-1.5 h-1.5 rounded-full bg-slate-400" />
-                    </button>
                   </div>
 
-                  <div className="flex items-center gap-2 px-3 pt-3 pb-2">
-                    <Button
-                      onClick={clickUpload}
-                      variant="secondary"
-                      className="h-10 gap-2 rounded-xl bg-white dark:bg-slate-800
-                                 border border-slate-200 dark:border-slate-700
-                                 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700"
-                    >
-                      <Upload className="w-4 h-4" />
-                      {t("sources_add")}
-                    </Button>
-
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      className="h-10 gap-2 rounded-xl border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
-                    >
-                      <Compass className="w-4 h-4" />
-                      {labelDiscover}
-                    </Button>
-
-                    <input type="file" ref={fileInputRef} className="hidden" multiple onChange={onFiles} />
-                  </div>
+                  {/* input oculto para que siga funcionando el botón de subir del panel derecho */}
+                  <input type="file" ref={fileInputRef} className="hidden" multiple onChange={onFiles} />
 
                   <div className="flex-1 overflow-y-auto px-4 pb-6">
-                    {sources.length === 0 ? (
-                      <div className="mt-14 text-center text-slate-600 dark:text-slate-400">
-                        <div className="mx-auto mb-3 w-12 h-12 rounded-xl border border-dashed border-slate-300 dark:border-slate-600 flex items-center justify-center">
-                          <Paperclip className="w-[22px] h-[22px] opacity-80" />
-                        </div>
-                        <p className="text-sm font-semibold">{t("sources_empty_title")}</p>
-                        <p className="text-[13.5px] mt-1 leading-relaxed">{t("sources_empty_help")}</p>
-                      </div>
-                    ) : (
+                    {sources.length > 0 && (
                       <ul className="space-y-2">
                         {sources.map((s) => (
                           <li
