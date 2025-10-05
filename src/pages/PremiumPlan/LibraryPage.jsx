@@ -228,7 +228,6 @@ const LibraryPage = () => {
             <section className="py-8 md:py-10 px-4 md:px-8">
               {/* Filtros + botón Crear carpeta (solo en Mis carpetas) */}
               <div className="flex items-center justify-between mb-5">
-                {/* Más juntos; el primero mantiene su posición */}
                 <div className="flex items-center gap-3">
                   {[
                     { id: "all",     label: t("library_filter_all") },
@@ -238,21 +237,17 @@ const LibraryPage = () => {
                   ].map(({ id, label }) => {
                     const active = type === id;
 
-                    // Botón con fondo interno animado (más marcado) + ring + sombra en hover
+                    // Gris típico, sin ring ni borde; fondo interno animado
                     const btnBase =
-                      "group relative overflow-hidden rounded-full text-sm px-4 py-2 " +
-                      "transition-colors duration-150 hover:shadow-sm " +
-                      "hover:ring-2 hover:ring-sky-200 hover:ring-offset-0 " +
-                      "dark:hover:ring-slate-700";
+                      "group relative overflow-hidden rounded-full text-sm px-4 py-2 transition-colors duration-150 hover:shadow-sm";
                     const textCls = active
-                      ? "relative z-10 text-[#1A73E8] dark:text-[#93C5FD]"
-                      : "relative z-10 text-slate-700 group-hover:text-slate-900 " +
-                        "dark:text-slate-300 dark:group-hover:text-slate-100";
+                      ? "relative z-10 text-slate-800 dark:text-slate-100"
+                      : "relative z-10 text-slate-700 group-hover:text-slate-900 dark:text-slate-300 dark:group-hover:text-slate-100";
                     const bgBase =
                       "absolute inset-0 rounded-full scale-100 transition-transform duration-150 will-change-transform";
                     const bgCls = active
-                      ? `${bgBase} bg-[#E8F0FE] dark:bg-[rgba(59,130,246,0.18)] group-hover:scale-[1.10] group-hover:bg-[#DBE8FF]`
-                      : `${bgBase} bg-transparent group-hover:bg-blue-50 dark:group-hover:bg-slate-800 group-hover:scale-[1.10]`;
+                      ? `${bgBase} bg-[#F2F4F7] dark:bg-[rgba(148,163,184,0.18)] group-hover:scale-[1.08] group-hover:bg-[#ECEFF3] dark:group-hover:bg-[rgba(148,163,184,0.26)]`
+                      : `${bgBase} bg-transparent group-hover:bg-[#F5F7FA] dark:group-hover:bg-[rgba(148,163,184,0.12)] group-hover:scale-[1.08]`;
 
                     return (
                       <button
