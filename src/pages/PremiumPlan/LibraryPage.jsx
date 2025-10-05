@@ -159,62 +159,38 @@ const LibraryPage = () => {
           <aside className="border-r border-slate-200 dark:border-slate-800" style={{ borderColor: BORDER_COLOR }}>
             <div
               className="sticky ps-2 pe-3 pt-6 pb-0 text-slate-800 dark:text-slate-100"
-              style={{ backgroundColor: SIDEBAR_COLOR, top: HEADER_HEIGHT_PX, height: `calc(100vh - ${HEADER_HEIGHT_PX}px)`, width: SIDEBAR_WIDTH_PX }}
+              style={{ backgroundColor: SIDEBAR_COLOR, top: HEADER_HEIGHT_PX, height: `calc(100vh - ${HEADER_HEIGHT_PX}px)`, width: 190 }}
             >
               <div className="h-full flex flex-col justify-between">
                 <nav className="space-y-1">
-                  <Link
-                    to="/dashboard"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
-                    style={isActive("/dashboard") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
-                  >
+                  <Link to="/dashboard" className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`} style={isActive("/dashboard") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <Home className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_home")}</span>
                   </Link>
 
-                  <Link
-                    to="/create"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
-                    style={isActive("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
-                  >
+                  <Link to="/create" className={`w/full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`} style={isActive("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <PlusCircle className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_create")}</span>
                   </Link>
 
-                  <Link
-                    to="/library"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
-                    style={isActive("/library") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
-                  >
+                  <Link to="/library" className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`} style={isActive("/library") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <Folder className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_library")}</span>
                   </Link>
 
-                  <Link
-                    to="/assistant"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
-                    style={isActive("/assistant") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
-                  >
+                  <Link to="/assistant" className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`} style={isActive("/assistant") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <MessageSquare className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_ai_chat")}</span>
                   </Link>
 
-                  <Link
-                    to="/pricing"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
-                    style={isActive("/pricing") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
-                  >
+                  <Link to="/pricing" className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`} style={isActive("/pricing") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <CreditCard className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_plans")}</span>
                   </Link>
                 </nav>
 
                 <div className="pb-0">
-                  <Link
-                    to="/settings"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
-                    style={isActive("/settings") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
-                  >
+                  <Link to="/settings" className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`} style={isActive("/settings") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <Settings className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_settings")}</span>
                   </Link>
@@ -226,7 +202,7 @@ const LibraryPage = () => {
           {/* CONTENIDO */}
           <main>
             <section className="py-8 md:py-10 px-4 md:px-8">
-              {/* Filtros + botón Crear carpeta (solo en Mis carpetas) */}
+              {/* Filtros */}
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-3">
                   {[
@@ -237,16 +213,17 @@ const LibraryPage = () => {
                   ].map(({ id, label }) => {
                     const active = type === id;
 
-                    // Gris típico, sin ring ni borde; fondo interno animado
+                    // Inactivo: gris; Activo: azul como antes.
+                    // Efecto sin blur: fondo interno (span) que escala en hover.
                     const btnBase =
                       "group relative overflow-hidden rounded-full text-sm px-4 py-2 transition-colors duration-150 hover:shadow-sm";
                     const textCls = active
-                      ? "relative z-10 text-slate-800 dark:text-slate-100"
+                      ? "relative z-10 text-[#1A73E8] dark:text-[#93C5FD]"
                       : "relative z-10 text-slate-700 group-hover:text-slate-900 dark:text-slate-300 dark:group-hover:text-slate-100";
                     const bgBase =
                       "absolute inset-0 rounded-full scale-100 transition-transform duration-150 will-change-transform";
                     const bgCls = active
-                      ? `${bgBase} bg-[#F2F4F7] dark:bg-[rgba(148,163,184,0.18)] group-hover:scale-[1.08] group-hover:bg-[#ECEFF3] dark:group-hover:bg-[rgba(148,163,184,0.26)]`
+                      ? `${bgBase} bg-[#E8F0FE] dark:bg-[rgba(59,130,246,0.18)] group-hover:scale-[1.08] group-hover:bg-[#E3EEFF]`
                       : `${bgBase} bg-transparent group-hover:bg-[#F5F7FA] dark:group-hover:bg-[rgba(148,163,184,0.12)] group-hover:scale-[1.08]`;
 
                     return (
