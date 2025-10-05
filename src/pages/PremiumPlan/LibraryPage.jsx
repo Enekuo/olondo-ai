@@ -106,7 +106,7 @@ const LibraryPage = () => {
             Olondo.ai
           </Link>
 
-          <div className="flex items-center gap-3 sm:gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
             <div className="hidden sm:flex items-center gap-2 select-none">
               <div
                 className="inline-flex items-center justify-center rounded-[10px]"
@@ -241,9 +241,11 @@ const LibraryPage = () => {
                   ].map(({ id, label }) => {
                     const active = type === id;
                     const base = "px-3 py-1.5 rounded-full text-sm border transition-colors";
+                    // << CAMBIO DE ESTILO AZUL CLARO >>
                     const cls = active
-                      ? `${base} bg-slate-900 text-white dark:bg-white dark:text-slate-900 border-transparent`
-                      : `${base} bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700`;
+                      ? `${base} bg-[#1E40AF] text-white border-transparent dark:bg-[#2563EB]`
+                      : `${base} bg-white text-[#1E3A8A] border-[#BFDBFE] hover:bg-[#EFF6FF]
+                         dark:bg-slate-900 dark:text-[#93C5FD] dark:border-[#1E3A8A] dark:hover:bg-slate-800`;
                     return (
                       <button key={id} onClick={() => setType(id)} className={cls} aria-pressed={active}>
                         {label}
