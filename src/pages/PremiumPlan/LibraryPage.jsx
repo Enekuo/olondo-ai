@@ -106,7 +106,7 @@ const LibraryPage = () => {
             Olondo.ai
           </Link>
 
-        <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-3 sm:gap-4">
             <div className="hidden sm:flex items-center gap-2 select-none">
               <div
                 className="inline-flex items-center justify-center rounded-[10px]"
@@ -232,7 +232,7 @@ const LibraryPage = () => {
             <section className="py-8 md:py-10 px-4 md:px-8">
               {/* Filtros + botón Crear carpeta (solo en Mis carpetas) */}
               <div className="flex items-center justify-between mb-5">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-6">
                   {[
                     { id: "all",     label: t("library_filter_all") },
                     { id: "text",    label: t("library_filter_texts") },
@@ -240,12 +240,13 @@ const LibraryPage = () => {
                     { id: "folders", label: t("library_filter_folders") },
                   ].map(({ id, label }) => {
                     const active = type === id;
-                    const base = "px-3 py-1.5 rounded-full text-sm border transition-colors";
-                    // << CAMBIO DE ESTILO AZUL CLARO >>
+                    const base = "px-4 py-2 rounded-full text-sm transition-colors";
+                    // Estilo tipo ejemplo: activo con pill azul claro, inactivo solo texto
                     const cls = active
-                      ? `${base} bg-[#1E40AF] text-white border-transparent dark:bg-[#2563EB]`
-                      : `${base} bg-white text-[#1E3A8A] border-[#BFDBFE] hover:bg-[#EFF6FF]
-                         dark:bg-slate-900 dark:text-[#93C5FD] dark:border-[#1E3A8A] dark:hover:bg-slate-800`;
+                      ? `${base} bg-[#E8F0FE] text-[#1A73E8]
+                         dark:bg-[rgba(59,130,246,0.18)] dark:text-[#93C5FD]`
+                      : `${base} bg-transparent text-slate-700 hover:bg-slate-50
+                         dark:text-slate-300 dark:hover:bg-slate-800`;
                     return (
                       <button key={id} onClick={() => setType(id)} className={cls} aria-pressed={active}>
                         {label}
