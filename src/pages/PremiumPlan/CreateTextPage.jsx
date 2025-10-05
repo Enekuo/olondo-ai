@@ -32,24 +32,17 @@ const CreateTextPage = () => {
   const HEADER_HEIGHT_PX = 72;
   const SIDEBAR_WIDTH_PX = 190;
 
-  // Helpers
   const isCurrentOrChild = (base) =>
     location.pathname === base || location.pathname.startsWith(base + "/");
   const navHoverBg = theme === "dark" ? "hover:bg-[#2B384A]" : "hover:bg-[#eef3f9]";
   const navClasses = () =>
     `w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`;
 
-  const pageVariants = {
-    initial: { opacity: 0, y: 20 },
-    in:      { opacity: 1, y: 0 },
-    out:     { opacity: 0, y: -20 },
-  };
+  const pageVariants = { initial: { opacity: 0, y: 20 }, in: { opacity: 1, y: 0 }, out: { opacity: 0, y: -20 } };
 
-  // Labels
   const labelSources  = t("sources_title") === "sources_title" ? "Fuentes" : t("sources_title");
   const labelChat     = t("chat_panel_title") === "chat_panel_title" ? "Chat" : t("chat_panel_title");
 
-  // Handlers
   const clickUpload = () => fileInputRef.current?.click();
   const clickUploadImage = () => imageInputRef.current?.click();
 
@@ -83,22 +76,45 @@ const CreateTextPage = () => {
     setChatInput("");
   };
 
-  // ---- Pestañas estilo referencia (exacto a tu captura) ----
-  const TabBtn = ({ active, icon: Icon, label, onClick }) => (
-    <button
-      onClick={onClick}
-      type="button"
-      className={`relative inline-flex items-center gap-2 h-12 px-3 sm:px-4 text-[14px] font-medium
-                  ${active ? "text-[#2563eb]" : "text-slate-500 hover:text-slate-700"}
-                  transition`}
-    >
-      <Icon className={`w-[18px] h-[18px] ${active ? "text-[#2563eb]" : "text-slate-400"}`} />
-      <span className="truncate">{label}</span>
-      {/* subrayado azul del activo */}
-      {active && <span className="absolute -bottom-[1px] left-0 right-0 h-[2px] bg-[#2563eb] rounded-full" />}
-    </button>
+  /* ===========================
+     Pestañas EXACTAS a referencia
+     =========================== */
+  const BLUE = "#2563eb";         // azul activo
+  const GRAY_TEXT = "#6b7280";    // texto inactivo
+  const GRAY_ICON = "#9ca3af";    // icono inactivo
+  const DIVIDER = "#e5e7eb";      // separador
+
+  const TabBtn = ({ active, icon: Icon, label, onClick, showDivider }) => (
+    <div className="relative flex items-stretch">
+      <button
+        type="button"
+        onClick={onClick}
+        className="relative inline-flex items-center gap-2 h-[48px] px-4 text-[14px] font-medium"
+        style={{ color: active ? BLUE : GRAY_TEXT }}
+      >
+        <Icon
+          className="w-[18px] h-[18px]"
+          style={{ color: active ? BLUE : GRAY_ICON }}
+        />
+        <span className="truncate">{label}</span>
+
+        {active && (
+          <span
+            className="absolute bottom-[-1px] h-[2px] rounded-full"
+            style={{ left: 12, right: 12, backgroundColor: BLUE }}
+          />
+        )}
+      </button>
+
+      {showDivider && (
+        <span
+          aria-hidden
+          className="self-center"
+          style={{ width: 1, height: 24, backgroundColor: DIVIDER }}
+        />
+      )}
+    </div>
   );
-  // ---------------------------------------------------------
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-950 text-slate-900 dark:text-slate-100">
@@ -110,10 +126,9 @@ const CreateTextPage = () => {
         <div className="w-full h-full px-4 sm:px-6 flex items-center justify-between relative">
           <Link to="/" className="font-extrabold text-lg tracking-tight text-sky-400">Olondo.ai</Link>
 
-          {/* Título centrado exacto */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
             <div className="inline-flex items-center gap-2 text-sm sm:text-base md:text-lg font-semibold tracking-tight text-slate-900 dark:text-white">
-              <FileText className="w-5 h-5 relative -top-px text-blue-500" />
+              <FileText className="w-5 h-5 relative -top-px" style={{ color: BLUE }} />
               <span>{t("create_text_title")}</span>
             </div>
           </div>
@@ -139,7 +154,7 @@ const CreateTextPage = () => {
         </div>
       </header>
 
-      {/* LAYOUT con sidebar + lienzo */}
+      {/* LAYOUT */}
       <div className="w-full">
         <div className="grid gap-0 md:grid-cols-[190px_1fr]">
           {/* SIDEBAR */}
@@ -187,7 +202,7 @@ const CreateTextPage = () => {
             </div>
           </aside>
 
-          {/* LIENZO */}
+          {/* MAIN */}
           <main className="min-h-[calc(100vh-72px)]">
             <div className="max-w-7xl mx-auto w-full px-4 md:px-6 py-4">
               <motion.section
@@ -197,44 +212,44 @@ const CreateTextPage = () => {
               >
                 {/* Panel Fuentes */}
                 <aside className="h-full rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden flex flex-col">
-                  {/* Cabecera */}
+                  {/* Título */}
                   <div className="h-11 flex items-center justify-between px-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/40">
                     <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelSources}</div>
                   </div>
 
-                  {/* Pestañas EXACTAS al ejemplo; mismo orden que tu web */}
-                  <div className="flex items-stretch px-2 border-b border-slate-200 dark:border-slate-800">
+                  {/* Pestañas idénticas al ejemplo, en el MISMO orden que tu web */}
+                  <div className="flex items-center px-2 border-b" style={{ borderColor: DIVIDER }}>
                     <TabBtn
                       active={sourceMode === "url"}
                       icon={Link2}
                       label={t("sources_tab_url")}
                       onClick={() => setSourceMode("url")}
+                      showDivider
                     />
-                    {/* separador fino */}
-                    <div className="self-center h-6 w-px bg-slate-200 dark:bg-slate-700" />
                     <TabBtn
                       active={sourceMode === "text"}
                       icon={Clipboard}
                       label={t("sources_tab_text")}
                       onClick={() => setSourceMode("text")}
+                      showDivider
                     />
-                    <div className="self-center h-6 w-px bg-slate-200 dark:bg-slate-700" />
                     <TabBtn
                       active={sourceMode === "image"}
                       icon={ImageIcon}
                       label={t("sources_tab_image")}
                       onClick={() => setSourceMode("image")}
+                      showDivider={false}
                     />
                   </div>
 
-                  {/* inputs ocultos para subir */}
+                  {/* inputs ocultos */}
                   <input type="file" ref={fileInputRef} className="hidden" multiple onChange={onFiles} />
                   <input type="file" ref={imageInputRef} className="hidden" accept="image/*" multiple onChange={(e) => onFiles(e, "image")} />
 
-                  {/* Lista de fuentes */}
+                  {/* Contenido lista (vacío por ahora) */}
                   <div className="flex-1 overflow-y-auto px-4 pb-6" />
 
-                  {/* Buscador inferior (sin cambios) */}
+                  {/* Buscador inferior SIN CAMBIOS */}
                   <div className="border-t border-slate-200 dark:border-slate-800 p-3 bg-slate-50/60 dark:bg-slate-900/40">
                     <div className="flex">
                       <input
