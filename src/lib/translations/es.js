@@ -652,7 +652,10 @@ create_new_intro: "Explora el poder de Olondo AI. Elige una opción para empezar
   bottom_input_ph: "Escribe un mensaje o sube una fuente para empezar",
   sources_count: "fuentes",
   send: "Enviar",
- 
+  sources_title: "Fuentes",
+  enter_text_here: "Introduce tu texto aquí...", 
+
+
   // Library
   library_filter_all: "Todos",
   library_filter_texts: "Textos",
