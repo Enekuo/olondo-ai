@@ -232,7 +232,7 @@ const LibraryPage = () => {
             <section className="py-8 md:py-10 px-4 md:px-8">
               {/* Filtros + botón Crear carpeta (solo en Mis carpetas) */}
               <div className="flex items-center justify-between mb-5">
-                {/* gap reducido: mantiene la posición del primero y acerca los demás */}
+                {/* más juntos; el primero mantiene su posición */}
                 <div className="flex items-center gap-3">
                   {[
                     { id: "all",     label: t("library_filter_all") },
@@ -241,8 +241,8 @@ const LibraryPage = () => {
                     { id: "folders", label: t("library_filter_folders") },
                   ].map(({ id, label }) => {
                     const active = type === id;
-                    // Añadido transition-transform + hover scale
-                    const base = "px-4 py-2 rounded-full text-sm transition-colors transition-transform hover:scale-[1.03] active:scale-[0.99]";
+                    // SIN transform ni escalado para evitar blur
+                    const base = "px-4 py-2 rounded-full text-sm transition-colors";
                     const cls = active
                       ? `${base} bg-[#E8F0FE] text-[#1A73E8]
                          dark:bg-[rgba(59,130,246,0.18)] dark:text-[#93C5FD]`
@@ -260,7 +260,7 @@ const LibraryPage = () => {
                   <button
                     onClick={openFolderModal}
                     className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium
-                               bg-blue-600 text-white hover:bg-blue-700 active:scale-[0.99] shadow-sm"
+                               bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
                   >
                     <Plus className="w-4 h-4" />
                     {t("library_create_folder")}
