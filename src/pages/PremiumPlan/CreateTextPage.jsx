@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
-  Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon, Gem,
-  Upload, FileText, Trash2, Link2, Paperclip, Send, MessageSquare,
+  Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon,
+  Gem, Upload, FileText, Trash2, Link2, Paperclip, Send, MessageSquare,
   SlidersHorizontal, Image as ImageIcon, Clipboard
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -20,11 +20,11 @@ const CreateTextPage = () => {
   const [sources, setSources] = useState([]); // { id, type: 'file'|'url'|'text'|'image', name, meta }
   const [chatInput, setChatInput] = useState("");
   const [urlDraft, setUrlDraft] = useState("");
-  const [sourceMode, setSourceMode] = useState("url"); // solo para marcar activo arriba
+  const [sourceMode, setSourceMode] = useState("url"); // 'url' | 'text' | 'image'
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
 
-  // Colores
+  // Estilos base
   const HEADER_COLOR    = theme === "dark" ? "#262F3F" : "#ffffff";
   const SIDEBAR_COLOR   = theme === "dark" ? "#354153" : "#f8f9fb";
   const ACTIVE_BG_COLOR = theme === "dark" ? "#262F3F" : "#e9eef5";
@@ -32,17 +32,24 @@ const CreateTextPage = () => {
   const HEADER_HEIGHT_PX = 72;
   const SIDEBAR_WIDTH_PX = 190;
 
+  // Helpers
   const isCurrentOrChild = (base) =>
     location.pathname === base || location.pathname.startsWith(base + "/");
   const navHoverBg = theme === "dark" ? "hover:bg-[#2B384A]" : "hover:bg-[#eef3f9]";
   const navClasses = () =>
     `w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`;
 
-  const pageVariants = { initial: { opacity: 0, y: 20 }, in: { opacity: 1, y: 0 }, out: { opacity: 0, y: -20 } };
+  const pageVariants = {
+    initial: { opacity: 0, y: 20 },
+    in:      { opacity: 1, y: 0 },
+    out:     { opacity: 0, y: -20 },
+  };
 
-  const labelSources = t("sources_title") === "sources_title" ? "Fuentes" : t("sources_title");
-  const labelChat    = t("chat_panel_title") === "chat_panel_title" ? "Chat" : t("chat_panel_title");
+  // Labels
+  const labelSources  = t("sources_title") === "sources_title" ? "Fuentes" : t("sources_title");
+  const labelChat     = t("chat_panel_title") === "chat_panel_title" ? "Chat" : t("chat_panel_title");
 
+  // Handlers
   const clickUpload = () => fileInputRef.current?.click();
   const clickUploadImage = () => imageInputRef.current?.click();
 
@@ -76,20 +83,22 @@ const CreateTextPage = () => {
     setChatInput("");
   };
 
-  // Botón de pestaña compacto y responsive (siempre caben 3)
+  // ---- Pestañas estilo referencia (exacto a tu captura) ----
   const TabBtn = ({ active, icon: Icon, label, onClick }) => (
     <button
       onClick={onClick}
       type="button"
-      className={`relative flex-1 min-w-0 inline-flex items-center justify-center gap-2
-                  h-11 px-2 sm:px-3 text-[13.5px] font-medium truncate transition
-                  ${active ? "text-blue-600 dark:text-blue-400" : "text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"}`}
+      className={`relative inline-flex items-center gap-2 h-12 px-3 sm:px-4 text-[14px] font-medium
+                  ${active ? "text-[#2563eb]" : "text-slate-500 hover:text-slate-700"}
+                  transition`}
     >
-      <Icon className={`shrink-0 ${active ? "w-[18px] h-[18px]" : "w-[16px] h-[16px]"}`} />
+      <Icon className={`w-[18px] h-[18px] ${active ? "text-[#2563eb]" : "text-slate-400"}`} />
       <span className="truncate">{label}</span>
-      {active && <span className="absolute -bottom-px left-3 right-3 h-[2px] bg-blue-600 dark:bg-blue-400 rounded-full" />}
+      {/* subrayado azul del activo */}
+      {active && <span className="absolute -bottom-[1px] left-0 right-0 h-[2px] bg-[#2563eb] rounded-full" />}
     </button>
   );
+  // ---------------------------------------------------------
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-950 text-slate-900 dark:text-slate-100">
@@ -101,6 +110,7 @@ const CreateTextPage = () => {
         <div className="w-full h-full px-4 sm:px-6 flex items-center justify-between relative">
           <Link to="/" className="font-extrabold text-lg tracking-tight text-sky-400">Olondo.ai</Link>
 
+          {/* Título centrado exacto */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
             <div className="inline-flex items-center gap-2 text-sm sm:text-base md:text-lg font-semibold tracking-tight text-slate-900 dark:text-white">
               <FileText className="w-5 h-5 relative -top-px text-blue-500" />
@@ -129,7 +139,7 @@ const CreateTextPage = () => {
         </div>
       </header>
 
-      {/* LAYOUT */}
+      {/* LAYOUT con sidebar + lienzo */}
       <div className="w-full">
         <div className="grid gap-0 md:grid-cols-[190px_1fr]">
           {/* SIDEBAR */}
@@ -177,7 +187,7 @@ const CreateTextPage = () => {
             </div>
           </aside>
 
-          {/* MAIN */}
+          {/* LIENZO */}
           <main className="min-h-[calc(100vh-72px)]">
             <div className="max-w-7xl mx-auto w-full px-4 md:px-6 py-4">
               <motion.section
@@ -187,53 +197,44 @@ const CreateTextPage = () => {
               >
                 {/* Panel Fuentes */}
                 <aside className="h-full rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden flex flex-col">
-                  {/* Título */}
+                  {/* Cabecera */}
                   <div className="h-11 flex items-center justify-between px-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/40">
                     <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelSources}</div>
                   </div>
 
-                  {/* Pestañas — SIEMPRE CABEN */}
-                  <div className="flex items-center gap-1 px-2 border-b border-slate-200 dark:border-slate-800">
-                    <TabBtn active={sourceMode === "url"}   icon={Link2}      label={t("sources_tab_url")}   onClick={() => setSourceMode("url")} />
-                    <TabBtn active={sourceMode === "text"}  icon={Clipboard}  label={t("sources_tab_text")}  onClick={() => setSourceMode("text")} />
-                    <TabBtn active={sourceMode === "image"} icon={ImageIcon}  label={t("sources_tab_image")} onClick={() => setSourceMode("image")} />
+                  {/* Pestañas EXACTAS al ejemplo; mismo orden que tu web */}
+                  <div className="flex items-stretch px-2 border-b border-slate-200 dark:border-slate-800">
+                    <TabBtn
+                      active={sourceMode === "url"}
+                      icon={Link2}
+                      label={t("sources_tab_url")}
+                      onClick={() => setSourceMode("url")}
+                    />
+                    {/* separador fino */}
+                    <div className="self-center h-6 w-px bg-slate-200 dark:bg-slate-700" />
+                    <TabBtn
+                      active={sourceMode === "text"}
+                      icon={Clipboard}
+                      label={t("sources_tab_text")}
+                      onClick={() => setSourceMode("text")}
+                    />
+                    <div className="self-center h-6 w-px bg-slate-200 dark:bg-slate-700" />
+                    <TabBtn
+                      active={sourceMode === "image"}
+                      icon={ImageIcon}
+                      label={t("sources_tab_image")}
+                      onClick={() => setSourceMode("image")}
+                    />
                   </div>
 
-                  {/* inputs ocultos */}
+                  {/* inputs ocultos para subir */}
                   <input type="file" ref={fileInputRef} className="hidden" multiple onChange={onFiles} />
                   <input type="file" ref={imageInputRef} className="hidden" accept="image/*" multiple onChange={(e) => onFiles(e, "image")} />
 
                   {/* Lista de fuentes */}
-                  <div className="flex-1 overflow-y-auto px-4 pb-6">
-                    {sources.length > 0 && (
-                      <ul className="space-y-2 mt-3">
-                        {sources.map((s) => (
-                          <li
-                            key={s.id}
-                            className="group flex items-center justify-between rounded-lg border border-slate-200 dark:border-slate-700
-                                       bg-white dark:bg-slate-800 px-3 py-2 hover:shadow-sm transition"
-                          >
-                            <div className="flex items-center gap-2">
-                              {s.type === "url" && <Link2 className="w-4 h-4 text-slate-500" />}
-                              {s.type === "text" && <FileText className="w-4 h-4 text-slate-500" />}
-                              {s.type === "image" && <ImageIcon className="w-4 h-4 text-slate-500" />}
-                              {s.type === "file" && <Paperclip className="w-4 h-4 text-slate-500" />}
-                              <span className="text-sm truncate max-w-[220px]" title={s.name}>{s.name}</span>
-                            </div>
-                            <button
-                              onClick={() => removeSource(s.id)}
-                              className="opacity-70 hover:opacity-100 transition"
-                              title={t("remove")}
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </button>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
+                  <div className="flex-1 overflow-y-auto px-4 pb-6" />
 
-                  {/* ABAJO — RESTAURADO COMO LO TENÍAS */}
+                  {/* Buscador inferior (sin cambios) */}
                   <div className="border-t border-slate-200 dark:border-slate-800 p-3 bg-slate-50/60 dark:bg-slate-900/40">
                     <div className="flex">
                       <input
@@ -260,26 +261,6 @@ const CreateTextPage = () => {
                     </button>
                   </div>
 
-                  {sources.length === 0 && (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="text-center -translate-y-6">
-                        <div className="mx-auto mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-                          <Upload className="w-[22px] h-[22px] text-slate-600 dark:text-slate-300" />
-                        </div>
-                        <h3 className="text-lg md:text-xl font-semibold text-slate-800 dark:text-slate-100">
-                          {t("chat_add_source")}
-                        </h3>
-                        <Button
-                          onClick={clickUpload}
-                          className="mt-3 h-10 rounded-xl bg-gradient-to-r from-blue-500 to-sky-500
-                                     hover:from-blue-600 hover:to-sky-600 text-white shadow-md hover:shadow-lg"
-                        >
-                          {t("upload_source_btn")}
-                        </Button>
-                      </div>
-                    </div>
-                  )}
-
                   <form onSubmit={sendChat} className="absolute bottom-0 left-0 right-0 p-4">
                     <div className="mx-auto max-w-4xl flex items-center gap-2 rounded-full border
                                     border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900
@@ -294,12 +275,7 @@ const CreateTextPage = () => {
                       <div className="text-xs text-slate-500 mr-2">
                         {sources.length} {t("sources_count")}
                       </div>
-                      <Button
-                        type="submit"
-                        disabled={!chatInput.trim() || sources.length === 0}
-                        className="h-10 px-3 rounded-full"
-                        title={t("send")}
-                      >
+                      <Button type="submit" disabled={!chatInput.trim() || sources.length === 0} className="h-10 px-3 rounded-full" title={t("send")}>
                         <Send className="w-4 h-4" />
                       </Button>
                     </div>
