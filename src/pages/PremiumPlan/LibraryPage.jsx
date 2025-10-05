@@ -241,16 +241,39 @@ const LibraryPage = () => {
                     { id: "folders", label: t("library_filter_folders") },
                   ].map(({ id, label }) => {
                     const active = type === id;
-                    // SIN transform: "excitación" con padding y sombra leve
+
+                    // ✨ Excitación visual sin blur:
+                    // - Escalamos SOLO un pseudo-fondo (::before), no el texto
+                    // - Nada de transform en el botón → tipografía nítida
+                    // - Layout estable (no varía padding/width)
                     const base =
-                      "rounded-full text-sm transition-all duration-150 px-4 py-2 hover:px-5 hover:shadow-sm";
-                    const cls = active
-                      ? `${base} bg-[#E8F0FE] text-[#1A73E8] hover:bg-[#E3EEFF]
-                         dark:bg-[rgba(59,130,246,0.18)] dark:text-[#93C5FD] dark:hover:bg-[rgba(59,130,246,0.24)]`
-                      : `${base} bg-transparent text-slate-700 hover:bg-slate-50
-                         dark:text-slate-300 dark:hover:bg-slate-800`;
+                      "relative z-0 rounded-full text-sm px-4 py-2 transition-colors duration-150 " +
+                      "before:content-[''] before:absolute before:inset-0 before:rounded-full before:-z-10 " +
+                      "before:transition-transform before:duration-150 will-change-auto";
+
+                    const activeCls =
+                      "text-[#1A73E8] bg-[#E8F0FE] " +
+                      "dark:text-[#93C5FD] dark:bg-[rgba(59,130,246,0.18)] " +
+                      // el pseudo-fondo se pinta con el mismo color y se “estira”
+                      "before:bg-[#E8F0FE] dark:before:bg-[rgba(59,130,246,0.18)] " +
+                      "hover:before:scale-[1.06]";
+
+                    const inactiveCls =
+                      "text-slate-700 bg-transparent hover:text-slate-900 " +
+                      "dark:text-slate-300 dark:bg-transparent dark:hover:text-slate-100 " +
+                      // solo aparece un velo de fondo en hover, escalado
+                      "hover:before:bg-slate-50 dark:hover:before:bg-slate-800 hover:before:scale-[1.06]";
+
+                    const cls = `${base} ${active ? activeCls : inactiveCls}`;
+
                     return (
-                      <button key={id} onClick={() => setType(id)} className={cls} aria-pressed={active}>
+                      <button
+                        key={id}
+                        onClick={() => setType(id)}
+                        className={cls}
+                        aria-pressed={active}
+                        style={{ backfaceVisibility: "hidden" }} // evita micro-borrosidad en algunos navegadores
+                      >
                         {label}
                       </button>
                     );
@@ -427,4 +450,4 @@ const LibraryPage = () => {
   );
 };
 
-export default LibraryPage; 
+export default LibraryPage;
