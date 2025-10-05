@@ -230,25 +230,38 @@ const LibraryPage = () => {
           {/* CONTENIDO */}
           <main>
             <section className="py-8 md:py-10 px-4 md:px-8">
-              {/* Filtros */}
-              <div className="flex items-center gap-2 mb-5">
-                {[
-                  { id: "all",     label: t("library_filter_all") },
-                  { id: "text",    label: t("library_filter_texts") },
-                  { id: "summary", label: t("library_filter_summaries") },
-                  { id: "folders", label: t("library_filter_folders") },
-                ].map(({ id, label }) => {
-                  const active = type === id;
-                  const base = "px-3 py-1.5 rounded-full text-sm border transition-colors";
-                  const cls = active
-                    ? `${base} bg-slate-900 text-white dark:bg-white dark:text-slate-900 border-transparent`
-                    : `${base} bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700`;
-                  return (
-                    <button key={id} onClick={() => setType(id)} className={cls} aria-pressed={active}>
-                      {label}
-                    </button>
-                  );
-                })}
+              {/* Filtros + botón Crear carpeta (solo en Mis carpetas) */}
+              <div className="flex items-center justify-between mb-5">
+                <div className="flex items-center gap-2">
+                  {[
+                    { id: "all",     label: t("library_filter_all") },
+                    { id: "text",    label: t("library_filter_texts") },
+                    { id: "summary", label: t("library_filter_summaries") },
+                    { id: "folders", label: t("library_filter_folders") },
+                  ].map(({ id, label }) => {
+                    const active = type === id;
+                    const base = "px-3 py-1.5 rounded-full text-sm border transition-colors";
+                    const cls = active
+                      ? `${base} bg-slate-900 text-white dark:bg-white dark:text-slate-900 border-transparent`
+                      : `${base} bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700`;
+                    return (
+                      <button key={id} onClick={() => setType(id)} className={cls} aria-pressed={active}>
+                        {label}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {type === "folders" && (
+                  <button
+                    onClick={openFolderModal}
+                    className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium
+                               bg-blue-600 text-white hover:bg-blue-700 active:scale-[0.99] shadow-sm"
+                  >
+                    <Plus className="w-4 h-4" />
+                    {t("library_create_folder")}
+                  </button>
+                )}
               </div>
 
               {/* Contenedor de tarjetas */}
