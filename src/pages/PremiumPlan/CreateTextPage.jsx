@@ -34,13 +34,14 @@ const CreateTextPage = () => {
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? t("plan_premium_title") : t("plan_basic_title");
 
-  // Helpers para activo/hover (igual que en las otras páginas)
+  // Helpers para activo/hover
   const isCurrentOrChild = (base) =>
     location.pathname === base || location.pathname.startsWith(base + "/");
 
+  // Más oscuro en hover para inactivos
   const navClasses = (active) =>
     `w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${
-      active ? "" : "hover:bg-slate-100 dark:hover:bg-slate-800/60"
+      active ? "" : "hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
     }`;
 
   const pageVariants = {
@@ -394,4 +395,4 @@ const CreateTextPage = () => {
   );
 };
 
-export default CreateTextPage; 
+export default CreateTextPage;
