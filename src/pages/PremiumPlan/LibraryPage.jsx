@@ -232,7 +232,7 @@ const LibraryPage = () => {
             <section className="py-8 md:py-10 px-4 md:px-8">
               {/* Filtros + botón Crear carpeta (solo en Mis carpetas) */}
               <div className="flex items-center justify-between mb-5">
-                {/* más juntos; el primero mantiene su posición */}
+                {/* Más juntos; el primero mantiene su posición */}
                 <div className="flex items-center gap-3">
                   {[
                     { id: "all",     label: t("library_filter_all") },
@@ -241,11 +241,12 @@ const LibraryPage = () => {
                     { id: "folders", label: t("library_filter_folders") },
                   ].map(({ id, label }) => {
                     const active = type === id;
-                    // SIN transform ni escalado para evitar blur
-                    const base = "px-4 py-2 rounded-full text-sm transition-colors";
+                    // SIN transform: "excitación" con padding y sombra leve
+                    const base =
+                      "rounded-full text-sm transition-all duration-150 px-4 py-2 hover:px-5 hover:shadow-sm";
                     const cls = active
-                      ? `${base} bg-[#E8F0FE] text-[#1A73E8]
-                         dark:bg-[rgba(59,130,246,0.18)] dark:text-[#93C5FD]`
+                      ? `${base} bg-[#E8F0FE] text-[#1A73E8] hover:bg-[#E3EEFF]
+                         dark:bg-[rgba(59,130,246,0.18)] dark:text-[#93C5FD] dark:hover:bg-[rgba(59,130,246,0.24)]`
                       : `${base} bg-transparent text-slate-700 hover:bg-slate-50
                          dark:text-slate-300 dark:hover:bg-slate-800`;
                     return (
