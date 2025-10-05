@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import {
   Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon, Gem,
   Upload, FileText, Trash2, Link2, Paperclip, Send, MessageSquare,
-  Compass, SlidersHorizontal
+  Compass, SlidersHorizontal, Image as ImageIcon, Clipboard
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
@@ -17,10 +17,13 @@ const CreateTextPage = () => {
   const location = useLocation();
 
   // Estado
-  const [sources, setSources] = useState([]); // { id, type: 'file'|'url'|'text', name, meta }
+  const [sources, setSources] = useState([]); // { id, type: 'file'|'url'|'text'|'image', name, meta }
   const [chatInput, setChatInput] = useState("");
   const [urlDraft, setUrlDraft] = useState("");
+  const [textDraft, setTextDraft] = useState("");
+  const [sourceMode, setSourceMode] = useState("url"); // 'url' | 'text' | 'image'
   const fileInputRef = useRef(null);
+  const imageInputRef = useRef(null);
 
   // Estilos base
   const HEADER_COLOR    = theme === "dark" ? "#262F3F" : "#ffffff";
@@ -32,16 +35,13 @@ const CreateTextPage = () => {
   const SIDEBAR_WIDTH_PX = 190;
 
   const USER_PLAN = "premium";
-  const planLabel = USER_PLAN === "premium" ? t("plan_premium_title") : t("plan_basic_title");
 
   // Helpers para activo/hover (igual que en Dashboard)
   const isCurrentOrChild = (base) =>
     location.pathname === base || location.pathname.startsWith(base + "/");
 
-  // MISMOS colores de hover que Dashboard
   const navHoverBg = theme === "dark" ? "hover:bg-[#2B384A]" : "hover:bg-[#eef3f9]";
-
-  const navClasses = (active) =>
+  const navClasses = () =>
     `w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`;
 
   const pageVariants = {
@@ -50,20 +50,20 @@ const CreateTextPage = () => {
     out:     { opacity: 0, y: -20 },
   };
 
-  // Labels (sin fallback, usamos claves nuevas)
-  const labelSources  = t("sources_title");
-  const labelDiscover = t("sources_discover")    === "sources_discover"    ? "Descubrir" : t("sources_discover");
-  const labelChat     = t("chat_panel_title")    === "chat_panel_title"    ? "Chat" : t("chat_panel_title");
+  // Labels
+  const labelSources  = t("sources_title"); // “Fuentes”
+  const labelChat     = t("chat_panel_title") === "chat_panel_title" ? "Chat" : t("chat_panel_title");
 
   // Handlers
   const clickUpload = () => fileInputRef.current?.click();
+  const clickUploadImage = () => imageInputRef.current?.click();
 
-  const onFiles = (e) => {
+  const onFiles = (e, forcedType = null) => {
     const files = Array.from(e.target?.files || []);
     if (!files.length) return;
     const mapped = files.map((f, idx) => ({
       id: `${Date.now()}_${idx}`,
-      type: "file",
+      type: forcedType || "file",
       name: f.name,
       meta: { size: f.size }
     }));
@@ -80,6 +80,15 @@ const CreateTextPage = () => {
     setUrlDraft("");
   };
 
+  const addText = () => {
+    if (!textDraft.trim()) return;
+    setSources((prev) => [
+      ...prev,
+      { id: `${Date.now()}_text`, type: "text", name: textDraft.slice(0, 40) + (textDraft.length > 40 ? "…" : ""), meta: { chars: textDraft.length } },
+    ]);
+    setTextDraft("");
+  };
+
   const removeSource = (id) => setSources((prev) => prev.filter((s) => s.id !== id));
 
   const sendChat = (e) => {
@@ -88,6 +97,24 @@ const CreateTextPage = () => {
     // Conectar tu API aquí (chatInput + sources)
     setChatInput("");
   };
+
+  // Tab button (estilo tipo ejemplo)
+  const TabBtn = ({ active, icon: Icon, label, onClick }) => (
+    <button
+      onClick={onClick}
+      className={`relative inline-flex items-center gap-2 px-3 sm:px-4 h-11 text-sm font-medium transition
+        ${active
+          ? "text-blue-600 dark:text-blue-400"
+          : "text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"}`}
+      type="button"
+    >
+      <Icon className={`w-[18px] h-[18px] ${active ? "" : "opacity-80"}`} />
+      <span className="whitespace-nowrap">{label}</span>
+      {active && (
+        <span className="absolute -bottom-px left-3 right-3 h-[2px] bg-blue-600 dark:bg-blue-400 rounded-full" />
+      )}
+    </button>
+  );
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-950 text-slate-900 dark:text-slate-100">
@@ -173,7 +200,7 @@ const CreateTextPage = () => {
                 <nav className="space-y-1">
                   <Link
                     to="/app/dashboard"
-                    className={navClasses(location.pathname === "/app/dashboard")}
+                    className={navClasses()}
                     style={location.pathname === "/app/dashboard" ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                     aria-current={location.pathname === "/app/dashboard" ? "page" : undefined}
                   >
@@ -184,7 +211,7 @@ const CreateTextPage = () => {
                   {/* ACTIVO también en subrutas /create/* */}
                   <Link
                     to="/create"
-                    className={navClasses(isCurrentOrChild("/create"))}
+                    className={navClasses()}
                     style={isCurrentOrChild("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                     aria-current={isCurrentOrChild("/create") ? "page" : undefined}
                     title={t("dashboard_nav_create")}
@@ -195,7 +222,7 @@ const CreateTextPage = () => {
 
                   <Link
                     to="/library"
-                    className={navClasses(isCurrentOrChild("/library"))}
+                    className={navClasses()}
                     style={isCurrentOrChild("/library") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                     aria-current={isCurrentOrChild("/library") ? "page" : undefined}
                   >
@@ -206,7 +233,7 @@ const CreateTextPage = () => {
                   {/* Chat con IA */}
                   <Link
                     to="/assistant"
-                    className={navClasses(isCurrentOrChild("/assistant"))}
+                    className={navClasses()}
                     style={isCurrentOrChild("/assistant") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                     aria-current={isCurrentOrChild("/assistant") ? "page" : undefined}
                   >
@@ -216,7 +243,7 @@ const CreateTextPage = () => {
 
                   <Link
                     to="/pricing"
-                    className={navClasses(isCurrentOrChild("/pricing"))}
+                    className={navClasses()}
                     style={isCurrentOrChild("/pricing") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                     aria-current={isCurrentOrChild("/pricing") ? "page" : undefined}
                   >
@@ -228,7 +255,7 @@ const CreateTextPage = () => {
                 <div className="pb-0">
                   <Link
                     to="/settings"
-                    className={navClasses(isCurrentOrChild("/settings"))}
+                    className={navClasses()}
                     style={isCurrentOrChild("/settings") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                     aria-current={isCurrentOrChild("/settings") ? "page" : undefined}
                   >
@@ -250,16 +277,41 @@ const CreateTextPage = () => {
               >
                 {/* Panel Fuentes */}
                 <aside className="h-full rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden flex flex-col">
+                  {/* Título */}
                   <div className="h-11 flex items-center justify-between px-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/40">
                     <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelSources}</div>
                   </div>
 
-                  {/* input oculto para que siga funcionando el botón de subir del panel derecho */}
-                  <input type="file" ref={fileInputRef} className="hidden" multiple onChange={onFiles} />
+                  {/* Tabs */}
+                  <div className="flex items-center gap-2 px-3 border-b border-slate-200 dark:border-slate-800">
+                    <TabBtn
+                      active={sourceMode === "url"}
+                      icon={Link2}
+                      label={t("sources_tab_url")}
+                      onClick={() => setSourceMode("url")}
+                    />
+                    <TabBtn
+                      active={sourceMode === "text"}
+                      icon={Clipboard}
+                      label={t("sources_tab_text")}
+                      onClick={() => setSourceMode("text")}
+                    />
+                    <TabBtn
+                      active={sourceMode === "image"}
+                      icon={ImageIcon}
+                      label={t("sources_tab_image")}
+                      onClick={() => setSourceMode("image")}
+                    />
+                  </div>
 
+                  {/* inputs ocultos para subir archivos/imagenes (también usados por el panel derecho) */}
+                  <input type="file" ref={fileInputRef} className="hidden" multiple onChange={onFiles} />
+                  <input type="file" ref={imageInputRef} className="hidden" accept="image/*" multiple onChange={(e) => onFiles(e, "image")} />
+
+                  {/* Lista de fuentes */}
                   <div className="flex-1 overflow-y-auto px-4 pb-6">
                     {sources.length > 0 && (
-                      <ul className="space-y-2">
+                      <ul className="space-y-2 mt-3">
                         {sources.map((s) => (
                           <li
                             key={s.id}
@@ -267,7 +319,10 @@ const CreateTextPage = () => {
                                        bg-white dark:bg-slate-800 px-3 py-2 hover:shadow-sm transition"
                           >
                             <div className="flex items-center gap-2">
-                              {s.type === "url" ? <Link2 className="w-4 h-4 text-slate-500" /> : <Paperclip className="w-4 h-4 text-slate-500" />}
+                              {s.type === "url" && <Link2 className="w-4 h-4 text-slate-500" />}
+                              {s.type === "text" && <FileText className="w-4 h-4 text-slate-500" />}
+                              {s.type === "image" && <ImageIcon className="w-4 h-4 text-slate-500" />}
+                              {s.type === "file" && <Paperclip className="w-4 h-4 text-slate-500" />}
                               <span className="text-sm truncate max-w-[220px]" title={s.name}>{s.name}</span>
                             </div>
                             <button
@@ -283,20 +338,58 @@ const CreateTextPage = () => {
                     )}
                   </div>
 
+                  {/* Zona inferior dependiente de la pestaña */}
                   <div className="border-t border-slate-200 dark:border-slate-800 p-3 bg-slate-50/60 dark:bg-slate-900/40">
-                    <div className="flex">
-                      <input
-                        value={urlDraft}
-                        onChange={(e) => setUrlDraft(e.target.value)}
-                        className="h-10 flex-1 rounded-l-xl border border-slate-200 dark:border-slate-700
-                                   bg-white/90 dark:bg-slate-900/60 px-3 text-sm outline-none
-                                   focus:ring-2 focus:ring-sky-400"
-                        placeholder={t("enter_text_here")}
-                      />
-                      <Button onClick={addUrl} className="h-10 px-4 rounded-r-xl bg-sky-600 hover:bg-sky-700 text-white shadow-sm">
-                        +
-                      </Button>
-                    </div>
+                    {sourceMode === "url" && (
+                      <div className="flex">
+                        <input
+                          value={urlDraft}
+                          onChange={(e) => setUrlDraft(e.target.value)}
+                          className="h-10 flex-1 rounded-l-xl border border-slate-200 dark:border-slate-700
+                                     bg-white/90 dark:bg-slate-900/60 px-3 text-sm outline-none
+                                     focus:ring-2 focus:ring-sky-400"
+                          placeholder={t("add_url_placeholder")}
+                        />
+                        <Button onClick={addUrl} className="h-10 px-4 rounded-r-xl bg-sky-600 hover:bg-sky-700 text-white shadow-sm">
+                          +
+                        </Button>
+                      </div>
+                    )}
+
+                    {sourceMode === "text" && (
+                      <div className="flex flex-col gap-2">
+                        <textarea
+                          value={textDraft}
+                          onChange={(e) => setTextDraft(e.target.value)}
+                          className="min-h-[80px] max-h-[180px] rounded-xl border border-slate-200 dark:border-slate-700
+                                     bg-white/90 dark:bg-slate-900/60 px-3 py-2 text-sm outline-none
+                                     focus:ring-2 focus:ring-sky-400 resize-y"
+                          placeholder={t("enter_text_here")}
+                        />
+                        <div className="flex justify-end">
+                          <Button onClick={addText} className="h-10 px-4 rounded-xl bg-sky-600 hover:bg-sky-700 text-white shadow-sm">
+                            +
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+
+                    {sourceMode === "image" && (
+                      <div className="flex items-center justify-between gap-3">
+                        <Button
+                          type="button"
+                          onClick={clickUploadImage}
+                          className="h-10 rounded-xl bg-sky-600 hover:bg-sky-700 text-white shadow-sm inline-flex items-center gap-2"
+                        >
+                          <ImageIcon className="w-4 h-4" />
+                          {t("select_image_btn")}
+                        </Button>
+                        {/* contador simple */}
+                        <div className="text-xs text-slate-500">
+                          {sources.filter(s => s.type === "image").length} img
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </aside>
 
