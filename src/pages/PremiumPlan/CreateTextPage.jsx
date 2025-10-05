@@ -50,8 +50,8 @@ const CreateTextPage = () => {
     out:     { opacity: 0, y: -20 },
   };
 
-  // Labels con fallback
-  const labelSources  = t("sources_panel_title") === "sources_panel_title" ? "Fuentes" : t("sources_panel_title");
+  // Labels (sin fallback, usamos claves nuevas)
+  const labelSources  = t("sources_title");
   const labelDiscover = t("sources_discover")    === "sources_discover"    ? "Descubrir" : t("sources_discover");
   const labelChat     = t("chat_panel_title")    === "chat_panel_title"    ? "Chat" : t("chat_panel_title");
 
@@ -291,7 +291,7 @@ const CreateTextPage = () => {
                         className="h-10 flex-1 rounded-l-xl border border-slate-200 dark:border-slate-700
                                    bg-white/90 dark:bg-slate-900/60 px-3 text-sm outline-none
                                    focus:ring-2 focus:ring-sky-400"
-                        placeholder={t("add_url_placeholder")}
+                        placeholder={t("enter_text_here")}
                       />
                       <Button onClick={addUrl} className="h-10 px-4 rounded-r-xl bg-sky-600 hover:bg-sky-700 text-white shadow-sm">
                         +
