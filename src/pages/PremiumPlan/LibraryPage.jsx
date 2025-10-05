@@ -27,14 +27,10 @@ const LibraryPage = () => {
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
 
-  // Igual que Home: activo también en subrutas
   const isActive = (path) =>
     location.pathname === path || location.pathname.startsWith(path + "/");
 
-  // Sidebar: hover más claro que activo (solo fondo)
   const navHoverBg = theme === "dark" ? "hover:bg-[#2B384A]" : "hover:bg-[#eef3f9]";
-
-  // Header igual que Home
   const headerHoverBg  = theme === "dark" ? "hover:bg-[#262F3F]" : "hover:bg-[#e9eef5]";
   const headerBtnBase =
     theme === "dark" ? "bg-slate-800 text-white border-0" : "bg-white text-slate-800 border border-slate-200";
@@ -242,39 +238,33 @@ const LibraryPage = () => {
                   ].map(({ id, label }) => {
                     const active = type === id;
 
-                    // ✨ Excitación visual sin blur:
-                    // - Escalamos SOLO un pseudo-fondo (::before), no el texto
-                    // - Nada de transform en el botón → tipografía nítida
-                    // - Layout estable (no varía padding/width)
-                    const base =
-                      "relative z-0 rounded-full text-sm px-4 py-2 transition-colors duration-150 " +
-                      "before:content-[''] before:absolute before:inset-0 before:rounded-full before:-z-10 " +
-                      "before:transition-transform before:duration-150 will-change-auto";
-
-                    const activeCls =
-                      "text-[#1A73E8] bg-[#E8F0FE] " +
-                      "dark:text-[#93C5FD] dark:bg-[rgba(59,130,246,0.18)] " +
-                      // el pseudo-fondo se pinta con el mismo color y se “estira”
-                      "before:bg-[#E8F0FE] dark:before:bg-[rgba(59,130,246,0.18)] " +
-                      "hover:before:scale-[1.06]";
-
-                    const inactiveCls =
-                      "text-slate-700 bg-transparent hover:text-slate-900 " +
-                      "dark:text-slate-300 dark:bg-transparent dark:hover:text-slate-100 " +
-                      // solo aparece un velo de fondo en hover, escalado
-                      "hover:before:bg-slate-50 dark:hover:before:bg-slate-800 hover:before:scale-[1.06]";
-
-                    const cls = `${base} ${active ? activeCls : inactiveCls}`;
+                    // Botón con fondo interno animado (más marcado) + ring + sombra en hover
+                    const btnBase =
+                      "group relative overflow-hidden rounded-full text-sm px-4 py-2 " +
+                      "transition-colors duration-150 hover:shadow-sm " +
+                      "hover:ring-2 hover:ring-sky-200 hover:ring-offset-0 " +
+                      "dark:hover:ring-slate-700";
+                    const textCls = active
+                      ? "relative z-10 text-[#1A73E8] dark:text-[#93C5FD]"
+                      : "relative z-10 text-slate-700 group-hover:text-slate-900 " +
+                        "dark:text-slate-300 dark:group-hover:text-slate-100";
+                    const bgBase =
+                      "absolute inset-0 rounded-full scale-100 transition-transform duration-150 will-change-transform";
+                    const bgCls = active
+                      ? `${bgBase} bg-[#E8F0FE] dark:bg-[rgba(59,130,246,0.18)] group-hover:scale-[1.10] group-hover:bg-[#DBE8FF]`
+                      : `${bgBase} bg-transparent group-hover:bg-blue-50 dark:group-hover:bg-slate-800 group-hover:scale-[1.10]`;
 
                     return (
                       <button
                         key={id}
+                        type="button"
                         onClick={() => setType(id)}
-                        className={cls}
+                        className={btnBase}
                         aria-pressed={active}
-                        style={{ backfaceVisibility: "hidden" }} // evita micro-borrosidad en algunos navegadores
+                        style={{ backfaceVisibility: "hidden" }}
                       >
-                        {label}
+                        <span className={bgCls} aria-hidden="true" />
+                        <span className={textCls}>{label}</span>
                       </button>
                     );
                   })}
