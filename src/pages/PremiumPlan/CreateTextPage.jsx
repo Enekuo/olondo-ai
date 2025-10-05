@@ -76,10 +76,8 @@ const CreateTextPage = () => {
     setChatInput("");
   };
 
-  /* ===========================
-     Pestañas EXACTAS a referencia
-     =========================== */
-  const BLUE = "#2563eb";         // azul activo
+  /* ===== Pestañas EXACTAS al ejemplo ===== */
+  const BLUE = "#2563eb";         // activo
   const GRAY_TEXT = "#6b7280";    // texto inactivo
   const GRAY_ICON = "#9ca3af";    // icono inactivo
   const DIVIDER = "#e5e7eb";      // separador
@@ -92,16 +90,14 @@ const CreateTextPage = () => {
         className="relative inline-flex items-center gap-2 h-[48px] px-4 text-[14px] font-medium"
         style={{ color: active ? BLUE : GRAY_TEXT }}
       >
-        <Icon
-          className="w-[18px] h-[18px]"
-          style={{ color: active ? BLUE : GRAY_ICON }}
-        />
+        <Icon className="w-[18px] h-[18px]" style={{ color: active ? BLUE : GRAY_ICON }} />
         <span className="truncate">{label}</span>
 
+        {/* subrayado azul a TODO el ancho del botón */}
         {active && (
           <span
-            className="absolute bottom-[-1px] h-[2px] rounded-full"
-            style={{ left: 12, right: 12, backgroundColor: BLUE }}
+            className="absolute bottom-[-1px] left-0 right-0 h-[2px] rounded-full"
+            style={{ backgroundColor: BLUE }}
           />
         )}
       </button>
@@ -115,6 +111,7 @@ const CreateTextPage = () => {
       )}
     </div>
   );
+  /* ====================================== */
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-950 text-slate-900 dark:text-slate-100">
@@ -217,7 +214,7 @@ const CreateTextPage = () => {
                     <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelSources}</div>
                   </div>
 
-                  {/* Pestañas idénticas al ejemplo, en el MISMO orden que tu web */}
+                  {/* Pestañas idénticas al ejemplo, MISMO orden */}
                   <div className="flex items-center px-2 border-b" style={{ borderColor: DIVIDER }}>
                     <TabBtn
                       active={sourceMode === "url"}
@@ -242,7 +239,7 @@ const CreateTextPage = () => {
                     />
                   </div>
 
-                  {/* inputs ocultos */}
+                  {/* inputs ocultos para subir */}
                   <input type="file" ref={fileInputRef} className="hidden" multiple onChange={onFiles} />
                   <input type="file" ref={imageInputRef} className="hidden" accept="image/*" multiple onChange={(e) => onFiles(e, "image")} />
 
