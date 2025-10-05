@@ -173,7 +173,7 @@ const CreateTextPage = () => {
                   <Link
                     to="/app/dashboard"
                     className={navClasses(location.pathname === "/app/dashboard")}
-                    style={{ backgroundColor: location.pathname === "/app/dashboard" ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={location.pathname === "/app/dashboard" ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                     aria-current={location.pathname === "/app/dashboard" ? "page" : undefined}
                   >
                     <Home className="w-5 h-5 shrink-0" />
@@ -184,7 +184,7 @@ const CreateTextPage = () => {
                   <Link
                     to="/create"
                     className={navClasses(isCurrentOrChild("/create"))}
-                    style={{ backgroundColor: isCurrentOrChild("/create") ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={isCurrentOrChild("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                     aria-current={isCurrentOrChild("/create") ? "page" : undefined}
                     title={t("dashboard_nav_create")}
                   >
@@ -195,7 +195,7 @@ const CreateTextPage = () => {
                   <Link
                     to="/library"
                     className={navClasses(isCurrentOrChild("/library"))}
-                    style={{ backgroundColor: isCurrentOrChild("/library") ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={isCurrentOrChild("/library") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                     aria-current={isCurrentOrChild("/library") ? "page" : undefined}
                   >
                     <Folder className="w-5 h-5 shrink-0" />
@@ -206,7 +206,7 @@ const CreateTextPage = () => {
                   <Link
                     to="/assistant"
                     className={navClasses(isCurrentOrChild("/assistant"))}
-                    style={{ backgroundColor: isCurrentOrChild("/assistant") ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={isCurrentOrChild("/assistant") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                     aria-current={isCurrentOrChild("/assistant") ? "page" : undefined}
                   >
                     <MessageSquare className="w-5 h-5 shrink-0" />
@@ -216,7 +216,7 @@ const CreateTextPage = () => {
                   <Link
                     to="/pricing"
                     className={navClasses(isCurrentOrChild("/pricing"))}
-                    style={{ backgroundColor: isCurrentOrChild("/pricing") ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={isCurrentOrChild("/pricing") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                     aria-current={isCurrentOrChild("/pricing") ? "page" : undefined}
                   >
                     <CreditCard className="w-5 h-5 shrink-0" />
@@ -228,7 +228,7 @@ const CreateTextPage = () => {
                   <Link
                     to="/settings"
                     className={navClasses(isCurrentOrChild("/settings"))}
-                    style={{ backgroundColor: isCurrentOrChild("/settings") ? ACTIVE_BG_COLOR : "transparent" }}
+                    style={isCurrentOrChild("/settings") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
                     aria-current={isCurrentOrChild("/settings") ? "page" : undefined}
                   >
                     <Settings className="w-5 h-5 shrink-0" />
