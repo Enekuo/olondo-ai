@@ -654,7 +654,13 @@ create_new_intro: "Explora el poder de Olondo AI. Elige una opción para empezar
   send: "Enviar",
   sources_title: "Fuentes",
   enter_text_here: "Introduce tu texto aquí...", 
-
+  sources_tab_url: "Añadir URL",
+  sources_tab_text: "Pegar texto",
+  sources_tab_image: "Subir imagen",
+  sources_center_url: "Añadir URL",
+  sources_center_text: "Pegar texto",
+  sources_center_image: "Subir imagen",
+  select_image_btn: "Seleccionar imagen",
 
   // Library
   library_filter_all: "Todos",

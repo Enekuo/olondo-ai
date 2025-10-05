@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import {
   Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon, Gem,
   Upload, FileText, Trash2, Link2, Paperclip, Send, MessageSquare,
-  Compass, SlidersHorizontal, Image as ImageIcon, Clipboard
+  SlidersHorizontal, Image as ImageIcon, Clipboard
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
@@ -30,16 +30,12 @@ const CreateTextPage = () => {
   const SIDEBAR_COLOR   = theme === "dark" ? "#354153" : "#f8f9fb";
   const ACTIVE_BG_COLOR = theme === "dark" ? "#262F3F" : "#e9eef5";
   const BORDER_COLOR    = theme === "dark" ? "#1f2937" : "#e5e7eb";
-
   const HEADER_HEIGHT_PX = 72;
   const SIDEBAR_WIDTH_PX = 190;
 
-  const USER_PLAN = "premium";
-
-  // Helpers para activo/hover (igual que en Dashboard)
+  // Helpers
   const isCurrentOrChild = (base) =>
     location.pathname === base || location.pathname.startsWith(base + "/");
-
   const navHoverBg = theme === "dark" ? "hover:bg-[#2B384A]" : "hover:bg-[#eef3f9]";
   const navClasses = () =>
     `w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`;
@@ -51,10 +47,10 @@ const CreateTextPage = () => {
   };
 
   // Labels
-  const labelSources  = t("sources_title"); // “Fuentes”
+  const labelSources  = t("sources_title") === "sources_title" ? "Fuentes" : t("sources_title");
   const labelChat     = t("chat_panel_title") === "chat_panel_title" ? "Chat" : t("chat_panel_title");
 
-  // Handlers
+  // Handlers subir
   const clickUpload = () => fileInputRef.current?.click();
   const clickUploadImage = () => imageInputRef.current?.click();
 
@@ -98,7 +94,7 @@ const CreateTextPage = () => {
     setChatInput("");
   };
 
-  // Tab button (estilo tipo ejemplo)
+  // Botón de pestaña
   const TabBtn = ({ active, icon: Icon, label, onClick }) => (
     <button
       onClick={onClick}
@@ -113,6 +109,22 @@ const CreateTextPage = () => {
       {active && (
         <span className="absolute -bottom-px left-3 right-3 h-[2px] bg-blue-600 dark:bg-blue-400 rounded-full" />
       )}
+    </button>
+  );
+
+  // Botón grande central (tarjeta)
+  const TileBtn = ({ icon: Icon, label, onClick, active }) => (
+    <button
+      onClick={onClick}
+      className={`flex-1 min-w-[140px] max-w-[220px] h-20 rounded-xl border transition
+                  inline-flex items-center justify-center gap-3 px-4
+                  ${active
+                    ? "border-blue-500/40 bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-300"
+                    : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200"}`}
+      type="button"
+    >
+      <Icon className="w-5 h-5" />
+      <span className="text-[15px] font-medium">{label}</span>
     </button>
   );
 
@@ -147,16 +159,6 @@ const CreateTextPage = () => {
                 }}
               >
                 <Gem className="w-5 h-5" style={{ color: theme === "dark" ? "#ffffff" : "#334155" }} />
-              </div>
-              <div
-                className="rounded-xl px-3 py-1.5 text-sm font-medium"
-                style={
-                  theme === "dark"
-                    ? { backgroundColor: "rgba(255,255,255,0.06)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)", color: "#E5E7EB" }
-                    : { backgroundColor: "#f3f4f6", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12)", color: "#0f172a" }
-                }
-              >
-                {USER_PLAN === "premium" ? t("plan_premium_title") : t("plan_basic_title")}
               </div>
             </div>
 
@@ -208,7 +210,6 @@ const CreateTextPage = () => {
                     <span className="truncate">{t("dashboard_nav_home")}</span>
                   </Link>
 
-                  {/* ACTIVO también en subrutas /create/* */}
                   <Link
                     to="/create"
                     className={navClasses()}
@@ -230,7 +231,6 @@ const CreateTextPage = () => {
                     <span className="truncate">{t("dashboard_nav_library")}</span>
                   </Link>
 
-                  {/* Chat con IA */}
                   <Link
                     to="/assistant"
                     className={navClasses()}
@@ -282,7 +282,7 @@ const CreateTextPage = () => {
                     <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelSources}</div>
                   </div>
 
-                  {/* Tabs */}
+                  {/* Pestañas arriba */}
                   <div className="flex items-center gap-2 px-3 border-b border-slate-200 dark:border-slate-800">
                     <TabBtn
                       active={sourceMode === "url"}
@@ -304,11 +304,37 @@ const CreateTextPage = () => {
                     />
                   </div>
 
-                  {/* inputs ocultos para subir archivos/imagenes (también usados por el panel derecho) */}
+                  {/* inputs ocultos */}
                   <input type="file" ref={fileInputRef} className="hidden" multiple onChange={onFiles} />
                   <input type="file" ref={imageInputRef} className="hidden" accept="image/*" multiple onChange={(e) => onFiles(e, "image")} />
 
-                  {/* Lista de fuentes */}
+                  {/* Centro: 3 botones grandes SIEMPRE visibles cuando no hay fuentes */}
+                  {sources.length === 0 && (
+                    <div className="px-4 pt-6">
+                      <div className="flex items-center justify-center gap-3 md:gap-4">
+                        <TileBtn
+                          icon={Link2}
+                          label={t("sources_center_url")}
+                          onClick={() => setSourceMode("url")}
+                          active={sourceMode === "url"}
+                        />
+                        <TileBtn
+                          icon={Clipboard}
+                          label={t("sources_center_text")}
+                          onClick={() => setSourceMode("text")}
+                          active={sourceMode === "text"}
+                        />
+                        <TileBtn
+                          icon={ImageIcon}
+                          label={t("sources_center_image")}
+                          onClick={() => setSourceMode("image")}
+                          active={sourceMode === "image"}
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Lista de fuentes (si hay) */}
                   <div className="flex-1 overflow-y-auto px-4 pb-6">
                     {sources.length > 0 && (
                       <ul className="space-y-2 mt-3">
@@ -338,7 +364,7 @@ const CreateTextPage = () => {
                     )}
                   </div>
 
-                  {/* Zona inferior dependiente de la pestaña */}
+                  {/* Abajo: cambia según pestaña */}
                   <div className="border-t border-slate-200 dark:border-slate-800 p-3 bg-slate-50/60 dark:bg-slate-900/40">
                     {sourceMode === "url" && (
                       <div className="flex">
@@ -384,7 +410,6 @@ const CreateTextPage = () => {
                           <ImageIcon className="w-4 h-4" />
                           {t("select_image_btn")}
                         </Button>
-                        {/* contador simple */}
                         <div className="text-xs text-slate-500">
                           {sources.filter(s => s.type === "image").length} img
                         </div>
@@ -412,7 +437,7 @@ const CreateTextPage = () => {
                           {t("chat_add_source")}
                         </h3>
                         <Button
-                          onClick={clickUpload}
+                          onClick={() => fileInputRef.current?.click()}
                           className="mt-3 h-10 rounded-xl bg-gradient-to-r from-blue-500 to-sky-500
                                      hover:from-blue-600 hover:to-sky-600 text-white shadow-md hover:shadow-lg"
                         >
@@ -440,7 +465,6 @@ const CreateTextPage = () => {
                         type="submit"
                         disabled={!chatInput.trim() || sources.length === 0}
                         className="h-10 px-3 rounded-full"
-                        title={t("send")}
                       >
                         <Send className="w-4 h-4" />
                       </Button>
