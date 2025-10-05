@@ -1,36 +1,32 @@
-import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useMemo, useState, useRef, useEffect } from "react";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import {
-  Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon, Gem,
-  BookOpen, Upload, Clipboard, Link2, Trash2, MessageSquare
+  Home, PlusCircle, Plus, Folder, CreditCard, Settings, User, Sun, Moon, Gem, MessageSquare,
+  MoreVertical, Pencil, Trash2
 } from "lucide-react";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 import { useTheme } from "@/components/layout/ThemeProvider";
 
-const CreateSummaryPage = () => {
+/** Icono guardado en /public */
+const DOC_ICON_SRC = "/doc-blue.png";
+
+const LibraryPage = () => {
   const { t } = useLanguage();
   const { theme, setTheme } = useTheme();
   const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const [inputText, setInputText] = useState("");
-  const [sourceUrl, setSourceUrl] = useState("");
-  const [files, setFiles] = useState([]);
-
-  const HEADER_COLOR    = theme === "dark" ? "#262F3F" : "#ffffff";
-  const SIDEBAR_COLOR   = theme === "dark" ? "#354153" : "#f8f9fb";
-  const ACTIVE_BG_COLOR = theme === "dark" ? "#262F3F" : "#e9eef5";
-  const BORDER_COLOR    = theme === "dark" ? "#1f2937" : "#e5e7eb";
-
+  const HEADER_COLOR     = theme === "dark" ? "#262F3F" : "#ffffff";
+  const SIDEBAR_COLOR    = theme === "dark" ? "#354153" : "#f8f9fb";
+  const ACTIVE_BG_COLOR  = theme === "dark" ? "#262F3F" : "#e9eef5";
+  const BORDER_COLOR     = theme === "dark" ? "#1f2937" : "#e5e7eb";
   const HEADER_HEIGHT_PX = 72;
   const SIDEBAR_WIDTH_PX = 190;
 
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? "Plan Premium" : "Plan Básico";
 
-  // === Igual que Home ===
   const isActive = (path) =>
     location.pathname === path || location.pathname.startsWith(path + "/");
 
@@ -38,28 +34,61 @@ const CreateSummaryPage = () => {
   const headerHoverBg  = theme === "dark" ? "hover:bg-[#262F3F]" : "hover:bg-[#e9eef5]";
   const headerBtnBase =
     theme === "dark" ? "bg-slate-800 text-white border-0" : "bg-white text-slate-800 border border-slate-200";
-  // ======================
 
-  const planPillStyle =
-    theme === "dark"
-      ? { backgroundColor: "rgba(255,255,255,0.06)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)", color: "#E5E7EB" }
-      : { backgroundColor: "#f3f4f6", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12)", color: "#0f172a" };
-
-  const planIconBoxStyle =
-    theme === "dark"
-      ? { backgroundColor: "rgba(255,255,255,0.22)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.45)" }
-      : { backgroundColor: "#ffffff", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)" };
-
-  const planIconColor = theme === "dark" ? "#ffffff" : "#334155";
-
-  const pageVariants = {
-    initial: { opacity: 0, y: 20 },
-    in:      { opacity: 1, y: 0 },
-    out:     { opacity: 0, y: -20 },
+  // Filtro (?type=all|text|summary|folders)
+  const type = useMemo(() => searchParams.get("type") || "all", [searchParams]);
+  const setType = (next) => {
+    const sp = new URLSearchParams(searchParams);
+    sp.set("type", next);
+    setSearchParams(sp, { replace: true });
   };
 
-  const handleFiles = (e) => setFiles(Array.from(e.target?.files || []));
-  const clearAll = () => { setInputText(""); setSourceUrl(""); setFiles([]); };
+  const createAction = useMemo(() => {
+    switch (type) {
+      case "text":    return { label: t("library_create_text"),    href: "/create?mode=text" };
+      case "summary": return { label: t("library_create_summary"), href: "/create?mode=summary" };
+      case "folders": return { label: t("library_create_folder"),  href: "/library/folders/new" };
+      case "all":
+      default:        return { label: t("library_create_new"),     href: "/create" };
+    }
+  }, [type, t]);
+
+  // Estado carpetas
+  const [isFolderModalOpen, setFolderModalOpen] = useState(false);
+  const [folderName, setFolderName] = useState("");
+  const [folders, setFolders] = useState([]);
+
+  const openFolderModal = () => { setFolderName(""); setFolderModalOpen(true); };
+  const closeFolderModal = () => setFolderModalOpen(false);
+  const saveFolder = () => {
+    const name = folderName.trim();
+    if (!name) return;
+    setFolders((prev) => [
+      { id: crypto.randomUUID?.() || String(Date.now()), name, createdAt: new Date().toISOString() },
+      ...prev,
+    ]);
+    setFolderModalOpen(false);
+  };
+
+  const formatDate = (d) =>
+    d.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" }).replace(".", "");
+  const doc = { id: "doc-olondo", title: "Olondo.ai", date: formatDate(new Date()) };
+
+  // Menú contextual
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
+  const menuBtnRef = useRef(null);
+
+  useEffect(() => {
+    const onClickOutside = (e) => {
+      if (!menuOpen) return;
+      if (menuRef.current?.contains(e.target)) return;
+      if (menuBtnRef.current?.contains(e.target)) return;
+      setMenuOpen(false);
+    };
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
+  }, [menuOpen]);
 
   return (
     <div className="min-h-screen w-full bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -69,14 +98,34 @@ const CreateSummaryPage = () => {
         style={{ backgroundColor: HEADER_COLOR, height: HEADER_HEIGHT_PX, borderColor: BORDER_COLOR }}
       >
         <div className="w-full h-full px-4 sm:px-6 flex items-center justify-between">
-          <Link to="/" className="font-extrabold text-lg tracking-tight text-sky-400">Olondo.ai</Link>
+          <Link to="/" className="font-extrabold text-lg tracking-tight text-sky-400">
+            Olondo.ai
+          </Link>
 
           <div className="flex items-center gap-3 sm:gap-4">
             <div className="hidden sm:flex items-center gap-2 select-none">
-              <div className="inline-flex items-center justify-center rounded-[10px]" style={{ width: 30, height: 30, ...planIconBoxStyle }}>
-                <Gem className="w-5 h-5" style={{ color: planIconColor }} />
+              <div
+                className="inline-flex items-center justify-center rounded-[10px]"
+                style={{
+                  width: 30, height: 30,
+                  backgroundColor: theme === "dark" ? "rgba(255,255,255,0.22)" : "#ffffff",
+                  boxShadow: theme === "dark"
+                    ? "inset 0 0 0 1px rgba(255,255,255,0.45)"
+                    : "inset 0 0 0 1px rgba(15,23,42,0.12), 0 1px 2px rgba(0,0,0,0.04)"
+                }}
+              >
+                <Gem className="w-5 h-5" style={{ color: theme === "dark" ? "#ffffff" : "#334155" }} />
               </div>
-              <div className="rounded-xl px-3 py-1.5 text-sm font-medium" style={planPillStyle}>
+              <div
+                className="rounded-xl px-3 py-1.5 text-sm font-medium"
+                style={{
+                  backgroundColor: theme === "dark" ? "rgba(255,255,255,0.06)" : "#f3f4f6",
+                  boxShadow: theme === "dark"
+                    ? "inset 0 0 0 1px rgba(255,255,255,0.10)"
+                    : "inset 0 0 0 1px rgba(15,23,42,0.12)",
+                  color: theme === "dark" ? "#E5E7EB" : "#0f172a",
+                }}
+              >
                 {planLabel}
               </div>
             </div>
@@ -110,63 +159,38 @@ const CreateSummaryPage = () => {
           <aside className="border-r border-slate-200 dark:border-slate-800" style={{ borderColor: BORDER_COLOR }}>
             <div
               className="sticky ps-2 pe-3 pt-6 pb-0 text-slate-800 dark:text-slate-100"
-              style={{ backgroundColor: SIDEBAR_COLOR, top: HEADER_HEIGHT_PX, height: `calc(100vh - ${HEADER_HEIGHT_PX}px)`, width: SIDEBAR_WIDTH_PX }}
+              style={{ backgroundColor: SIDEBAR_COLOR, top: HEADER_HEIGHT_PX, height: `calc(100vh - ${HEADER_HEIGHT_PX}px)`, width: 190 }}
             >
               <div className="h-full flex flex-col justify-between">
                 <nav className="space-y-1">
-                  <Link
-                    to="/dashboard"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
-                    style={isActive("/dashboard") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
-                  >
+                  <Link to="/dashboard" className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`} style={isActive("/dashboard") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <Home className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_home")}</span>
                   </Link>
 
-                  <Link
-                    to="/create"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
-                    style={isActive("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
-                  >
+                  <Link to="/create" className={`w/full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`} style={isActive("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <PlusCircle className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_create")}</span>
                   </Link>
 
-                  <Link
-                    to="/library"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
-                    style={isActive("/library") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
-                  >
+                  <Link to="/library" className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`} style={isActive("/library") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <Folder className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_library")}</span>
                   </Link>
 
-                  {/* Chat con IA */}
-                  <Link
-                    to="/assistant"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
-                    style={isActive("/assistant") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
-                  >
+                  <Link to="/assistant" className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`} style={isActive("/assistant") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <MessageSquare className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_ai_chat")}</span>
                   </Link>
 
-                  <Link
-                    to="/pricing"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
-                    style={isActive("/pricing") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
-                  >
+                  <Link to="/pricing" className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`} style={isActive("/pricing") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <CreditCard className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_plans")}</span>
                   </Link>
                 </nav>
 
                 <div className="pb-0">
-                  <Link
-                    to="/settings"
-                    className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`}
-                    style={isActive("/settings") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}
-                  >
+                  <Link to="/settings" className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`} style={isActive("/settings") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <Settings className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_settings")}</span>
                   </Link>
@@ -177,92 +201,215 @@ const CreateSummaryPage = () => {
 
           {/* CONTENIDO */}
           <main>
-            <motion.section
-              className="py-20 md:py-24 px-4 md:px-8 flex flex-col items-center 
-                         bg-gradient-to-br from-slate-100 via-sky-50 to-blue-100 
-                         dark:from-slate-900 dark:via-slate-800 dark:to-sky-900 
-                         rounded-b-2xl max-w-6xl mx-auto mb-10 md:mb-16"
-              initial="initial" animate="in" exit="out" variants={pageVariants} transition={{ duration: 0.5 }}
-            >
-              {/* Title */}
-              <div className="text-center mb-10">
-                <h1 className="flex items-center justify-center text-3xl md:text-5xl font-extrabold gap-3 text-slate-900 dark:text-white mb-3">
-                  <BookOpen className="h-8 w-8 text-purple-500" /> {t("create_summary_title", "Crear Resumen (Premium)")}
-                </h1>
-                <p className="text-lg md:text-xl text-slate-800 dark:text-slate-200 max-w-xl mx-auto">
-                  {t("create_summary_sub", "Sube archivos o pega texto para obtener resúmenes concisos y claros.")}
-                </p>
-              </div>
+            <section className="py-8 md:py-10 px-4 md:px-8">
+              {/* Filtros */}
+              <div className="flex items-center justify-between mb-5">
+                <div className="flex items-center gap-3">
+                  {[
+                    { id: "all",     label: t("library_filter_all") },
+                    { id: "text",    label: t("library_filter_texts") },
+                    { id: "summary", label: t("library_filter_summaries") },
+                    { id: "folders", label: t("library_filter_folders") },
+                  ].map(({ id, label }) => {
+                    const active = type === id;
 
-              {/* Card */}
-              <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Inputs */}
-                <div className="bg-white dark:bg-slate-800/70 border border-slate-100 dark:border-slate-700/60 rounded-2xl p-6 shadow-[0_8px_25px_-10px_rgba(2,6,23,0.15)]">
-                  <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">
-                    <Clipboard className="inline w-4 h-4 mr-2" />
-                    {t("paste_text", "Pegar texto")}
-                  </label>
-                  <textarea
-                    value={inputText}
-                    onChange={(e) => setInputText(e.target.value)}
-                    rows={8}
-                    className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-900/40 px-4 py-3 outline-none focus:ring-2 focus:ring-fuchsia-400"
-                    placeholder={t("paste_text_ph", "Pega aquí el contenido a resumir...")}
-                  />
+                    // Inactivo: gris; Activo: azul como antes.
+                    // Efecto sin blur: fondo interno (span) que escala en hover.
+                    const btnBase =
+                      "group relative overflow-hidden rounded-full text-sm px-4 py-2 transition-colors duration-150 hover:shadow-sm";
+                    const textCls = active
+                      ? "relative z-10 text-[#1A73E8] dark:text-[#93C5FD]"
+                      : "relative z-10 text-slate-700 group-hover:text-slate-900 dark:text-slate-300 dark:group-hover:text-slate-100";
+                    const bgBase =
+                      "absolute inset-0 rounded-full scale-100 transition-transform duration-150 will-change-transform";
+                    const bgCls = active
+                      ? `${bgBase} bg-[#E8F0FE] dark:bg-[rgba(59,130,246,0.18)] group-hover:scale-[1.08] group-hover:bg-[#E3EEFF]`
+                      : `${bgBase} bg-transparent group-hover:bg-[#F5F7FA] dark:group-hover:bg-[rgba(148,163,184,0.12)] group-hover:scale-[1.08]`;
 
-                  <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mt-6 mb-2">
-                    <Link2 className="inline w-4 h-4 mr-2" />
-                    {t("source_url", "URL de referencia (opcional)")}
-                  </label>
-                  <input
-                    value={sourceUrl}
-                    onChange={(e) => setSourceUrl(e.target.value)}
-                    className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-900/40 px-4 py-3 outline-none focus:ring-2 focus:ring-fuchsia-400"
-                    placeholder="https://..."
-                  />
-
-                  <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mt-6 mb-2">
-                    <Upload className="inline w-4 h-4 mr-2" />
-                    {t("attach_files", "Adjuntar archivos")}
-                  </label>
-                  <input
-                    type="file"
-                    className="block w-full text-sm text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 dark:file:bg-slate-700 dark:file:text-slate-200"
-                    multiple
-                    onChange={handleFiles}
-                  />
-                  {files.length > 0 && (
-                    <div className="mt-3 text-sm text-slate-600 dark:text-slate-300">
-                      {files.length} {t("files_selected", "archivo(s) seleccionado(s)")}
-                    </div>
-                  )}
+                    return (
+                      <button
+                        key={id}
+                        type="button"
+                        onClick={() => setType(id)}
+                        className={btnBase}
+                        aria-pressed={active}
+                        style={{ backfaceVisibility: "hidden" }}
+                      >
+                        <span className={bgCls} aria-hidden="true" />
+                        <span className={textCls}>{label}</span>
+                      </button>
+                    );
+                  })}
                 </div>
 
-                {/* Actions */}
-                <div className="bg-white dark:bg-slate-800/70 border border-slate-100 dark:border-slate-700/60 rounded-2xl p-6 shadow-[0_8px_25px_-10px_rgba(2,6,23,0.15)] flex flex-col">
-                  <div className="mb-6">
-                    <h3 className="text-lg font-semibold mb-1">{t("summary_prefs", "Preferencias rápidas de resumen")}</h3>
-                    <p className="text-slate-600 dark:text-slate-400 text-sm">
-                      {t("summary_prefs_sub", "Longitud, enfoque y tono puedes afinarlos cuando integres la API.")}
+                {type === "folders" && (
+                  <button
+                    onClick={openFolderModal}
+                    className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium
+                               bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
+                  >
+                    <Plus className="w-4 h-4" />
+                    {t("library_create_folder")}
+                  </button>
+                )}
+              </div>
+
+              {/* Contenedor de tarjetas */}
+              <div className="flex flex-wrap gap-[38px]">
+                {/* Crear nuevo */}
+                {type !== "folders" && (
+                  <Link
+                    to={createAction.href}
+                    className="rounded-2xl border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 shadow-sm hover:shadow-md transition"
+                    style={{ width: 280, height: 196, borderRadius: 16 }}
+                    role="button"
+                  >
+                    <div className="h-full w-full flex flex-col items-center justify-center">
+                      <div className="flex items-center justify-center rounded-full bg-indigo-50 dark:bg-slate-800" style={{ width: 70, height: 70 }}>
+                        <Plus className="text-indigo-600 dark:text-sky-400" style={{ width: 21, height: 21 }} />
+                      </div>
+                      <span className="mt-4 text-[20px] leading-6 text-slate-900 dark:text-slate-100">
+                        {createAction.label}
+                      </span>
+                    </div>
+                  </Link>
+                )}
+
+                {/* Tarjeta documento demo */}
+                {(type === "all" || type === "text") && (
+                  <div
+                    className="relative rounded-2xl shadow-sm border"
+                    style={{
+                      width: 280,
+                      height: 196,
+                      borderRadius: 16,
+                      backgroundColor: "#EDF5FF",
+                      borderColor: "#D9E7FF",
+                    }}
+                  >
+                    {/* Menú (3 puntos) */}
+                    <button
+                      ref={menuBtnRef}
+                      aria-label="Opciones"
+                      className="absolute top-3 right-3 h-8 w-8 inline-flex items-center justify-center rounded-full hover:bg-white/60"
+                      onClick={() => setMenuOpen(v => !v)}
+                      type="button"
+                    >
+                      <MoreVertical className="w-5 h-5 text-slate-600" />
+                    </button>
+
+                    {menuOpen && (
+                      <div
+                        ref={menuRef}
+                        className="absolute z-10 top-1/2 -translate-y-1/2 left-[calc(100%-100px)] w-[200px] rounded-xl border border-slate-200 bg-white shadow-lg py-2"
+                      >
+                        <div className="flex items-center gap-3 px-3 py-2 text-slate-800 cursor-pointer hover:bg-slate-50">
+                          <Pencil className="w-5 h-5 text-slate-600" />
+                          <span>Editar título</span>
+                        </div>
+                        <div className="flex items-center gap-3 px-3 py-2 text-slate-800 cursor-pointer hover:bg-slate-50">
+                          <Trash2 className="w-5 h-5 text-slate-600" />
+                          <span>Eliminar</span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Contenido tarjeta */}
+                    <div className="h-full w-full px-5 pt-12 pb-6">
+                      <img
+                        src={DOC_ICON_SRC}
+                        alt=""
+                        width={60}
+                        height={60}
+                        className="block select-none -mt-6"
+                      />
+                      <h3
+                        className="mt-8 text-[22px] leading-[30px] font-semibold text-slate-900 pr-8"
+                        style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}
+                      >
+                        {doc.title}
+                      </h3>
+                      <p className="mt-4 text-[14px] leading-[20px] text-slate-700">{doc.date}</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Carpetas */}
+                {type === "folders" && folders.length === 0 && (
+                  <div className="rounded-xl border border-dashed border-slate-300 dark:border-slate-700 p-6 text-slate-500">
+                    {t("library_no_folders") || "Aún no tienes carpetas. Crea la primera."}
+                  </div>
+                )}
+                {type === "folders" && folders.map((f) => (
+                  <div
+                    key={f.id}
+                    className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm"
+                    style={{ width: 280 }}
+                  >
+                    <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
+                      <Folder className="w-5 h-5 text-sky-500" />
+                      <span className="font-medium truncate">{f.name}</span>
+                    </div>
+                    <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
+                      {new Date(f.createdAt).toLocaleString()}
                     </p>
                   </div>
-
-                  <div className="mt-auto grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <Button className="h-11 font-semibold bg-gradient-to-r from-purple-500 to-fuchsia-500 hover:from-purple-600 hover:to-fuchsia-600">
-                      ✨ {t("generate_summary", "Generar resumen")}
-                    </Button>
-                    <Button variant="secondary" className="h-11 font-semibold" onClick={clearAll}>
-                      <Trash2 className="w-4 h-4 mr-2" /> {t("clear", "Limpiar")}
-                    </Button>
-                  </div>
-                </div>
+                ))}
               </div>
-            </motion.section>
+            </section>
           </main>
         </div>
       </div>
+
+      {/* MODAL Crear carpeta */}
+      {isFolderModalOpen && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center" role="dialog" aria-modal="true">
+          <div className="absolute inset-0 bg-black/45" onClick={closeFolderModal} />
+          <div className="relative w-full max-w-lg bg-white rounded-[18px] border border-slate-200 shadow-[0_24px_80px_rgba(2,6,23,0.22)]">
+            <div className="px-6 pt-5 pb-3 flex items-center justify-between">
+              <h3 className="text-[18px] leading-6 font-semibold text-slate-900">
+                {t("folder_modal_title")}
+              </h3>
+              <button
+                onClick={closeFolderModal}
+                className="h-8 w-8 inline-flex items-center justify-center rounded-lg hover:bg-slate-100 text-slate-500"
+                aria-label={t("close") || "Cerrar"}
+              >
+                <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </div>
+            <div className="px-6 pb-5">
+              <label className="block text-sm font-medium text-slate-700 mb-1">
+                {t("folder_modal_label")}
+              </label>
+              <input
+                autoFocus
+                value={folderName}
+                onChange={(e) => setFolderName(e.target.value)}
+                placeholder={t("folder_modal_placeholder")}
+                className="w-full rounded-[10px] border border-slate-300 bg-white px-3 py-2 text-[14px] leading-[22px] outline-none focus:ring-2 focus:ring-sky-500"
+              />
+            </div>
+            <div className="px-6 pb-6 flex items-center justify-end gap-3">
+              <button
+                onClick={closeFolderModal}
+                className="px-4 py-2 text-[14px] font-medium rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 shadow-sm"
+              >
+                {t("folder_modal_cancel")}
+              </button>
+              <button
+                onClick={saveFolder}
+                disabled={!folderName.trim()}
+                className="px-4 py-2 text-[14px] font-medium rounded-lg bg-slate-900 text-white hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+              >
+                {t("folder_modal_save")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default CreateSummaryPage;
+export default LibraryPage; 
