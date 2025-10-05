@@ -34,15 +34,15 @@ const CreateTextPage = () => {
   const USER_PLAN = "premium";
   const planLabel = USER_PLAN === "premium" ? t("plan_premium_title") : t("plan_basic_title");
 
-  // Helpers para activo/hover
+  // Helpers para activo/hover (igual que en Dashboard)
   const isCurrentOrChild = (base) =>
     location.pathname === base || location.pathname.startsWith(base + "/");
 
-  // Más oscuro en hover para inactivos
+  // MISMOS colores de hover que Dashboard
+  const navHoverBg = theme === "dark" ? "hover:bg-[#2B384A]" : "hover:bg-[#eef3f9]";
+
   const navClasses = (active) =>
-    `w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${
-      active ? "" : "hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
-    }`;
+    `w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`;
 
   const pageVariants = {
     initial: { opacity: 0, y: 20 },
@@ -129,7 +129,7 @@ const CreateTextPage = () => {
                     : { backgroundColor: "#f3f4f6", boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.12)", color: "#0f172a" }
                 }
               >
-                {planLabel}
+                {USER_PLAN === "premium" ? t("plan_premium_title") : t("plan_basic_title")}
               </div>
             </div>
 
