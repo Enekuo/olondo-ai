@@ -647,9 +647,9 @@ dashboard_chat_sources_count: "0 fuentes",
   bottom_input_ph: "Escribe un mensaje o sube una fuente para empezar",
   sources_count: "fuentes",
   send: "Enviar",
-  sources_tab_text: "Pegar texto",
+  sources_tab_text: "Texto",
   sources_tab_document: "Documento",
-  sources_tab_image: "Subir imagen",
+  sources_tab_image: "Imagen",
 
   // Library
   library_filter_all: "Todos",
