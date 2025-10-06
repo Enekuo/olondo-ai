@@ -87,11 +87,11 @@ const CreateTextPage = () => {
       <button
         type="button"
         onClick={onClick}
-        className="relative inline-flex items-center gap-2 h-[48px] px-4 text-[14px] font-medium"
+        className="relative inline-flex items-center gap-2 h-[48px] px-3 text-[14px] font-medium"
         style={{ color: active ? BLUE : GRAY_TEXT }}
       >
         <Icon className="w-[18px] h-[18px]" style={{ color: active ? BLUE : GRAY_ICON }} />
-        <span className="truncate">{label}</span>
+        <span className="truncate whitespace-nowrap">{label}</span>
 
         {/* subrayado azul a TODO el ancho del botón */}
         {active && (
@@ -214,7 +214,7 @@ const CreateTextPage = () => {
                     <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelSources}</div>
                   </div>
 
-                  {/* Pestañas idénticas al ejemplo (Texto / Documento / Imagen) */}
+                  {/* Pestañas (Texto / Documento / Imagen) */}
                   <div className="flex items-center px-2 border-b" style={{ borderColor: DIVIDER }}>
                     <TabBtn
                       active={sourceMode === "text"}
