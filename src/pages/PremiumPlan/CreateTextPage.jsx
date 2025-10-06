@@ -16,7 +16,7 @@ const CreateTextPage = () => {
   const { theme, setTheme } = useTheme();
   const location = useLocation();
 
-  // Helper de traducción con fallback (evita mostrar claves crudas)
+  // Helper para evitar claves crudas si falta una traducción
   const tr = (key, fallback) => {
     const val = t(key);
     return !val || val === key ? fallback : val;
@@ -78,10 +78,10 @@ const CreateTextPage = () => {
   };
 
   /* ===== Pestañas iguales (3 columnas) ===== */
-  const BLUE = "#2563eb";         // activo
-  const GRAY_TEXT = "#6b7280";    // texto inactivo
-  const GRAY_ICON = "#9ca3af";    // icono inactivo
-  const DIVIDER = "#e5e7eb";      // separador
+  const BLUE = "#2563eb";
+  const GRAY_TEXT = "#6b7280";
+  const GRAY_ICON = "#9ca3af";
+  const DIVIDER = "#e5e7eb";
 
   const TabBtn = ({ active, icon: Icon, label, onClick, showDivider }) => (
     <div className="relative flex-1 min-w-0 flex items-stretch">
@@ -93,15 +93,10 @@ const CreateTextPage = () => {
       >
         <Icon className="w-[18px] h-[18px] shrink-0" style={{ color: active ? BLUE : GRAY_ICON }} />
         <span className="truncate">{label}</span>
-
         {active && (
-          <span
-            className="absolute bottom-[-1px] left-0 right-0 h-[2px] rounded-full"
-            style={{ backgroundColor: BLUE }}
-          />
+          <span className="absolute bottom-[-1px] left-0 right-0 h-[2px] rounded-full" style={{ backgroundColor: BLUE }} />
         )}
       </button>
-
       {showDivider && (
         <span aria-hidden className="self-center" style={{ width: 1, height: 22, backgroundColor: DIVIDER }} />
       )}
@@ -216,30 +211,33 @@ const CreateTextPage = () => {
                     <TabBtn active={sourceMode === "image"} icon={ImageIcon} label={tr("sources_tab_image", "Subir imagen")} onClick={() => setSourceMode("image")} showDivider={false} />
                   </div>
 
-                  {/* Ayuda central: EXACTA (2 elementos, centrados, una línea) */}
+                  {/* Ayuda central EXACTA (2 items, icono arriba + texto debajo) */}
                   <div className="flex-1 overflow-y-auto px-4 pb-6">
                     {sources.length === 0 && (
                       <div className="h-full w-full flex items-center justify-center select-none">
-                        <div className="inline-flex items-center gap-10">
-                          {/* Añadir URL (icono +) */}
-                          <div className="inline-flex items-center gap-3 text-slate-500 whitespace-nowrap">
-                            <span className="relative inline-flex items-center justify-center text-slate-400">
-                              {/* “+” sobre el icono */}
-                              <span className="absolute -top-2 left-1/2 -translate-x-1/2 text-xs leading-none">+</span>
-                              <LinkIcon className="w-5 h-5" />
+                        <div className="flex items-start justify-center gap-16">
+                          {/* Añadir URL */}
+                          <div className="flex flex-col items-center text-center">
+                            <span className="relative w-8 h-8 flex items-center justify-center" style={{ color: GRAY_ICON }}>
+                              <span className="absolute -top-2 left-1/2 -translate-x-1/2 text-xs leading-none" style={{ color: GRAY_ICON }}>+</span>
+                              <LinkIcon className="w-6 h-6" />
                             </span>
-                            <span className="text-[15px]">Añadir URL</span>
+                            <span className="mt-2 text-[15px] font-medium" style={{ color: GRAY_TEXT }}>
+                              {tr("sources_center_url", "Añadir URL")}
+                            </span>
                           </div>
 
-                          {/* divisor vertical corto */}
-                          <span aria-hidden className="h-6 w-px bg-slate-200" />
+                          {/* divisor */}
+                          <span aria-hidden className="h-10 w-px self-center" style={{ backgroundColor: DIVIDER }} />
 
                           {/* Pegar texto */}
-                          <div className="inline-flex items-center gap-3 text-slate-500 whitespace-nowrap">
-                            <span className="inline-flex items-center justify-center text-slate-400">
-                              <Clipboard className="w-5 h-5" />
+                          <div className="flex flex-col items-center text-center">
+                            <span className="w-8 h-8 flex items-center justify-center" style={{ color: GRAY_ICON }}>
+                              <Clipboard className="w-6 h-6" />
                             </span>
-                            <span className="text-[15px]">Pegar texto</span>
+                            <span className="mt-2 text-[15px] font-medium" style={{ color: GRAY_TEXT }}>
+                              {tr("sources_center_text", "Pegar texto")}
+                            </span>
                           </div>
                         </div>
                       </div>
