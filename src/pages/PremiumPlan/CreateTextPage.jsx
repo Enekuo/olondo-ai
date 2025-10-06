@@ -50,6 +50,9 @@ const CreateTextPage = () => {
   const labelSources = tr("sources_title", "Fuentes");
   const labelChat    = tr("chat_panel_title", "Chat");
 
+  const clickUpload = () => fileInputRef.current?.click();
+  const clickUploadImage = () => imageInputRef.current?.click();
+
   const onFiles = (e, forcedType = null) => {
     const files = Array.from(e.target?.files || []);
     if (!files.length) return;
@@ -242,13 +245,13 @@ const CreateTextPage = () => {
                     />
                   </div>
 
-                  {/* Contenido lista + ayuda central cuando está vacío */}
+                  {/* Contenido lista + ayuda central (exactamente dos columnas) */}
                   <div className="flex-1 overflow-y-auto px-4 pb-6">
                     {sources.length === 0 && (
                       <div className="h-full w-full flex items-center justify-center select-none">
-                        <div className="flex items-start justify-center gap-10 lg:gap-14">
+                        <div className="flex items-start justify-center gap-14">
                           {/* Añadir URL */}
-                          <div className="basis-1/3 min-w-0 flex flex-col items-center text-center">
+                          <div className="basis-1/2 min-w-0 flex flex-col items-center text-center">
                             <span className="relative w-8 h-8 flex items-center justify-center text-slate-400">
                               {/* símbolo + sobre el icono */}
                               <span className="absolute -top-2 text-xs leading-none">+</span>
@@ -263,25 +266,12 @@ const CreateTextPage = () => {
                           <span aria-hidden className="h-10 w-px self-center bg-slate-200" />
 
                           {/* Pegar texto */}
-                          <div className="basis-1/3 min-w-0 flex flex-col items-center text-center">
+                          <div className="basis-1/2 min-w-0 flex flex-col items-center text-center">
                             <span className="w-8 h-8 flex items-center justify-center text-slate-400">
                               <Clipboard className="w-6 h-6" />
                             </span>
                             <span className="mt-2 text-[15px] font-medium text-slate-500">
                               {tr("sources_center_text", "Pegar texto")}
-                            </span>
-                          </div>
-
-                          {/* divisor */}
-                          <span aria-hidden className="h-10 w-px self-center bg-slate-200" />
-
-                          {/* Subir imagen */}
-                          <div className="basis-1/3 min-w-0 flex flex-col items-center text-center">
-                            <span className="w-8 h-8 flex items-center justify-center text-slate-400">
-                              <ImageIcon className="w-6 h-6" />
-                            </span>
-                            <span className="mt-2 text-[15px] font-medium text-slate-500">
-                              {tr("sources_center_image", "Subir imagen")}
                             </span>
                           </div>
                         </div>
