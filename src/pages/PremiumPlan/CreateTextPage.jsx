@@ -46,12 +46,8 @@ const CreateTextPage = () => {
 
   const pageVariants = { initial: { opacity: 0, y: 20 }, in: { opacity: 1, y: 0 }, out: { opacity: 0, y: -20 } };
 
-  // Textos (con fallback)
   const labelSources = tr("sources_title", "Fuentes");
   const labelChat    = tr("chat_panel_title", "Chat");
-
-  const clickUpload = () => fileInputRef.current?.click();
-  const clickUploadImage = () => imageInputRef.current?.click();
 
   const onFiles = (e, forcedType = null) => {
     const files = Array.from(e.target?.files || []);
@@ -117,7 +113,6 @@ const CreateTextPage = () => {
       )}
     </div>
   );
-  /* ========================================= */
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-950 text-slate-900 dark:text-slate-100">
@@ -168,7 +163,7 @@ const CreateTextPage = () => {
                 backgroundColor: SIDEBAR_COLOR,
                 top: HEADER_HEIGHT_PX,
                 height: `calc(100vh - ${HEADER_HEIGHT_PX}px)`,
-                width: SIDEBAR_WIDTH_PX
+                width: 190
               }}
             >
               <div className="h-full flex flex-col justify-between">
@@ -220,59 +215,36 @@ const CreateTextPage = () => {
                     <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelSources}</div>
                   </div>
 
-                  {/* Pestañas (tres columnas iguales) */}
+                  {/* Pestañas */}
                   <div className="flex items-center px-2 border-b" style={{ borderColor: DIVIDER }}>
-                    <TabBtn
-                      active={sourceMode === "text"}
-                      icon={FileText}
-                      label={tr("sources_tab_text", "Pegar texto")}
-                      onClick={() => setSourceMode("text")}
-                      showDivider
-                    />
-                    <TabBtn
-                      active={sourceMode === "document"}
-                      icon={FileIcon}
-                      label={tr("sources_tab_document", "Documento")}
-                      onClick={() => setSourceMode("document")}
-                      showDivider
-                    />
-                    <TabBtn
-                      active={sourceMode === "image"}
-                      icon={ImageIcon}
-                      label={tr("sources_tab_image", "Subir imagen")}
-                      onClick={() => setSourceMode("image")}
-                      showDivider={false}
-                    />
+                    <TabBtn active={sourceMode === "text"} icon={FileText} label={tr("sources_tab_text", "Pegar texto")} onClick={() => setSourceMode("text")} showDivider />
+                    <TabBtn active={sourceMode === "document"} icon={FileIcon} label={tr("sources_tab_document", "Documento")} onClick={() => setSourceMode("document")} showDivider />
+                    <TabBtn active={sourceMode === "image"} icon={ImageIcon} label={tr("sources_tab_image", "Subir imagen")} onClick={() => setSourceMode("image")} showDivider={false} />
                   </div>
 
-                  {/* Contenido lista + ayuda central (exactamente dos columnas) */}
+                  {/* Ayuda central EXACTA (2 elementos) */}
                   <div className="flex-1 overflow-y-auto px-4 pb-6">
                     {sources.length === 0 && (
                       <div className="h-full w-full flex items-center justify-center select-none">
-                        <div className="flex items-start justify-center gap-14">
-                          {/* Añadir URL */}
-                          <div className="basis-1/2 min-w-0 flex flex-col items-center text-center">
-                            <span className="relative w-8 h-8 flex items-center justify-center text-slate-400">
-                              {/* símbolo + sobre el icono */}
-                              <span className="absolute -top-2 text-xs leading-none">+</span>
-                              <LinkIcon className="w-6 h-6" />
+                        <div className="flex items-center justify-center gap-14">
+                          {/* Añadir URL (icono +) */}
+                          <div className="flex items-center gap-3 text-slate-500 whitespace-nowrap">
+                            <span className="relative inline-flex items-center justify-center text-slate-400">
+                              <span className="absolute -top-2 left-1/2 -translate-x-1/2 text-xs leading-none">+</span>
+                              <LinkIcon className="w-5 h-5" />
                             </span>
-                            <span className="mt-2 text-[15px] font-medium text-slate-500">
-                              {tr("sources_center_url", "Añadir URL")}
-                            </span>
+                            <span className="text-[15px]">Añadir URL</span>
                           </div>
 
-                          {/* divisor */}
-                          <span aria-hidden className="h-10 w-px self-center bg-slate-200" />
+                          {/* divisor vertical corto */}
+                          <span aria-hidden className="h-6 w-px bg-slate-200" />
 
                           {/* Pegar texto */}
-                          <div className="basis-1/2 min-w-0 flex flex-col items-center text-center">
-                            <span className="w-8 h-8 flex items-center justify-center text-slate-400">
-                              <Clipboard className="w-6 h-6" />
+                          <div className="flex items-center gap-3 text-slate-500 whitespace-nowrap">
+                            <span className="inline-flex items-center justify-center text-slate-400">
+                              <Clipboard className="w-5 h-5" />
                             </span>
-                            <span className="mt-2 text-[15px] font-medium text-slate-500">
-                              {tr("sources_center_text", "Pegar texto")}
-                            </span>
+                            <span className="text-[15px]">Pegar texto</span>
                           </div>
                         </div>
                       </div>
