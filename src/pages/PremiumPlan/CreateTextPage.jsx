@@ -76,24 +76,22 @@ const CreateTextPage = () => {
     setChatInput("");
   };
 
-  /* ===== Pestañas EXACTAS al ejemplo ===== */
+  /* ===== Pestañas EXACTAS al ejemplo, ahora más compactas ===== */
   const BLUE = "#2563eb";         // activo
   const GRAY_TEXT = "#6b7280";    // texto inactivo
   const GRAY_ICON = "#9ca3af";    // icono inactivo
   const DIVIDER = "#e5e7eb";      // separador
 
   const TabBtn = ({ active, icon: Icon, label, onClick, showDivider }) => (
-    <div className="relative flex items-stretch">
+    <div className="relative flex items-stretch min-w-0">
       <button
         type="button"
         onClick={onClick}
-        className="relative inline-flex items-center gap-2 h-[48px] px-3 text-[14px] font-medium"
+        className="relative inline-flex items-center gap-1.5 h-[44px] px-2 text-[13px] font-medium min-w-0"
         style={{ color: active ? BLUE : GRAY_TEXT }}
       >
-        <Icon className="w-[18px] h-[18px]" style={{ color: active ? BLUE : GRAY_ICON }} />
+        <Icon className="w-4 h-4 shrink-0" style={{ color: active ? BLUE : GRAY_ICON }} />
         <span className="truncate whitespace-nowrap">{label}</span>
-
-        {/* subrayado azul a TODO el ancho del botón */}
         {active && (
           <span
             className="absolute bottom-[-1px] left-0 right-0 h-[2px] rounded-full"
@@ -106,12 +104,12 @@ const CreateTextPage = () => {
         <span
           aria-hidden
           className="self-center"
-          style={{ width: 1, height: 24, backgroundColor: DIVIDER }}
+          style={{ width: 1, height: 22, backgroundColor: DIVIDER }}
         />
       )}
     </div>
   );
-  /* ====================================== */
+  /* =========================================================== */
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-950 text-slate-900 dark:text-slate-100">
@@ -214,12 +212,12 @@ const CreateTextPage = () => {
                     <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelSources}</div>
                   </div>
 
-                  {/* Pestañas (Texto / Documento / Imagen) */}
-                  <div className="flex items-center px-2 border-b" style={{ borderColor: DIVIDER }}>
+                  {/* Pestañas compactas */}
+                  <div className="flex items-center px-1 border-b" style={{ borderColor: DIVIDER }}>
                     <TabBtn
                       active={sourceMode === "text"}
                       icon={FileText}
-                      label={t("sources_tab_text") === "sources_tab_text" ? "Texto" : t("sources_tab_text")}
+                      label={t("sources_tab_text") === "sources_tab_text" ? "Pegar texto" : t("sources_tab_text")}
                       onClick={() => setSourceMode("text")}
                       showDivider
                     />
@@ -233,7 +231,7 @@ const CreateTextPage = () => {
                     <TabBtn
                       active={sourceMode === "image"}
                       icon={ImageIcon}
-                      label={t("sources_tab_image") === "sources_tab_image" ? "Imagen" : t("sources_tab_image")}
+                      label={t("sources_tab_image") === "sources_tab_image" ? "Subir imagen" : t("sources_tab_image")}
                       onClick={() => setSourceMode("image")}
                       showDivider={false}
                     />
