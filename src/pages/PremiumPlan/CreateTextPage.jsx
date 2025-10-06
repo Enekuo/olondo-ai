@@ -71,8 +71,6 @@ const CreateTextPage = () => {
     setUrlDraft("");
   };
 
-  const removeSource = (id) => setSources((prev) => prev.filter((s) => s.id !== id));
-
   const sendChat = (e) => {
     e?.preventDefault();
     if (!chatInput.trim()) return;
@@ -105,11 +103,7 @@ const CreateTextPage = () => {
       </button>
 
       {showDivider && (
-        <span
-          aria-hidden
-          className="self-center"
-          style={{ width: 1, height: 22, backgroundColor: DIVIDER }}
-        />
+        <span aria-hidden className="self-center" style={{ width: 1, height: 22, backgroundColor: DIVIDER }} />
       )}
     </div>
   );
@@ -163,7 +157,7 @@ const CreateTextPage = () => {
                 backgroundColor: SIDEBAR_COLOR,
                 top: HEADER_HEIGHT_PX,
                 height: `calc(100vh - ${HEADER_HEIGHT_PX}px)`,
-                width: 190
+                width: SIDEBAR_WIDTH_PX
               }}
             >
               <div className="h-full flex flex-col justify-between">
@@ -222,14 +216,15 @@ const CreateTextPage = () => {
                     <TabBtn active={sourceMode === "image"} icon={ImageIcon} label={tr("sources_tab_image", "Subir imagen")} onClick={() => setSourceMode("image")} showDivider={false} />
                   </div>
 
-                  {/* Ayuda central EXACTA (2 elementos) */}
+                  {/* Ayuda central: EXACTA (2 elementos, centrados, una línea) */}
                   <div className="flex-1 overflow-y-auto px-4 pb-6">
                     {sources.length === 0 && (
                       <div className="h-full w-full flex items-center justify-center select-none">
-                        <div className="flex items-center justify-center gap-14">
+                        <div className="inline-flex items-center gap-10">
                           {/* Añadir URL (icono +) */}
-                          <div className="flex items-center gap-3 text-slate-500 whitespace-nowrap">
+                          <div className="inline-flex items-center gap-3 text-slate-500 whitespace-nowrap">
                             <span className="relative inline-flex items-center justify-center text-slate-400">
+                              {/* “+” sobre el icono */}
                               <span className="absolute -top-2 left-1/2 -translate-x-1/2 text-xs leading-none">+</span>
                               <LinkIcon className="w-5 h-5" />
                             </span>
@@ -240,7 +235,7 @@ const CreateTextPage = () => {
                           <span aria-hidden className="h-6 w-px bg-slate-200" />
 
                           {/* Pegar texto */}
-                          <div className="flex items-center gap-3 text-slate-500 whitespace-nowrap">
+                          <div className="inline-flex items-center gap-3 text-slate-500 whitespace-nowrap">
                             <span className="inline-flex items-center justify-center text-slate-400">
                               <Clipboard className="w-5 h-5" />
                             </span>
