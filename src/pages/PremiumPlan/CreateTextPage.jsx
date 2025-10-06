@@ -16,7 +16,7 @@ const CreateTextPage = () => {
   const { theme, setTheme } = useTheme();
   const location = useLocation();
 
-  // Helper para evitar claves crudas si falta una traducción
+  // Helper: evita mostrar claves crudas si falta una traducción
   const tr = (key, fallback) => {
     const val = t(key);
     return !val || val === key ? fallback : val;
@@ -27,7 +27,7 @@ const CreateTextPage = () => {
   const [chatInput, setChatInput] = useState("");
   const [urlDraft, setUrlDraft] = useState("");
   const [sourceMode, setSourceMode] = useState("text"); // 'text' | 'document' | 'url'
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef(null); // (se queda por si se usa más adelante)
 
   // Estilos base
   const HEADER_COLOR    = theme === "dark" ? "#262F3F" : "#ffffff";
@@ -47,19 +47,6 @@ const CreateTextPage = () => {
 
   const labelSources = tr("sources_title", "Fuentes");
   const labelChat    = tr("chat_panel_title", "Chat");
-
-  const onFiles = (e) => {
-    const files = Array.from(e.target?.files || []);
-    if (!files.length) return;
-    const mapped = files.map((f, idx) => ({
-      id: `${Date.now()}_${idx}`,
-      type: "file",
-      name: f.name,
-      meta: { size: f.size }
-    }));
-    setSources((prev) => [...prev, ...mapped]);
-    e.target.value = "";
-  };
 
   const addUrl = () => {
     if (!urlDraft.trim()) return;
@@ -205,30 +192,12 @@ const CreateTextPage = () => {
 
                   {/* Pestañas: Texto / Documento / URL */}
                   <div className="flex items-center px-2 border-b" style={{ borderColor: DIVIDER }}>
-                    <TabBtn
-                      active={sourceMode === "text"}
-                      icon={FileText}
-                      label={tr("sources_tab_text", "Texto")}
-                      onClick={() => setSourceMode("text")}
-                      showDivider
-                    />
-                    <TabBtn
-                      active={sourceMode === "document"}
-                      icon={FileIcon}
-                      label={tr("sources_tab_document", "Documento")}
-                      onClick={() => setSourceMode("document")}
-                      showDivider
-                    />
-                    <TabBtn
-                      active={sourceMode === "url"}
-                      icon={UrlIcon}
-                      label={tr("sources_tab_url", "URL")}
-                      onClick={() => setSourceMode("url")}
-                      showDivider={false}
-                    />
+                    <TabBtn active={sourceMode === "text"} icon={FileText} label={tr("sources_tab_text", "Texto")} onClick={() => setSourceMode("text")} showDivider />
+                    <TabBtn active={sourceMode === "document"} icon={FileIcon} label={tr("sources_tab_document", "Documento")} onClick={() => setSourceMode("document")} showDivider />
+                    <TabBtn active={sourceMode === "url"} icon={UrlIcon} label={tr("sources_tab_url", "URL")} onClick={() => setSourceMode("url")} showDivider={false} />
                   </div>
 
-                  {/* Ayuda central — icono arriba + texto debajo */}
+                  {/* Ayuda central */}
                   <div className="flex-1 overflow-y-auto px-4 pb-6">
                     {sources.length === 0 && (
                       <div className="h-full w-full flex items-center justify-center select-none">
@@ -261,7 +230,7 @@ const CreateTextPage = () => {
                     )}
                   </div>
 
-                  {/* Zona inferior: input (sirve para pegar texto / URLs) */}
+                  {/* Input inferior (igual que antes) */}
                   <div className="border-t border-slate-200 dark:border-slate-800 p-3 bg-slate-50/60 dark:bg-slate-900/40">
                     <div className="flex">
                       <input
@@ -275,23 +244,6 @@ const CreateTextPage = () => {
                       <Button onClick={addUrl} className="h-10 px-4 rounded-r-xl bg-sky-600 hover:bg-sky-700 text-white shadow-sm">
                         +
                       </Button>
-                    </div>
-
-                    {/* Botones de acción según pestaña activa */}
-                    <div className="mt-3 flex items-center gap-2">
-                      {sourceMode === "document" && (
-                        <>
-                          <input type="file" ref={fileInputRef} className="hidden" multiple onChange={onFiles} />
-                          <Button type="button" variant="outline" className="h-9" onClick={() => fileInputRef.current?.click()}>
-                            {tr("upload_source_btn", "Subir documento")}
-                          </Button>
-                        </>
-                      )}
-                      {sourceMode === "url" && (
-                        <Button type="button" variant="outline" className="h-9" onClick={addUrl}>
-                          {tr("sources_add", "Añadir")}
-                        </Button>
-                      )}
                     </div>
                   </div>
                 </aside>
@@ -334,4 +286,4 @@ const CreateTextPage = () => {
   );
 };
 
-export default CreateTextPage; 
+export default CreateTextPage;
