@@ -2,19 +2,25 @@ import React, { useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon,
-  Gem, Upload, FileText, Trash2, Link2, Paperclip, Send, MessageSquare,
-  SlidersHorizontal, Image as ImageIcon, Clipboard, File as FileIcon
+  FileText, Send, MessageSquare, SlidersHorizontal,
+  Image as ImageIcon, Clipboard, File as FileIcon, Link as LinkIcon
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 import { useTheme } from "@/components/layout/ThemeProvider";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button"; 
+import { Button } from "@/components/ui/button";
 
 const CreateTextPage = () => {
   const { t } = useLanguage();
   const { theme, setTheme } = useTheme();
   const location = useLocation();
+
+  // Helper de traducción con fallback (evita mostrar claves crudas)
+  const tr = (key, fallback) => {
+    const val = t(key);
+    return !val || val === key ? fallback : val;
+  };
 
   // Estado
   const [sources, setSources] = useState([]); // { id, type: 'file'|'url'|'text'|'image', name, meta }
@@ -40,8 +46,9 @@ const CreateTextPage = () => {
 
   const pageVariants = { initial: { opacity: 0, y: 20 }, in: { opacity: 1, y: 0 }, out: { opacity: 0, y: -20 } };
 
-  const labelSources  = t("sources_title");
-  const labelChat     = t("chat_panel_title");
+  // Textos (con fallback)
+  const labelSources = tr("sources_title", "Fuentes");
+  const labelChat    = tr("chat_panel_title", "Chat");
 
   const clickUpload = () => fileInputRef.current?.click();
   const clickUploadImage = () => imageInputRef.current?.click();
@@ -76,7 +83,7 @@ const CreateTextPage = () => {
     setChatInput("");
   };
 
-  /* ===== Pestañas EXACTAS al ejemplo ===== */
+  /* ===== Pestañas iguales (3 columnas) ===== */
   const BLUE = "#2563eb";         // activo
   const GRAY_TEXT = "#6b7280";    // texto inactivo
   const GRAY_ICON = "#9ca3af";    // icono inactivo
@@ -91,9 +98,8 @@ const CreateTextPage = () => {
         style={{ color: active ? BLUE : GRAY_TEXT }}
       >
         <Icon className="w-[18px] h-[18px] shrink-0" style={{ color: active ? BLUE : GRAY_ICON }} />
-        <span className="truncate whitespace-nowrap">{label}</span>
+        <span className="truncate">{label}</span>
 
-        {/* subrayado azul a TODO el ancho del botón */}
         {active && (
           <span
             className="absolute bottom-[-1px] left-0 right-0 h-[2px] rounded-full"
@@ -103,15 +109,11 @@ const CreateTextPage = () => {
       </button>
 
       {showDivider && (
-        <span
-          aria-hidden
-          className="self-center"
-          style={{ width: 1, height: 22, backgroundColor: DIVIDER }}
-        />
+        <span aria-hidden className="self-center" style={{ width: 1, height: 22, backgroundColor: DIVIDER }} />
       )}
     </div>
   );
-  /* ====================================== */
+  /* ========================================= */
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-950 text-slate-900 dark:text-slate-100">
@@ -126,7 +128,7 @@ const CreateTextPage = () => {
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
             <div className="inline-flex items-center gap-2 text-sm sm:text-base md:text-lg font-semibold tracking-tight text-slate-900 dark:text-white">
               <FileText className="w-5 h-5 relative -top-px" style={{ color: BLUE }} />
-              <span>{t("create_text_title")}</span>
+              <span>{tr("create_text_title", "Crear Texto")}</span>
             </div>
           </div>
 
@@ -136,14 +138,14 @@ const CreateTextPage = () => {
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="inline-flex h-10 w-10 items-center justify-center rounded-xl hover:opacity-90 transition-colors"
               style={{ backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff", border: theme === "dark" ? "none" : "1px solid #e5e7eb", color: theme === "dark" ? "#ffffff" : "#1f2937" }}
-              aria-label={t("theme_toggle")}
+              aria-label={tr("theme_toggle", "Cambiar tema")}
             >
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
             <button
               className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:opacity-90 transition-colors"
               style={{ backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff", border: theme === "dark" ? "none" : "1px solid #e5e7eb", color: theme === "dark" ? "#ffffff" : "#1f2937" }}
-              aria-label={t("user_menu")}
+              aria-label={tr("user_menu", "Usuario")}
             >
               <User className="w-5 h-5" />
             </button>
@@ -169,30 +171,30 @@ const CreateTextPage = () => {
                 <nav className="space-y-1">
                   <Link to="/app/dashboard" className={navClasses()} style={location.pathname === "/app/dashboard" ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <Home className="w-5 h-5 shrink-0" />
-                    <span className="truncate">{t("dashboard_nav_home")}</span>
+                    <span className="truncate">{tr("dashboard_nav_home", "Home")}</span>
                   </Link>
                   <Link to="/create" className={navClasses()} style={isCurrentOrChild("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined} aria-current={isCurrentOrChild("/create") ? "page" : undefined}>
                     <PlusCircle className="w-5 h-5 shrink-0" />
-                    <span className="truncate">{t("dashboard_nav_create")}</span>
+                    <span className="truncate">{tr("dashboard_nav_create", "Crear nuevo")}</span>
                   </Link>
                   <Link to="/library" className={navClasses()} style={isCurrentOrChild("/library") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <Folder className="w-5 h-5 shrink-0" />
-                    <span className="truncate">{t("dashboard_nav_library")}</span>
+                    <span className="truncate">{tr("dashboard_nav_library", "Biblioteca")}</span>
                   </Link>
                   <Link to="/assistant" className={navClasses()} style={isCurrentOrChild("/assistant") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <MessageSquare className="w-5 h-5 shrink-0" />
-                    <span className="truncate">{t("dashboard_nav_ai_chat")}</span>
+                    <span className="truncate">{tr("dashboard_nav_ai_chat", "Chat con IA")}</span>
                   </Link>
                   <Link to="/pricing" className={navClasses()} style={isCurrentOrChild("/pricing") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <CreditCard className="w-5 h-5 shrink-0" />
-                    <span className="truncate">{t("dashboard_nav_plans")}</span>
+                    <span className="truncate">{tr("dashboard_nav_plans", "Planes")}</span>
                   </Link>
                 </nav>
 
                 <div className="pb-0">
                   <Link to="/settings" className={navClasses()} style={isCurrentOrChild("/settings") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <Settings className="w-5 h-5 shrink-0" />
-                    <span className="truncate">{t("dashboard_nav_settings")}</span>
+                    <span className="truncate">{tr("dashboard_nav_settings", "Configuración")}</span>
                   </Link>
                 </div>
               </div>
@@ -214,26 +216,26 @@ const CreateTextPage = () => {
                     <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelSources}</div>
                   </div>
 
-                  {/* Pestañas (Texto / Documento / Imagen) */}
+                  {/* Pestañas (tres columnas iguales) */}
                   <div className="flex items-center px-2 border-b" style={{ borderColor: DIVIDER }}>
                     <TabBtn
                       active={sourceMode === "text"}
                       icon={FileText}
-                      label={t("sources_tab_text")}
+                      label={tr("sources_tab_text", "Pegar texto")}
                       onClick={() => setSourceMode("text")}
                       showDivider
                     />
                     <TabBtn
                       active={sourceMode === "document"}
                       icon={FileIcon}
-                      label={t("sources_tab_document")}
+                      label={tr("sources_tab_document", "Documento")}
                       onClick={() => setSourceMode("document")}
                       showDivider
                     />
                     <TabBtn
                       active={sourceMode === "image"}
                       icon={ImageIcon}
-                      label={t("sources_tab_image")}
+                      label={tr("sources_tab_image", "Subir imagen")}
                       onClick={() => setSourceMode("image")}
                       showDivider={false}
                     />
@@ -245,25 +247,25 @@ const CreateTextPage = () => {
                       <div className="h-full w-full flex items-center justify-center select-none">
                         <div className="flex items-center gap-6 text-[15px]" style={{ color: GRAY_TEXT }}>
                           <span className="inline-flex items-center gap-2">
-                            <Link2 className="w-5 h-5" style={{ color: GRAY_ICON }} />
-                            <span>{t("sources_center_url")}</span>
+                            <LinkIcon className="w-5 h-5" style={{ color: GRAY_ICON }} />
+                            <span>{tr("sources_center_url", "Añadir URL")}</span>
                           </span>
                           <span aria-hidden className="h-5" style={{ width: 1, backgroundColor: DIVIDER }} />
                           <span className="inline-flex items-center gap-2">
                             <Clipboard className="w-5 h-5" style={{ color: GRAY_ICON }} />
-                            <span>{t("sources_center_text")}</span>
+                            <span>{tr("sources_center_text", "Pegar texto")}</span>
                           </span>
                           <span aria-hidden className="h-5" style={{ width: 1, backgroundColor: DIVIDER }} />
                           <span className="inline-flex items-center gap-2">
                             <ImageIcon className="w-5 h-5" style={{ color: GRAY_ICON }} />
-                            <span>{t("sources_center_image")}</span>
+                            <span>{tr("sources_center_image", "Subir imagen")}</span>
                           </span>
                         </div>
                       </div>
                     )}
                   </div>
 
-                  {/* Buscador inferior SIN CAMBIOS */}
+                  {/* Buscador inferior */}
                   <div className="border-t border-slate-200 dark:border-slate-800 p-3 bg-slate-50/60 dark:bg-slate-900/40">
                     <div className="flex">
                       <input
@@ -272,7 +274,7 @@ const CreateTextPage = () => {
                         className="h-10 flex-1 rounded-l-xl border border-slate-200 dark:border-slate-700
                                    bg-white/90 dark:bg-slate-900/60 px-3 text-sm outline-none
                                    focus:ring-2 focus:ring-sky-400"
-                        placeholder={t("enter_text_here")}
+                        placeholder={tr("enter_text_here", "Introduce tu texto aquí...")}
                       />
                       <Button onClick={addUrl} className="h-10 px-4 rounded-r-xl bg-sky-600 hover:bg-sky-700 text-white shadow-sm">
                         +
@@ -285,7 +287,7 @@ const CreateTextPage = () => {
                 <section className="h-full relative rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden -ml-px">
                   <div className="h-11 flex items-center justify-between px-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/40">
                     <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelChat}</div>
-                    <button className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/60 dark:hover:bg-slate-800/60 transition" title={t("settings") || "Ajustes"}>
+                    <button className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/60 dark:hover:bg-slate-800/60 transition" title={tr("settings", "Ajustes")}>
                       <SlidersHorizontal className="w-4 h-4" />
                     </button>
                   </div>
@@ -297,14 +299,14 @@ const CreateTextPage = () => {
                       <input
                         value={chatInput}
                         onChange={(e) => setChatInput(e.target.value)}
-                        placeholder={t("bottom_input_ph")}
+                        placeholder={tr("bottom_input_ph", "Escribe un mensaje o sube una fuente para empezar")}
                         className="flex-1 bg-transparent outline-none text-sm md:text-base placeholder:text-slate-400"
                         disabled={sources.length === 0}
                       />
                       <div className="text-xs text-slate-500 mr-2">
-                        {sources.length} {t("sources_count")}
+                        {sources.length} {tr("sources_count", "fuentes")}
                       </div>
-                      <Button type="submit" disabled={!chatInput.trim() || sources.length === 0} className="h-10 px-3 rounded-full" title={t("send")}>
+                      <Button type="submit" disabled={!chatInput.trim() || sources.length === 0} className="h-10 px-3 rounded-full" title={tr("send", "Enviar")}>
                         <Send className="w-4 h-4" />
                       </Button>
                     </div>
