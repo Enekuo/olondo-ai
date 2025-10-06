@@ -636,31 +636,20 @@ dashboard_chat_sources_count: "0 fuentes",
   assistant_mascot_greeting: "¿Cómo puedo ayudarte?",
   
 
-// CreateNew
-plan_premium_title: "Plan Premium",
-create_new_intro: "Explora el poder de Olondo AI. Elige una opción para empezar:",
+  // CreateNew
+  plan_premium_title: "Plan Premium",
+  create_new_intro: "Explora el poder de Olondo AI. Elige una opción para empezar:",
 
-// Create Text
+  // Create Text
   create_text_title: "Crear Texto",
-  sources_add: "Añadir",
-  sources_empty_title: "Aquí aparecerán tus fuentes guardadas",
-  sources_empty_help: "Pulsa “Añadir” para subir PDFs, webs, textos, vídeos o audios.",
-  add_url_placeholder: "Pega una URL y pulsa +",
-  remove: "Eliminar",
-  chat_add_source: "Añade una fuente para comenzar",
-  upload_source_btn: "Subir una fuente",
+  sources_title: "Fuentes",
+  enter_text_here: "Introduce tu texto aquí...",
   bottom_input_ph: "Escribe un mensaje o sube una fuente para empezar",
   sources_count: "fuentes",
   send: "Enviar",
-  sources_title: "Fuentes",
-  enter_text_here: "Introduce tu texto aquí...", 
   sources_tab_text: "Pegar texto",
   sources_tab_document: "Documento",
   sources_tab_image: "Subir imagen",
-  sources_center_url: "Añadir URL",
-  sources_center_text: "Pegar texto",
-  sources_center_image: "Subir imagen",
-  select_image_btn: "Seleccionar imagen",
 
   // Library
   library_filter_all: "Todos",
