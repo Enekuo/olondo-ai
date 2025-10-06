@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import {
   Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon,
   Gem, Upload, FileText, Trash2, Link2, Paperclip, Send, MessageSquare,
-  SlidersHorizontal, Image as ImageIcon, Clipboard
+  SlidersHorizontal, Image as ImageIcon, Clipboard, File as FileIcon
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
@@ -20,7 +20,7 @@ const CreateTextPage = () => {
   const [sources, setSources] = useState([]); // { id, type: 'file'|'url'|'text'|'image', name, meta }
   const [chatInput, setChatInput] = useState("");
   const [urlDraft, setUrlDraft] = useState("");
-  const [sourceMode, setSourceMode] = useState("url"); // 'url' | 'text' | 'image'
+  const [sourceMode, setSourceMode] = useState("text"); // 'text' | 'document' | 'image'
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
 
@@ -214,26 +214,26 @@ const CreateTextPage = () => {
                     <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelSources}</div>
                   </div>
 
-                  {/* Pestañas idénticas al ejemplo, MISMO orden */}
+                  {/* Pestañas idénticas al ejemplo (Texto / Documento / Imagen) */}
                   <div className="flex items-center px-2 border-b" style={{ borderColor: DIVIDER }}>
                     <TabBtn
-                      active={sourceMode === "url"}
-                      icon={Link2}
-                      label={t("sources_tab_url")}
-                      onClick={() => setSourceMode("url")}
+                      active={sourceMode === "text"}
+                      icon={FileText}
+                      label={t("sources_tab_text") === "sources_tab_text" ? "Texto" : t("sources_tab_text")}
+                      onClick={() => setSourceMode("text")}
                       showDivider
                     />
                     <TabBtn
-                      active={sourceMode === "text"}
-                      icon={Clipboard}
-                      label={t("sources_tab_text")}
-                      onClick={() => setSourceMode("text")}
+                      active={sourceMode === "document"}
+                      icon={FileIcon}
+                      label={t("sources_tab_document") === "sources_tab_document" ? "Documento" : t("sources_tab_document")}
+                      onClick={() => setSourceMode("document")}
                       showDivider
                     />
                     <TabBtn
                       active={sourceMode === "image"}
                       icon={ImageIcon}
-                      label={t("sources_tab_image")}
+                      label={t("sources_tab_image") === "sources_tab_image" ? "Imagen" : t("sources_tab_image")}
                       onClick={() => setSourceMode("image")}
                       showDivider={false}
                     />
