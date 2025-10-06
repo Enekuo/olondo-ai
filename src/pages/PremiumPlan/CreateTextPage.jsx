@@ -9,7 +9,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 import { useTheme } from "@/components/layout/ThemeProvider";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button"; 
+import { Button } from "@/components/ui/button";
 
 const CreateTextPage = () => {
   const { t } = useLanguage();
@@ -40,8 +40,9 @@ const CreateTextPage = () => {
 
   const pageVariants = { initial: { opacity: 0, y: 20 }, in: { opacity: 1, y: 0 }, out: { opacity: 0, y: -20 } };
 
-  const labelSources  = t("sources_title") === "sources_title" ? "Fuentes" : t("sources_title");
-  const labelChat     = t("chat_panel_title") === "chat_panel_title" ? "Chat" : t("chat_panel_title");
+  // Sin fallback en español: usa solo t()
+  const labelSources  = t("sources_title");
+  const labelChat     = t("chat_panel_title");
 
   const clickUpload = () => fileInputRef.current?.click();
   const clickUploadImage = () => imageInputRef.current?.click();
@@ -76,7 +77,7 @@ const CreateTextPage = () => {
     setChatInput("");
   };
 
-  /* ===== Pestañas EXACTAS al ejemplo ===== */
+  /* ===== Pestañas estilo referencia ===== */
   const BLUE = "#2563eb";         // activo
   const GRAY_TEXT = "#6b7280";    // texto inactivo
   const GRAY_ICON = "#9ca3af";    // icono inactivo
@@ -93,7 +94,6 @@ const CreateTextPage = () => {
         <Icon className="w-[18px] h-[18px]" style={{ color: active ? BLUE : GRAY_ICON }} />
         <span className="truncate whitespace-nowrap">{label}</span>
 
-        {/* subrayado azul a TODO el ancho del botón */}
         {active && (
           <span
             className="absolute bottom-[-1px] left-0 right-0 h-[2px] rounded-full"
@@ -219,21 +219,21 @@ const CreateTextPage = () => {
                     <TabBtn
                       active={sourceMode === "text"}
                       icon={FileText}
-                      label={t("sources_tab_text") === "sources_tab_text" ? "Texto" : t("sources_tab_text")}
+                      label={t("sources_tab_text")}
                       onClick={() => setSourceMode("text")}
                       showDivider
                     />
                     <TabBtn
                       active={sourceMode === "document"}
                       icon={FileIcon}
-                      label={t("sources_tab_document") === "sources_tab_document" ? "Documento" : t("sources_tab_document")}
+                      label={t("sources_tab_document")}
                       onClick={() => setSourceMode("document")}
                       showDivider
                     />
                     <TabBtn
                       active={sourceMode === "image"}
                       icon={ImageIcon}
-                      label={t("sources_tab_image") === "sources_tab_image" ? "Imagen" : t("sources_tab_image")}
+                      label={t("sources_tab_image")}
                       onClick={() => setSourceMode("image")}
                       showDivider={false}
                     />
@@ -246,7 +246,7 @@ const CreateTextPage = () => {
                   {/* Contenido lista (vacío por ahora) */}
                   <div className="flex-1 overflow-y-auto px-4 pb-6" />
 
-                  {/* Buscador inferior SIN CAMBIOS */}
+                  {/* Buscador inferior */}
                   <div className="border-t border-slate-200 dark:border-slate-800 p-3 bg-slate-50/60 dark:bg-slate-900/40">
                     <div className="flex">
                       <input
