@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import {
   Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon,
   FileText, Send, MessageSquare, SlidersHorizontal,
-  Image as ImageIcon, Clipboard, File as FileIcon, Link as LinkIcon
+  Image as ImageIcon, ClipboardCopy, File as FileIcon, Link as LinkIcon
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
@@ -211,7 +211,7 @@ const CreateTextPage = () => {
                     <TabBtn active={sourceMode === "image"} icon={ImageIcon} label={tr("sources_tab_image", "Subir imagen")} onClick={() => setSourceMode("image")} showDivider={false} />
                   </div>
 
-                  {/* Ayuda central — más pequeño y más junto */}
+                  {/* Ayuda central — compacto y juntos, con ClipboardCopy */}
                   <div className="flex-1 overflow-y-auto px-4 pb-6">
                     {sources.length === 0 && (
                       <div className="h-full w-full flex items-center justify-center select-none">
@@ -230,10 +230,10 @@ const CreateTextPage = () => {
                           {/* divisor */}
                           <span aria-hidden className="h-5 w-px self-center" style={{ backgroundColor: DIVIDER }} />
 
-                          {/* Pegar texto */}
+                          {/* Pegar texto con el icono solicitado */}
                           <div className="flex flex-col items-center text-center">
                             <span className="w-6 h-6 flex items-center justify-center" style={{ color: GRAY_ICON }}>
-                              <Clipboard className="w-[20px] h-[20px]" />
+                              <ClipboardCopy className="w-[20px] h-[20px]" />
                             </span>
                             <span className="mt-1 text-[14px] font-medium" style={{ color: GRAY_TEXT }}>
                               {tr("sources_center_text", "Pegar texto")}
