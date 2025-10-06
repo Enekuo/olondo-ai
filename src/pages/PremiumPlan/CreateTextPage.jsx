@@ -40,7 +40,7 @@ const CreateTextPage = () => {
 
   const pageVariants = { initial: { opacity: 0, y: 20 }, in: { opacity: 1, y: 0 }, out: { opacity: 0, y: -20 } };
 
-  // Sin fallback en español: usa solo t()
+  // Sin fallbacks: siempre desde i18n
   const labelSources  = t("sources_title");
   const labelChat     = t("chat_panel_title");
 
@@ -77,22 +77,22 @@ const CreateTextPage = () => {
     setChatInput("");
   };
 
-  /* ===== Pestañas estilo referencia ===== */
+  /* ===== Pestañas iguales (3 columnas) ===== */
   const BLUE = "#2563eb";         // activo
   const GRAY_TEXT = "#6b7280";    // texto inactivo
   const GRAY_ICON = "#9ca3af";    // icono inactivo
   const DIVIDER = "#e5e7eb";      // separador
 
   const TabBtn = ({ active, icon: Icon, label, onClick, showDivider }) => (
-    <div className="relative flex items-stretch">
+    <div className="relative flex-1 min-w-0 flex items-stretch">
       <button
         type="button"
         onClick={onClick}
-        className="relative inline-flex items-center gap-2 h-[48px] px-3 text-[14px] font-medium"
+        className="relative inline-flex w-full items-center gap-2 h-[44px] px-3 text-[14px] font-medium justify-start"
         style={{ color: active ? BLUE : GRAY_TEXT }}
       >
-        <Icon className="w-[18px] h-[18px]" style={{ color: active ? BLUE : GRAY_ICON }} />
-        <span className="truncate whitespace-nowrap">{label}</span>
+        <Icon className="w-[18px] h-[18px] shrink-0" style={{ color: active ? BLUE : GRAY_ICON }} />
+        <span className="truncate">{label}</span>
 
         {active && (
           <span
@@ -106,12 +106,12 @@ const CreateTextPage = () => {
         <span
           aria-hidden
           className="self-center"
-          style={{ width: 1, height: 24, backgroundColor: DIVIDER }}
+          style={{ width: 1, height: 22, backgroundColor: DIVIDER }}
         />
       )}
     </div>
   );
-  /* ====================================== */
+  /* ========================================= */
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-950 text-slate-900 dark:text-slate-100">
@@ -214,7 +214,7 @@ const CreateTextPage = () => {
                     <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelSources}</div>
                   </div>
 
-                  {/* Pestañas (Texto / Documento / Imagen) */}
+                  {/* Pestañas (tres columnas iguales) */}
                   <div className="flex items-center px-2 border-b" style={{ borderColor: DIVIDER }}>
                     <TabBtn
                       active={sourceMode === "text"}
