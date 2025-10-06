@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import {
   Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon,
   FileText, Send, MessageSquare, SlidersHorizontal,
-  Image as ImageIcon, ClipboardCopy, File as FileIcon, Link as LinkIcon
+  ClipboardCopy, File as FileIcon, Link2 as UrlIcon
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
@@ -23,12 +23,11 @@ const CreateTextPage = () => {
   };
 
   // Estado
-  const [sources, setSources] = useState([]); // { id, type: 'file'|'url'|'text'|'image', name, meta }
+  const [sources, setSources] = useState([]); // { id, type: 'file'|'url'|'text', name, meta }
   const [chatInput, setChatInput] = useState("");
   const [urlDraft, setUrlDraft] = useState("");
-  const [sourceMode, setSourceMode] = useState("text"); // 'text' | 'document' | 'image'
+  const [sourceMode, setSourceMode] = useState("text"); // 'text' | 'document' | 'url'
   const fileInputRef = useRef(null);
-  const imageInputRef = useRef(null);
 
   // Estilos base
   const HEADER_COLOR    = theme === "dark" ? "#262F3F" : "#ffffff";
@@ -49,12 +48,12 @@ const CreateTextPage = () => {
   const labelSources = tr("sources_title", "Fuentes");
   const labelChat    = tr("chat_panel_title", "Chat");
 
-  const onFiles = (e, forcedType = null) => {
+  const onFiles = (e) => {
     const files = Array.from(e.target?.files || []);
     if (!files.length) return;
     const mapped = files.map((f, idx) => ({
       id: `${Date.now()}_${idx}`,
-      type: forcedType || "file",
+      type: "file",
       name: f.name,
       meta: { size: f.size }
     }));
@@ -79,7 +78,7 @@ const CreateTextPage = () => {
 
   /* ===== Pestañas iguales (3 columnas) ===== */
   const BLUE = "#2563eb";
-  const GRAY_TEXT = "#9ca3af";   // <- texto más claro como en tu referencia
+  const GRAY_TEXT = "#9ca3af";
   const GRAY_ICON = "#9ca3af";
   const DIVIDER = "#e5e7eb";
 
@@ -161,26 +160,26 @@ const CreateTextPage = () => {
                     <Home className="w-5 h-5 shrink-0" />
                     <span className="truncate">{tr("dashboard_nav_home", "Home")}</span>
                   </Link>
-                  <Link to="/create" className={navClasses()} style={location.pathname.startsWith("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined} aria-current={location.pathname.startsWith("/create") ? "page" : undefined}>
+                  <Link to="/create" className={navClasses()} style={isCurrentOrChild("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined} aria-current={isCurrentOrChild("/create") ? "page" : undefined}>
                     <PlusCircle className="w-5 h-5 shrink-0" />
                     <span className="truncate">{tr("dashboard_nav_create", "Crear nuevo")}</span>
                   </Link>
-                  <Link to="/library" className={navClasses()} style={location.pathname.startsWith("/library") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
+                  <Link to="/library" className={navClasses()} style={isCurrentOrChild("/library") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <Folder className="w-5 h-5 shrink-0" />
                     <span className="truncate">{tr("dashboard_nav_library", "Biblioteca")}</span>
                   </Link>
-                  <Link to="/assistant" className={navClasses()} style={location.pathname.startsWith("/assistant") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
+                  <Link to="/assistant" className={navClasses()} style={isCurrentOrChild("/assistant") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <MessageSquare className="w-5 h-5 shrink-0" />
                     <span className="truncate">{tr("dashboard_nav_ai_chat", "Chat con IA")}</span>
                   </Link>
-                  <Link to="/pricing" className={navClasses()} style={location.pathname.startsWith("/pricing") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
+                  <Link to="/pricing" className={navClasses()} style={isCurrentOrChild("/pricing") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <CreditCard className="w-5 h-5 shrink-0" />
                     <span className="truncate">{tr("dashboard_nav_plans", "Planes")}</span>
                   </Link>
                 </nav>
 
                 <div className="pb-0">
-                  <Link to="/settings" className={navClasses()} style={location.pathname.startsWith("/settings") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
+                  <Link to="/settings" className={navClasses()} style={isCurrentOrChild("/settings") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <Settings className="w-5 h-5 shrink-0" />
                     <span className="truncate">{tr("dashboard_nav_settings", "Configuración")}</span>
                   </Link>
@@ -204,14 +203,32 @@ const CreateTextPage = () => {
                     <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelSources}</div>
                   </div>
 
-                  {/* Pestañas */}
+                  {/* Pestañas: Texto / Documento / URL */}
                   <div className="flex items-center px-2 border-b" style={{ borderColor: DIVIDER }}>
-                    <TabBtn active={sourceMode === "text"} icon={FileText} label={tr("sources_tab_text", "Pegar texto")} onClick={() => setSourceMode("text")} showDivider />
-                    <TabBtn active={sourceMode === "document"} icon={FileIcon} label={tr("sources_tab_document", "Documento")} onClick={() => setSourceMode("document")} showDivider />
-                    <TabBtn active={sourceMode === "image"} icon={ImageIcon} label={tr("sources_tab_image", "Subir imagen")} onClick={() => setSourceMode("image")} showDivider={false} />
+                    <TabBtn
+                      active={sourceMode === "text"}
+                      icon={FileText}
+                      label={tr("sources_tab_text", "Texto")}
+                      onClick={() => setSourceMode("text")}
+                      showDivider
+                    />
+                    <TabBtn
+                      active={sourceMode === "document"}
+                      icon={FileIcon}
+                      label={tr("sources_tab_document", "Documento")}
+                      onClick={() => setSourceMode("document")}
+                      showDivider
+                    />
+                    <TabBtn
+                      active={sourceMode === "url"}
+                      icon={UrlIcon}
+                      label={tr("sources_tab_url", "URL")}
+                      onClick={() => setSourceMode("url")}
+                      showDivider={false}
+                    />
                   </div>
 
-                  {/* Ayuda central — icono arriba + texto debajo; color más claro */}
+                  {/* Ayuda central — icono arriba + texto debajo */}
                   <div className="flex-1 overflow-y-auto px-4 pb-6">
                     {sources.length === 0 && (
                       <div className="h-full w-full flex items-center justify-center select-none">
@@ -220,7 +237,7 @@ const CreateTextPage = () => {
                           <div className="flex flex-col items-center text-center">
                             <span className="relative w-8 h-8 flex items-center justify-center" style={{ color: GRAY_ICON }}>
                               <span className="absolute -top-2 left-1/2 -translate-x-1/2 text-xs leading-none" style={{ color: GRAY_ICON }}>+</span>
-                              <LinkIcon className="w-6 h-6" />
+                              <UrlIcon className="w-6 h-6" />
                             </span>
                             <span className="mt-2 text-[15px] font-medium" style={{ color: GRAY_TEXT }}>
                               {tr("sources_center_url", "Añadir URL")}
@@ -230,7 +247,7 @@ const CreateTextPage = () => {
                           {/* divisor */}
                           <span aria-hidden className="h-8 w-px self-center" style={{ backgroundColor: DIVIDER }} />
 
-                          {/* Pegar texto (ClipboardCopy) */}
+                          {/* Pegar texto */}
                           <div className="flex flex-col items-center text-center">
                             <span className="w-8 h-8 flex items-center justify-center" style={{ color: GRAY_ICON }}>
                               <ClipboardCopy className="w-6 h-6" />
@@ -244,7 +261,7 @@ const CreateTextPage = () => {
                     )}
                   </div>
 
-                  {/* Buscador inferior */}
+                  {/* Zona inferior: input (sirve para pegar texto / URLs) */}
                   <div className="border-t border-slate-200 dark:border-slate-800 p-3 bg-slate-50/60 dark:bg-slate-900/40">
                     <div className="flex">
                       <input
@@ -258,6 +275,23 @@ const CreateTextPage = () => {
                       <Button onClick={addUrl} className="h-10 px-4 rounded-r-xl bg-sky-600 hover:bg-sky-700 text-white shadow-sm">
                         +
                       </Button>
+                    </div>
+
+                    {/* Botones de acción según pestaña activa */}
+                    <div className="mt-3 flex items-center gap-2">
+                      {sourceMode === "document" && (
+                        <>
+                          <input type="file" ref={fileInputRef} className="hidden" multiple onChange={onFiles} />
+                          <Button type="button" variant="outline" className="h-9" onClick={() => fileInputRef.current?.click()}>
+                            {tr("upload_source_btn", "Subir documento")}
+                          </Button>
+                        </>
+                      )}
+                      {sourceMode === "url" && (
+                        <Button type="button" variant="outline" className="h-9" onClick={addUrl}>
+                          {tr("sources_add", "Añadir")}
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </aside>
@@ -300,4 +334,4 @@ const CreateTextPage = () => {
   );
 };
 
-export default CreateTextPage;
+export default CreateTextPage; 
