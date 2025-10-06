@@ -9,7 +9,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 import { useTheme } from "@/components/layout/ThemeProvider";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"; 
 
 const CreateTextPage = () => {
   const { t } = useLanguage();
@@ -40,7 +40,6 @@ const CreateTextPage = () => {
 
   const pageVariants = { initial: { opacity: 0, y: 20 }, in: { opacity: 1, y: 0 }, out: { opacity: 0, y: -20 } };
 
-  // Sin fallbacks: siempre desde i18n
   const labelSources  = t("sources_title");
   const labelChat     = t("chat_panel_title");
 
@@ -77,7 +76,7 @@ const CreateTextPage = () => {
     setChatInput("");
   };
 
-  /* ===== Pestañas iguales (3 columnas) ===== */
+  /* ===== Pestañas EXACTAS al ejemplo ===== */
   const BLUE = "#2563eb";         // activo
   const GRAY_TEXT = "#6b7280";    // texto inactivo
   const GRAY_ICON = "#9ca3af";    // icono inactivo
@@ -92,8 +91,9 @@ const CreateTextPage = () => {
         style={{ color: active ? BLUE : GRAY_TEXT }}
       >
         <Icon className="w-[18px] h-[18px] shrink-0" style={{ color: active ? BLUE : GRAY_ICON }} />
-        <span className="truncate">{label}</span>
+        <span className="truncate whitespace-nowrap">{label}</span>
 
+        {/* subrayado azul a TODO el ancho del botón */}
         {active && (
           <span
             className="absolute bottom-[-1px] left-0 right-0 h-[2px] rounded-full"
@@ -111,7 +111,7 @@ const CreateTextPage = () => {
       )}
     </div>
   );
-  /* ========================================= */
+  /* ====================================== */
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-950 text-slate-900 dark:text-slate-100">
@@ -214,7 +214,7 @@ const CreateTextPage = () => {
                     <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelSources}</div>
                   </div>
 
-                  {/* Pestañas (tres columnas iguales) */}
+                  {/* Pestañas (Texto / Documento / Imagen) */}
                   <div className="flex items-center px-2 border-b" style={{ borderColor: DIVIDER }}>
                     <TabBtn
                       active={sourceMode === "text"}
@@ -239,14 +239,31 @@ const CreateTextPage = () => {
                     />
                   </div>
 
-                  {/* inputs ocultos para subir */}
-                  <input type="file" ref={fileInputRef} className="hidden" multiple onChange={onFiles} />
-                  <input type="file" ref={imageInputRef} className="hidden" accept="image/*" multiple onChange={(e) => onFiles(e, "image")} />
+                  {/* Contenido lista + ayuda central cuando está vacío */}
+                  <div className="flex-1 overflow-y-auto px-4 pb-6">
+                    {sources.length === 0 && (
+                      <div className="h-full w-full flex items-center justify-center select-none">
+                        <div className="flex items-center gap-6 text-[15px]" style={{ color: GRAY_TEXT }}>
+                          <span className="inline-flex items-center gap-2">
+                            <Link2 className="w-5 h-5" style={{ color: GRAY_ICON }} />
+                            <span>{t("sources_center_url")}</span>
+                          </span>
+                          <span aria-hidden className="h-5" style={{ width: 1, backgroundColor: DIVIDER }} />
+                          <span className="inline-flex items-center gap-2">
+                            <Clipboard className="w-5 h-5" style={{ color: GRAY_ICON }} />
+                            <span>{t("sources_center_text")}</span>
+                          </span>
+                          <span aria-hidden className="h-5" style={{ width: 1, backgroundColor: DIVIDER }} />
+                          <span className="inline-flex items-center gap-2">
+                            <ImageIcon className="w-5 h-5" style={{ color: GRAY_ICON }} />
+                            <span>{t("sources_center_image")}</span>
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
 
-                  {/* Contenido lista (vacío por ahora) */}
-                  <div className="flex-1 overflow-y-auto px-4 pb-6" />
-
-                  {/* Buscador inferior */}
+                  {/* Buscador inferior SIN CAMBIOS */}
                   <div className="border-t border-slate-200 dark:border-slate-800 p-3 bg-slate-50/60 dark:bg-slate-900/40">
                     <div className="flex">
                       <input
