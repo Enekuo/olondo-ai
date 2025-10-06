@@ -108,7 +108,7 @@ const CreateTextPage = () => {
       {/* HEADER */}
       <header
         className="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-slate-800"
-        style={{ backgroundColor: HEADER_COLOR, height: HEADER_HEIGHT_PX, borderColor: BORDER_COLOR }}
+        style={{ backgroundColor: HEADER_COLOR, height: 72, borderColor: BORDER_COLOR }}
       >
         <div className="w-full h-full px-4 sm:px-6 flex items-center justify-between relative">
           <Link to="/" className="font-extrabold text-lg tracking-tight text-sky-400">Olondo.ai</Link>
@@ -150,8 +150,8 @@ const CreateTextPage = () => {
               className="sticky ps-2 pe-3 pt-6 pb-0 text-slate-800 dark:text-slate-100"
               style={{
                 backgroundColor: SIDEBAR_COLOR,
-                top: HEADER_HEIGHT_PX,
-                height: `calc(100vh - ${HEADER_HEIGHT_PX}px)`,
+                top: 72,
+                height: `calc(100vh - 72px)`,
                 width: SIDEBAR_WIDTH_PX
               }}
             >
@@ -161,26 +161,26 @@ const CreateTextPage = () => {
                     <Home className="w-5 h-5 shrink-0" />
                     <span className="truncate">{tr("dashboard_nav_home", "Home")}</span>
                   </Link>
-                  <Link to="/create" className={navClasses()} style={isCurrentOrChild("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined} aria-current={isCurrentOrChild("/create") ? "page" : undefined}>
+                  <Link to="/create" className={navClasses()} style={location.pathname.startsWith("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined} aria-current={location.pathname.startsWith("/create") ? "page" : undefined}>
                     <PlusCircle className="w-5 h-5 shrink-0" />
                     <span className="truncate">{tr("dashboard_nav_create", "Crear nuevo")}</span>
                   </Link>
-                  <Link to="/library" className={navClasses()} style={isCurrentOrChild("/library") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
+                  <Link to="/library" className={navClasses()} style={location.pathname.startsWith("/library") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <Folder className="w-5 h-5 shrink-0" />
                     <span className="truncate">{tr("dashboard_nav_library", "Biblioteca")}</span>
                   </Link>
-                  <Link to="/assistant" className={navClasses()} style={isCurrentOrChild("/assistant") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
+                  <Link to="/assistant" className={navClasses()} style={location.pathname.startsWith("/assistant") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <MessageSquare className="w-5 h-5 shrink-0" />
                     <span className="truncate">{tr("dashboard_nav_ai_chat", "Chat con IA")}</span>
                   </Link>
-                  <Link to="/pricing" className={navClasses()} style={isCurrentOrChild("/pricing") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
+                  <Link to="/pricing" className={navClasses()} style={location.pathname.startsWith("/pricing") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <CreditCard className="w-5 h-5 shrink-0" />
                     <span className="truncate">{tr("dashboard_nav_plans", "Planes")}</span>
                   </Link>
                 </nav>
 
                 <div className="pb-0">
-                  <Link to="/settings" className={navClasses()} style={isCurrentOrChild("/settings") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
+                  <Link to="/settings" className={navClasses()} style={location.pathname.startsWith("/settings") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <Settings className="w-5 h-5 shrink-0" />
                     <span className="truncate">{tr("dashboard_nav_settings", "Configuración")}</span>
                   </Link>
@@ -195,7 +195,7 @@ const CreateTextPage = () => {
               <motion.section
                 className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6"
                 initial="initial" animate="in" exit="out" variants={pageVariants} transition={{ duration: 0.35 }}
-                style={{ minHeight: `calc(100vh - ${HEADER_HEIGHT_PX + 32}px)` }}
+                style={{ minHeight: `calc(100vh - 104px)` }}
               >
                 {/* Panel Fuentes */}
                 <aside className="h-full rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden flex flex-col">
@@ -211,31 +211,31 @@ const CreateTextPage = () => {
                     <TabBtn active={sourceMode === "image"} icon={ImageIcon} label={tr("sources_tab_image", "Subir imagen")} onClick={() => setSourceMode("image")} showDivider={false} />
                   </div>
 
-                  {/* Ayuda central EXACTA (2 items, icono arriba + texto debajo) */}
+                  {/* Ayuda central — más pequeño y más junto */}
                   <div className="flex-1 overflow-y-auto px-4 pb-6">
                     {sources.length === 0 && (
                       <div className="h-full w-full flex items-center justify-center select-none">
-                        <div className="flex items-start justify-center gap-16">
+                        <div className="flex items-start justify-center gap-8">
                           {/* Añadir URL */}
                           <div className="flex flex-col items-center text-center">
-                            <span className="relative w-8 h-8 flex items-center justify-center" style={{ color: GRAY_ICON }}>
-                              <span className="absolute -top-2 left-1/2 -translate-x-1/2 text-xs leading-none" style={{ color: GRAY_ICON }}>+</span>
-                              <LinkIcon className="w-6 h-6" />
+                            <span className="relative w-6 h-6 flex items-center justify-center" style={{ color: GRAY_ICON }}>
+                              <span className="absolute -top-1 left-1/2 -translate-x-1/2 text-[10px] leading-none" style={{ color: GRAY_ICON }}>+</span>
+                              <LinkIcon className="w-[20px] h-[20px]" />
                             </span>
-                            <span className="mt-2 text-[15px] font-medium" style={{ color: GRAY_TEXT }}>
+                            <span className="mt-1 text-[14px] font-medium" style={{ color: GRAY_TEXT }}>
                               {tr("sources_center_url", "Añadir URL")}
                             </span>
                           </div>
 
                           {/* divisor */}
-                          <span aria-hidden className="h-10 w-px self-center" style={{ backgroundColor: DIVIDER }} />
+                          <span aria-hidden className="h-5 w-px self-center" style={{ backgroundColor: DIVIDER }} />
 
                           {/* Pegar texto */}
                           <div className="flex flex-col items-center text-center">
-                            <span className="w-8 h-8 flex items-center justify-center" style={{ color: GRAY_ICON }}>
-                              <Clipboard className="w-6 h-6" />
+                            <span className="w-6 h-6 flex items-center justify-center" style={{ color: GRAY_ICON }}>
+                              <Clipboard className="w-[20px] h-[20px]" />
                             </span>
-                            <span className="mt-2 text-[15px] font-medium" style={{ color: GRAY_TEXT }}>
+                            <span className="mt-1 text-[14px] font-medium" style={{ color: GRAY_TEXT }}>
                               {tr("sources_center_text", "Pegar texto")}
                             </span>
                           </div>
