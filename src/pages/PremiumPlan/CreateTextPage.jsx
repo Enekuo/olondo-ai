@@ -23,9 +23,10 @@ const CreateTextPage = () => {
   };
 
   // Estado
-  const [sources] = useState([]); // sigue contando fuentes si más adelante las añades
+  const [sources] = useState([]); // seguiremos usándolo cuando activemos Doc/URL
   const [chatInput, setChatInput] = useState("");
   const [sourceMode, setSourceMode] = useState("text"); // 'text' | 'document' | 'url'
+  const [textValue, setTextValue] = useState("");       // contenido pegado/escrito
 
   // Estilos base
   const HEADER_COLOR    = theme === "dark" ? "#262F3F" : "#ffffff";
@@ -186,39 +187,37 @@ const CreateTextPage = () => {
                     <TabBtn active={sourceMode === "url"} icon={UrlIcon} label={tr("sources_tab_url", "URL")} onClick={() => setSourceMode("url")} showDivider={false} />
                   </div>
 
-                  {/* Ayuda central */}
-                  <div className="flex-1 overflow-y-auto px-4 pb-6">
-                    {sources.length === 0 && (
+                  {/* Contenido del panel: cambia según pestaña */}
+                  <div className="flex-1 overflow-hidden">
+                    {sourceMode === "text" && (
+                      <div className="h-full w-full">
+                        <textarea
+                          value={textValue}
+                          onChange={(e) => setTextValue(e.target.value)}
+                          placeholder={tr("enter_text_here_full", "Introduce o pega tu texto aquí")}
+                          className="w-full h-full resize-none outline-none p-4 text-[15px] leading-6
+                                     bg-transparent placeholder:text-slate-400 text-slate-800
+                                     dark:text-slate-100 dark:placeholder:text-slate-500"
+                        />
+                      </div>
+                    )}
+
+                    {sourceMode === "document" && (
                       <div className="h-full w-full flex items-center justify-center select-none">
-                        <div className="flex items-start justify-center gap-12">
-                          {/* Añadir URL */}
-                          <div className="flex flex-col items-center text-center">
-                            <span className="relative w-8 h-8 flex items-center justify-center" style={{ color: GRAY_ICON }}>
-                              <span className="absolute -top-2 left-1/2 -translate-x-1/2 text-xs leading-none" style={{ color: GRAY_ICON }}>+</span>
-                              <UrlIcon className="w-6 h-6" />
-                            </span>
-                            <span className="mt-2 text-[15px] font-medium" style={{ color: GRAY_TEXT }}>
-                              {tr("sources_center_url", "Añadir URL")}
-                            </span>
-                          </div>
+                        <div className="text-slate-400 text-sm">
+                          {tr("doc_tab_placeholder", "Aquí irá el cargador de documentos.")}
+                        </div>
+                      </div>
+                    )}
 
-                          {/* divisor */}
-                          <span aria-hidden className="h-8 w-px self-center" style={{ backgroundColor: DIVIDER }} />
-
-                          {/* Pegar texto */}
-                          <div className="flex flex-col items-center text-center">
-                            <span className="w-8 h-8 flex items-center justify-center" style={{ color: GRAY_ICON }}>
-                              <ClipboardCopy className="w-6 h-6" />
-                            </span>
-                            <span className="mt-2 text-[15px] font-medium" style={{ color: GRAY_TEXT }}>
-                              {tr("sources_center_text", "Pegar texto")}
-                            </span>
-                          </div>
+                    {sourceMode === "url" && (
+                      <div className="h-full w-full flex items-center justify-center select-none">
+                        <div className="text-slate-400 text-sm">
+                          {tr("url_tab_placeholder", "Aquí irá el campo para añadir URLs.")}
                         </div>
                       </div>
                     )}
                   </div>
-                  {/* (Se eliminó la franja inferior con input y botón +) */}
                 </aside>
 
                 {/* Panel Chat */}
