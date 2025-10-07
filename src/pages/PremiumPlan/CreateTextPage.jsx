@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon,
   FileText, Send, MessageSquare, SlidersHorizontal,
-  ClipboardCopy, File as FileIcon, Link2 as UrlIcon
+  ClipboardCopy, File as FileIcon, Link2 as UrlIcon, Plus
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
@@ -23,10 +23,11 @@ const CreateTextPage = () => {
   };
 
   // Estado
-  const [sources] = useState([]); // seguiremos usándolo cuando activemos Doc/URL
+  const [sources] = useState([]); // lo usaremos al conectar realmente las fuentes
   const [chatInput, setChatInput] = useState("");
   const [sourceMode, setSourceMode] = useState("text"); // 'text' | 'document' | 'url'
-  const [textValue, setTextValue] = useState("");       // contenido pegado/escrito
+  const [textValue, setTextValue] = useState("");
+  const fileInputRef = useRef(null);
 
   // Estilos base
   const HEADER_COLOR    = theme === "dark" ? "#262F3F" : "#ffffff";
@@ -78,6 +79,13 @@ const CreateTextPage = () => {
       )}
     </div>
   );
+
+  // select de archivo (solo UI por ahora)
+  const triggerPick = () => fileInputRef.current?.click();
+  const onFiles = (e) => {
+    // aquí más adelante podrás añadir los archivos a "sources"
+    e.target.value = ""; // reset
+  };
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-950 text-slate-900 dark:text-slate-100">
@@ -188,25 +196,52 @@ const CreateTextPage = () => {
                   </div>
 
                   {/* Contenido del panel: cambia según pestaña */}
-                  <div className="flex-1 overflow-hidden">
+                  <div className="flex-1 overflow-hidden p-4">
                     {sourceMode === "text" && (
-                      <div className="h-full w-full">
-                        <textarea
-                          value={textValue}
-                          onChange={(e) => setTextValue(e.target.value)}
-                          placeholder={tr("enter_text_here_full", "Introduce o pega tu texto aquí")}
-                          className="w-full h-full resize-none outline-none p-4 text-[15px] leading-6
-                                     bg-transparent placeholder:text-slate-400 text-slate-800
-                                     dark:text-slate-100 dark:placeholder:text-slate-500"
-                        />
-                      </div>
+                      <textarea
+                        value={textValue}
+                        onChange={(e) => setTextValue(e.target.value)}
+                        placeholder={tr("enter_text_here_full", "Introduce o pega tu texto aquí")}
+                        className="w-full h-full resize-none outline-none text-[15px] leading-6
+                                   bg-transparent placeholder:text-slate-400 text-slate-800
+                                   dark:text-slate-100 dark:placeholder:text-slate-500"
+                      />
                     )}
 
                     {sourceMode === "document" && (
-                      <div className="h-full w-full flex items-center justify-center select-none">
-                        <div className="text-slate-400 text-sm">
-                          {tr("doc_tab_placeholder", "Aquí irá el cargador de documentos.")}
-                        </div>
+                      <div className="h-full w-full flex items-center justify-center">
+                        {/* INPUT oculto */}
+                        <input
+                          ref={fileInputRef}
+                          type="file"
+                          className="hidden"
+                          multiple
+                          accept=".pdf,.ppt,.pptx,.doc,.docx,.csv,.json,.xml,.epub,.txt,.vtt,.srt"
+                          onChange={onFiles}
+                        />
+                        {/* Dropzone/Picker */}
+                        <button
+                          type="button"
+                          onClick={triggerPick}
+                          className="w-full max-w-[720px] rounded-2xl border border-dashed
+                                     border-slate-300 dark:border-slate-700 bg-white/40 dark:bg-slate-900/30
+                                     hover:bg-slate-50 dark:hover:bg-slate-900/50 transition
+                                     px-6 py-10 text-center shadow-[inset_0_0_0_1px_rgba(0,0,0,0.02)]"
+                        >
+                          <div className="mx-auto mb-5 w-20 h-20 rounded-full bg-sky-100 flex items-center justify-center">
+                            <Plus className="w-10 h-10 text-sky-600" />
+                          </div>
+                          <div className="text-xl font-semibold text-slate-800 dark:text-slate-100">
+                            {tr("choose_file_title", "Elige tu archivo")}
+                          </div>
+                          {/* SIN la línea "o arrastra el archivo aquí" */}
+                          <div className="mt-4 text-sm text-slate-500">
+                            {tr(
+                              "accepted_formats",
+                              "Formatos admitidos: PDF, PPTX, DOCX, CSV, JSON, XML, EPUB, TXT, VTT, SRT"
+                            )}
+                          </div>
+                        </button>
                       </div>
                     )}
 
