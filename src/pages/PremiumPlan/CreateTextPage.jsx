@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon,
@@ -16,18 +16,16 @@ const CreateTextPage = () => {
   const { theme, setTheme } = useTheme();
   const location = useLocation();
 
-  // Helper: evita mostrar claves crudas si falta una traducción
+  // Helper: fallback si falta alguna traducción
   const tr = (key, fallback) => {
     const val = t(key);
     return !val || val === key ? fallback : val;
   };
 
   // Estado
-  const [sources, setSources] = useState([]); // { id, type: 'file'|'url'|'text', name, meta }
+  const [sources] = useState([]); // sigue contando fuentes si más adelante las añades
   const [chatInput, setChatInput] = useState("");
-  const [urlDraft, setUrlDraft] = useState("");
   const [sourceMode, setSourceMode] = useState("text"); // 'text' | 'document' | 'url'
-  const fileInputRef = useRef(null); // (se queda por si se usa más adelante)
 
   // Estilos base
   const HEADER_COLOR    = theme === "dark" ? "#262F3F" : "#ffffff";
@@ -47,15 +45,6 @@ const CreateTextPage = () => {
 
   const labelSources = tr("sources_title", "Fuentes");
   const labelChat    = tr("chat_panel_title", "Chat");
-
-  const addUrl = () => {
-    if (!urlDraft.trim()) return;
-    setSources((prev) => [
-      ...prev,
-      { id: `${Date.now()}_url`, type: "url", name: urlDraft.trim(), meta: {} },
-    ]);
-    setUrlDraft("");
-  };
 
   const sendChat = (e) => {
     e?.preventDefault();
@@ -229,23 +218,7 @@ const CreateTextPage = () => {
                       </div>
                     )}
                   </div>
-
-                  {/* Input inferior (igual que antes) */}
-                  <div className="border-t border-slate-200 dark:border-slate-800 p-3 bg-slate-50/60 dark:bg-slate-900/40">
-                    <div className="flex">
-                      <input
-                        value={urlDraft}
-                        onChange={(e) => setUrlDraft(e.target.value)}
-                        className="h-10 flex-1 rounded-l-xl border border-slate-200 dark:border-slate-700
-                                   bg-white/90 dark:bg-slate-900/60 px-3 text-sm outline-none
-                                   focus:ring-2 focus:ring-sky-400"
-                        placeholder={tr("enter_text_here", "Introduce tu texto aquí...")}
-                      />
-                      <Button onClick={addUrl} className="h-10 px-4 rounded-r-xl bg-sky-600 hover:bg-sky-700 text-white shadow-sm">
-                        +
-                      </Button>
-                    </div>
-                  </div>
+                  {/* (Se eliminó la franja inferior con input y botón +) */}
                 </aside>
 
                 {/* Panel Chat */}
