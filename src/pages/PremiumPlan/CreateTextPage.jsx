@@ -16,17 +16,18 @@ const CreateTextPage = () => {
   const { theme, setTheme } = useTheme();
   const location = useLocation();
 
-  // Helper: fallback si falta alguna traducción
+  // i18n helper (fallback si falta clave)
   const tr = (key, fallback) => {
     const val = t(key);
     return !val || val === key ? fallback : val;
   };
 
   // Estado
-  const [sources] = useState([]); // lo usaremos al conectar realmente las fuentes
+  const [sources] = useState([]);
   const [chatInput, setChatInput] = useState("");
   const [sourceMode, setSourceMode] = useState("text"); // 'text' | 'document' | 'url'
   const [textValue, setTextValue] = useState("");
+  const [urlsValue, setUrlsValue] = useState("");
   const fileInputRef = useRef(null);
 
   // Estilos base
@@ -54,7 +55,7 @@ const CreateTextPage = () => {
     setChatInput("");
   };
 
-  /* ===== Pestañas iguales (3 columnas) ===== */
+  /* ===== Pestañas ===== */
   const BLUE = "#2563eb";
   const GRAY_TEXT = "#9ca3af";
   const GRAY_ICON = "#9ca3af";
@@ -80,12 +81,8 @@ const CreateTextPage = () => {
     </div>
   );
 
-  // select de archivo (solo UI por ahora)
   const triggerPick = () => fileInputRef.current?.click();
-  const onFiles = (e) => {
-    // aquí más adelante podrás añadir los archivos a "sources"
-    e.target.value = ""; // reset
-  };
+  const onFiles = (e) => { e.target.value = ""; };
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-950 text-slate-900 dark:text-slate-100">
@@ -188,15 +185,16 @@ const CreateTextPage = () => {
                     <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelSources}</div>
                   </div>
 
-                  {/* Pestañas: Texto / Documento / URL */}
+                  {/* Tabs */}
                   <div className="flex items-center px-2 border-b" style={{ borderColor: DIVIDER }}>
                     <TabBtn active={sourceMode === "text"} icon={FileText} label={tr("sources_tab_text", "Texto")} onClick={() => setSourceMode("text")} showDivider />
                     <TabBtn active={sourceMode === "document"} icon={FileIcon} label={tr("sources_tab_document", "Documento")} onClick={() => setSourceMode("document")} showDivider />
                     <TabBtn active={sourceMode === "url"} icon={UrlIcon} label={tr("sources_tab_url", "URL")} onClick={() => setSourceMode("url")} showDivider={false} />
                   </div>
 
-                  {/* Contenido del panel: cambia según pestaña */}
+                  {/* Contenido */}
                   <div className="flex-1 overflow-hidden p-4">
+                    {/* TEXTO */}
                     {sourceMode === "text" && (
                       <textarea
                         value={textValue}
@@ -208,9 +206,9 @@ const CreateTextPage = () => {
                       />
                     )}
 
+                    {/* DOCUMENTO */}
                     {sourceMode === "document" && (
                       <div className="h-full w-full flex items-center justify-center">
-                        {/* INPUT oculto */}
                         <input
                           ref={fileInputRef}
                           type="file"
@@ -219,7 +217,6 @@ const CreateTextPage = () => {
                           accept=".pdf,.ppt,.pptx,.doc,.docx,.csv,.json,.xml,.epub,.txt,.vtt,.srt"
                           onChange={onFiles}
                         />
-                        {/* Dropzone/Picker */}
                         <button
                           type="button"
                           onClick={triggerPick}
@@ -234,7 +231,6 @@ const CreateTextPage = () => {
                           <div className="text-xl font-semibold text-slate-800 dark:text-slate-100">
                             {tr("choose_file_title", "Elige tu archivo")}
                           </div>
-                          {/* SIN la línea "o arrastra el archivo aquí" */}
                           <div className="mt-4 text-sm text-slate-500">
                             {tr(
                               "accepted_formats",
@@ -245,10 +241,28 @@ const CreateTextPage = () => {
                       </div>
                     )}
 
+                    {/* URL */}
                     {sourceMode === "url" && (
-                      <div className="h-full w-full flex items-center justify-center select-none">
-                        <div className="text-slate-400 text-sm">
-                          {tr("url_tab_placeholder", "Aquí irá el campo para añadir URLs.")}
+                      <div className="h-full w-full flex flex-col">
+                        <label className="mb-2 inline-flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300">
+                          <UrlIcon className="w-4 h-4" />
+                          {tr("paste_urls_label", "Pegar URLs*")}
+                        </label>
+                        <textarea
+                          value={urlsValue}
+                          onChange={(e) => setUrlsValue(e.target.value)}
+                          placeholder={tr("paste_urls_placeholder", "Pega las URLs web aquí (una por línea o separadas por espacio)")}
+                          className="flex-1 min-h-[220px] w-full rounded-xl border border-slate-300 dark:border-slate-700
+                                     bg-white/90 dark:bg-slate-900/50 p-3 text-[15px] leading-6 outline-none
+                                     focus:ring-2 focus:ring-sky-400 placeholder:text-slate-400
+                                     dark:placeholder:text-slate-500"
+                        />
+                        <div className="mt-4 text-slate-500 text-sm">
+                          <ul className="list-disc ps-5 space-y-1">
+                            <li>{tr("urls_note_multi", "Para añadir varias URLs, sepáralas con un espacio o un salto de línea.")}</li>
+                            <li>{tr("urls_note_visible", "Solo se importará el texto visible del sitio web.")}</li>
+                            <li>{tr("urls_note_paywalled", "No se admiten artículos de pago.")}</li>
+                          </ul>
                         </div>
                       </div>
                     )}
