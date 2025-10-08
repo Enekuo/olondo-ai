@@ -384,12 +384,13 @@ const CreateTextPage = () => {
                             <UrlIcon className="w-4 h-4" />
                             {tr("paste_urls_label", "Pegar URLs*")}
                           </div>
-                          {/* Botón azul con borde negro/ blanco en dark */}
+                          {/* Botón rectangular sin esquinas redondeadas */}
                           <button
                             type="button"
                             onClick={() => setUrlInputOpen(true)}
-                            className="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg
-                                       border-2 border-black bg-sky-50 text-sky-700
+                            className="inline-flex items-center gap-2 text-sm px-3 py-1.5
+                                       border-2 border-black rounded-none
+                                       bg-sky-50 text-sky-700
                                        hover:bg-sky-100 focus:outline-none focus:ring-2 focus:ring-sky-400/50
                                        shadow-[0_1px_0_0_rgba(0,0,0,0.08)]
                                        dark:border-white dark:bg-sky-950/30 dark:text-sky-300
