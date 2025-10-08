@@ -16,6 +16,7 @@ const CreateTextPage = () => {
   const { theme, setTheme } = useTheme();
   const location = useLocation();
 
+  // i18n helper
   const tr = (key, fallback) => {
     const val = t(key);
     return !val || val === key ? fallback : val;
@@ -111,7 +112,7 @@ const CreateTextPage = () => {
       try {
         const url = new URL(u);
         valid.push({ href: url.href, host: url.host });
-      } catch {}
+      } catch { /* ignore */ }
     }
     const seen = new Set();
     return valid.filter(v => (seen.has(v.href) ? false : (seen.add(v.href), true)));
@@ -328,7 +329,7 @@ const CreateTextPage = () => {
                           type="file"
                           className="hidden"
                           multiple
-                          // @ts-ignore
+                          // @ts-ignore – soporte de carpeta
                           webkitdirectory=""
                           directory=""
                           accept=".pdf,.ppt,.pptx,.doc,.docx,.csv,.json,.xml,.epub,.txt,.vtt,.srt,.md,.rtf,.html,.htm,.jpg,.jpeg,.png"
@@ -428,12 +429,18 @@ const CreateTextPage = () => {
                             <UrlIcon className="w-4 h-4" />
                             {tr("paste_urls_label", "Pegar URLs*")}
                           </div>
+                          {/* Botón AZUL visibile */}
                           <button
                             type="button"
                             onClick={() => setUrlInputOpen(true)}
-                            className="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800"
+                            className="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg
+                                       border border-sky-300 bg-sky-50 text-sky-700
+                                       hover:bg-sky-100 focus:outline-none focus:ring-2 focus:ring-sky-400/50
+                                       shadow-[0_1px_0_0_rgba(2,132,199,0.15)]
+                                       dark:border-sky-500/40 dark:bg-sky-950/30 dark:text-sky-300
+                                       dark:hover:bg-sky-900/40"
                           >
-                            <Plus className="w-4 h-4" />
+                            <Plus className="w-4 h-4 text-sky-600 dark:text-sky-300" />
                             {tr("add_url", "Añadir URL")}
                           </button>
                         </div>
@@ -487,7 +494,7 @@ const CreateTextPage = () => {
                             <ul className="flex-1 overflow-y-auto overflow-x-hidden divide-y divide-slate-200 dark:divide-slate-800 rounded-xl border border-slate-200 dark:border-slate-800">
                               {urlItems.map(({ id, url, host }) => (
                                 <li key={id} className="flex items-center justify-between gap-3 px-3 py-2">
-                                  {/* Zona texto flexible */}
+                                  {/* Texto flexible con ellipsis */}
                                   <div className="min-w-0 flex items-center gap-3 flex-1">
                                     <div className="shrink-0 w-8 h-8 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
                                       <UrlIcon className="w-4 h-4" />
@@ -505,7 +512,7 @@ const CreateTextPage = () => {
                                     </div>
                                   </div>
 
-                                  {/* Botón X independiente, sin superponer */}
+                                  {/* X separada, sin superponer al enlace */}
                                   <button
                                     onClick={() => removeUrl(id)}
                                     className="shrink-0 p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
@@ -516,7 +523,6 @@ const CreateTextPage = () => {
                                 </li>
                               ))}
                             </ul>
-                            {/* Eliminado el botón “Añadir más” en URL */}
                           </>
                         )}
 
