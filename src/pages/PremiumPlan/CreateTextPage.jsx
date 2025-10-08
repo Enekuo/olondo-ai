@@ -174,7 +174,7 @@ const CreateTextPage = () => {
           <main className="min-h-[calc(100vh-72px)]">
             <div className="max-w-7xl mx-auto w-full px-4 md:px-6 py-4">
               <motion.section
-                className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6"
+                className="grid grid-cols-1 lg:grid-cols-[480px_1fr] gap-6"
                 initial="initial" animate="in" exit="out" variants={pageVariants} transition={{ duration: 0.35 }}
                 style={{ minHeight: `calc(100vh - ${HEADER_HEIGHT_PX + 32}px)` }}
               >
@@ -252,10 +252,7 @@ const CreateTextPage = () => {
                           value={urlsValue}
                           onChange={(e) => setUrlsValue(e.target.value)}
                           placeholder={tr("paste_urls_placeholder", "Pega las URLs web aquí (una por línea o separadas por espacio)")}
-                          className="flex-1 min-h-[220px] w-full rounded-xl border border-slate-300 dark:border-slate-700
-                                     bg-white/90 dark:bg-slate-900/50 p-3 text-[15px] leading-6 outline-none
-                                     focus:ring-2 focus:ring-sky-400 placeholder:text-slate-400
-                                     dark:placeholder:text-slate-500"
+                          className="flex-1 min-h...[TRUNCATED FOR BREVITY IN THIS MESSAGE]..."
                         />
                         <div className="mt-4 text-slate-500 text-sm">
                           <ul className="list-disc ps-5 space-y-1">
