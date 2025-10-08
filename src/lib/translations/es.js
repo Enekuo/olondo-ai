@@ -650,7 +650,48 @@ dashboard_chat_sources_count: "0 fuentes",
   sources_tab_text: "Texto",
   sources_tab_document: "Documento",
   sources_tab_image: "Imagen",
+  // Paneles
+  sources_title: "Fuentes",
+  chat_panel_title: "Chat",
 
+  // Tabs de fuentes
+  sources_tab_text: "Texto",
+  sources_tab_document: "Documento",
+  sources_tab_url: "URL",
+
+  // Texto
+  enter_text_here_full: "Introduce o pega tu texto aquí",
+
+  // Documentos
+  choose_file_title: "Elige tu archivo o carpeta",
+  accepted_formats:
+    "Formatos admitidos: PDF, PPTX, DOCX, CSV, JSON, XML, EPUB, TXT, VTT, SRT",
+  folder_hint:
+    "También puedes seleccionar una carpeta completa o arrastrar y soltar.",
+  selected_docs: "Seleccionados",
+  clear_all: "Vaciar todo",
+  add_more: "Añadir más",
+  remove: "Quitar",
+
+  // URLs
+  paste_urls_label: "Pegar URLs*",
+  add_url: "Añadir URL",
+  paste_urls_placeholder:
+    "Pega una o varias URLs (una por línea o separadas por espacio)",
+  save_urls: "Guardar",
+  cancel: "Cancelar",
+  urls_note_multi:
+    "Para añadir varias URLs, sepáralas con un espacio o un salto de línea.",
+  urls_note_visible: "Solo se importará el texto visible del sitio web.",
+  urls_note_paywalled: "No se admiten artículos de pago.",
+  saved_urls: "URLs guardadas",
+
+  // Chat / input inferior
+  bottom_input_ph: "Escribe un mensaje o sube una fuente para empezar",
+  send: "Enviar",
+  sources_count: "fuentes",
+  
+  
   // Library
   library_filter_all: "Todos",
   library_filter_texts: "Textos",
@@ -668,5 +709,9 @@ dashboard_chat_sources_count: "0 fuentes",
   folder_modal_cancel: "Cancelar",
   folder_modal_save: "Guardar",
   close: "Cerrar",
+
+  
+
+
 }
 

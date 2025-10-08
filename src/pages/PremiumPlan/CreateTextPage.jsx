@@ -16,9 +16,10 @@ const CreateTextPage = () => {
   const { theme, setTheme } = useTheme();
   const location = useLocation();
 
+  // helper i18n
   const tr = (key, fallback) => {
-    const val = t(key);
-    return !val || val === key ? fallback : val;
+    const v = t(key);
+    return !v || v === key ? fallback : v;
   };
 
   // ===== Estado =====
@@ -55,8 +56,10 @@ const CreateTextPage = () => {
 
   const pageVariants = { initial: { opacity: 0, y: 20 }, in: { opacity: 1, y: 0 }, out: { opacity: 0, y: -20 } };
 
-  const labelSources = tr("sources_title", "Fuentes");
-  const labelChat    = tr("chat_panel_title", "Chat");
+  // etiquetas i18n
+  const labelCreateTitle = tr("create_text_title", "Crear Texto");
+  const labelSources     = tr("sources_title", "Fuentes");
+  const labelChat        = tr("chat_panel_title", "Chat");
 
   const sendChat = (e) => {
     e?.preventDefault();
@@ -64,7 +67,7 @@ const CreateTextPage = () => {
     setChatInput("");
   };
 
-  // ===== UI helpers =====
+  // ===== Pestañas =====
   const BLUE = "#2563eb";
   const GRAY_TEXT = "#9ca3af";
   const GRAY_ICON = "#9ca3af";
@@ -80,9 +83,7 @@ const CreateTextPage = () => {
       >
         <Icon className="w-[18px] h-[18px] shrink-0" style={{ color: active ? BLUE : GRAY_ICON }} />
         <span className="truncate">{label}</span>
-        {active && (
-          <span className="absolute bottom-[-1px] left-0 right-0 h-[2px] rounded-full" style={{ backgroundColor: BLUE }} />
-        )}
+        {active && <span className="absolute bottom-[-1px] left-0 right-0 h-[2px] rounded-full" style={{ backgroundColor: BLUE }} />}
       </button>
       {showDivider && <span aria-hidden className="self-center" style={{ width: 1, height: 22, backgroundColor: DIVIDER }} />}
     </div>
@@ -170,12 +171,14 @@ const CreateTextPage = () => {
       >
         <div className="w-full h-full px-4 sm:px-6 flex items-center justify-between relative">
           <Link to="/" className="font-extrabold text-lg tracking-tight text-sky-400">Olondo.ai</Link>
+
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
             <div className="inline-flex items-center gap-2 text-sm sm:text-base md:text-lg font-semibold tracking-tight text-slate-900 dark:text-white">
               <FileText className="w-5 h-5 relative -top-px" style={{ color: BLUE }} />
-              <span>{tr("create_text_title", "Crear Texto")}</span>
+              <span>{labelCreateTitle}</span>
             </div>
           </div>
+
           <div className="flex items-center gap-3 sm:gap-4">
             <LanguageSwitcher />
             <button
@@ -200,7 +203,7 @@ const CreateTextPage = () => {
       {/* LAYOUT */}
       <div className="w-full">
         <div className="grid gap-0 md:grid-cols-[190px_1fr]">
-          {/* SIDEBAR */}
+          {/* SIDEBAR (claves ya existentes) */}
           <aside className="border-r border-slate-200 dark:border-slate-800" style={{ borderColor: BORDER_COLOR }}>
             <div
               className="sticky ps-2 pe-3 pt-6 pb-0 text-slate-800 dark:text-slate-100"
@@ -214,24 +217,31 @@ const CreateTextPage = () => {
               <div className="h-full flex flex-col justify-between">
                 <nav className="space-y-1">
                   <Link to="/app/dashboard" className={navClasses()} style={location.pathname === "/app/dashboard" ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
-                    <Home className="w-5 h-5 shrink-0" /><span className="truncate">{tr("dashboard_nav_home", "Home")}</span>
+                    <Home className="w-5 h-5 shrink-0" />
+                    <span className="truncate">{tr("dashboard_nav_home", "Home")}</span>
                   </Link>
                   <Link to="/create" className={navClasses()} style={isCurrentOrChild("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined} aria-current={isCurrentOrChild("/create") ? "page" : undefined}>
-                    <PlusCircle className="w-5 h-5 shrink-0" /><span className="truncate">{tr("dashboard_nav_create", "Crear nuevo")}</span>
+                    <PlusCircle className="w-5 h-5 shrink-0" />
+                    <span className="truncate">{tr("dashboard_nav_create", "Crear nuevo")}</span>
                   </Link>
                   <Link to="/library" className={navClasses()} style={isCurrentOrChild("/library") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
-                    <Folder className="w-5 h-5 shrink-0" /><span className="truncate">{tr("dashboard_nav_library", "Biblioteca")}</span>
+                    <Folder className="w-5 h-5 shrink-0" />
+                    <span className="truncate">{tr("dashboard_nav_library", "Biblioteca")}</span>
                   </Link>
                   <Link to="/assistant" className={navClasses()} style={isCurrentOrChild("/assistant") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
-                    <MessageSquare className="w-5 h-5 shrink-0" /><span className="truncate">{tr("dashboard_nav_ai_chat", "Chat con IA")}</span>
+                    <MessageSquare className="w-5 h-5 shrink-0" />
+                    <span className="truncate">{tr("dashboard_nav_ai_chat", "Chat con IA")}</span>
                   </Link>
                   <Link to="/pricing" className={navClasses()} style={isCurrentOrChild("/pricing") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
-                    <CreditCard className="w-5 h-5 shrink-0" /><span className="truncate">{tr("dashboard_nav_plans", "Planes")}</span>
+                    <CreditCard className="w-5 h-5 shrink-0" />
+                    <span className="truncate">{tr("dashboard_nav_plans", "Planes")}</span>
                   </Link>
                 </nav>
+
                 <div className="pb-0">
                   <Link to="/settings" className={navClasses()} style={isCurrentOrChild("/settings") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
-                    <Settings className="w-5 h-5 shrink-0" /><span className="truncate">{tr("dashboard_nav_settings", "Configuración")}</span>
+                    <Settings className="w-5 h-5 shrink-0" />
+                    <span className="truncate">{tr("dashboard_nav_settings", "Configuración")}</span>
                   </Link>
                 </div>
               </div>
@@ -309,7 +319,8 @@ const CreateTextPage = () => {
                             {tr("choose_file_title", "Elige tu archivo o carpeta")}
                           </div>
                           <div className="mt-4 text-sm text-slate-500">
-                            {tr("accepted_formats","Formatos admitidos: PDF, PPTX, DOCX, CSV, JSON, XML, EPUB, TXT, VTT, SRT")}
+                            {tr("accepted_formats",
+                              "Formatos admitidos: PDF, PPTX, DOCX, CSV, JSON, XML, EPUB, TXT, VTT, SRT")}
                           </div>
                           <div className="mt-1 text-xs text-slate-400">
                             {tr("folder_hint", "También puedes seleccionar una carpeta completa o arrastrar y soltar.")}
@@ -384,7 +395,7 @@ const CreateTextPage = () => {
                             <UrlIcon className="w-4 h-4" />
                             {tr("paste_urls_label", "Pegar URLs*")}
                           </div>
-                          {/* Botón estilo segunda captura */}
+                          {/* Botón estilo pill celeste (segunda captura) */}
                           <button
                             type="button"
                             onClick={() => setUrlInputOpen(true)}
@@ -403,7 +414,7 @@ const CreateTextPage = () => {
                           </button>
                         </div>
 
-                        {/* Apartado de entrada de URLs */}
+                        {/* Entrada URLs */}
                         {urlInputOpen && (
                           <div className="mb-4 rounded-xl border border-slate-300 dark:border-slate-700 p-3 bg-white/90 dark:bg-slate-900/50">
                             <textarea
@@ -432,7 +443,7 @@ const CreateTextPage = () => {
                           </div>
                         )}
 
-                        {/* Lista / tabla de URLs guardadas */}
+                        {/* Lista de URLs */}
                         {urlItems.length > 0 && (
                           <>
                             <div className="mb-2 flex items-center justify-between">
@@ -481,7 +492,7 @@ const CreateTextPage = () => {
                           </>
                         )}
 
-                        {/* Ayuda breve (más abajo) cuando no hay URLs y no hay input */}
+                        {/* Ayuda breve */}
                         {urlItems.length === 0 && !urlInputOpen && (
                           <div className="mt-12 text-slate-500 text-sm">
                             <ul className="list-disc ps-5 space-y-1">
