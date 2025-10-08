@@ -16,21 +16,29 @@ const CreateTextPage = () => {
   const { theme, setTheme } = useTheme();
   const location = useLocation();
 
-  // i18n helper (fallback si falta clave)
+  // i18n helper
   const tr = (key, fallback) => {
     const val = t(key);
     return !val || val === key ? fallback : val;
   };
 
-  // Estado
-  const [sources, setSources] = useState([]); // [{id,type,name,meta}]
+  // ===== Estado general =====
+  const [sources, setSources] = useState([]); // [{id,type:'file'|'url',name,meta}]
   const [chatInput, setChatInput] = useState("");
   const [sourceMode, setSourceMode] = useState("text"); // 'text' | 'document' | 'url'
+
+  // Texto
   const [textValue, setTextValue] = useState("");
-  const [urlsValue, setUrlsValue] = useState("");
+
+  // Documentos
   const [documents, setDocuments] = useState([]); // [{id,file}]
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef(null);
+
+  // URLs
+  const [urlInputOpen, setUrlInputOpen] = useState(false);
+  const [urlsTextarea, setUrlsTextarea] = useState("");
+  const [urlItems, setUrlItems] = useState([]); // [{id,url,host}]
 
   // Estilos base
   const HEADER_COLOR    = theme === "dark" ? "#262F3F" : "#ffffff";
@@ -83,9 +91,7 @@ const CreateTextPage = () => {
     </div>
   );
 
-  const triggerPick = () => fileInputRef.current?.click();
-
-  // Util: tamaño legible
+  // ===== Utilidades =====
   const formatBytes = (n) => {
     if (!n && n !== 0) return "";
     const k = 1024;
@@ -94,13 +100,28 @@ const CreateTextPage = () => {
     return `${(n / Math.pow(k, i)).toFixed(i ? 1 : 0)} ${sizes[i]}`;
   };
 
-  // Tamaño total
   const totalSize = useMemo(
     () => documents.reduce((acc, d) => acc + (d.file?.size || 0), 0),
     [documents]
   );
 
-  // Añadir archivos (acumular)
+  const parseUrlsFromText = (text) => {
+    const raw = text.split(/[\s\n]+/).map(s => s.trim()).filter(Boolean);
+    const valid = [];
+    for (const u of raw) {
+      try {
+        const url = new URL(u);
+        valid.push({ href: url.href, host: url.host });
+      } catch { /* ignore invalid */ }
+    }
+    // quitar duplicados por href
+    const seen = new Set();
+    return valid.filter(v => (seen.has(v.href) ? false : (seen.add(v.href), true)));
+  };
+
+  // ===== Documentos =====
+  const triggerPick = () => fileInputRef.current?.click();
+
   const addFiles = (list) => {
     if (!list?.length) return;
     const arr = Array.from(list);
@@ -115,12 +136,8 @@ const CreateTextPage = () => {
     setSources((prev) => [...prev, ...newSources]);
   };
 
-  const onFiles = (e) => {
-    addFiles(e.target.files);
-    e.target.value = ""; // permite re-seleccionar lo mismo
-  };
+  const onFiles = (e) => { addFiles(e.target.files); e.target.value = ""; };
 
-  // Drag & drop
   const onDragEnter = (e) => { e.preventDefault(); e.stopPropagation(); setDragActive(true); };
   const onDragOver  = (e) => { e.preventDefault(); e.stopPropagation(); setDragActive(true); };
   const onDragLeave = (e) => { e.preventDefault(); e.stopPropagation(); setDragActive(false); };
@@ -131,17 +148,50 @@ const CreateTextPage = () => {
     if (dt?.files?.length) addFiles(dt.files);
   };
 
-  // Eliminar
   const removeDocument = (id) => {
     setDocuments((prev) => prev.filter((d) => d.id !== id));
     setSources((prev) => prev.filter((s) => s.id !== id));
   };
 
-  // Vaciar
   const clearDocuments = () => {
     const ids = new Set(documents.map((d) => d.id));
     setDocuments([]);
     setSources((prev) => prev.filter((s) => !ids.has(s.id)));
+  };
+
+  // ===== URLs =====
+  const addUrlsFromTextarea = () => {
+    const parsed = parseUrlsFromText(urlsTextarea);
+    if (!parsed.length) return;
+
+    const newItems = parsed.map(p => ({
+      id: crypto.randomUUID(),
+      url: p.href,
+      host: p.host
+    }));
+    setUrlItems(prev => [...prev, ...newItems]);
+
+    const newSources = newItems.map(i => ({
+      id: i.id,
+      type: "url",
+      name: i.host,
+      meta: { url: i.url }
+    }));
+    setSources(prev => [...prev, ...newSources]);
+
+    setUrlsTextarea("");
+    setUrlInputOpen(false);
+  };
+
+  const removeUrl = (id) => {
+    setUrlItems(prev => prev.filter(u => u.id !== id));
+    setSources(prev => prev.filter(s => s.id !== id));
+  };
+
+  const clearUrls = () => {
+    const ids = new Set(urlItems.map(u => u.id));
+    setUrlItems([]);
+    setSources(prev => prev.filter(s => !ids.has(s.id)));
   };
 
   return (
@@ -275,20 +325,18 @@ const CreateTextPage = () => {
                         onDragLeave={onDragLeave}
                         onDrop={onDrop}
                       >
-                        {/* Input oculto: archivos/carpeta y múltiples */}
                         <input
                           ref={fileInputRef}
                           type="file"
                           className="hidden"
                           multiple
-                          // @ts-ignore – soporte de carpeta en navegadores basados en Chromium
+                          // @ts-ignore
                           webkitdirectory=""
                           directory=""
                           accept=".pdf,.ppt,.pptx,.doc,.docx,.csv,.json,.xml,.epub,.txt,.vtt,.srt,.md,.rtf,.html,.htm,.jpg,.jpeg,.png"
                           onChange={onFiles}
                         />
 
-                        {/* Zona de subida */}
                         <button
                           type="button"
                           onClick={triggerPick}
@@ -312,7 +360,6 @@ const CreateTextPage = () => {
                           </div>
                         </button>
 
-                        {/* Barra superior con totales y Vaciar */}
                         {documents.length > 0 && (
                           <div className="mt-6 mb-2 flex items-center justify-between">
                             <div className="text-sm font-medium text-slate-700 dark:text-slate-200">
@@ -330,7 +377,6 @@ const CreateTextPage = () => {
                           </div>
                         )}
 
-                        {/* Lista / tabla */}
                         {documents.length > 0 && (
                           <div className="flex-1 overflow-auto">
                             <ul className="divide-y divide-slate-200 dark:divide-slate-800 rounded-xl border border-slate-200 dark:border-slate-800">
@@ -341,7 +387,6 @@ const CreateTextPage = () => {
                                       <FileIcon className="w-4 h-4" />
                                     </div>
                                     <div className="min-w-0">
-                                      {/* Truncado + tooltip */}
                                       <div className="text-sm font-medium truncate max-w-[290px]" title={file.name}>
                                         {file.name}
                                       </div>
@@ -361,7 +406,6 @@ const CreateTextPage = () => {
                           </div>
                         )}
 
-                        {/* Botón fijo “Añadir más” */}
                         {documents.length > 0 && (
                           <div className="mt-3">
                             <button
@@ -380,26 +424,115 @@ const CreateTextPage = () => {
                     {/* URL */}
                     {sourceMode === "url" && (
                       <div className="h-full w-full flex flex-col">
-                        <label className="mb-2 inline-flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300">
-                          <UrlIcon className="w-4 h-4" />
-                          {tr("paste_urls_label", "Pegar URLs*")}
-                        </label>
-                        <textarea
-                          value={urlsValue}
-                          onChange={(e) => setUrlsValue(e.target.value)}
-                          placeholder={tr("paste_urls_placeholder", "Pega las URLs web aquí (una por línea o separadas por espacio)")}
-                          className="flex-1 min-h-[220px] w-full rounded-xl border border-slate-300 dark:border-slate-700
-                                     bg-white/90 dark:bg-slate-900/50 p-3 text-[15px] leading-6 outline-none
-                                     focus:ring-2 focus:ring-sky-400 placeholder:text-slate-400
-                                     dark:placeholder:text-slate-500"
-                        />
-                        <div className="mt-4 text-slate-500 text-sm">
-                          <ul className="list-disc ps-5 space-y-1">
-                            <li>{tr("urls_note_multi", "Para añadir varias URLs, sepáralas con un espacio o un salto de línea.")}</li>
-                            <li>{tr("urls_note_visible", "Solo se importará el texto visible del sitio web.")}</li>
-                            <li>{tr("urls_note_paywalled", "No se admiten artículos de pago.")}</li>
-                          </ul>
+                        {/* Cabecera acciones */}
+                        <div className="mb-3 flex items-center justify-between">
+                          <div className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300">
+                            <UrlIcon className="w-4 h-4" />
+                            {tr("paste_urls_label", "Pegar URLs*")}
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setUrlInputOpen(true)}
+                            className="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800"
+                          >
+                            <Plus className="w-4 h-4" />
+                            {tr("add_url", "Añadir URL")}
+                          </button>
                         </div>
+
+                        {/* Apartado de entrada de URLs (condicional) */}
+                        {urlInputOpen && (
+                          <div className="mb-4 rounded-xl border border-slate-300 dark:border-slate-700 p-3 bg-white/90 dark:bg-slate-900/50">
+                            <textarea
+                              value={urlsTextarea}
+                              onChange={(e) => setUrlsTextarea(e.target.value)}
+                              placeholder={tr("paste_urls_placeholder", "Pega una o varias URLs (una por línea o separadas por espacio)")}
+                              className="w-full min-h-[140px] rounded-md border border-slate-200 dark:border-slate-700 bg-transparent p-2 outline-none text-[15px] leading-6 placeholder:text-slate-400 dark:placeholder:text-slate-500"
+                            />
+                            <div className="mt-2 flex items-center gap-2">
+                              <Button type="button" onClick={addUrlsFromTextarea} className="h-9">
+                                {tr("save_urls", "Guardar")}
+                              </Button>
+                              <button
+                                type="button"
+                                onClick={() => { setUrlsTextarea(""); setUrlInputOpen(false); }}
+                                className="h-9 px-3 rounded-md border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm"
+                              >
+                                {tr("cancel", "Cancelar")}
+                              </button>
+                            </div>
+                            <div className="mt-2 text-xs text-slate-500">
+                              • {tr("urls_note_multi", "Para añadir varias URLs, sepáralas con un espacio o un salto de línea.")}<br/>
+                              • {tr("urls_note_visible", "Solo se importará el texto visible del sitio web.")}<br/>
+                              • {tr("urls_note_paywalled", "No se admiten artículos de pago.")}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Lista / tabla de URLs guardadas */}
+                        {urlItems.length > 0 && (
+                          <>
+                            <div className="mb-2 flex items-center justify-between">
+                              <div className="text-sm font-medium text-slate-700 dark:text-slate-200">
+                                {tr("saved_urls", "URLs guardadas")} ({urlItems.length})
+                              </div>
+                              <button
+                                onClick={clearUrls}
+                                className="text-sm inline-flex items-center gap-1 px-2 py-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
+                                title={tr("clear_all", "Vaciar todo")}
+                              >
+                                <Trash2 className="w-4 h-4" />
+                                {tr("clear_all", "Vaciar todo")}
+                              </button>
+                            </div>
+
+                            <ul className="flex-1 overflow-auto divide-y divide-slate-200 dark:divide-slate-800 rounded-xl border border-slate-200 dark:border-slate-800">
+                              {urlItems.map(({ id, url, host }) => (
+                                <li key={id} className="flex items-center justify-between gap-3 px-3 py-2">
+                                  <div className="min-w-0 flex items-center gap-3">
+                                    <div className="shrink-0 w-8 h-8 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+                                      <UrlIcon className="w-4 h-4" />
+                                    </div>
+                                    <div className="min-w-0">
+                                      <a href={url} target="_blank" rel="noreferrer" className="text-sm font-medium truncate max-w-[300px] text-sky-600 hover:underline" title={url}>
+                                        {host} — {url}
+                                      </a>
+                                    </div>
+                                  </div>
+                                  <button
+                                    onClick={() => removeUrl(id)}
+                                    className="p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
+                                    title={tr("remove", "Quitar")}
+                                  >
+                                    <X className="w-4 h-4" />
+                                  </button>
+                                </li>
+                              ))}
+                            </ul>
+
+                            <div className="mt-3">
+                              <button
+                                type="button"
+                                onClick={() => setUrlInputOpen(true)}
+                                className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white/70 dark:bg-slate-900/40 hover:bg-slate-50 dark:hover:bg-slate-900/60 py-2"
+                              >
+                                <Plus className="w-4 h-4" />
+                                {tr("add_more", "Añadir más")}
+                              </button>
+                            </div>
+                          </>
+                        )}
+
+                        {/* Si no hay nada aún, mostramos solo la ayuda breve */}
+                        {urlItems.length === 0 && !urlInputOpen && (
+                          <div className="mt-2 text-slate-500 text-sm">
+                            <ul className="list-disc ps-5 space-y-1">
+                              <li>{tr("urls_note_multi", "Para añadir varias URLs, sepáralas con un espacio o un salto de línea.")}</li>
+                              <li>{tr("urls_note_visible", "Solo se importará el texto visible del sitio web.")}</li>
+                              <li>{tr("urls_note_paywalled", "No se admiten artículos de pago.")}</li>
+                            </ul>
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
