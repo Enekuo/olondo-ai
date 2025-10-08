@@ -384,19 +384,21 @@ const CreateTextPage = () => {
                             <UrlIcon className="w-4 h-4" />
                             {tr("paste_urls_label", "Pegar URLs*")}
                           </div>
-                          {/* Botón rectangular sin esquinas redondeadas */}
+                          {/* Botón estilo segunda captura */}
                           <button
                             type="button"
                             onClick={() => setUrlInputOpen(true)}
-                            className="inline-flex items-center gap-2 text-sm px-3 py-1.5
-                                       border-2 border-black rounded-none
+                            className="inline-flex items-center gap-2
+                                       px-4 py-2 text-sm font-medium
+                                       rounded-full border border-sky-300
                                        bg-sky-50 text-sky-700
-                                       hover:bg-sky-100 focus:outline-none focus:ring-2 focus:ring-sky-400/50
-                                       shadow-[0_1px_0_0_rgba(0,0,0,0.08)]
-                                       dark:border-white dark:bg-sky-950/30 dark:text-sky-300
-                                       dark:hover:bg-sky-900/40"
+                                       hover:bg-sky-100 hover:border-sky-400
+                                       focus:outline-none focus:ring-2 focus:ring-sky-400/40
+                                       shadow-sm transition-colors
+                                       dark:border-sky-500/40 dark:bg-sky-900/20 dark:text-sky-300
+                                       dark:hover:bg-sky-900/30"
                           >
-                            <Plus className="w-4 h-4 text-sky-600 dark:text-sky-300" />
+                            <Plus className="w-4 h-4 text-sky-500 dark:text-sky-300" />
                             {tr("add_url", "Añadir URL")}
                           </button>
                         </div>
