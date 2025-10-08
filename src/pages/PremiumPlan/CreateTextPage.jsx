@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import {
   Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon,
   FileText, Send, MessageSquare, SlidersHorizontal,
-  ClipboardCopy, File as FileIcon, Link2 as UrlIcon, Plus
+  File as FileIcon, Link2 as UrlIcon, Plus, Trash2, X
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
@@ -23,11 +23,12 @@ const CreateTextPage = () => {
   };
 
   // Estado
-  const [sources] = useState([]);
+  const [sources, setSources] = useState([]); // [{id,type,name,meta}]
   const [chatInput, setChatInput] = useState("");
   const [sourceMode, setSourceMode] = useState("text"); // 'text' | 'document' | 'url'
   const [textValue, setTextValue] = useState("");
   const [urlsValue, setUrlsValue] = useState("");
+  const [documents, setDocuments] = useState([]); // [{id,file}]
   const fileInputRef = useRef(null);
 
   // Estilos base
@@ -82,7 +83,50 @@ const CreateTextPage = () => {
   );
 
   const triggerPick = () => fileInputRef.current?.click();
-  const onFiles = (e) => { e.target.value = ""; };
+
+  // Util: tamaño legible
+  const formatBytes = (n) => {
+    if (!n && n !== 0) return "";
+    const k = 1024;
+    const sizes = ["B","KB","MB","GB","TB"];
+    const i = Math.floor(Math.log(n) / Math.log(k));
+    return `${(n / Math.pow(k, i)).toFixed(i ? 1 : 0)} ${sizes[i]}`;
+    };
+
+  // Añadir archivos/carpeta (acumular)
+  const onFiles = (e) => {
+    const list = Array.from(e.target.files || []);
+    if (!list.length) { e.target.value = ""; return; }
+
+    // Documentos nuevos
+    const newDocs = list.map((file) => ({ id: crypto.randomUUID(), file }));
+    setDocuments((prev) => [...prev, ...newDocs]);
+
+    // También reflejamos en "sources" para el contador inferior
+    const newSources = newDocs.map((d) => ({
+      id: d.id,
+      type: "file",
+      name: d.file.name,
+      meta: { size: d.file.size, type: d.file.type }
+    }));
+    setSources((prev) => [...prev, ...newSources]);
+
+    // Limpia el input para poder reabrir el mismo archivo/carpeta
+    e.target.value = "";
+  };
+
+  // Eliminar un documento
+  const removeDocument = (id) => {
+    setDocuments((prev) => prev.filter((d) => d.id !== id));
+    setSources((prev) => prev.filter((s) => s.id !== id));
+  };
+
+  // Vaciar lista completa
+  const clearDocuments = () => {
+    const ids = new Set(documents.map((d) => d.id));
+    setDocuments([]);
+    setSources((prev) => prev.filter((s) => !ids.has(s.id)));
+  };
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-950 text-slate-900 dark:text-slate-100">
@@ -208,19 +252,24 @@ const CreateTextPage = () => {
 
                     {/* DOCUMENTO */}
                     {sourceMode === "document" && (
-                      <div className="h-full w-full flex items-center justify-center">
+                      <div className="h-full w-full flex flex-col">
+                        {/* Input oculto: permite archivos o CARPETAS (webkitdirectory) y múltiples */}
                         <input
                           ref={fileInputRef}
                           type="file"
                           className="hidden"
                           multiple
+                          // @ts-ignore – soporte de carpeta en navegadores basados en Chromium
+                          webkitdirectory=""
+                          directory=""
                           accept=".pdf,.ppt,.pptx,.doc,.docx,.csv,.json,.xml,.epub,.txt,.vtt,.srt"
                           onChange={onFiles}
                         />
+                        {/* Zona de subida */}
                         <button
                           type="button"
                           onClick={triggerPick}
-                          className="w-full max-w-[720px] rounded-2xl border border-dashed
+                          className="w-full rounded-2xl border border-dashed
                                      border-slate-300 dark:border-slate-700 bg-white/40 dark:bg-slate-900/30
                                      hover:bg-slate-50 dark:hover:bg-slate-900/50 transition
                                      px-6 py-10 text-center shadow-[inset_0_0_0_1px_rgba(0,0,0,0.02)]"
@@ -229,7 +278,7 @@ const CreateTextPage = () => {
                             <Plus className="w-10 h-10 text-sky-600" />
                           </div>
                           <div className="text-xl font-semibold text-slate-800 dark:text-slate-100">
-                            {tr("choose_file_title", "Elige tu archivo")}
+                            {tr("choose_file_title", "Elige tu archivo o carpeta")}
                           </div>
                           <div className="mt-4 text-sm text-slate-500">
                             {tr(
@@ -237,7 +286,52 @@ const CreateTextPage = () => {
                               "Formatos admitidos: PDF, PPTX, DOCX, CSV, JSON, XML, EPUB, TXT, VTT, SRT"
                             )}
                           </div>
+                          <div className="mt-1 text-xs text-slate-400">
+                            {tr("folder_hint", "También puedes seleccionar una carpeta completa.")}
+                          </div>
                         </button>
+
+                        {/* Lista / tabla de seleccionados */}
+                        {documents.length > 0 && (
+                          <div className="mt-6 flex-1 overflow-auto">
+                            <div className="mb-2 flex items-center justify-between">
+                              <div className="text-sm font-medium text-slate-700 dark:text-slate-200">
+                                {tr("selected_docs", "Seleccionados")} ({documents.length})
+                              </div>
+                              <button
+                                onClick={clearDocuments}
+                                className="text-sm inline-flex items-center gap-1 px-2 py-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
+                                title={tr("clear_all", "Vaciar todo")}
+                              >
+                                <Trash2 className="w-4 h-4" />
+                                {tr("clear_all", "Vaciar todo")}
+                              </button>
+                            </div>
+
+                            <ul className="divide-y divide-slate-200 dark:divide-slate-800 rounded-xl border border-slate-200 dark:border-slate-800">
+                              {documents.map(({ id, file }) => (
+                                <li key={id} className="flex items-center justify-between gap-3 px-3 py-2">
+                                  <div className="min-w-0 flex items-center gap-3">
+                                    <div className="shrink-0 w-8 h-8 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+                                      <FileIcon className="w-4 h-4" />
+                                    </div>
+                                    <div className="min-w-0">
+                                      <div className="text-sm font-medium truncate">{file.name}</div>
+                                      <div className="text-xs text-slate-500">{formatBytes(file.size)}</div>
+                                    </div>
+                                  </div>
+                                  <button
+                                    onClick={() => removeDocument(id)}
+                                    className="p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
+                                    title={tr("remove", "Quitar")}
+                                  >
+                                    <X className="w-4 h-4" />
+                                  </button>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
                       </div>
                     )}
 
@@ -252,7 +346,10 @@ const CreateTextPage = () => {
                           value={urlsValue}
                           onChange={(e) => setUrlsValue(e.target.value)}
                           placeholder={tr("paste_urls_placeholder", "Pega las URLs web aquí (una por línea o separadas por espacio)")}
-                          className="flex-1 min-h...[TRUNCATED FOR BREVITY IN THIS MESSAGE]..."
+                          className="flex-1 min-h-[220px] w-full rounded-xl border border-slate-300 dark:border-slate-700
+                                     bg-white/90 dark:bg-slate-900/50 p-3 text-[15px] leading-6 outline-none
+                                     focus:ring-2 focus:ring-sky-400 placeholder:text-slate-400
+                                     dark:placeholder:text-slate-500"
                         />
                         <div className="mt-4 text-slate-500 text-sm">
                           <ul className="list-disc ps-5 space-y-1">
