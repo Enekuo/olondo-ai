@@ -16,7 +16,6 @@ const CreateTextPage = () => {
   const { theme, setTheme } = useTheme();
   const location = useLocation();
 
-  // i18n helper
   const tr = (key, fallback) => {
     const val = t(key);
     return !val || val === key ? fallback : val;
@@ -112,9 +111,8 @@ const CreateTextPage = () => {
       try {
         const url = new URL(u);
         valid.push({ href: url.href, host: url.host });
-      } catch { /* ignore invalid */ }
+      } catch {}
     }
-    // quitar duplicados por href
     const seen = new Set();
     return valid.filter(v => (seen.has(v.href) ? false : (seen.add(v.href), true)));
   };
@@ -440,7 +438,7 @@ const CreateTextPage = () => {
                           </button>
                         </div>
 
-                        {/* Apartado de entrada de URLs (condicional) */}
+                        {/* Apartado de entrada de URLs */}
                         {urlInputOpen && (
                           <div className="mb-4 rounded-xl border border-slate-300 dark:border-slate-700 p-3 bg-white/90 dark:bg-slate-900/50">
                             <textarea
@@ -486,22 +484,31 @@ const CreateTextPage = () => {
                               </button>
                             </div>
 
-                            <ul className="flex-1 overflow-auto divide-y divide-slate-200 dark:divide-slate-800 rounded-xl border border-slate-200 dark:border-slate-800">
+                            <ul className="flex-1 overflow-y-auto overflow-x-hidden divide-y divide-slate-200 dark:divide-slate-800 rounded-xl border border-slate-200 dark:border-slate-800">
                               {urlItems.map(({ id, url, host }) => (
                                 <li key={id} className="flex items-center justify-between gap-3 px-3 py-2">
-                                  <div className="min-w-0 flex items-center gap-3">
+                                  {/* Zona texto flexible */}
+                                  <div className="min-w-0 flex items-center gap-3 flex-1">
                                     <div className="shrink-0 w-8 h-8 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
                                       <UrlIcon className="w-4 h-4" />
                                     </div>
-                                    <div className="min-w-0">
-                                      <a href={url} target="_blank" rel="noreferrer" className="text-sm font-medium truncate max-w-[300px] text-sky-600 hover:underline" title={url}>
+                                    <div className="min-w-0 flex-1">
+                                      <a
+                                        href={url}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="text-sm font-medium block truncate text-sky-600 hover:underline"
+                                        title={url}
+                                      >
                                         {host} — {url}
                                       </a>
                                     </div>
                                   </div>
+
+                                  {/* Botón X independiente, sin superponer */}
                                   <button
                                     onClick={() => removeUrl(id)}
-                                    className="p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
+                                    className="shrink-0 p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
                                     title={tr("remove", "Quitar")}
                                   >
                                     <X className="w-4 h-4" />
@@ -509,21 +516,11 @@ const CreateTextPage = () => {
                                 </li>
                               ))}
                             </ul>
-
-                            <div className="mt-3">
-                              <button
-                                type="button"
-                                onClick={() => setUrlInputOpen(true)}
-                                className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white/70 dark:bg-slate-900/40 hover:bg-slate-50 dark:hover:bg-slate-900/60 py-2"
-                              >
-                                <Plus className="w-4 h-4" />
-                                {tr("add_more", "Añadir más")}
-                              </button>
-                            </div>
+                            {/* Eliminado el botón “Añadir más” en URL */}
                           </>
                         )}
 
-                        {/* Si no hay nada aún, mostramos solo la ayuda breve */}
+                        {/* Ayuda breve si no hay URLs y no está abierto el input */}
                         {urlItems.length === 0 && !urlInputOpen && (
                           <div className="mt-2 text-slate-500 text-sm">
                             <ul className="list-disc ps-5 space-y-1">
