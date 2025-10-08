@@ -16,13 +16,12 @@ const CreateTextPage = () => {
   const { theme, setTheme } = useTheme();
   const location = useLocation();
 
-  // i18n helper
   const tr = (key, fallback) => {
     const val = t(key);
     return !val || val === key ? fallback : val;
   };
 
-  // ===== Estado general =====
+  // ===== Estado =====
   const [sources, setSources] = useState([]); // [{id,type:'file'|'url',name,meta}]
   const [chatInput, setChatInput] = useState("");
   const [sourceMode, setSourceMode] = useState("text"); // 'text' | 'document' | 'url'
@@ -40,7 +39,7 @@ const CreateTextPage = () => {
   const [urlsTextarea, setUrlsTextarea] = useState("");
   const [urlItems, setUrlItems] = useState([]); // [{id,url,host}]
 
-  // Estilos base
+  // ===== Estilos base =====
   const HEADER_COLOR    = theme === "dark" ? "#262F3F" : "#ffffff";
   const SIDEBAR_COLOR   = theme === "dark" ? "#354153" : "#f8f9fb";
   const ACTIVE_BG_COLOR = theme === "dark" ? "#262F3F" : "#e9eef5";
@@ -65,7 +64,7 @@ const CreateTextPage = () => {
     setChatInput("");
   };
 
-  /* ===== Pestañas ===== */
+  // ===== UI helpers =====
   const BLUE = "#2563eb";
   const GRAY_TEXT = "#9ca3af";
   const GRAY_ICON = "#9ca3af";
@@ -85,17 +84,14 @@ const CreateTextPage = () => {
           <span className="absolute bottom-[-1px] left-0 right-0 h-[2px] rounded-full" style={{ backgroundColor: BLUE }} />
         )}
       </button>
-      {showDivider && (
-        <span aria-hidden className="self-center" style={{ width: 1, height: 22, backgroundColor: DIVIDER }} />
-      )}
+      {showDivider && <span aria-hidden className="self-center" style={{ width: 1, height: 22, backgroundColor: DIVIDER }} />}
     </div>
   );
 
-  // ===== Utilidades =====
+  // ===== Utils =====
   const formatBytes = (n) => {
     if (!n && n !== 0) return "";
-    const k = 1024;
-    const sizes = ["B","KB","MB","GB","TB"];
+    const k = 1024, sizes = ["B","KB","MB","GB","TB"];
     const i = Math.floor(Math.log(n) / Math.log(k));
     return `${(n / Math.pow(k, i)).toFixed(i ? 1 : 0)} ${sizes[i]}`;
   };
@@ -109,10 +105,7 @@ const CreateTextPage = () => {
     const raw = text.split(/[\s\n]+/).map(s => s.trim()).filter(Boolean);
     const valid = [];
     for (const u of raw) {
-      try {
-        const url = new URL(u);
-        valid.push({ href: url.href, host: url.host });
-      } catch { /* ignore */ }
+      try { const url = new URL(u); valid.push({ href: url.href, host: url.host }); } catch {}
     }
     const seen = new Set();
     return valid.filter(v => (seen.has(v.href) ? false : (seen.add(v.href), true)));
@@ -120,77 +113,52 @@ const CreateTextPage = () => {
 
   // ===== Documentos =====
   const triggerPick = () => fileInputRef.current?.click();
-
   const addFiles = (list) => {
     if (!list?.length) return;
     const arr = Array.from(list);
     const newDocs = arr.map((file) => ({ id: crypto.randomUUID(), file }));
     setDocuments((prev) => [...prev, ...newDocs]);
     const newSources = newDocs.map((d) => ({
-      id: d.id,
-      type: "file",
-      name: d.file.name,
-      meta: { size: d.file.size, type: d.file.type }
+      id: d.id, type: "file", name: d.file.name, meta: { size: d.file.size, type: d.file.type }
     }));
     setSources((prev) => [...prev, ...newSources]);
   };
-
   const onFiles = (e) => { addFiles(e.target.files); e.target.value = ""; };
 
   const onDragEnter = (e) => { e.preventDefault(); e.stopPropagation(); setDragActive(true); };
   const onDragOver  = (e) => { e.preventDefault(); e.stopPropagation(); setDragActive(true); };
   const onDragLeave = (e) => { e.preventDefault(); e.stopPropagation(); setDragActive(false); };
   const onDrop = (e) => {
-    e.preventDefault(); e.stopPropagation();
-    setDragActive(false);
-    const dt = e.dataTransfer;
-    if (dt?.files?.length) addFiles(dt.files);
+    e.preventDefault(); e.stopPropagation(); setDragActive(false);
+    const dt = e.dataTransfer; if (dt?.files?.length) addFiles(dt.files);
   };
 
   const removeDocument = (id) => {
     setDocuments((prev) => prev.filter((d) => d.id !== id));
     setSources((prev) => prev.filter((s) => s.id !== id));
   };
-
   const clearDocuments = () => {
     const ids = new Set(documents.map((d) => d.id));
-    setDocuments([]);
-    setSources((prev) => prev.filter((s) => !ids.has(s.id)));
+    setDocuments([]); setSources((prev) => prev.filter((s) => !ids.has(s.id)));
   };
 
   // ===== URLs =====
   const addUrlsFromTextarea = () => {
     const parsed = parseUrlsFromText(urlsTextarea);
     if (!parsed.length) return;
-
-    const newItems = parsed.map(p => ({
-      id: crypto.randomUUID(),
-      url: p.href,
-      host: p.host
-    }));
+    const newItems = parsed.map(p => ({ id: crypto.randomUUID(), url: p.href, host: p.host }));
     setUrlItems(prev => [...prev, ...newItems]);
-
-    const newSources = newItems.map(i => ({
-      id: i.id,
-      type: "url",
-      name: i.host,
-      meta: { url: i.url }
-    }));
+    const newSources = newItems.map(i => ({ id: i.id, type: "url", name: i.host, meta: { url: i.url } }));
     setSources(prev => [...prev, ...newSources]);
-
-    setUrlsTextarea("");
-    setUrlInputOpen(false);
+    setUrlsTextarea(""); setUrlInputOpen(false);
   };
-
   const removeUrl = (id) => {
     setUrlItems(prev => prev.filter(u => u.id !== id));
     setSources(prev => prev.filter(s => s.id !== id));
   };
-
   const clearUrls = () => {
     const ids = new Set(urlItems.map(u => u.id));
-    setUrlItems([]);
-    setSources(prev => prev.filter(s => !ids.has(s.id)));
+    setUrlItems([]); setSources(prev => prev.filter(s => !ids.has(s.id)));
   };
 
   return (
@@ -202,14 +170,12 @@ const CreateTextPage = () => {
       >
         <div className="w-full h-full px-4 sm:px-6 flex items-center justify-between relative">
           <Link to="/" className="font-extrabold text-lg tracking-tight text-sky-400">Olondo.ai</Link>
-
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
             <div className="inline-flex items-center gap-2 text-sm sm:text-base md:text-lg font-semibold tracking-tight text-slate-900 dark:text-white">
               <FileText className="w-5 h-5 relative -top-px" style={{ color: BLUE }} />
               <span>{tr("create_text_title", "Crear Texto")}</span>
             </div>
           </div>
-
           <div className="flex items-center gap-3 sm:gap-4">
             <LanguageSwitcher />
             <button
@@ -248,31 +214,24 @@ const CreateTextPage = () => {
               <div className="h-full flex flex-col justify-between">
                 <nav className="space-y-1">
                   <Link to="/app/dashboard" className={navClasses()} style={location.pathname === "/app/dashboard" ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
-                    <Home className="w-5 h-5 shrink-0" />
-                    <span className="truncate">{tr("dashboard_nav_home", "Home")}</span>
+                    <Home className="w-5 h-5 shrink-0" /><span className="truncate">{tr("dashboard_nav_home", "Home")}</span>
                   </Link>
                   <Link to="/create" className={navClasses()} style={isCurrentOrChild("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined} aria-current={isCurrentOrChild("/create") ? "page" : undefined}>
-                    <PlusCircle className="w-5 h-5 shrink-0" />
-                    <span className="truncate">{tr("dashboard_nav_create", "Crear nuevo")}</span>
+                    <PlusCircle className="w-5 h-5 shrink-0" /><span className="truncate">{tr("dashboard_nav_create", "Crear nuevo")}</span>
                   </Link>
                   <Link to="/library" className={navClasses()} style={isCurrentOrChild("/library") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
-                    <Folder className="w-5 h-5 shrink-0" />
-                    <span className="truncate">{tr("dashboard_nav_library", "Biblioteca")}</span>
+                    <Folder className="w-5 h-5 shrink-0" /><span className="truncate">{tr("dashboard_nav_library", "Biblioteca")}</span>
                   </Link>
                   <Link to="/assistant" className={navClasses()} style={isCurrentOrChild("/assistant") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
-                    <MessageSquare className="w-5 h-5 shrink-0" />
-                    <span className="truncate">{tr("dashboard_nav_ai_chat", "Chat con IA")}</span>
+                    <MessageSquare className="w-5 h-5 shrink-0" /><span className="truncate">{tr("dashboard_nav_ai_chat", "Chat con IA")}</span>
                   </Link>
                   <Link to="/pricing" className={navClasses()} style={isCurrentOrChild("/pricing") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
-                    <CreditCard className="w-5 h-5 shrink-0" />
-                    <span className="truncate">{tr("dashboard_nav_plans", "Planes")}</span>
+                    <CreditCard className="w-5 h-5 shrink-0" /><span className="truncate">{tr("dashboard_nav_plans", "Planes")}</span>
                   </Link>
                 </nav>
-
                 <div className="pb-0">
                   <Link to="/settings" className={navClasses()} style={isCurrentOrChild("/settings") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
-                    <Settings className="w-5 h-5 shrink-0" />
-                    <span className="truncate">{tr("dashboard_nav_settings", "Configuración")}</span>
+                    <Settings className="w-5 h-5 shrink-0" /><span className="truncate">{tr("dashboard_nav_settings", "Configuración")}</span>
                   </Link>
                 </div>
               </div>
@@ -329,13 +288,12 @@ const CreateTextPage = () => {
                           type="file"
                           className="hidden"
                           multiple
-                          // @ts-ignore – soporte de carpeta
+                          // @ts-ignore
                           webkitdirectory=""
                           directory=""
                           accept=".pdf,.ppt,.pptx,.doc,.docx,.csv,.json,.xml,.epub,.txt,.vtt,.srt,.md,.rtf,.html,.htm,.jpg,.jpeg,.png"
                           onChange={onFiles}
                         />
-
                         <button
                           type="button"
                           onClick={triggerPick}
@@ -351,8 +309,7 @@ const CreateTextPage = () => {
                             {tr("choose_file_title", "Elige tu archivo o carpeta")}
                           </div>
                           <div className="mt-4 text-sm text-slate-500">
-                            {tr("accepted_formats",
-                              "Formatos admitidos: PDF, PPTX, DOCX, CSV, JSON, XML, EPUB, TXT, VTT, SRT")}
+                            {tr("accepted_formats","Formatos admitidos: PDF, PPTX, DOCX, CSV, JSON, XML, EPUB, TXT, VTT, SRT")}
                           </div>
                           <div className="mt-1 text-xs text-slate-400">
                             {tr("folder_hint", "También puedes seleccionar una carpeta completa o arrastrar y soltar.")}
@@ -386,9 +343,7 @@ const CreateTextPage = () => {
                                       <FileIcon className="w-4 h-4" />
                                     </div>
                                     <div className="min-w-0">
-                                      <div className="text-sm font-medium truncate max-w-[290px]" title={file.name}>
-                                        {file.name}
-                                      </div>
+                                      <div className="text-sm font-medium truncate max-w-[290px]" title={file.name}>{file.name}</div>
                                       <div className="text-xs text-slate-500">{formatBytes(file.size)}</div>
                                     </div>
                                   </div>
@@ -423,21 +378,21 @@ const CreateTextPage = () => {
                     {/* URL */}
                     {sourceMode === "url" && (
                       <div className="h-full w-full flex flex-col">
-                        {/* Cabecera acciones */}
+                        {/* Cabecera */}
                         <div className="mb-3 flex items-center justify-between">
                           <div className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300">
                             <UrlIcon className="w-4 h-4" />
                             {tr("paste_urls_label", "Pegar URLs*")}
                           </div>
-                          {/* Botón AZUL visibile */}
+                          {/* Botón azul con borde negro/ blanco en dark */}
                           <button
                             type="button"
                             onClick={() => setUrlInputOpen(true)}
                             className="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg
-                                       border border-sky-300 bg-sky-50 text-sky-700
+                                       border-2 border-black bg-sky-50 text-sky-700
                                        hover:bg-sky-100 focus:outline-none focus:ring-2 focus:ring-sky-400/50
-                                       shadow-[0_1px_0_0_rgba(2,132,199,0.15)]
-                                       dark:border-sky-500/40 dark:bg-sky-950/30 dark:text-sky-300
+                                       shadow-[0_1px_0_0_rgba(0,0,0,0.08)]
+                                       dark:border-white dark:bg-sky-950/30 dark:text-sky-300
                                        dark:hover:bg-sky-900/40"
                           >
                             <Plus className="w-4 h-4 text-sky-600 dark:text-sky-300" />
@@ -466,7 +421,7 @@ const CreateTextPage = () => {
                                 {tr("cancel", "Cancelar")}
                               </button>
                             </div>
-                            <div className="mt-2 text-xs text-slate-500">
+                            <div className="mt-6 text-xs text-slate-500">
                               • {tr("urls_note_multi", "Para añadir varias URLs, sepáralas con un espacio o un salto de línea.")}<br/>
                               • {tr("urls_note_visible", "Solo se importará el texto visible del sitio web.")}<br/>
                               • {tr("urls_note_paywalled", "No se admiten artículos de pago.")}
@@ -494,7 +449,6 @@ const CreateTextPage = () => {
                             <ul className="flex-1 overflow-y-auto overflow-x-hidden divide-y divide-slate-200 dark:divide-slate-800 rounded-xl border border-slate-200 dark:border-slate-800">
                               {urlItems.map(({ id, url, host }) => (
                                 <li key={id} className="flex items-center justify-between gap-3 px-3 py-2">
-                                  {/* Texto flexible con ellipsis */}
                                   <div className="min-w-0 flex items-center gap-3 flex-1">
                                     <div className="shrink-0 w-8 h-8 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
                                       <UrlIcon className="w-4 h-4" />
@@ -511,8 +465,6 @@ const CreateTextPage = () => {
                                       </a>
                                     </div>
                                   </div>
-
-                                  {/* X separada, sin superponer al enlace */}
                                   <button
                                     onClick={() => removeUrl(id)}
                                     className="shrink-0 p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
@@ -526,9 +478,9 @@ const CreateTextPage = () => {
                           </>
                         )}
 
-                        {/* Ayuda breve si no hay URLs y no está abierto el input */}
+                        {/* Ayuda breve (más abajo) cuando no hay URLs y no hay input */}
                         {urlItems.length === 0 && !urlInputOpen && (
-                          <div className="mt-2 text-slate-500 text-sm">
+                          <div className="mt-12 text-slate-500 text-sm">
                             <ul className="list-disc ps-5 space-y-1">
                               <li>{tr("urls_note_multi", "Para añadir varias URLs, sepáralas con un espacio o un salto de línea.")}</li>
                               <li>{tr("urls_note_visible", "Solo se importará el texto visible del sitio web.")}</li>
