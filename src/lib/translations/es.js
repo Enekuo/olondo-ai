@@ -669,7 +669,7 @@ dashboard_chat_sources_count: "0 fuentes",
   paste_urls_label: "Pegar URLs*",
   add_url: "Añadir URL",
   paste_urls_placeholder:
-    "Introduce aqui la URL",
+    "Introduce aqui una o más URLs (separadas por línea)",
   save_urls: "Guardar",
   cancel: "Cancelar",
   
