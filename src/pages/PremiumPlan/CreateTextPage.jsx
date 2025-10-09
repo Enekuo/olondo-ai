@@ -372,7 +372,7 @@ const CreateTextPage = () => {
                                   </button>
                                 </li>
                               ))}
-                            </ul>
+                            </ul> 
                           </div>
                         )}
 
