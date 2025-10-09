@@ -657,9 +657,9 @@ dashboard_chat_sources_count: "0 fuentes",
   // Documentos
   choose_file_title: "Elige tu archivo o carpeta",
   accepted_formats:
-    "Formatos admitidos: PDF, PPTX, DOCX, CSV, JSON, XML, EPUB, TXT, VTT, SRT",
+    "Formatos admitidos: PDF, DOCX, PPTX, PNG, JPG, JPEG, CSV, JSON, XML, EPUB, TXT, VTT, SRT",
   folder_hint:
-    "También puedes seleccionar una carpeta completa o arrastrar y soltar.",
+    "También puedes subir imágenes o capturas de pantalla.",
   selected_docs: "Seleccionados",
   clear_all: "Vaciar todo",
   remove: "Quitar",
@@ -669,11 +669,10 @@ dashboard_chat_sources_count: "0 fuentes",
   paste_urls_label: "Pegar URLs*",
   add_url: "Añadir URL",
   paste_urls_placeholder:
-    "Pega una o varias URLs (una por línea o separadas por espacio)",
+    "Introduce aqui la URL",
   save_urls: "Guardar",
   cancel: "Cancelar",
-  urls_note_multi:
-    "Para añadir varias URLs, sepáralas con un espacio o un salto de línea.",
+  
   urls_note_visible: "Solo se importará el texto visible del sitio web.",
   urls_note_paywalled: "No se admiten artículos de pago.",
   saved_urls: "URLs guardadas",
