@@ -2,7 +2,8 @@ import React, { useRef, useState, useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon,
-  FileText, Send, MessageSquare, SlidersHorizontal,
+  FileText, MessageSquare,
+  SlidersHorizontal,
   File as FileIcon, Link2 as UrlIcon, Plus, Trash2, X
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -21,7 +22,6 @@ const CreateTextPage = () => {
 
   // ===== Estado =====
   const [sources, setSources] = useState([]); // [{id,type:'file'|'url',name,meta}]
-  const [chatInput, setChatInput] = useState("");
   const [sourceMode, setSourceMode] = useState("text"); // 'text' | 'document' | 'url'
 
   // Texto
@@ -56,13 +56,6 @@ const CreateTextPage = () => {
   // etiquetas i18n
   const labelCreateTitle = tr("create_text_title");
   const labelSources     = tr("sources_title");
-  const labelChat        = tr("chat_panel_title");
-
-  const sendChat = (e) => {
-    e?.preventDefault();
-    if (!chatInput.trim()) return;
-    setChatInput("");
-  };
 
   // ===== Pestañas =====
   const BLUE = "#2563eb";
@@ -372,7 +365,7 @@ const CreateTextPage = () => {
                                   </button>
                                 </li>
                               ))}
-                            </ul> 
+                            </ul>
                           </div>
                         )}
 
@@ -445,7 +438,7 @@ const CreateTextPage = () => {
                                 {tr("cancel")}
                               </button>
                             </div>
-                            {/* Ayuda breve dentro de la tarjeta: se eliminó urls_note_multi */}
+                            {/* Ayuda breve dentro de la tarjeta */}
                             <div className="mt-6 text-xs text-slate-500">
                               • {tr("urls_note_visible")}<br/>
                               • {tr("urls_note_paywalled")}
@@ -504,7 +497,7 @@ const CreateTextPage = () => {
                           </>
                         )}
 
-                        {/* Ayuda breve fuera de la tarjeta: se eliminó urls_note_multi */}
+                        {/* Ayuda breve fuera de la tarjeta */}
                         {urlItems.length === 0 && !urlInputOpen && (
                           <div className="mt-12 text-slate-500 text-sm">
                             <ul className="list-disc ps-5 space-y-1">
@@ -518,35 +511,10 @@ const CreateTextPage = () => {
                   </div>
                 </aside>
 
-                {/* Panel Chat */}
+                {/* ========= Panel Derecho: limpio (sin barra superior ni input inferior) ========= */}
                 <section className="h-full relative rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden -ml-px">
-                  <div className="h-11 flex items-center justify-between px-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/40">
-                    <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelChat}</div>
-                    <button className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/60 dark:hover:bg-slate-800/60 transition" title={tr("settings")} aria-label={tr("settings")}>
-                      <SlidersHorizontal className="w-4 h-4" />
-                    </button>
-                  </div>
-
-                  <form onSubmit={sendChat} className="absolute bottom-0 left-0 right-0 p-4">
-                    <div className="mx-auto max-w-4xl flex items-center gap-2 rounded-full border
-                                    border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900
-                                    px-6 py-2 shadow-sm focus-within:ring-2 focus-within:ring-sky-400/40">
-                      <input
-                        value={chatInput}
-                        onChange={(e) => setChatInput(e.target.value)}
-                        placeholder={tr("bottom_input_ph")}
-                        className="flex-1 bg-transparent outline-none text-sm md:text-base placeholder:text-slate-400"
-                        disabled={sources.length === 0}
-                        aria-label={tr("bottom_input_ph")}
-                      />
-                      <div className="text-xs text-slate-500 mr-2">
-                        {sources.length} {tr("sources_count")}
-                      </div>
-                      <Button type="submit" disabled={!chatInput.trim() || sources.length === 0} className="h-10 px-3 rounded-full" title={tr("send")} aria-label={tr("send")}>
-                        <Send className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </form>
+                  {/* Contenido vacío por ahora: aquí irá el editor/generación */}
+                  <div className="w-full h-full" />
                 </section>
               </motion.section>
             </div>
@@ -557,4 +525,4 @@ const CreateTextPage = () => {
   );
 };
 
-export default CreateTextPage; 
+export default CreateTextPage;
