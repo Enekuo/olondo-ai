@@ -57,7 +57,7 @@ const CreateTextPage = () => {
   const pageVariants = { initial: { opacity: 0, y: 20 }, in: { opacity: 1, y: 0 }, out: { opacity: 0, y: -20 } };
 
   // etiquetas i18n
-  const labelCreateTitle = tr("create_text_title", "Crear Texto");
+  const labelCreateTitle = tr("create_text_title", "Crear texto");
   const labelSources     = tr("sources_title", "Fuentes");
   const labelChat        = tr("chat_panel_title", "Chat");
 
@@ -80,6 +80,8 @@ const CreateTextPage = () => {
         onClick={onClick}
         className="relative inline-flex w-full items-center gap-2 h-[44px] px-3 text-[14px] font-medium justify-start"
         style={{ color: active ? BLUE : GRAY_TEXT }}
+        aria-pressed={active}
+        aria-label={label}
       >
         <Icon className="w-[18px] h-[18px] shrink-0" style={{ color: active ? BLUE : GRAY_ICON }} />
         <span className="truncate">{label}</span>
@@ -174,7 +176,7 @@ const CreateTextPage = () => {
 
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
             <div className="inline-flex items-center gap-2 text-sm sm:text-base md:text-lg font-semibold tracking-tight text-slate-900 dark:text-white">
-              <FileText className="w-5 h-5 relative -top-px" style={{ color: BLUE }} />
+              <FileText className="w-5 h-5 relative -top-px" style={{ color: BLUE }} aria-hidden />
               <span>{labelCreateTitle}</span>
             </div>
           </div>
@@ -186,6 +188,7 @@ const CreateTextPage = () => {
               className="inline-flex h-10 w-10 items-center justify-center rounded-xl hover:opacity-90 transition-colors"
               style={{ backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff", border: theme === "dark" ? "none" : "1px solid #e5e7eb", color: theme === "dark" ? "#ffffff" : "#1f2937" }}
               aria-label={tr("theme_toggle", "Cambiar tema")}
+              title={tr("theme_toggle", "Cambiar tema")}
             >
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
@@ -193,6 +196,7 @@ const CreateTextPage = () => {
               className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:opacity-90 transition-colors"
               style={{ backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff", border: theme === "dark" ? "none" : "1px solid #e5e7eb", color: theme === "dark" ? "#ffffff" : "#1f2937" }}
               aria-label={tr("user_menu", "Usuario")}
+              title={tr("user_menu", "Usuario")}
             >
               <User className="w-5 h-5" />
             </button>
@@ -218,7 +222,7 @@ const CreateTextPage = () => {
                 <nav className="space-y-1">
                   <Link to="/app/dashboard" className={navClasses()} style={location.pathname === "/app/dashboard" ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <Home className="w-5 h-5 shrink-0" />
-                    <span className="truncate">{tr("dashboard_nav_home", "Home")}</span>
+                    <span className="truncate">{tr("dashboard_nav_home", "Inicio")}</span>
                   </Link>
                   <Link to="/create" className={navClasses()} style={isCurrentOrChild("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined} aria-current={isCurrentOrChild("/create") ? "page" : undefined}>
                     <PlusCircle className="w-5 h-5 shrink-0" />
@@ -241,7 +245,7 @@ const CreateTextPage = () => {
                 <div className="pb-0">
                   <Link to="/settings" className={navClasses()} style={isCurrentOrChild("/settings") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <Settings className="w-5 h-5 shrink-0" />
-                    <span className="truncate">{tr("dashboard_nav_settings", "Configuración")}</span>
+                    <span className="truncate">{tr("dashboard_nav_settings", "Ajustes")}</span>
                   </Link>
                 </div>
               </div>
@@ -281,6 +285,7 @@ const CreateTextPage = () => {
                         className="w-full h-full resize-none outline-none text-[15px] leading-6
                                    bg-transparent placeholder:text-slate-400 text-slate-800
                                    dark:text-slate-100 dark:placeholder:text-slate-500"
+                        aria-label={tr("sources_tab_text", "Texto")}
                       />
                     )}
 
@@ -311,6 +316,8 @@ const CreateTextPage = () => {
                                      border-slate-300 dark:border-slate-700 bg-white/40 dark:bg-slate-900/30
                                      hover:bg-slate-50 dark:hover:bg-slate-900/50 transition
                                      px-6 py-10 text-center shadow-[inset_0_0_0_1px_rgba(0,0,0,0.02)]"
+                          aria-label={tr("choose_file_title", "Elige tu archivo o carpeta")}
+                          title={tr("choose_file_title", "Elige tu archivo o carpeta")}
                         >
                           <div className="mx-auto mb-5 w-20 h-20 rounded-full bg-sky-100 flex items-center justify-center">
                             <Plus className="w-10 h-10 text-sky-600" />
@@ -337,6 +344,7 @@ const CreateTextPage = () => {
                               onClick={clearDocuments}
                               className="text-sm inline-flex items-center gap-1 px-2 py-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
                               title={tr("clear_all", "Vaciar todo")}
+                              aria-label={tr("clear_all", "Vaciar todo")}
                             >
                               <Trash2 className="w-4 h-4" />
                               {tr("clear_all", "Vaciar todo")}
@@ -362,6 +370,7 @@ const CreateTextPage = () => {
                                     onClick={() => removeDocument(id)}
                                     className="p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
                                     title={tr("remove", "Quitar")}
+                                    aria-label={tr("remove", "Quitar")}
                                   >
                                     <X className="w-4 h-4" />
                                   </button>
@@ -377,6 +386,8 @@ const CreateTextPage = () => {
                               type="button"
                               onClick={triggerPick}
                               className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white/70 dark:bg-slate-900/40 hover:bg-slate-50 dark:hover:bg-slate-900/60 py-2"
+                              aria-label={tr("add_more", "Añadir más")}
+                              title={tr("add_more", "Añadir más")}
                             >
                               <Plus className="w-4 h-4" />
                               {tr("add_more", "Añadir más")}
@@ -395,7 +406,7 @@ const CreateTextPage = () => {
                             <UrlIcon className="w-4 h-4" />
                             {tr("paste_urls_label", "Pegar URLs*")}
                           </div>
-                          {/* Botón estilo pill celeste (segunda captura) */}
+                          {/* Botón estilo pill celeste */}
                           <button
                             type="button"
                             onClick={() => setUrlInputOpen(true)}
@@ -408,6 +419,8 @@ const CreateTextPage = () => {
                                        shadow-sm transition-colors
                                        dark:border-sky-500/40 dark:bg-sky-900/20 dark:text-sky-300
                                        dark:hover:bg-sky-900/30"
+                            aria-label={tr("add_url", "Añadir URL")}
+                            title={tr("add_url", "Añadir URL")}
                           >
                             <Plus className="w-4 h-4 text-sky-500 dark:text-sky-300" />
                             {tr("add_url", "Añadir URL")}
@@ -422,6 +435,7 @@ const CreateTextPage = () => {
                               onChange={(e) => setUrlsTextarea(e.target.value)}
                               placeholder={tr("paste_urls_placeholder", "Pega una o varias URLs (una por línea o separadas por espacio)")}
                               className="w-full min-h-[140px] rounded-md border border-slate-200 dark:border-slate-700 bg-transparent p-2 outline-none text-[15px] leading-6 placeholder:text-slate-400 dark:placeholder:text-slate-500"
+                              aria-label={tr("paste_urls_placeholder", "Pega una o varias URLs (una por línea o separadas por espacio)")}
                             />
                             <div className="mt-2 flex items-center gap-2">
                               <Button type="button" onClick={addUrlsFromTextarea} className="h-9">
@@ -454,6 +468,7 @@ const CreateTextPage = () => {
                                 onClick={clearUrls}
                                 className="text-sm inline-flex items-center gap-1 px-2 py-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
                                 title={tr("clear_all", "Vaciar todo")}
+                                aria-label={tr("clear_all", "Vaciar todo")}
                               >
                                 <Trash2 className="w-4 h-4" />
                                 {tr("clear_all", "Vaciar todo")}
@@ -483,6 +498,7 @@ const CreateTextPage = () => {
                                     onClick={() => removeUrl(id)}
                                     className="shrink-0 p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
                                     title={tr("remove", "Quitar")}
+                                    aria-label={tr("remove", "Quitar")}
                                   >
                                     <X className="w-4 h-4" />
                                   </button>
@@ -511,7 +527,7 @@ const CreateTextPage = () => {
                 <section className="h-full relative rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden -ml-px">
                   <div className="h-11 flex items-center justify-between px-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/40">
                     <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelChat}</div>
-                    <button className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/60 dark:hover:bg-slate-800/60 transition" title={tr("settings", "Ajustes")}>
+                    <button className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/60 dark:hover:bg-slate-800/60 transition" title={tr("settings", "Ajustes")} aria-label={tr("settings", "Ajustes")}>
                       <SlidersHorizontal className="w-4 h-4" />
                     </button>
                   </div>
@@ -526,11 +542,12 @@ const CreateTextPage = () => {
                         placeholder={tr("bottom_input_ph", "Escribe un mensaje o sube una fuente para empezar")}
                         className="flex-1 bg-transparent outline-none text-sm md:text-base placeholder:text-slate-400"
                         disabled={sources.length === 0}
+                        aria-label={tr("bottom_input_ph", "Escribe un mensaje o sube una fuente para empezar")}
                       />
                       <div className="text-xs text-slate-500 mr-2">
                         {sources.length} {tr("sources_count", "fuentes")}
                       </div>
-                      <Button type="submit" disabled={!chatInput.trim() || sources.length === 0} className="h-10 px-3 rounded-full" title={tr("send", "Enviar")}>
+                      <Button type="submit" disabled={!chatInput.trim() || sources.length === 0} className="h-10 px-3 rounded-full" title={tr("send", "Enviar")} aria-label={tr("send", "Enviar")}>
                         <Send className="w-4 h-4" />
                       </Button>
                     </div>

@@ -636,30 +636,22 @@ dashboard_chat_sources_count: "0 fuentes",
   assistant_mascot_greeting: "¿Cómo puedo ayudarte?",
   
 
+
   // CreateNew
   plan_premium_title: "Plan Premium",
   create_new_intro: "Explora el poder de Olondo AI. Elige una opción para empezar:",
 
-  // Create Text
-  create_text_title: "Crear Texto",
-  sources_title: "Fuentes",
-  enter_text_here: "Introduce tu texto aquí...",
-  bottom_input_ph: "Escribe un mensaje o sube una fuente para empezar",
-  sources_count: "fuentes",
-  send: "Enviar",
-  sources_tab_text: "Texto",
-  sources_tab_document: "Documento",
-  sources_tab_image: "Imagen",
-  // Paneles
-  sources_title: "Fuentes",
-  chat_panel_title: "Chat",
 
-  // Tabs de fuentes
+
+  
+  // Create Text
+  create_text_title: "Crear texto",
+
+  // Panel izquierdo (Fuentes)
+  sources_title: "Fuentes",
   sources_tab_text: "Texto",
   sources_tab_document: "Documento",
   sources_tab_url: "URL",
-
-  // Texto
   enter_text_here_full: "Introduce o pega tu texto aquí",
 
   // Documentos
@@ -670,8 +662,8 @@ dashboard_chat_sources_count: "0 fuentes",
     "También puedes seleccionar una carpeta completa o arrastrar y soltar.",
   selected_docs: "Seleccionados",
   clear_all: "Vaciar todo",
-  add_more: "Añadir más",
   remove: "Quitar",
+  add_more: "Añadir más",
 
   // URLs
   paste_urls_label: "Pegar URLs*",
@@ -686,11 +678,16 @@ dashboard_chat_sources_count: "0 fuentes",
   urls_note_paywalled: "No se admiten artículos de pago.",
   saved_urls: "URLs guardadas",
 
-  // Chat / input inferior
+  // Panel derecho (Chat)
+  chat_panel_title: "Chat",
+  settings: "Ajustes",
   bottom_input_ph: "Escribe un mensaje o sube una fuente para empezar",
-  send: "Enviar",
   sources_count: "fuentes",
+  send: "Enviar",
   
+
+
+
   
   // Library
   library_filter_all: "Todos",
