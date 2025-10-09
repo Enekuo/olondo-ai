@@ -16,11 +16,8 @@ const CreateTextPage = () => {
   const { theme, setTheme } = useTheme();
   const location = useLocation();
 
-  // helper i18n
-  const tr = (key, fallback) => {
-    const v = t(key);
-    return !v || v === key ? fallback : v;
-  };
+  // helper i18n (sin fallback)
+  const tr = (key) => t(key);
 
   // ===== Estado =====
   const [sources, setSources] = useState([]); // [{id,type:'file'|'url',name,meta}]
@@ -57,9 +54,9 @@ const CreateTextPage = () => {
   const pageVariants = { initial: { opacity: 0, y: 20 }, in: { opacity: 1, y: 0 }, out: { opacity: 0, y: -20 } };
 
   // etiquetas i18n
-  const labelCreateTitle = tr("create_text_title", "Crear texto");
-  const labelSources     = tr("sources_title", "Fuentes");
-  const labelChat        = tr("chat_panel_title", "Chat");
+  const labelCreateTitle = tr("create_text_title");
+  const labelSources     = tr("sources_title");
+  const labelChat        = tr("chat_panel_title");
 
   const sendChat = (e) => {
     e?.preventDefault();
@@ -187,16 +184,16 @@ const CreateTextPage = () => {
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="inline-flex h-10 w-10 items-center justify-center rounded-xl hover:opacity-90 transition-colors"
               style={{ backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff", border: theme === "dark" ? "none" : "1px solid #e5e7eb", color: theme === "dark" ? "#ffffff" : "#1f2937" }}
-              aria-label={tr("theme_toggle", "Cambiar tema")}
-              title={tr("theme_toggle", "Cambiar tema")}
+              aria-label={tr("theme_toggle")}
+              title={tr("theme_toggle")}
             >
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
             <button
               className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:opacity-90 transition-colors"
               style={{ backgroundColor: theme === "dark" ? "#1f2937" : "#ffffff", border: theme === "dark" ? "none" : "1px solid #e5e7eb", color: theme === "dark" ? "#ffffff" : "#1f2937" }}
-              aria-label={tr("user_menu", "Usuario")}
-              title={tr("user_menu", "Usuario")}
+              aria-label={tr("user_menu")}
+              title={tr("user_menu")}
             >
               <User className="w-5 h-5" />
             </button>
@@ -222,30 +219,30 @@ const CreateTextPage = () => {
                 <nav className="space-y-1">
                   <Link to="/app/dashboard" className={navClasses()} style={location.pathname === "/app/dashboard" ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <Home className="w-5 h-5 shrink-0" />
-                    <span className="truncate">{tr("dashboard_nav_home", "Inicio")}</span>
+                    <span className="truncate">{tr("dashboard_nav_home")}</span>
                   </Link>
                   <Link to="/create" className={navClasses()} style={isCurrentOrChild("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined} aria-current={isCurrentOrChild("/create") ? "page" : undefined}>
                     <PlusCircle className="w-5 h-5 shrink-0" />
-                    <span className="truncate">{tr("dashboard_nav_create", "Crear nuevo")}</span>
+                    <span className="truncate">{tr("dashboard_nav_create")}</span>
                   </Link>
                   <Link to="/library" className={navClasses()} style={isCurrentOrChild("/library") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <Folder className="w-5 h-5 shrink-0" />
-                    <span className="truncate">{tr("dashboard_nav_library", "Biblioteca")}</span>
+                    <span className="truncate">{tr("dashboard_nav_library")}</span>
                   </Link>
                   <Link to="/assistant" className={navClasses()} style={isCurrentOrChild("/assistant") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <MessageSquare className="w-5 h-5 shrink-0" />
-                    <span className="truncate">{tr("dashboard_nav_ai_chat", "Chat con IA")}</span>
+                    <span className="truncate">{tr("dashboard_nav_ai_chat")}</span>
                   </Link>
                   <Link to="/pricing" className={navClasses()} style={isCurrentOrChild("/pricing") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <CreditCard className="w-5 h-5 shrink-0" />
-                    <span className="truncate">{tr("dashboard_nav_plans", "Planes")}</span>
+                    <span className="truncate">{tr("dashboard_nav_plans")}</span>
                   </Link>
                 </nav>
 
                 <div className="pb-0">
                   <Link to="/settings" className={navClasses()} style={isCurrentOrChild("/settings") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <Settings className="w-5 h-5 shrink-0" />
-                    <span className="truncate">{tr("dashboard_nav_settings", "Ajustes")}</span>
+                    <span className="truncate">{tr("dashboard_nav_settings")}</span>
                   </Link>
                 </div>
               </div>
@@ -269,9 +266,9 @@ const CreateTextPage = () => {
 
                   {/* Tabs */}
                   <div className="flex items-center px-2 border-b" style={{ borderColor: DIVIDER }}>
-                    <TabBtn active={sourceMode === "text"} icon={FileText} label={tr("sources_tab_text", "Texto")} onClick={() => setSourceMode("text")} showDivider />
-                    <TabBtn active={sourceMode === "document"} icon={FileIcon} label={tr("sources_tab_document", "Documento")} onClick={() => setSourceMode("document")} showDivider />
-                    <TabBtn active={sourceMode === "url"} icon={UrlIcon} label={tr("sources_tab_url", "URL")} onClick={() => setSourceMode("url")} showDivider={false} />
+                    <TabBtn active={sourceMode === "text"} icon={FileText} label={tr("sources_tab_text")} onClick={() => setSourceMode("text")} showDivider />
+                    <TabBtn active={sourceMode === "document"} icon={FileIcon} label={tr("sources_tab_document")} onClick={() => setSourceMode("document")} showDivider />
+                    <TabBtn active={sourceMode === "url"} icon={UrlIcon} label={tr("sources_tab_url")} onClick={() => setSourceMode("url")} showDivider={false} />
                   </div>
 
                   {/* Contenido */}
@@ -281,11 +278,11 @@ const CreateTextPage = () => {
                       <textarea
                         value={textValue}
                         onChange={(e) => setTextValue(e.target.value)}
-                        placeholder={tr("enter_text_here_full", "Introduce o pega tu texto aquí")}
+                        placeholder={tr("enter_text_here_full")}
                         className="w-full h-full resize-none outline-none text-[15px] leading-6
                                    bg-transparent placeholder:text-slate-400 text-slate-800
                                    dark:text-slate-100 dark:placeholder:text-slate-500"
-                        aria-label={tr("sources_tab_text", "Texto")}
+                        aria-label={tr("sources_tab_text")}
                       />
                     )}
 
@@ -316,38 +313,37 @@ const CreateTextPage = () => {
                                      border-slate-300 dark:border-slate-700 bg-white/40 dark:bg-slate-900/30
                                      hover:bg-slate-50 dark:hover:bg-slate-900/50 transition
                                      px-6 py-10 text-center shadow-[inset_0_0_0_1px_rgba(0,0,0,0.02)]"
-                          aria-label={tr("choose_file_title", "Elige tu archivo o carpeta")}
-                          title={tr("choose_file_title", "Elige tu archivo o carpeta")}
+                          aria-label={tr("choose_file_title")}
+                          title={tr("choose_file_title")}
                         >
                           <div className="mx-auto mb-5 w-20 h-20 rounded-full bg-sky-100 flex items-center justify-center">
                             <Plus className="w-10 h-10 text-sky-600" />
                           </div>
                           <div className="text-xl font-semibold text-slate-800 dark:text-slate-100">
-                            {tr("choose_file_title", "Elige tu archivo o carpeta")}
+                            {tr("choose_file_title")}
                           </div>
                           <div className="mt-4 text-sm text-slate-500">
-                            {tr("accepted_formats",
-                              "Formatos admitidos: PDF, PPTX, DOCX, CSV, JSON, XML, EPUB, TXT, VTT, SRT")}
+                            {tr("accepted_formats")}
                           </div>
                           <div className="mt-1 text-xs text-slate-400">
-                            {tr("folder_hint", "También puedes seleccionar una carpeta completa o arrastrar y soltar.")}
+                            {tr("folder_hint")}
                           </div>
                         </button>
 
                         {documents.length > 0 && (
                           <div className="mt-6 mb-2 flex items-center justify-between">
                             <div className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                              {tr("selected_docs", "Seleccionados")} ({documents.length})
+                              {tr("selected_docs")} ({documents.length})
                               <span className="ms-2 text-slate-500 font-normal">• {formatBytes(totalSize)}</span>
                             </div>
                             <button
                               onClick={clearDocuments}
                               className="text-sm inline-flex items-center gap-1 px-2 py-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
-                              title={tr("clear_all", "Vaciar todo")}
-                              aria-label={tr("clear_all", "Vaciar todo")}
+                              title={tr("clear_all")}
+                              aria-label={tr("clear_all")}
                             >
                               <Trash2 className="w-4 h-4" />
-                              {tr("clear_all", "Vaciar todo")}
+                              {tr("clear_all")}
                             </button>
                           </div>
                         )}
@@ -369,8 +365,8 @@ const CreateTextPage = () => {
                                   <button
                                     onClick={() => removeDocument(id)}
                                     className="p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
-                                    title={tr("remove", "Quitar")}
-                                    aria-label={tr("remove", "Quitar")}
+                                    title={tr("remove")}
+                                    aria-label={tr("remove")}
                                   >
                                     <X className="w-4 h-4" />
                                   </button>
@@ -386,11 +382,11 @@ const CreateTextPage = () => {
                               type="button"
                               onClick={triggerPick}
                               className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white/70 dark:bg-slate-900/40 hover:bg-slate-50 dark:hover:bg-slate-900/60 py-2"
-                              aria-label={tr("add_more", "Añadir más")}
-                              title={tr("add_more", "Añadir más")}
+                              aria-label={tr("add_more")}
+                              title={tr("add_more")}
                             >
                               <Plus className="w-4 h-4" />
-                              {tr("add_more", "Añadir más")}
+                              {tr("add_more")}
                             </button>
                           </div>
                         )}
@@ -404,7 +400,7 @@ const CreateTextPage = () => {
                         <div className="mb-3 flex items-center justify-between">
                           <div className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300">
                             <UrlIcon className="w-4 h-4" />
-                            {tr("paste_urls_label", "Pegar URLs*")}
+                            {tr("paste_urls_label")}
                           </div>
                           {/* Botón estilo pill celeste */}
                           <button
@@ -419,11 +415,11 @@ const CreateTextPage = () => {
                                        shadow-sm transition-colors
                                        dark:border-sky-500/40 dark:bg-sky-900/20 dark:text-sky-300
                                        dark:hover:bg-sky-900/30"
-                            aria-label={tr("add_url", "Añadir URL")}
-                            title={tr("add_url", "Añadir URL")}
+                            aria-label={tr("add_url")}
+                            title={tr("add_url")}
                           >
                             <Plus className="w-4 h-4 text-sky-500 dark:text-sky-300" />
-                            {tr("add_url", "Añadir URL")}
+                            {tr("add_url")}
                           </button>
                         </div>
 
@@ -433,26 +429,26 @@ const CreateTextPage = () => {
                             <textarea
                               value={urlsTextarea}
                               onChange={(e) => setUrlsTextarea(e.target.value)}
-                              placeholder={tr("paste_urls_placeholder", "Pega una o varias URLs (una por línea o separadas por espacio)")}
+                              placeholder={tr("paste_urls_placeholder")}
                               className="w-full min-h-[140px] rounded-md border border-slate-200 dark:border-slate-700 bg-transparent p-2 outline-none text-[15px] leading-6 placeholder:text-slate-400 dark:placeholder:text-slate-500"
-                              aria-label={tr("paste_urls_placeholder", "Pega una o varias URLs (una por línea o separadas por espacio)")}
+                              aria-label={tr("paste_urls_placeholder")}
                             />
                             <div className="mt-2 flex items-center gap-2">
                               <Button type="button" onClick={addUrlsFromTextarea} className="h-9">
-                                {tr("save_urls", "Guardar")}
+                                {tr("save_urls")}
                               </Button>
                               <button
                                 type="button"
                                 onClick={() => { setUrlsTextarea(""); setUrlInputOpen(false); }}
                                 className="h-9 px-3 rounded-md border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm"
                               >
-                                {tr("cancel", "Cancelar")}
+                                {tr("cancel")}
                               </button>
                             </div>
                             <div className="mt-6 text-xs text-slate-500">
-                              • {tr("urls_note_multi", "Para añadir varias URLs, sepáralas con un espacio o un salto de línea.")}<br/>
-                              • {tr("urls_note_visible", "Solo se importará el texto visible del sitio web.")}<br/>
-                              • {tr("urls_note_paywalled", "No se admiten artículos de pago.")}
+                              • {tr("urls_note_multi")}<br/>
+                              • {tr("urls_note_visible")}<br/>
+                              • {tr("urls_note_paywalled")}
                             </div>
                           </div>
                         )}
@@ -462,16 +458,16 @@ const CreateTextPage = () => {
                           <>
                             <div className="mb-2 flex items-center justify-between">
                               <div className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                                {tr("saved_urls", "URLs guardadas")} ({urlItems.length})
+                                {tr("saved_urls")} ({urlItems.length})
                               </div>
                               <button
                                 onClick={clearUrls}
                                 className="text-sm inline-flex items-center gap-1 px-2 py-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
-                                title={tr("clear_all", "Vaciar todo")}
-                                aria-label={tr("clear_all", "Vaciar todo")}
+                                title={tr("clear_all")}
+                                aria-label={tr("clear_all")}
                               >
                                 <Trash2 className="w-4 h-4" />
-                                {tr("clear_all", "Vaciar todo")}
+                                {tr("clear_all")}
                               </button>
                             </div>
 
@@ -497,8 +493,8 @@ const CreateTextPage = () => {
                                   <button
                                     onClick={() => removeUrl(id)}
                                     className="shrink-0 p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
-                                    title={tr("remove", "Quitar")}
-                                    aria-label={tr("remove", "Quitar")}
+                                    title={tr("remove")}
+                                    aria-label={tr("remove")}
                                   >
                                     <X className="w-4 h-4" />
                                   </button>
@@ -512,9 +508,9 @@ const CreateTextPage = () => {
                         {urlItems.length === 0 && !urlInputOpen && (
                           <div className="mt-12 text-slate-500 text-sm">
                             <ul className="list-disc ps-5 space-y-1">
-                              <li>{tr("urls_note_multi", "Para añadir varias URLs, sepáralas con un espacio o un salto de línea.")}</li>
-                              <li>{tr("urls_note_visible", "Solo se importará el texto visible del sitio web.")}</li>
-                              <li>{tr("urls_note_paywalled", "No se admiten artículos de pago.")}</li>
+                              <li>{tr("urls_note_multi")}</li>
+                              <li>{tr("urls_note_visible")}</li>
+                              <li>{tr("urls_note_paywalled")}</li>
                             </ul>
                           </div>
                         )}
@@ -527,7 +523,7 @@ const CreateTextPage = () => {
                 <section className="h-full relative rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden -ml-px">
                   <div className="h-11 flex items-center justify-between px-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/40">
                     <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{labelChat}</div>
-                    <button className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/60 dark:hover:bg-slate-800/60 transition" title={tr("settings", "Ajustes")} aria-label={tr("settings", "Ajustes")}>
+                    <button className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/60 dark:hover:bg-slate-800/60 transition" title={tr("settings")} aria-label={tr("settings")}>
                       <SlidersHorizontal className="w-4 h-4" />
                     </button>
                   </div>
@@ -539,15 +535,15 @@ const CreateTextPage = () => {
                       <input
                         value={chatInput}
                         onChange={(e) => setChatInput(e.target.value)}
-                        placeholder={tr("bottom_input_ph", "Escribe un mensaje o sube una fuente para empezar")}
+                        placeholder={tr("bottom_input_ph")}
                         className="flex-1 bg-transparent outline-none text-sm md:text-base placeholder:text-slate-400"
                         disabled={sources.length === 0}
-                        aria-label={tr("bottom_input_ph", "Escribe un mensaje o sube una fuente para empezar")}
+                        aria-label={tr("bottom_input_ph")}
                       />
                       <div className="text-xs text-slate-500 mr-2">
-                        {sources.length} {tr("sources_count", "fuentes")}
+                        {sources.length} {tr("sources_count")}
                       </div>
-                      <Button type="submit" disabled={!chatInput.trim() || sources.length === 0} className="h-10 px-3 rounded-full" title={tr("send", "Enviar")} aria-label={tr("send", "Enviar")}>
+                      <Button type="submit" disabled={!chatInput.trim() || sources.length === 0} className="h-10 px-3 rounded-full" title={tr("send")} aria-label={tr("send")}>
                         <Send className="w-4 h-4" />
                       </Button>
                     </div>
