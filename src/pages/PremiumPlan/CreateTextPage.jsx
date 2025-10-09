@@ -445,8 +445,8 @@ const CreateTextPage = () => {
                                 {tr("cancel")}
                               </button>
                             </div>
+                            {/* Ayuda breve dentro de la tarjeta: se eliminó urls_note_multi */}
                             <div className="mt-6 text-xs text-slate-500">
-                              • {tr("urls_note_multi")}<br/>
                               • {tr("urls_note_visible")}<br/>
                               • {tr("urls_note_paywalled")}
                             </div>
@@ -504,11 +504,10 @@ const CreateTextPage = () => {
                           </>
                         )}
 
-                        {/* Ayuda breve */}
+                        {/* Ayuda breve fuera de la tarjeta: se eliminó urls_note_multi */}
                         {urlItems.length === 0 && !urlInputOpen && (
                           <div className="mt-12 text-slate-500 text-sm">
                             <ul className="list-disc ps-5 space-y-1">
-                              <li>{tr("urls_note_multi")}</li>
                               <li>{tr("urls_note_visible")}</li>
                               <li>{tr("urls_note_paywalled")}</li>
                             </ul>
