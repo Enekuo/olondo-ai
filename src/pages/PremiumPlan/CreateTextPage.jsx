@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import {
   Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon,
   FileText, MessageSquare,
-  SlidersHorizontal,
   File as FileIcon, Link2 as UrlIcon, Plus, Trash2, X
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -22,6 +21,7 @@ const CreateTextPage = () => {
 
   // ===== Estado =====
   const [sources, setSources] = useState([]); // [{id,type:'file'|'url',name,meta}]
+  const [chatInput, setChatInput] = useState(""); // mantiene el buscador inferior
   const [sourceMode, setSourceMode] = useState("text"); // 'text' | 'document' | 'url'
 
   // Texto
@@ -197,7 +197,7 @@ const CreateTextPage = () => {
       {/* LAYOUT */}
       <div className="w-full">
         <div className="grid gap-0 md:grid-cols-[190px_1fr]">
-          {/* SIDEBAR (claves ya existentes) */}
+          {/* SIDEBAR */}
           <aside className="border-r border-slate-200 dark:border-slate-800" style={{ borderColor: BORDER_COLOR }}>
             <div
               className="sticky ps-2 pe-3 pt-6 pb-0 text-slate-800 dark:text-slate-100"
@@ -250,7 +250,7 @@ const CreateTextPage = () => {
                 initial="initial" animate="in" exit="out" variants={pageVariants} transition={{ duration: 0.35 }}
                 style={{ minHeight: `calc(100vh - ${HEADER_HEIGHT_PX + 32}px)` }}
               >
-                {/* Panel Fuentes */}
+                {/* Panel Fuentes (izquierda) */}
                 <aside className="h-full rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden flex flex-col">
                   {/* Título */}
                   <div className="h-11 flex items-center justify-between px-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/40">
@@ -511,10 +511,25 @@ const CreateTextPage = () => {
                   </div>
                 </aside>
 
-                {/* ========= Panel Derecho: limpio (sin barra superior ni input inferior) ========= */}
+                {/* ========= Panel Derecho: sin barra superior; mantiene buscador abajo SIN contador ni botón ========= */}
                 <section className="h-full relative rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden -ml-px">
-                  {/* Contenido vacío por ahora: aquí irá el editor/generación */}
-                  <div className="w-full h-full" />
+                  {/* contenido libre arriba */}
+                  <div className="w-full h-full"></div>
+
+                  {/* buscador inferior limpio */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <div className="mx-auto max-w-4xl flex items-center gap-2 rounded-full border
+                                    border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900
+                                    px-6 py-2 shadow-sm focus-within:ring-2 focus-within:ring-sky-400/40">
+                      <input
+                        value={chatInput}
+                        onChange={(e) => setChatInput(e.target.value)}
+                        placeholder={tr("bottom_input_ph")}
+                        className="flex-1 bg-transparent outline-none text-sm md:text-base placeholder:text-slate-400"
+                        aria-label={tr("bottom_input_ph")}
+                      />
+                    </div>
+                  </div>
                 </section>
               </motion.section>
             </div>
