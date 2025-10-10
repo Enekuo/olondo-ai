@@ -511,39 +511,37 @@ const CreateTextPage = () => {
                   </div>
                 </aside>
 
-                {/* ========= Panel Derecho: sin barra superior; mantiene buscador abajo SIN contador ni botón ========= */}
+                {/* ========= Panel Derecho ========= */}
                 <section className="h-full relative rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden -ml-px">
-                  {/* Botón superior: Generar con fuentes */}
-                  <div className="absolute top-24 right-6 z-10">
+                  {/* === Botón superior centrado (AZUL) === */}
+                  <div className="absolute top-24 left-1/2 -translate-x-1/2 z-10">
                     <Button type="button" className="h-11 rounded-full px-5 shadow-sm">
                       <FileText className="w-4 h-4 me-2" />
                       {tr("generate_from_sources")}
                     </Button>
                   </div>
 
-                  {/* contenido libre arriba */}
+                  {/* espacio libre para resultados */}
                   <div className="w-full h-full"></div>
 
-                  {/* buscador inferior limpio */}
+                  {/* === Buscador inferior con botón integrado a la derecha (AZUL) === */}
                   <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <div className="mx-auto max-w-4xl flex items-center gap-2 rounded-full border
+                    <div className="mx-auto max-w-4xl rounded-full border
                                     border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900
-                                    px-6 py-2 shadow-sm focus-within:ring-2 focus-within:ring-sky-400/40">
-                      <input
-                        value={chatInput}
-                        onChange={(e) => setChatInput(e.target.value)}
-                        placeholder={tr("bottom_input_ph")}
-                        className="flex-1 bg-transparent outline-none text-sm md:text-base placeholder:text-slate-400"
-                        aria-label={tr("bottom_input_ph")}
-                      />
-                    </div>
-
-                    {/* Botón inferior derecha: Generar con prompt */}
-                    <div className="absolute right-6 bottom-6">
-                      <Button type="button" variant="secondary" className="h-11 rounded-full px-5 shadow-sm">
-                        <MessageSquare className="w-4 h-4 me-2" />
-                        {tr("generate_with_prompt")}
-                      </Button>
+                                    shadow-sm focus-within:ring-2 focus-within:ring-sky-400/40">
+                      <div className="flex items-center gap-2 px-4 py-2">
+                        <input
+                          value={chatInput}
+                          onChange={(e) => setChatInput(e.target.value)}
+                          placeholder={tr("bottom_input_ph")}
+                          className="flex-1 bg-transparent outline-none text-sm md:text-base placeholder:text-slate-400"
+                          aria-label={tr("bottom_input_ph")}
+                        />
+                        <Button type="button" className="h-10 rounded-full px-4 shrink-0">
+                          <MessageSquare className="w-4 h-4 me-2" />
+                          {tr("generate_with_prompt")}
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </section>

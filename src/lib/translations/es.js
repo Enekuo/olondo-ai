@@ -677,17 +677,13 @@ dashboard_chat_sources_count: "0 fuentes",
   urls_note_paywalled: "No se admiten artículos de pago.",
   saved_urls: "URLs guardadas",
 
-  // Panel derecho (Chat)
-  chat_panel_title: "Chat",
-  settings: "Ajustes",
+  // Panel derecho 
+  
   bottom_input_ph: "Escribe un mensaje o sube una fuente para empezar",
-  sources_count: "fuentes",
-  send: "Enviar",
-  
+  generate_from_sources: "Generar texto",
+  generate_with_prompt: "Generar mediante prompt", 
 
 
-
-  
   // Library
   library_filter_all: "Todos",
   library_filter_texts: "Textos",
