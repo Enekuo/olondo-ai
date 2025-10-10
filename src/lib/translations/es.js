@@ -677,9 +677,9 @@ dashboard_chat_sources_count: "0 fuentes",
   urls_note_paywalled: "No se admiten artículos de pago.",
   saved_urls: "URLs guardadas",
 
-  // Panel derecho 
-  
-  bottom_input_ph: "Escribe un mensaje o sube una fuente para empezar",
+  // Panel derecho
+
+  bottom_input_ph: "Escribe un prompt aquí",
   generate_from_sources: "Generar texto",
   generate_with_prompt: "Generar mediante prompt", 
 
