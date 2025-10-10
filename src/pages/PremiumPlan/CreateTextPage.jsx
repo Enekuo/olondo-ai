@@ -513,6 +513,14 @@ const CreateTextPage = () => {
 
                 {/* ========= Panel Derecho: sin barra superior; mantiene buscador abajo SIN contador ni botón ========= */}
                 <section className="h-full relative rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden -ml-px">
+                  {/* Botón superior: Generar con fuentes */}
+                  <div className="absolute top-24 right-6 z-10">
+                    <Button type="button" className="h-11 rounded-full px-5 shadow-sm">
+                      <FileText className="w-4 h-4 me-2" />
+                      {tr("generate_from_sources")}
+                    </Button>
+                  </div>
+
                   {/* contenido libre arriba */}
                   <div className="w-full h-full"></div>
 
@@ -528,6 +536,14 @@ const CreateTextPage = () => {
                         className="flex-1 bg-transparent outline-none text-sm md:text-base placeholder:text-slate-400"
                         aria-label={tr("bottom_input_ph")}
                       />
+                    </div>
+
+                    {/* Botón inferior derecha: Generar con prompt */}
+                    <div className="absolute right-6 bottom-6">
+                      <Button type="button" variant="secondary" className="h-11 rounded-full px-5 shadow-sm">
+                        <MessageSquare className="w-4 h-4 me-2" />
+                        {tr("generate_with_prompt")}
+                      </Button>
                     </div>
                   </div>
                 </section>
