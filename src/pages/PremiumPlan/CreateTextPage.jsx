@@ -515,7 +515,7 @@ const CreateTextPage = () => {
                 <section className="h-full relative rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden -ml-px">
                   {/* === Botón superior en la posición marcada (centrado y más abajo) === */}
                   <div className="absolute left-1/2 -translate-x-1/2 z-10" style={{ top: "38%" }}>
-                    <Button type="button" className="h-14 md:h-16 rounded-full px-8 md:px-10 text-[16px] md:text-[18px] font-semibold shadow-sm">
+                    <Button type="button" className="h-10 rounded-full px-4 shrink-0">
                       {tr("generate_from_sources")}
                     </Button>
                   </div>
