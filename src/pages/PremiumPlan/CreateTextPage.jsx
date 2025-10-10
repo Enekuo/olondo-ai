@@ -517,7 +517,7 @@ const CreateTextPage = () => {
                   <div className="absolute left-1/2 -translate-x-1/2 z-10" style={{ top: "38%" }}>
                     <Button
                      type="button"
-                     className="h-12 md:h-14 w-[280px] md:w-[320px] rounded-full text-[15px] md:text-[16px] font-semibold shadow-sm flex items-center justify-center"
+                     className="h-10 md:h-11 w-[220px] md:w-[240px] rounded-full text-[14px] md:text-[15px] font-medium shadow-sm flex items-center justify-center"
                     >
                    {tr("generate_from_sources")}
                    </Button>
