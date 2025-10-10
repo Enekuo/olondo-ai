@@ -2,8 +2,8 @@ import React, { useRef, useState, useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Home, PlusCircle, Folder, CreditCard, Settings, User, Sun, Moon,
-  FileText, MessageSquare,
-  File as FileIcon, Link2 as UrlIcon, Plus, Trash2, X
+  FileText,
+  File as FileIcon, Link2 as UrlIcon, Plus, Trash2, X, MessageSquare
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
@@ -21,7 +21,7 @@ const CreateTextPage = () => {
 
   // ===== Estado =====
   const [sources, setSources] = useState([]); // [{id,type:'file'|'url',name,meta}]
-  const [chatInput, setChatInput] = useState(""); // mantiene el buscador inferior
+  const [chatInput, setChatInput] = useState(""); // buscador inferior
   const [sourceMode, setSourceMode] = useState("text"); // 'text' | 'document' | 'url'
 
   // Texto
@@ -53,7 +53,7 @@ const CreateTextPage = () => {
 
   const pageVariants = { initial: { opacity: 0, y: 20 }, in: { opacity: 1, y: 0 }, out: { opacity: 0, y: -20 } };
 
-  // etiquetas i18n
+  // i18n
   const labelCreateTitle = tr("create_text_title");
   const labelSources     = tr("sources_title");
 
@@ -513,10 +513,9 @@ const CreateTextPage = () => {
 
                 {/* ========= Panel Derecho ========= */}
                 <section className="h-full relative rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden -ml-px">
-                  {/* === Botón superior centrado (AZUL) === */}
-                  <div className="absolute top-24 left-1/2 -translate-x-1/2 z-10">
-                    <Button type="button" className="h-11 rounded-full px-5 shadow-sm">
-                      <FileText className="w-4 h-4 me-2" />
+                  {/* === Botón superior en la posición marcada (centrado y más abajo) === */}
+                  <div className="absolute left-1/2 -translate-x-1/2 z-10" style={{ top: "38%" }}>
+                    <Button type="button" className="h-11 rounded-full px-6 shadow-sm">
                       {tr("generate_from_sources")}
                     </Button>
                   </div>
@@ -524,7 +523,7 @@ const CreateTextPage = () => {
                   {/* espacio libre para resultados */}
                   <div className="w-full h-full"></div>
 
-                  {/* === Buscador inferior con botón integrado a la derecha (AZUL) === */}
+                  {/* === Buscador inferior con botón azul a la derecha (sin icono) === */}
                   <div className="absolute bottom-0 left-0 right-0 p-4">
                     <div className="mx-auto max-w-4xl rounded-full border
                                     border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900
@@ -538,7 +537,6 @@ const CreateTextPage = () => {
                           aria-label={tr("bottom_input_ph")}
                         />
                         <Button type="button" className="h-10 rounded-full px-4 shrink-0">
-                          <MessageSquare className="w-4 h-4 me-2" />
                           {tr("generate_with_prompt")}
                         </Button>
                       </div>
