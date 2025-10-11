@@ -145,20 +145,26 @@ const CreateTextPage = () => {
     setSources(prev => [...prev, ...newSources]);
     setUrlsTextarea(""); setUrlInputOpen(false);
   };
+
   const removeUrl = (id) => {
-    setUrlItems(prev => prev.filter(u => u.id !== id));
-    setSources(prev => prev.filter(s => s.id !== id));
-  };
-  const clearUrls = () => {
-    const ids = new Set(urlItems.map(u => u.id));
-    setUrlItems([]); setSources(prev => prev.filter(s => !ids.has(s.id)));
+    setUrlItems((prev) => prev.filter((u) => u.id !== id));
+    setSources((prev) => prev.filter((s) => s.id !== id));
   };
 
-  // ===== Estado vacío (para mostrar los mensajes) =====
-  const nothingLoaded =
-    textValue.trim() === "" &&
-    documents.length === 0 &&
-    urlItems.length === 0;
+  const clearUrls = () => {
+    const ids = new Set(urlItems.map((u) => u.id));
+    setUrlItems([]);
+    setSources((prev) => prev.filter((s) => !ids.has(s.id)));
+  };
+
+  // ===== Derivar título/cuerpo de la MISMA clave (sin crear nuevas) =====
+  const leftRaw = tr("create_help_left");
+  const [leftTitle, leftBody] = useMemo(() => {
+    const parts = (leftRaw || "").split(".");
+    const first = (parts.shift() || leftRaw || "").trim();
+    const rest = parts.join(".").trim();
+    return [first.endsWith(".") ? first : `${first}.`, rest];
+  }, [leftRaw]);
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-950 text-slate-900 dark:text-slate-100">
@@ -284,15 +290,20 @@ const CreateTextPage = () => {
                                      dark:text-slate-100 dark:placeholder:text-slate-500"
                           aria-label={tr("sources_tab_text")}
                         />
-                        {/* Ayuda tipo NotebookLM (exactamente debajo del textarea) */}
+                        {/* Tarjeta estilo NotebookLM */}
                         <div className="mt-6">
-                          <div className="mx-auto max-w-md rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/40 p-6 text-center">
-                            <div className="mx-auto mb-3 w-10 h-10 rounded-full bg-slate-200/70 dark:bg-slate-800 flex items-center justify-center">
-                              <FileText className="w-5 h-5 text-slate-500" />
+                          <div className="mx-auto max-w-[520px] rounded-xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/40 p-8 text-center">
+                            <div className="mx-auto mb-4 w-12 h-12 rounded-full bg-slate-200/70 dark:bg-slate-800 flex items-center justify-center">
+                              <FileText className="w-6 h-6 text-slate-500" />
                             </div>
-                            <p className="text-sm leading-6 text-slate-600 dark:text-slate-300">
-                              {tr("create_help_left")}
-                            </p>
+                            <div className="text-[15px] font-semibold text-slate-600 dark:text-slate-200">
+                              {leftTitle}
+                            </div>
+                            {leftBody && (
+                              <p className="mt-2 text-[13px] leading-6 text-slate-500 dark:text-slate-400">
+                                {leftBody}
+                              </p>
+                            )}
                           </div>
                         </div>
                       </>
@@ -409,15 +420,24 @@ const CreateTextPage = () => {
                     {sourceMode === "url" && (
                       <div className="h-full w-full flex flex-col">
                         {/* Cabecera */}
-                        <div className="mb-3 flex itemscenter justify-between">
+                        <div className="mb-3 flex items-center justify-between">
                           <div className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300">
                             <UrlIcon className="w-4 h-4" />
                             {tr("paste_urls_label")}
                           </div>
+                          {/* Botón estilo pill celeste */}
                           <button
                             type="button"
                             onClick={() => setUrlInputOpen(true)}
-                            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full border border-sky-300 bg-sky-50 text-sky-700 hover:bg-sky-100 hover:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-400/40 shadow-sm transition-colors dark:border-sky-500/40 dark:bg-sky-900/20 dark:text-sky-300 dark:hover:bg-sky-900/30"
+                            className="inline-flex items-center gap-2
+                                       px-4 py-2 text-sm font-medium
+                                       rounded-full border border-sky-300
+                                       bg-sky-50 text-sky-700
+                                       hover:bg-sky-100 hover:border-sky-400
+                                       focus:outline-none focus:ring-2 focus:ring-sky-400/40
+                                       shadow-sm transition-colors
+                                       dark:border-sky-500/40 dark:bg-sky-900/20 dark:text-sky-300
+                                       dark:hover:bg-sky-900/30"
                             aria-label={tr("add_url")}
                             title={tr("add_url")}
                           >
@@ -426,6 +446,7 @@ const CreateTextPage = () => {
                           </button>
                         </div>
 
+                        {/* Entrada URLs */}
                         {urlInputOpen && (
                           <div className="mb-4 rounded-xl border border-slate-300 dark:border-slate-700 p-3 bg-white/90 dark:bg-slate-900/50">
                             <textarea
@@ -447,6 +468,7 @@ const CreateTextPage = () => {
                                 {tr("cancel")}
                               </button>
                             </div>
+                            {/* Ayuda breve dentro de la tarjeta */}
                             <div className="mt-6 text-xs text-slate-500">
                               • {tr("urls_note_visible")}<br/>
                               • {tr("urls_note_paywalled")}
@@ -454,6 +476,7 @@ const CreateTextPage = () => {
                           </div>
                         )}
 
+                        {/* Lista de URLs */}
                         {urlItems.length > 0 && (
                           <>
                             <div className="mb-2 flex items-center justify-between">
@@ -504,6 +527,7 @@ const CreateTextPage = () => {
                           </>
                         )}
 
+                        {/* Ayuda breve fuera de la tarjeta */}
                         {urlItems.length === 0 && !urlInputOpen && (
                           <div className="mt-12 text-slate-500 text-sm">
                             <ul className="list-disc ps-5 space-y-1">
@@ -529,7 +553,7 @@ const CreateTextPage = () => {
                     </Button>
                   </div>
 
-                  {/* Texto de ayuda (exactamente debajo del botón) */}
+                  {/* Texto de ayuda debajo del botón */}
                   <div
                     className="absolute left-1/2 -translate-x-1/2 text-center px-6"
                     style={{ top: "49%" }}
