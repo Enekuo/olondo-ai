@@ -16,26 +16,21 @@ const CreateTextPage = () => {
   const { theme, setTheme } = useTheme();
   const location = useLocation();
 
-  // helper i18n (sin fallback)
   const tr = (key) => t(key);
 
   // ===== Estado =====
-  const [sources, setSources] = useState([]); // [{id,type:'file'|'url',name,meta}]
-  const [chatInput, setChatInput] = useState(""); // buscador inferior
-  const [sourceMode, setSourceMode] = useState("text"); // 'text' | 'document' | 'url'
-
-  // Texto
+  const [sources, setSources] = useState([]);
+  const [chatInput, setChatInput] = useState("");
+  const [sourceMode, setSourceMode] = useState("text");
   const [textValue, setTextValue] = useState("");
 
-  // Documentos
-  const [documents, setDocuments] = useState([]); // [{id,file}]
+  const [documents, setDocuments] = useState([]);
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef(null);
 
-  // URLs
   const [urlInputOpen, setUrlInputOpen] = useState(false);
   const [urlsTextarea, setUrlsTextarea] = useState("");
-  const [urlItems, setUrlItems] = useState([]); // [{id,url,host}]
+  const [urlItems, setUrlItems] = useState([]);
 
   // ===== Estilos base =====
   const HEADER_COLOR    = theme === "dark" ? "#262F3F" : "#ffffff";
@@ -157,7 +152,7 @@ const CreateTextPage = () => {
     setSources((prev) => prev.filter((s) => !ids.has(s.id)));
   };
 
-  // ===== Derivar título/cuerpo desde la misma clave (no añadimos más) =====
+  // ===== Derivar título/cuerpo desde la misma clave =====
   const leftRaw = tr("create_help_left");
   const [leftTitle, leftBody] = useMemo(() => {
     const parts = (leftRaw || "").split(".");
@@ -292,8 +287,8 @@ const CreateTextPage = () => {
                           aria-label={tr("sources_tab_text")}
                         />
 
-                        {/* Tarjeta estilo NotebookLM (icono + título + cuerpo) */}
-                        <div className="mt-6">
+                        {/* Tarjeta estilo NotebookLM, MOVIDA hacia arriba */}
+                        <div className="-mt-10 md:-mt-14">
                           <div className="mx-auto max-w-[620px] rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40 px-10 py-8 text-center shadow-sm">
                             <div className="mx-auto mb-4 w-12 h-12 rounded-full bg-slate-200/80 dark:bg-slate-800 flex items-center justify-center">
                               <FileText className="w-6 h-6 text-slate-500" />
