@@ -25,6 +25,7 @@ const CreateTextPage = () => {
   const [textValue, setTextValue] = useState("");
 
   const [documents, setDocuments] = useState([]);
+  theme
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef(null);
 
@@ -276,32 +277,27 @@ const CreateTextPage = () => {
                     {/* TEXTO */}
                     {sourceMode === "text" && (
                       <>
-                        {/* textarea más bajo para dejar sitio a la tarjeta */}
+                        {/* Área de texto */}
                         <textarea
                           value={textValue}
                           onChange={(e) => setTextValue(e.target.value)}
                           placeholder={tr("enter_text_here_full")}
-                          className="w-full h-[200px] md:h-[220px] resize-none outline-none text-[15px] leading-6
+                          className="w-full h-[220px] resize-none outline-none text-[15px] leading-6
                                      bg-transparent placeholder:text-slate-400 text-slate-800
                                      dark:text-slate-100 dark:placeholder:text-slate-500"
                           aria-label={tr("sources_tab_text")}
                         />
 
-                        {/* Tarjeta estilo NotebookLM, MOVIDA hacia arriba */}
-                        <div className="-mt-10 md:-mt-14">
-                          <div className="mx-auto max-w-[620px] rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40 px-10 py-8 text-center shadow-sm">
-                            <div className="mx-auto mb-4 w-12 h-12 rounded-full bg-slate-200/80 dark:bg-slate-800 flex items-center justify-center">
-                              <FileText className="w-6 h-6 text-slate-500" />
-                            </div>
-                            <div className="text-[15px] font-semibold text-slate-600 dark:text-slate-200">
-                              {leftTitle}
-                            </div>
-                            {leftBody && (
-                              <p className="mt-2 text-[13px] leading-6 text-slate-500 dark:text-slate-400">
-                                {leftBody}
-                              </p>
-                            )}
-                          </div>
+                        {/* SOLO FRASES, SIN CUADRADO */}
+                        <div className="mt-6 text-center px-2">
+                          <p className="text-[15px] font-semibold text-slate-600 dark:text-slate-200">
+                            {leftTitle}
+                          </p>
+                          {leftBody && (
+                            <p className="mt-1 text-[13px] leading-6 text-slate-500 dark:text-slate-400">
+                              {leftBody}
+                            </p>
+                          )}
                         </div>
                       </>
                     )}
@@ -548,13 +544,11 @@ const CreateTextPage = () => {
                     </Button>
                   </div>
 
-                  {/* Texto de ayuda dentro de tarjeta, debajo del botón */}
+                  {/* SOLO FRASE (sin cuadrado) debajo del botón */}
                   <div className="absolute left-1/2 -translate-x-1/2 text-center px-6" style={{ top: "49%" }}>
-                    <div className="mx-auto max-w-xl rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40 px-8 py-6 shadow-sm">
-                      <p className="text-sm leading-6 text-slate-600 dark:text-slate-300">
-                        {tr("create_help_right")}
-                      </p>
-                    </div>
+                    <p className="text-sm leading-6 text-slate-600 dark:text-slate-300 max-w-xl">
+                      {tr("create_help_right")}
+                    </p>
                   </div>
 
                   {/* espacio libre para resultados */}
