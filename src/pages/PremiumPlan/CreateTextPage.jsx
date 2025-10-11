@@ -154,6 +154,12 @@ const CreateTextPage = () => {
     setUrlItems([]); setSources(prev => prev.filter(s => !ids.has(s.id)));
   };
 
+  // ===== Estado vacío (para mensajes de ayuda tipo NotebookLM) =====
+  const isEmptyState =
+    textValue.trim() === "" &&
+    documents.length === 0 &&
+    urlItems.length === 0;
+
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-950 text-slate-900 dark:text-slate-100">
       {/* HEADER */}
@@ -266,6 +272,20 @@ const CreateTextPage = () => {
 
                   {/* Contenido */}
                   <div className="flex-1 overflow-hidden p-4">
+                    {/* 🔹 Mensaje de ayuda (estado vacío) */}
+                    {isEmptyState && (
+                      <div className="mb-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30 p-4">
+                        <div className="flex items-start gap-3 text-slate-600 dark:text-slate-400">
+                          <div className="mt-[2px] shrink-0">
+                            <FileText className="w-5 h-5" />
+                          </div>
+                          <p className="text-sm leading-6">
+                            {tr("create_help_left")}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
                     {/* TEXTO */}
                     {sourceMode === "text" && (
                       <textarea
@@ -513,7 +533,19 @@ const CreateTextPage = () => {
 
                 {/* ========= Panel Derecho ========= */}
                 <section className="h-full relative rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden -ml-px">
-                  {/* === Botón superior en la posición marcada (centrado y más abajo) === */}
+                  {/* 🔹 Mensaje de ayuda (estado vacío) */}
+                  {isEmptyState && (
+                    <div
+                      className="absolute left-1/2 -translate-x-1/2 text-center px-6"
+                      style={{ top: "24%" }}
+                    >
+                      <p className="text-slate-600 dark:text-slate-400 text-sm md:text-base max-w-2xl">
+                        {tr("create_help_right")}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* === Botón superior centrado === */}
                   <div className="absolute left-1/2 -translate-x-1/2 z-10" style={{ top: "38%" }}>
                     <Button
                      type="button"
@@ -555,4 +587,4 @@ const CreateTextPage = () => {
   );
 };
 
-export default CreateTextPage; 
+export default CreateTextPage;

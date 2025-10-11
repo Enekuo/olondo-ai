@@ -646,14 +646,12 @@ dashboard_chat_sources_count: "0 fuentes",
   
   // Create Text
   create_text_title: "Crear texto",
-
   // Panel izquierdo (Fuentes)
   sources_title: "Fuentes",
   sources_tab_text: "Texto",
   sources_tab_document: "Documento",
   sources_tab_url: "URL",
   enter_text_here_full: "Introduce o pega tu texto aquí",
-
   // Documentos
   choose_file_title: "Elige tu archivo o carpeta",
   accepted_formats:
@@ -664,7 +662,6 @@ dashboard_chat_sources_count: "0 fuentes",
   clear_all: "Vaciar todo",
   remove: "Quitar",
   add_more: "Añadir más",
-
   // URLs
   paste_urls_label: "Pegar URLs*",
   add_url: "Añadir URL",
@@ -676,6 +673,12 @@ dashboard_chat_sources_count: "0 fuentes",
   urls_note_visible: "Solo se importará el texto visible del sitio web.",
   urls_note_paywalled: "No se admiten artículos de pago.",
   saved_urls: "URLs guardadas",
+ 
+  create_help_left: "Aquí aparecerán tus textos o documentos subidos. Puedes añadir archivos PDF, texto copiado, enlaces web...",
+  create_help_right: "Aquí verás el resultado generado por la IA, junto con la opción de escucharlo en voz alta.",
+
+
+
 
   // Panel derecho
 
