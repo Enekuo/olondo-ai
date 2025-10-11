@@ -19,10 +19,10 @@ const CreateTextPage = () => {
   const tr = (key) => t(key);
 
   // ===== Estado =====
-  const [sources, setSources] = useState([]); // [{id,type:'file'|'url',name,meta}]
-  const [chatInput, setChatInput] = useState("");
-  const [sourceMode, setSourceMode] = useState("text"); // 'text' | 'document' | 'url'
+  // IMPORTANTE: arranca sin pestaña seleccionada
+  const [sourceMode, setSourceMode] = useState(null); // null | 'text' | 'document' | 'url'
   const [textValue, setTextValue] = useState("");
+  const [chatInput, setChatInput] = useState("");
 
   // Documentos
   const [documents, setDocuments] = useState([]); // [{id,file}]
@@ -86,11 +86,6 @@ const CreateTextPage = () => {
     return `${(n / Math.pow(k, i)).toFixed(i ? 1 : 0)} ${sizes[i]}`;
   };
 
-  const totalSize = useMemo(
-    () => documents.reduce((acc, d) => acc + (d.file?.size || 0), 0),
-    [documents]
-  );
-
   const parseUrlsFromText = (text) => {
     const raw = text.split(/[\s\n]+/).map(s => s.trim()).filter(Boolean);
     const valid = [];
@@ -101,17 +96,13 @@ const CreateTextPage = () => {
     return valid.filter(v => (seen.has(v.href) ? false : (seen.add(v.href), true)));
   };
 
-  // ===== Documentos =====
+  // Documentos
   const triggerPick = () => fileInputRef.current?.click();
   const addFiles = (list) => {
     if (!list?.length) return;
     const arr = Array.from(list);
     const newDocs = arr.map((file) => ({ id: crypto.randomUUID(), file }));
     setDocuments((prev) => [...prev, ...newDocs]);
-    const newSources = newDocs.map((d) => ({
-      id: d.id, type: "file", name: d.file.name, meta: { size: d.file.size, type: d.file.type }
-    }));
-    setSources((prev) => [...prev, ...newSources]);
   };
   const onFiles = (e) => { addFiles(e.target.files); e.target.value = ""; };
 
@@ -125,36 +116,22 @@ const CreateTextPage = () => {
 
   const removeDocument = (id) => {
     setDocuments((prev) => prev.filter((d) => d.id !== id));
-    setSources((prev) => prev.filter((s) => s.id !== id));
-  };
-  const clearDocuments = () => {
-    const ids = new Set(documents.map((d) => d.id));
-    setDocuments([]); setSources((prev) => prev.filter((s) => !ids.has(s.id)));
   };
 
-  // ===== URLs =====
+  // URLs
   const addUrlsFromTextarea = () => {
     const parsed = parseUrlsFromText(urlsTextarea);
     if (!parsed.length) return;
     const newItems = parsed.map(p => ({ id: crypto.randomUUID(), url: p.href, host: p.host }));
     setUrlItems(prev => [...prev, ...newItems]);
-    const newSources = newItems.map(i => ({ id: i.id, type: "url", name: i.host, meta: { url: i.url } }));
-    setSources(prev => [...prev, ...newSources]);
     setUrlsTextarea(""); setUrlInputOpen(false);
   };
-
   const removeUrl = (id) => {
     setUrlItems((prev) => prev.filter((u) => u.id !== id));
-    setSources((prev) => prev.filter((s) => s.id !== id));
   };
+  const clearUrls = () => setUrlItems([]);
 
-  const clearUrls = () => {
-    const ids = new Set(urlItems.map((u) => u.id));
-    setUrlItems([]);
-    setSources((prev) => prev.filter((s) => !ids.has(s.id)));
-  };
-
-  // ===== Derivar título/cuerpo desde la misma clave (sin nuevas claves) =====
+  // Mensaje de ayuda (misma clave, dividido en título/cuerpo)
   const leftRaw = tr("create_help_left");
   const [leftTitle, leftBody] = useMemo(() => {
     const parts = (leftRaw || "").split(".");
@@ -176,7 +153,7 @@ const CreateTextPage = () => {
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
             <div className="inline-flex items-center gap-2 text-sm sm:text-base md:text-lg font-semibold tracking-tight text-slate-900 dark:text-white">
               <FileText className="w-5 h-5 relative -top-px" style={{ color: BLUE }} aria-hidden />
-              <span>{labelCreateTitle}</span>
+              <span>{tr("create_text_title")}</span>
             </div>
           </div>
 
@@ -268,28 +245,35 @@ const CreateTextPage = () => {
 
                   {/* Tabs */}
                   <div className="flex items-center px-2 border-b" style={{ borderColor: DIVIDER }}>
-                    <TabBtn active={sourceMode === "text"} icon={FileText} label={tr("sources_tab_text")} onClick={() => setSourceMode("text")} showDivider />
-                    <TabBtn active={sourceMode === "document"} icon={FileIcon} label={tr("sources_tab_document")} onClick={() => setSourceMode("document")} showDivider />
-                    <TabBtn active={sourceMode === "url"} icon={UrlIcon} label={tr("sources_tab_url")} onClick={() => setSourceMode("url")} showDivider={false} />
+                    <TabBtn
+                      active={sourceMode === "text"}
+                      icon={FileText}
+                      label={tr("sources_tab_text")}
+                      onClick={() => setSourceMode("text")}
+                      showDivider
+                    />
+                    <TabBtn
+                      active={sourceMode === "document"}
+                      icon={FileIcon}
+                      label={tr("sources_tab_document")}
+                      onClick={() => setSourceMode("document")}
+                      showDivider
+                    />
+                    <TabBtn
+                      active={sourceMode === "url"}
+                      icon={UrlIcon}
+                      label={tr("sources_tab_url")}
+                      onClick={() => setSourceMode("url")}
+                      showDivider={false}
+                    />
                   </div>
 
                   {/* Contenido */}
                   <div className="flex-1 overflow-hidden p-4">
-                    {/* TEXTO */}
-                    {sourceMode === "text" && (
-                      <>
-                        <textarea
-                          value={textValue}
-                          onChange={(e) => setTextValue(e.target.value)}
-                          placeholder={tr("enter_text_here_full")}
-                          className="w-full h-[220px] resize-none outline-none text-[15px] leading-6
-                                     bg-transparent placeholder:text-slate-400 text-slate-800
-                                     dark:text-slate-100 dark:placeholder:text-slate-500"
-                          aria-label={tr("sources_tab_text")}
-                        />
-
-                        {/* ICONO + FRASES (SIN CUADRADO) */}
-                        <div className="mt-6 text-center px-2">
+                    {/* ======= ESTADO INICIAL: NINGUNA PESTAÑA ======= */}
+                    {!sourceMode && (
+                      <div className="h-full w-full flex items-center justify-center">
+                        <div className="text-center px-2">
                           <div className="mx-auto mb-3 w-12 h-12 rounded-full bg-slate-200/70 dark:bg-slate-800 flex items-center justify-center">
                             <FileText className="w-6 h-6 text-slate-500" />
                           </div>
@@ -302,10 +286,23 @@ const CreateTextPage = () => {
                             </p>
                           )}
                         </div>
-                      </>
+                      </div>
                     )}
 
-                    {/* DOCUMENTO */}
+                    {/* ======= TEXTO ======= */}
+                    {sourceMode === "text" && (
+                      <textarea
+                        value={textValue}
+                        onChange={(e) => setTextValue(e.target.value)}
+                        placeholder={tr("enter_text_here_full")}
+                        className="w-full h-[220px] resize-none outline-none text-[15px] leading-6
+                                   bg-transparent placeholder:text-slate-400 text-slate-800
+                                   dark:text-slate-100 dark:placeholder:text-slate-500"
+                        aria-label={tr("sources_tab_text")}
+                      />
+                    )}
+
+                    {/* ======= DOCUMENTO ======= */}
                     {sourceMode === "document" && (
                       <div
                         className={`h-full w-full flex flex-col relative ${dragActive ? "ring-2 ring-sky-400 rounded-2xl" : ""}`}
@@ -348,74 +345,12 @@ const CreateTextPage = () => {
                             {tr("folder_hint")}
                           </div>
                         </button>
-
-                        {documents.length > 0 && (
-                          <div className="mt-6 mb-2 flex items-center justify-between">
-                            <div className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                              {tr("selected_docs")} ({documents.length})
-                              <span className="ms-2 text-slate-500 font-normal">• {formatBytes(totalSize)}</span>
-                            </div>
-                            <button
-                              onClick={clearDocuments}
-                              className="text-sm inline-flex items-center gap-1 px-2 py-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
-                              title={tr("clear_all")}
-                              aria-label={tr("clear_all")}
-                            >
-                              <Trash2 className="w-4 h-4" />
-                              {tr("clear_all")}
-                            </button>
-                          </div>
-                        )}
-
-                        {documents.length > 0 && (
-                          <div className="flex-1 overflow-auto">
-                            <ul className="divide-y divide-slate-200 dark:divide-slate-800 rounded-xl border border-slate-200 dark:border-slate-800">
-                              {documents.map(({ id, file }) => (
-                                <li key={id} className="flex items-center justify-between gap-3 px-3 py-2">
-                                  <div className="min-w-0 flex items-center gap-3">
-                                    <div className="shrink-0 w-8 h-8 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
-                                      <FileIcon className="w-4 h-4" />
-                                    </div>
-                                    <div className="min-w-0">
-                                      <div className="text-sm font-medium truncate max-w-[290px]" title={file.name}>{file.name}</div>
-                                      <div className="text-xs text-slate-500">{formatBytes(file.size)}</div>
-                                    </div>
-                                  </div>
-                                  <button
-                                    onClick={() => removeDocument(id)}
-                                    className="p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
-                                    title={tr("remove")}
-                                    aria-label={tr("remove")}
-                                  >
-                                    <X className="w-4 h-4" />
-                                  </button>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-
-                        {documents.length > 0 && (
-                          <div className="mt-3">
-                            <button
-                              type="button"
-                              onClick={triggerPick}
-                              className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white/70 dark:bg-slate-900/40 hover:bg-slate-50 dark:hover:bg-slate-900/60 py-2"
-                              aria-label={tr("add_more")}
-                              title={tr("add_more")}
-                            >
-                              <Plus className="w-4 h-4" />
-                              {tr("add_more")}
-                            </button>
-                          </div>
-                        )}
                       </div>
                     )}
 
-                    {/* URL */}
+                    {/* ======= URL ======= */}
                     {sourceMode === "url" && (
                       <div className="h-full w-full flex flex-col">
-                        {/* Cabecera */}
                         <div className="mb-3 flex items-center justify-between">
                           <div className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300">
                             <UrlIcon className="w-4 h-4" />
@@ -441,7 +376,6 @@ const CreateTextPage = () => {
                           </button>
                         </div>
 
-                        {/* Entrada URLs */}
                         {urlInputOpen && (
                           <div className="mb-4 rounded-xl border border-slate-300 dark:border-slate-700 p-3 bg-white/90 dark:bg-slate-900/50">
                             <textarea
@@ -470,65 +404,37 @@ const CreateTextPage = () => {
                           </div>
                         )}
 
-                        {/* Lista de URLs */}
                         {urlItems.length > 0 && (
-                          <>
-                            <div className="mb-2 flex items-center justify-between">
-                              <div className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                                {tr("saved_urls")} ({urlItems.length})
-                              </div>
-                              <button
-                                onClick={clearUrls}
-                                className="text-sm inline-flex items-center gap-1 px-2 py-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
-                                title={tr("clear_all")}
-                                aria-label={tr("clear_all")}
-                              >
-                                <Trash2 className="w-4 h-4" />
-                                {tr("clear_all")}
-                              </button>
-                            </div>
-
-                            <ul className="flex-1 overflow-y-auto overflow-x-hidden divide-y divide-slate-200 dark:divide-slate-800 rounded-xl border border-slate-200 dark:border-slate-800">
-                              {urlItems.map(({ id, url, host }) => (
-                                <li key={id} className="flex items-center justify-between gap-3 px-3 py-2">
-                                  <div className="min-w-0 flex items-center gap-3 flex-1">
-                                    <div className="shrink-0 w-8 h-8 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
-                                      <UrlIcon className="w-4 h-4" />
-                                    </div>
-                                    <div className="min-w-0 flex-1">
-                                      <a
-                                        href={url}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        className="text-sm font-medium block truncate text-sky-600 hover:underline"
-                                        title={url}
-                                      >
-                                        {host} — {url}
-                                      </a>
-                                    </div>
+                          <ul className="flex-1 overflow-y-auto overflow-x-hidden divide-y divide-slate-200 dark:divide-slate-800 rounded-xl border border-slate-200 dark:border-slate-800">
+                            {urlItems.map(({ id, url, host }) => (
+                              <li key={id} className="flex items-center justify-between gap-3 px-3 py-2">
+                                <div className="min-w-0 flex items-center gap-3 flex-1">
+                                  <div className="shrink-0 w-8 h-8 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+                                    <UrlIcon className="w-4 h-4" />
                                   </div>
-                                  <button
-                                    onClick={() => removeUrl(id)}
-                                    className="shrink-0 p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
-                                    title={tr("remove")}
-                                    aria-label={tr("remove")}
-                                  >
-                                    <X className="w-4 h-4" />
-                                  </button>
-                                </li>
-                              ))}
-                            </ul>
-                          </>
-                        )}
-
-                        {/* Ayuda breve fuera de la tarjeta */}
-                        {urlItems.length === 0 && !urlInputOpen && (
-                          <div className="mt-12 text-slate-500 text-sm">
-                            <ul className="list-disc ps-5 space-y-1">
-                              <li>{tr("urls_note_visible")}</li>
-                              <li>{tr("urls_note_paywalled")}</li>
-                            </ul>
-                          </div>
+                                  <div className="min-w-0 flex-1">
+                                    <a
+                                      href={url}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      className="text-sm font-medium block truncate text-sky-600 hover:underline"
+                                      title={url}
+                                    >
+                                      {host} — {url}
+                                    </a>
+                                  </div>
+                                </div>
+                                <button
+                                  onClick={() => removeUrl(id)}
+                                  className="shrink-0 p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
+                                  title={tr("remove")}
+                                  aria-label={tr("remove")}
+                                >
+                                  <X className="w-4 h-4" />
+                                </button>
+                              </li>
+                            ))}
+                          </ul>
                         )}
                       </div>
                     )}
@@ -547,7 +453,7 @@ const CreateTextPage = () => {
                     </Button>
                   </div>
 
-                  {/* SOLO FRASE (sin tarjeta) debajo del botón */}
+                  {/* Mensaje derecha (sin tarjeta) */}
                   <div className="absolute left-1/2 -translate-x-1/2 text-center px-6" style={{ top: "49%" }}>
                     <p className="text-sm leading-6 text-slate-600 dark:text-slate-300 max-w-xl">
                       {tr("create_help_right")}
@@ -587,3 +493,4 @@ const CreateTextPage = () => {
 };
 
 export default CreateTextPage;
+
