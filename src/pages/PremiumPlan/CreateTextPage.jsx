@@ -154,8 +154,8 @@ const CreateTextPage = () => {
     setUrlItems([]); setSources(prev => prev.filter(s => !ids.has(s.id)));
   };
 
-  // ===== Estado vacío (para mensajes de ayuda tipo NotebookLM) =====
-  const isEmptyState =
+  // ===== Estado vacío (para mostrar los mensajes) =====
+  const nothingLoaded =
     textValue.trim() === "" &&
     documents.length === 0 &&
     urlItems.length === 0;
@@ -272,31 +272,30 @@ const CreateTextPage = () => {
 
                   {/* Contenido */}
                   <div className="flex-1 overflow-hidden p-4">
-                    {/* 🔹 Mensaje de ayuda (estado vacío) */}
-                    {isEmptyState && (
-                      <div className="mb-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30 p-4">
-                        <div className="flex items-start gap-3 text-slate-600 dark:text-slate-400">
-                          <div className="mt-[2px] shrink-0">
-                            <FileText className="w-5 h-5" />
-                          </div>
-                          <p className="text-sm leading-6">
-                            {tr("create_help_left")}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-
                     {/* TEXTO */}
                     {sourceMode === "text" && (
-                      <textarea
-                        value={textValue}
-                        onChange={(e) => setTextValue(e.target.value)}
-                        placeholder={tr("enter_text_here_full")}
-                        className="w-full h-full resize-none outline-none text-[15px] leading-6
-                                   bg-transparent placeholder:text-slate-400 text-slate-800
-                                   dark:text-slate-100 dark:placeholder:text-slate-500"
-                        aria-label={tr("sources_tab_text")}
-                      />
+                      <>
+                        <textarea
+                          value={textValue}
+                          onChange={(e) => setTextValue(e.target.value)}
+                          placeholder={tr("enter_text_here_full")}
+                          className="w-full h-[260px] md:h-[300px] resize-none outline-none text-[15px] leading-6
+                                     bg-transparent placeholder:text-slate-400 text-slate-800
+                                     dark:text-slate-100 dark:placeholder:text-slate-500"
+                          aria-label={tr("sources_tab_text")}
+                        />
+                        {/* Ayuda tipo NotebookLM (exactamente debajo del textarea) */}
+                        <div className="mt-6">
+                          <div className="mx-auto max-w-md rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/40 p-6 text-center">
+                            <div className="mx-auto mb-3 w-10 h-10 rounded-full bg-slate-200/70 dark:bg-slate-800 flex items-center justify-center">
+                              <FileText className="w-5 h-5 text-slate-500" />
+                            </div>
+                            <p className="text-sm leading-6 text-slate-600 dark:text-slate-300">
+                              {tr("create_help_left")}
+                            </p>
+                          </div>
+                        </div>
+                      </>
                     )}
 
                     {/* DOCUMENTO */}
@@ -410,24 +409,15 @@ const CreateTextPage = () => {
                     {sourceMode === "url" && (
                       <div className="h-full w-full flex flex-col">
                         {/* Cabecera */}
-                        <div className="mb-3 flex items-center justify-between">
+                        <div className="mb-3 flex itemscenter justify-between">
                           <div className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300">
                             <UrlIcon className="w-4 h-4" />
                             {tr("paste_urls_label")}
                           </div>
-                          {/* Botón estilo pill celeste */}
                           <button
                             type="button"
                             onClick={() => setUrlInputOpen(true)}
-                            className="inline-flex items-center gap-2
-                                       px-4 py-2 text-sm font-medium
-                                       rounded-full border border-sky-300
-                                       bg-sky-50 text-sky-700
-                                       hover:bg-sky-100 hover:border-sky-400
-                                       focus:outline-none focus:ring-2 focus:ring-sky-400/40
-                                       shadow-sm transition-colors
-                                       dark:border-sky-500/40 dark:bg-sky-900/20 dark:text-sky-300
-                                       dark:hover:bg-sky-900/30"
+                            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full border border-sky-300 bg-sky-50 text-sky-700 hover:bg-sky-100 hover:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-400/40 shadow-sm transition-colors dark:border-sky-500/40 dark:bg-sky-900/20 dark:text-sky-300 dark:hover:bg-sky-900/30"
                             aria-label={tr("add_url")}
                             title={tr("add_url")}
                           >
@@ -436,7 +426,6 @@ const CreateTextPage = () => {
                           </button>
                         </div>
 
-                        {/* Entrada URLs */}
                         {urlInputOpen && (
                           <div className="mb-4 rounded-xl border border-slate-300 dark:border-slate-700 p-3 bg-white/90 dark:bg-slate-900/50">
                             <textarea
@@ -458,7 +447,6 @@ const CreateTextPage = () => {
                                 {tr("cancel")}
                               </button>
                             </div>
-                            {/* Ayuda breve dentro de la tarjeta */}
                             <div className="mt-6 text-xs text-slate-500">
                               • {tr("urls_note_visible")}<br/>
                               • {tr("urls_note_paywalled")}
@@ -466,7 +454,6 @@ const CreateTextPage = () => {
                           </div>
                         )}
 
-                        {/* Lista de URLs */}
                         {urlItems.length > 0 && (
                           <>
                             <div className="mb-2 flex items-center justify-between">
@@ -517,7 +504,6 @@ const CreateTextPage = () => {
                           </>
                         )}
 
-                        {/* Ayuda breve fuera de la tarjeta */}
                         {urlItems.length === 0 && !urlInputOpen && (
                           <div className="mt-12 text-slate-500 text-sm">
                             <ul className="list-disc ps-5 space-y-1">
@@ -533,32 +519,30 @@ const CreateTextPage = () => {
 
                 {/* ========= Panel Derecho ========= */}
                 <section className="h-full relative rounded-2xl bg-white dark:bg-slate-900/50 ring-1 ring-slate-200 dark:ring-slate-800 shadow-sm overflow-hidden -ml-px">
-                  {/* 🔹 Mensaje de ayuda (estado vacío) */}
-                  {isEmptyState && (
-                    <div
-                      className="absolute left-1/2 -translate-x-1/2 text-center px-6"
-                      style={{ top: "24%" }}
-                    >
-                      <p className="text-slate-600 dark:text-slate-400 text-sm md:text-base max-w-2xl">
-                        {tr("create_help_right")}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* === Botón superior centrado === */}
+                  {/* Botón superior centrado */}
                   <div className="absolute left-1/2 -translate-x-1/2 z-10" style={{ top: "38%" }}>
                     <Button
-                     type="button"
-                     className="h-10 md:h-11 w-[220px] md:w-[240px] rounded-full text-[14px] md:text-[15px] font-medium shadow-sm flex items-center justify-center"
+                      type="button"
+                      className="h-10 md:h-11 w-[220px] md:w-[240px] rounded-full text-[14px] md:text-[15px] font-medium shadow-sm flex items-center justify-center"
                     >
-                   {tr("generate_from_sources")}
-                   </Button>
+                      {tr("generate_from_sources")}
+                    </Button>
+                  </div>
+
+                  {/* Texto de ayuda (exactamente debajo del botón) */}
+                  <div
+                    className="absolute left-1/2 -translate-x-1/2 text-center px-6"
+                    style={{ top: "49%" }}
+                  >
+                    <p className="text-sm leading-6 text-slate-600 dark:text-slate-300 max-w-xl">
+                      {tr("create_help_right")}
+                    </p>
                   </div>
 
                   {/* espacio libre para resultados */}
                   <div className="w-full h-full"></div>
 
-                  {/* === Buscador inferior con botón azul a la derecha (sin icono) === */}
+                  {/* Buscador inferior */}
                   <div className="absolute bottom-0 left-0 right-0 p-4">
                     <div className="mx-auto max-w-4xl rounded-full border
                                     border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900
