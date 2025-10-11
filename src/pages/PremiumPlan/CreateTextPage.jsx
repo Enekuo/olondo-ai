@@ -19,19 +19,20 @@ const CreateTextPage = () => {
   const tr = (key) => t(key);
 
   // ===== Estado =====
-  const [sources, setSources] = useState([]);
+  const [sources, setSources] = useState([]); // [{id,type:'file'|'url',name,meta}]
   const [chatInput, setChatInput] = useState("");
-  const [sourceMode, setSourceMode] = useState("text");
+  const [sourceMode, setSourceMode] = useState("text"); // 'text' | 'document' | 'url'
   const [textValue, setTextValue] = useState("");
 
-  const [documents, setDocuments] = useState([]);
-  theme
+  // Documentos
+  const [documents, setDocuments] = useState([]); // [{id,file}]
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef(null);
 
+  // URLs
   const [urlInputOpen, setUrlInputOpen] = useState(false);
   const [urlsTextarea, setUrlsTextarea] = useState("");
-  const [urlItems, setUrlItems] = useState([]);
+  const [urlItems, setUrlItems] = useState([]); // [{id,url,host}]
 
   // ===== Estilos base =====
   const HEADER_COLOR    = theme === "dark" ? "#262F3F" : "#ffffff";
@@ -153,7 +154,7 @@ const CreateTextPage = () => {
     setSources((prev) => prev.filter((s) => !ids.has(s.id)));
   };
 
-  // ===== Derivar título/cuerpo desde la misma clave =====
+  // ===== Derivar título/cuerpo desde la misma clave (sin nuevas claves) =====
   const leftRaw = tr("create_help_left");
   const [leftTitle, leftBody] = useMemo(() => {
     const parts = (leftRaw || "").split(".");
@@ -277,7 +278,6 @@ const CreateTextPage = () => {
                     {/* TEXTO */}
                     {sourceMode === "text" && (
                       <>
-                        {/* Área de texto */}
                         <textarea
                           value={textValue}
                           onChange={(e) => setTextValue(e.target.value)}
@@ -288,8 +288,11 @@ const CreateTextPage = () => {
                           aria-label={tr("sources_tab_text")}
                         />
 
-                        {/* SOLO FRASES, SIN CUADRADO */}
+                        {/* ICONO + FRASES (SIN CUADRADO) */}
                         <div className="mt-6 text-center px-2">
+                          <div className="mx-auto mb-3 w-12 h-12 rounded-full bg-slate-200/70 dark:bg-slate-800 flex items-center justify-center">
+                            <FileText className="w-6 h-6 text-slate-500" />
+                          </div>
                           <p className="text-[15px] font-semibold text-slate-600 dark:text-slate-200">
                             {leftTitle}
                           </p>
@@ -544,7 +547,7 @@ const CreateTextPage = () => {
                     </Button>
                   </div>
 
-                  {/* SOLO FRASE (sin cuadrado) debajo del botón */}
+                  {/* SOLO FRASE (sin tarjeta) debajo del botón */}
                   <div className="absolute left-1/2 -translate-x-1/2 text-center px-6" style={{ top: "49%" }}>
                     <p className="text-sm leading-6 text-slate-600 dark:text-slate-300 max-w-xl">
                       {tr("create_help_right")}
