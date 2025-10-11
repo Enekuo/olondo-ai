@@ -157,7 +157,7 @@ const CreateTextPage = () => {
     setSources((prev) => prev.filter((s) => !ids.has(s.id)));
   };
 
-  // ===== Derivar título/cuerpo de la MISMA clave (sin crear nuevas) =====
+  // ===== Derivar título/cuerpo desde la misma clave (no añadimos más) =====
   const leftRaw = tr("create_help_left");
   const [leftTitle, leftBody] = useMemo(() => {
     const parts = (leftRaw || "").split(".");
@@ -281,19 +281,21 @@ const CreateTextPage = () => {
                     {/* TEXTO */}
                     {sourceMode === "text" && (
                       <>
+                        {/* textarea más bajo para dejar sitio a la tarjeta */}
                         <textarea
                           value={textValue}
                           onChange={(e) => setTextValue(e.target.value)}
                           placeholder={tr("enter_text_here_full")}
-                          className="w-full h-[260px] md:h-[300px] resize-none outline-none text-[15px] leading-6
+                          className="w-full h-[200px] md:h-[220px] resize-none outline-none text-[15px] leading-6
                                      bg-transparent placeholder:text-slate-400 text-slate-800
                                      dark:text-slate-100 dark:placeholder:text-slate-500"
                           aria-label={tr("sources_tab_text")}
                         />
-                        {/* Tarjeta estilo NotebookLM */}
+
+                        {/* Tarjeta estilo NotebookLM (icono + título + cuerpo) */}
                         <div className="mt-6">
-                          <div className="mx-auto max-w-[520px] rounded-xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/40 p-8 text-center">
-                            <div className="mx-auto mb-4 w-12 h-12 rounded-full bg-slate-200/70 dark:bg-slate-800 flex items-center justify-center">
+                          <div className="mx-auto max-w-[620px] rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40 px-10 py-8 text-center shadow-sm">
+                            <div className="mx-auto mb-4 w-12 h-12 rounded-full bg-slate-200/80 dark:bg-slate-800 flex items-center justify-center">
                               <FileText className="w-6 h-6 text-slate-500" />
                             </div>
                             <div className="text-[15px] font-semibold text-slate-600 dark:text-slate-200">
@@ -425,7 +427,6 @@ const CreateTextPage = () => {
                             <UrlIcon className="w-4 h-4" />
                             {tr("paste_urls_label")}
                           </div>
-                          {/* Botón estilo pill celeste */}
                           <button
                             type="button"
                             onClick={() => setUrlInputOpen(true)}
@@ -468,7 +469,6 @@ const CreateTextPage = () => {
                                 {tr("cancel")}
                               </button>
                             </div>
-                            {/* Ayuda breve dentro de la tarjeta */}
                             <div className="mt-6 text-xs text-slate-500">
                               • {tr("urls_note_visible")}<br/>
                               • {tr("urls_note_paywalled")}
@@ -553,14 +553,13 @@ const CreateTextPage = () => {
                     </Button>
                   </div>
 
-                  {/* Texto de ayuda debajo del botón */}
-                  <div
-                    className="absolute left-1/2 -translate-x-1/2 text-center px-6"
-                    style={{ top: "49%" }}
-                  >
-                    <p className="text-sm leading-6 text-slate-600 dark:text-slate-300 max-w-xl">
-                      {tr("create_help_right")}
-                    </p>
+                  {/* Texto de ayuda dentro de tarjeta, debajo del botón */}
+                  <div className="absolute left-1/2 -translate-x-1/2 text-center px-6" style={{ top: "49%" }}>
+                    <div className="mx-auto max-w-xl rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40 px-8 py-6 shadow-sm">
+                      <p className="text-sm leading-6 text-slate-600 dark:text-slate-300">
+                        {tr("create_help_right")}
+                      </p>
+                    </div>
                   </div>
 
                   {/* espacio libre para resultados */}
