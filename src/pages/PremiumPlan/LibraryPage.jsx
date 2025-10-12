@@ -35,7 +35,7 @@ const LibraryPage = () => {
   const headerBtnBase =
     theme === "dark" ? "bg-slate-800 text-white border-0" : "bg-white text-slate-800 border border-slate-200";
 
-  // Filtro (?type=all|text|summary|folders)
+  // ===== Filtros (?type=all|text|summary|folders)
   const type = useMemo(() => searchParams.get("type") || "all", [searchParams]);
   const setType = (next) => {
     const sp = new URLSearchParams(searchParams);
@@ -45,15 +45,15 @@ const LibraryPage = () => {
 
   const createAction = useMemo(() => {
     switch (type) {
-      case "text":    return { label: t("library_create_text") || "Crear texto",    href: "/create?mode=text" };
+      case "text":    return { label: t("library_create_text") || "Crear texto",     href: "/create?mode=text" };
       case "summary": return { label: t("library_create_summary") || "Crear resumen", href: "/create?mode=summary" };
       case "folders": return { label: t("library_create_folder") || "Crear carpeta",  href: "/library/folders/new" };
       case "all":
-      default:        return { label: t("library_create_new") || "Crear nuevo",     href: "/create" };
+      default:        return { label: t("library_create_new") || "Crear nuevo",      href: "/create" };
     }
   }, [type, t]);
 
-  // ====== Estado documentos (demo) ======
+  // ===== Documentos (demo) =====
   const formatDate = (d) =>
     d.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" }).replace(".", "");
 
@@ -62,7 +62,7 @@ const LibraryPage = () => {
   ]);
 
   // Menú contextual (por doc)
-  const [menuOpenFor, setMenuOpenFor] = useState(null); // guarda id del doc con menú abierto
+  const [menuOpenFor, setMenuOpenFor] = useState(null); // id del doc con menú abierto
   const menuRef = useRef(null);
   const menuBtnRef = useRef(null);
 
@@ -77,7 +77,7 @@ const LibraryPage = () => {
     return () => document.removeEventListener("mousedown", onClickOutside);
   }, [menuOpenFor]);
 
-  // ====== Modal editar título ======
+  // Modal editar título
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editTitle, setEditTitle] = useState("");
   const [editingDocId, setEditingDocId] = useState(null);
@@ -101,6 +101,23 @@ const LibraryPage = () => {
 
   const deleteDoc = (docId) => {
     setDocs(prev => prev.filter(d => d.id !== docId));
+  };
+
+  // ===== Carpetas =====
+  const [isFolderModalOpen, setFolderModalOpen] = useState(false);
+  const [folderName, setFolderName] = useState("");
+  const [folders, setFolders] = useState([]);
+
+  const openFolderModal = () => { setFolderName(""); setFolderModalOpen(true); };
+  const closeFolderModal = () => setFolderModalOpen(false);
+  const saveFolder = () => {
+    const name = folderName.trim();
+    if (!name) return;
+    setFolders((prev) => [
+      { id: crypto.randomUUID?.() || String(Date.now()), name, createdAt: new Date().toISOString() },
+      ...prev,
+    ]);
+    setFolderModalOpen(false);
   };
 
   return (
@@ -172,7 +189,7 @@ const LibraryPage = () => {
           <aside className="border-r border-slate-200 dark:border-slate-800" style={{ borderColor: BORDER_COLOR }}>
             <div
               className="sticky ps-2 pe-3 pt-6 pb-0 text-slate-800 dark:text-slate-100"
-              style={{ backgroundColor: SIDEBAR_COLOR, top: HEADER_HEIGHT_PX, height: `calc(100vh - ${HEADER_HEIGHT_PX}px)`, width: 190 }}
+              style={{ backgroundColor: SIDEBAR_COLOR, top: HEADER_HEIGHT_PX, height: `calc(100vh - ${HEADER_HEIGHT_PX}px)`, width: SIDEBAR_WIDTH_PX }}
             >
               <div className="h-full flex flex-col justify-between">
                 <nav className="space-y-1">
@@ -181,7 +198,7 @@ const LibraryPage = () => {
                     <span className="truncate">{t("dashboard_nav_home")}</span>
                   </Link>
 
-                  <Link to="/create" className={`w/full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`} style={isActive("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
+                  <Link to="/create" className={`w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`} style={isActive("/create") ? { backgroundColor: ACTIVE_BG_COLOR } : undefined}>
                     <PlusCircle className="w-5 h-5 shrink-0" />
                     <span className="truncate">{t("dashboard_nav_create")}</span>
                   </Link>
@@ -226,8 +243,6 @@ const LibraryPage = () => {
                   ].map(({ id, label }) => {
                     const active = type === id;
 
-                    // Inactivo: gris; Activo: azul como antes.
-                    // Efecto sin blur: fondo interno (span) que escala en hover.
                     const btnBase =
                       "group relative overflow-hidden rounded-full text-sm px-4 py-2 transition-colors duration-150 hover:shadow-sm";
                     const textCls = active
@@ -237,7 +252,7 @@ const LibraryPage = () => {
                       "absolute inset-0 rounded-full scale-100 transition-transform duration-150 will-change-transform";
                     const bgCls = active
                       ? `${bgBase} bg-[#E8F0FE] dark:bg-[rgba(59,130,246,0.18)] group-hover:scale-[1.08] group-hover:bg-[#E3EEFF]`
-                      : `${bgBase} bg-transparent group-hover:bg-[#F5F7FA] dark:group-hover:bg[rgba(148,163,184,0.12)] group-hover:scale-[1.08]`;
+                      : `${bgBase} bg-transparent group-hover:bg-[#F5F7FA] dark:group-hover:bg-[rgba(148,163,184,0.12)] group-hover:scale-[1.08]`;
 
                     return (
                       <button
@@ -257,11 +272,7 @@ const LibraryPage = () => {
 
                 {type === "folders" && (
                   <button
-                    onClick={() => {
-                      // abrir modal crear carpeta
-                      setFolderModalOpen(true);
-                      setFolderName("");
-                    }}
+                    onClick={openFolderModal}
                     className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium
                                bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
                   >
@@ -292,7 +303,7 @@ const LibraryPage = () => {
                   </Link>
                 )}
 
-                {/* Tarjetas documento demo (mapeadas para poder eliminar/editar) */}
+                {/* Tarjetas documento (map para poder editar/eliminar) */}
                 {(type === "all" || type === "text") && docs.map((doc) => (
                   <div
                     key={doc.id}
