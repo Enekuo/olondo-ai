@@ -704,8 +704,10 @@ dashboard_chat_sources_count: "0 fuentes",
   folder_modal_cancel: "Cancelar",
   folder_modal_save: "Guardar",
   close: "Cerrar",
+  library_doc_edit_title: "Editar documento",
+  library_doc_title_label: "Eliminar",
 
-  
+
 
 
 }
