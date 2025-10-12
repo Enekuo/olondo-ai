@@ -91,7 +91,7 @@ const Navbar = () => {
               className="flex items-center justify-center h-9 w-9 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400"
               aria-label={t('themeToggle', 'Toggle theme')}
             >
-              {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
+              {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
             </button>
             <Button
               onClick={() => navigate('/free-trial')}
@@ -110,7 +110,7 @@ const Navbar = () => {
               className="flex items-center justify-center h-9 w-9 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400"
               aria-label={t('themeToggle', 'Toggle theme')}
             >
-              {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
+              {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
             </button>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -171,4 +171,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;  
+export default Navbar;
