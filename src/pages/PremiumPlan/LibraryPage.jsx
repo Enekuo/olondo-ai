@@ -45,50 +45,63 @@ const LibraryPage = () => {
 
   const createAction = useMemo(() => {
     switch (type) {
-      case "text":    return { label: t("library_create_text"),    href: "/create?mode=text" };
-      case "summary": return { label: t("library_create_summary"), href: "/create?mode=summary" };
-      case "folders": return { label: t("library_create_folder"),  href: "/library/folders/new" };
+      case "text":    return { label: t("library_create_text") || "Crear texto",    href: "/create?mode=text" };
+      case "summary": return { label: t("library_create_summary") || "Crear resumen", href: "/create?mode=summary" };
+      case "folders": return { label: t("library_create_folder") || "Crear carpeta",  href: "/library/folders/new" };
       case "all":
-      default:        return { label: t("library_create_new"),     href: "/create" };
+      default:        return { label: t("library_create_new") || "Crear nuevo",     href: "/create" };
     }
   }, [type, t]);
 
-  // Estado carpetas
-  const [isFolderModalOpen, setFolderModalOpen] = useState(false);
-  const [folderName, setFolderName] = useState("");
-  const [folders, setFolders] = useState([]);
-
-  const openFolderModal = () => { setFolderName(""); setFolderModalOpen(true); };
-  const closeFolderModal = () => setFolderModalOpen(false);
-  const saveFolder = () => {
-    const name = folderName.trim();
-    if (!name) return;
-    setFolders((prev) => [
-      { id: crypto.randomUUID?.() || String(Date.now()), name, createdAt: new Date().toISOString() },
-      ...prev,
-    ]);
-    setFolderModalOpen(false);
-  };
-
+  // ====== Estado documentos (demo) ======
   const formatDate = (d) =>
     d.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" }).replace(".", "");
-  const doc = { id: "doc-olondo", title: "Olondo.ai", date: formatDate(new Date()) };
 
-  // Menú contextual
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [docs, setDocs] = useState([
+    { id: "doc-olondo", title: "Olondo.ai", date: formatDate(new Date()) }
+  ]);
+
+  // Menú contextual (por doc)
+  const [menuOpenFor, setMenuOpenFor] = useState(null); // guarda id del doc con menú abierto
   const menuRef = useRef(null);
   const menuBtnRef = useRef(null);
 
   useEffect(() => {
     const onClickOutside = (e) => {
-      if (!menuOpen) return;
+      if (!menuOpenFor) return;
       if (menuRef.current?.contains(e.target)) return;
       if (menuBtnRef.current?.contains(e.target)) return;
-      setMenuOpen(false);
+      setMenuOpenFor(null);
     };
     document.addEventListener("mousedown", onClickOutside);
     return () => document.removeEventListener("mousedown", onClickOutside);
-  }, [menuOpen]);
+  }, [menuOpenFor]);
+
+  // ====== Modal editar título ======
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [editTitle, setEditTitle] = useState("");
+  const [editingDocId, setEditingDocId] = useState(null);
+
+  const openEditModal = (doc) => {
+    setEditingDocId(doc.id);
+    setEditTitle(doc.title);
+    setEditModalOpen(true);
+  };
+  const closeEditModal = () => {
+    setEditModalOpen(false);
+    setEditingDocId(null);
+    setEditTitle("");
+  };
+  const saveEditTitle = () => {
+    const title = editTitle.trim();
+    if (!title) return;
+    setDocs(prev => prev.map(d => d.id === editingDocId ? { ...d, title } : d));
+    closeEditModal();
+  };
+
+  const deleteDoc = (docId) => {
+    setDocs(prev => prev.filter(d => d.id !== docId));
+  };
 
   return (
     <div className="min-h-screen w-full bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -206,10 +219,10 @@ const LibraryPage = () => {
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-3">
                   {[
-                    { id: "all",     label: t("library_filter_all") },
-                    { id: "text",    label: t("library_filter_texts") },
-                    { id: "summary", label: t("library_filter_summaries") },
-                    { id: "folders", label: t("library_filter_folders") },
+                    { id: "all",     label: t("library_filter_all") || "Todos" },
+                    { id: "text",    label: t("library_filter_texts") || "Textos" },
+                    { id: "summary", label: t("library_filter_summaries") || "Resúmenes" },
+                    { id: "folders", label: t("library_filter_folders") || "Mis carpetas" },
                   ].map(({ id, label }) => {
                     const active = type === id;
 
@@ -224,7 +237,7 @@ const LibraryPage = () => {
                       "absolute inset-0 rounded-full scale-100 transition-transform duration-150 will-change-transform";
                     const bgCls = active
                       ? `${bgBase} bg-[#E8F0FE] dark:bg-[rgba(59,130,246,0.18)] group-hover:scale-[1.08] group-hover:bg-[#E3EEFF]`
-                      : `${bgBase} bg-transparent group-hover:bg-[#F5F7FA] dark:group-hover:bg-[rgba(148,163,184,0.12)] group-hover:scale-[1.08]`;
+                      : `${bgBase} bg-transparent group-hover:bg-[#F5F7FA] dark:group-hover:bg[rgba(148,163,184,0.12)] group-hover:scale-[1.08]`;
 
                     return (
                       <button
@@ -244,12 +257,16 @@ const LibraryPage = () => {
 
                 {type === "folders" && (
                   <button
-                    onClick={openFolderModal}
+                    onClick={() => {
+                      // abrir modal crear carpeta
+                      setFolderModalOpen(true);
+                      setFolderName("");
+                    }}
                     className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium
                                bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
                   >
                     <Plus className="w-4 h-4" />
-                    {t("library_create_folder")}
+                    {t("library_create_folder") || "Crear carpeta"}
                   </button>
                 )}
               </div>
@@ -275,10 +292,11 @@ const LibraryPage = () => {
                   </Link>
                 )}
 
-                {/* Tarjeta documento demo */}
-                {(type === "all" || type === "text") && (
+                {/* Tarjetas documento demo (mapeadas para poder eliminar/editar) */}
+                {(type === "all" || type === "text") && docs.map((doc) => (
                   <div
-                    className="relative rounded-2xl shadow-sm border"
+                    key={doc.id}
+                    className="relative rounded-2xl shadow-sm border hover:shadow-md transition cursor-default"
                     style={{
                       width: 280,
                       height: 196,
@@ -292,25 +310,31 @@ const LibraryPage = () => {
                       ref={menuBtnRef}
                       aria-label="Opciones"
                       className="absolute top-3 right-3 h-8 w-8 inline-flex items-center justify-center rounded-full hover:bg-white/60"
-                      onClick={() => setMenuOpen(v => !v)}
+                      onClick={() => setMenuOpenFor(prev => prev === doc.id ? null : doc.id)}
                       type="button"
                     >
                       <MoreVertical className="w-5 h-5 text-slate-600" />
                     </button>
 
-                    {menuOpen && (
+                    {menuOpenFor === doc.id && (
                       <div
                         ref={menuRef}
                         className="absolute z-10 top-1/2 -translate-y-1/2 left-[calc(100%-100px)] w-[200px] rounded-xl border border-slate-200 bg-white shadow-lg py-2"
                       >
-                        <div className="flex items-center gap-3 px-3 py-2 text-slate-800 cursor-pointer hover:bg-slate-50">
+                        <button
+                          className="w-full flex items-center gap-3 px-3 py-2 text-slate-800 hover:bg-slate-50"
+                          onClick={() => { setMenuOpenFor(null); openEditModal(doc); }}
+                        >
                           <Pencil className="w-5 h-5 text-slate-600" />
-                          <span>Editar título</span>
-                        </div>
-                        <div className="flex items-center gap-3 px-3 py-2 text-slate-800 cursor-pointer hover:bg-slate-50">
+                          <span>{t("library_doc_edit_title") || "Editar título"}</span>
+                        </button>
+                        <button
+                          className="w-full flex items-center gap-3 px-3 py-2 text-slate-800 hover:bg-slate-50"
+                          onClick={() => { setMenuOpenFor(null); deleteDoc(doc.id); }}
+                        >
                           <Trash2 className="w-5 h-5 text-slate-600" />
-                          <span>Eliminar</span>
-                        </div>
+                          <span>{t("library_doc_delete") || "Eliminar"}</span>
+                        </button>
                       </div>
                     )}
 
@@ -332,7 +356,7 @@ const LibraryPage = () => {
                       <p className="mt-4 text-[14px] leading-[20px] text-slate-700">{doc.date}</p>
                     </div>
                   </div>
-                )}
+                ))}
 
                 {/* Carpetas */}
                 {type === "folders" && folders.length === 0 && (
@@ -403,6 +427,55 @@ const LibraryPage = () => {
                 className="px-4 py-2 text-[14px] font-medium rounded-lg bg-slate-900 text-white hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
               >
                 {t("folder_modal_save")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL Editar título del documento */}
+      {editModalOpen && (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center" role="dialog" aria-modal="true">
+          <div className="absolute inset-0 bg-black/45" onClick={closeEditModal} />
+          <div className="relative w-full max-w-md bg-white rounded-[18px] border border-slate-200 shadow-[0_24px_80px_rgba(2,6,23,0.22)]">
+            <div className="px-6 pt-5 pb-3 flex items-center justify-between">
+              <h3 className="text-[18px] leading-6 font-semibold text-slate-900">
+                {t("library_doc_edit_title") || "Editar título"}
+              </h3>
+              <button
+                onClick={closeEditModal}
+                className="h-8 w-8 inline-flex items-center justify-center rounded-lg hover:bg-slate-100 text-slate-500"
+                aria-label={t("close") || "Cerrar"}
+              >
+                <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </div>
+            <div className="px-6 pb-5">
+              <label className="block text-sm font-medium text-slate-700 mb-1">
+                {t("library_doc_title_label") || "Título"}
+              </label>
+              <input
+                autoFocus
+                value={editTitle}
+                onChange={(e) => setEditTitle(e.target.value)}
+                placeholder={t("library_doc_title_placeholder") || "Escribe un título"}
+                className="w-full rounded-[10px] border border-slate-300 bg-white px-3 py-2 text-[14px] leading-[22px] outline-none focus:ring-2 focus:ring-sky-500"
+                onKeyDown={(e) => { if (e.key === "Enter") saveEditTitle(); }}
+              />
+            </div>
+            <div className="px-6 pb-6 flex items-center justify-end gap-3">
+              <button
+                onClick={closeEditModal}
+                className="px-4 py-2 text-[14px] font-medium rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 shadow-sm"
+              >
+                {t("cancel") || "Cancelar"}
+              </button>
+              <button
+                onClick={saveEditTitle}
+                disabled={!editTitle.trim()}
+                className="px-4 py-2 text-[14px] font-medium rounded-lg bg-slate-900 text-white hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+              >
+                {t("save") || "Guardar"}
               </button>
             </div>
           </div>
