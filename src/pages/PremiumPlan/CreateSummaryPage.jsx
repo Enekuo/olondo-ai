@@ -17,7 +17,7 @@ const CreateSummaryPage = () => {
 
   const tr = (key) => t(key);
 
-  // ===== Estado (idéntico a Crear texto) =====
+  // ===== Estado =====
   const [sourceMode, setSourceMode] = useState(null); // null | 'text' | 'document' | 'url'
   const [textValue, setTextValue] = useState("");
   const [chatInput, setChatInput] = useState("");
@@ -40,26 +40,26 @@ const CreateSummaryPage = () => {
   const HEADER_HEIGHT_PX = 72;
   const SIDEBAR_WIDTH_PX = 190;
 
-  // Primario lila (sustituye al azul)
-  const PRIMARY = "#a855f7";     // purple-500
-  const PRIMARY_SOFT = "#ede9fe"; // purple-100 aprox
+  // Primario lila
+  const PRIMARY = "#a855f7";
+  const PRIMARY_SOFT = "#ede9fe";
   const DIVIDER = "#e5e7eb";
   const GRAY_TEXT = "#9ca3af";
   const GRAY_ICON = "#9ca3af";
 
   const isCurrentOrChild = (base) =>
     location.pathname === base || location.pathname.startsWith(base + "/");
-
   const navHoverBg = theme === "dark" ? "hover:bg-[#2B384A]" : "hover:bg-[#eef3f9]";
   const navClasses = () =>
     `w-full flex items-center gap-3 h-11 ps-2 pe-2 rounded-xl transition-colors cursor-pointer ${navHoverBg}`;
 
   const pageVariants = { initial: { opacity: 0, y: 20 }, in: { opacity: 1, y: 0 }, out: { opacity: 0, y: -20 } };
 
-  // i18n (mismas claves que Crear texto)
-  const labelSources = tr("sources_title");
+  // i18n
+  const labelSources  = tr("sources_title");
+  const labelGenBtn   = tr("summary_generate_btn"); // <-- NUEVA CLAVE USADA AQUÍ
 
-  // Pestañas (idéntico pero en lila)
+  // Pestañas
   const TabBtn = ({ active, icon: Icon, label, onClick, showDivider }) => (
     <div className="relative flex-1 min-w-0 flex items-stretch">
       <button
@@ -80,15 +80,11 @@ const CreateSummaryPage = () => {
     </div>
   );
 
-  // Utils
   const parseUrlsFromText = (text) => {
     const raw = text.split(/[\s\n]+/).map((s) => s.trim()).filter(Boolean);
     const valid = [];
     for (const u of raw) {
-      try {
-        const url = new URL(u);
-        valid.push({ href: url.href, host: url.host });
-      } catch {}
+      try { const url = new URL(u); valid.push({ href: url.href, host: url.host }); } catch {}
     }
     const seen = new Set();
     return valid.filter((v) => (seen.has(v.href) ? false : (seen.add(v.href), true)));
@@ -102,17 +98,13 @@ const CreateSummaryPage = () => {
     const newDocs = arr.map((file) => ({ id: crypto.randomUUID(), file }));
     setDocuments((prev) => [...prev, ...newDocs]);
   };
-  const onFiles = (e) => {
-    addFiles(e.target.files);
-    e.target.value = "";
-  };
+  const onFiles = (e) => { addFiles(e.target.files); e.target.value = ""; };
   const onDragEnter = (e) => { e.preventDefault(); e.stopPropagation(); setDragActive(true); };
   const onDragOver  = (e) => { e.preventDefault(); e.stopPropagation(); setDragActive(true); };
   const onDragLeave = (e) => { e.preventDefault(); e.stopPropagation(); setDragActive(false); };
   const onDrop = (e) => {
     e.preventDefault(); e.stopPropagation(); setDragActive(false);
-    const dt = e.dataTransfer;
-    if (dt?.files?.length) addFiles(dt.files);
+    const dt = e.dataTransfer; if (dt?.files?.length) addFiles(dt.files);
   };
   const removeDocument = (id) => setDocuments((prev) => prev.filter((d) => d.id !== id));
 
@@ -122,12 +114,11 @@ const CreateSummaryPage = () => {
     if (!parsed.length) return;
     const newItems = parsed.map((p) => ({ id: crypto.randomUUID(), url: p.href, host: p.host }));
     setUrlItems((prev) => [...prev, ...newItems]);
-    setUrlsTextarea("");
-    setUrlInputOpen(false);
+    setUrlsTextarea(""); setUrlInputOpen(false);
   };
   const removeUrl = (id) => setUrlItems((prev) => prev.filter((u) => u.id !== id));
 
-  // Mensaje de ayuda izquierda (misma clave que en crear texto)
+  // Mensaje de ayuda izquierda
   const leftRaw = tr("create_help_left");
   const [leftTitle, leftBody] = useMemo(() => {
     const parts = (leftRaw || "").split(".");
@@ -149,7 +140,6 @@ const CreateSummaryPage = () => {
         <div className="w-full h-full px-4 sm:px-6 flex items-center justify-between relative">
           <Link to="/" className="font-extrabold text-lg tracking-tight text-sky-400">Olondo.ai</Link>
 
-          {/* Título centrado */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
             <div className="inline-flex items-center gap-2 text-sm sm:text-base md:text-lg font-semibold tracking-tight text-slate-900 dark:text-white">
               <BookOpen className="w-5 h-5 relative -top-px" style={{ color: PRIMARY }} aria-hidden />
@@ -183,7 +173,7 @@ const CreateSummaryPage = () => {
       {/* LAYOUT */}
       <div className="w-full">
         <div className="grid gap-0 md:grid-cols-[190px_1fr]">
-          {/* SIDEBAR (rutas iguales que CreateTextPage) */}
+          {/* SIDEBAR */}
           <aside className="border-r border-slate-200 dark:border-slate-800" style={{ borderColor: BORDER_COLOR }}>
             <div
               className="sticky ps-2 pe-3 pt-6 pb-0 text-slate-800 dark:text-slate-100"
@@ -228,7 +218,7 @@ const CreateSummaryPage = () => {
             </div>
           </aside>
 
-          {/* MAIN (idéntico a crear texto, con lila) */}
+          {/* MAIN */}
           <main className="min-h-[calc(100vh-72px)]">
             <div className="max-w-7xl mx-auto w-full px-4 md:px-6 py-4">
               <motion.section
@@ -248,32 +238,13 @@ const CreateSummaryPage = () => {
 
                   {/* Tabs */}
                   <div className="flex items-center px-2 border-b" style={{ borderColor: DIVIDER }}>
-                    <TabBtn
-                      active={sourceMode === "text"}
-                      icon={FileText}
-                      label={tr("sources_tab_text")}
-                      onClick={() => setSourceMode("text")}
-                      showDivider
-                    />
-                    <TabBtn
-                      active={sourceMode === "document"}
-                      icon={FileIcon}
-                      label={tr("sources_tab_document")}
-                      onClick={() => setSourceMode("document")}
-                      showDivider
-                    />
-                    <TabBtn
-                      active={sourceMode === "url"}
-                      icon={UrlIcon}
-                      label={tr("sources_tab_url")}
-                      onClick={() => setSourceMode("url")}
-                      showDivider={false}
-                    />
+                    <TabBtn active={sourceMode === "text"} icon={FileText} label={tr("sources_tab_text")} onClick={() => setSourceMode("text")} showDivider />
+                    <TabBtn active={sourceMode === "document"} icon={FileIcon} label={tr("sources_tab_document")} onClick={() => setSourceMode("document")} showDivider />
+                    <TabBtn active={sourceMode === "url"} icon={UrlIcon} label={tr("sources_tab_url")} onClick={() => setSourceMode("url")} showDivider={false} />
                   </div>
 
                   {/* Contenido */}
                   <div className="flex-1 overflow-hidden p-4">
-                    {/* Estado inicial */}
                     {!sourceMode && (
                       <div className="h-full w-full flex items-center justify-center">
                         <div className="text-center px-2">
@@ -282,19 +253,12 @@ const CreateSummaryPage = () => {
                               <FileText className="w-6 h-6" style={{ color: PRIMARY }} />
                             </div>
                           </div>
-                          <p className="text-[15px] font-semibold text-slate-600 dark:text-slate-200">
-                            {leftTitle}
-                          </p>
-                          {leftBody && (
-                            <p className="mt-1 text-[13px] leading-6 text-slate-500 dark:text-slate-400">
-                              {leftBody}
-                            </p>
-                          )}
+                          <p className="text-[15px] font-semibold text-slate-600 dark:text-slate-200">{leftTitle}</p>
+                          {leftBody && <p className="mt-1 text-[13px] leading-6 text-slate-500 dark:text-slate-400">{leftBody}</p>}
                         </div>
                       </div>
                     )}
 
-                    {/* Texto */}
                     {sourceMode === "text" && (
                       <textarea
                         value={textValue}
@@ -307,7 +271,6 @@ const CreateSummaryPage = () => {
                       />
                     )}
 
-                    {/* Documento */}
                     {sourceMode === "document" && (
                       <div
                         className={`h-full w-full flex flex-col relative ${dragActive ? "ring-2 rounded-2xl" : ""}`}
@@ -331,30 +294,20 @@ const CreateSummaryPage = () => {
                         <button
                           type="button"
                           onClick={triggerPick}
-                          className="w-full rounded-2xl border border-dashed
-                                     border-slate-300 dark:border-slate-700 bg-white/40 dark:bg-slate-900/30
-                                     hover:bg-slate-50 dark:hover:bg-slate-900/50 transition
-                                     px-6 py-10 text-center shadow-[inset_0_0_0_1px_rgba(0,0,0,0.02)]"
+                          className="w-full rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 bg-white/40 dark:bg-slate-900/30 hover:bg-slate-50 dark:hover:bg-slate-900/50 transition px-6 py-10 text-center shadow-[inset_0_0_0_1px_rgba(0,0,0,0.02)]"
                           aria-label={tr("choose_file_title")}
                           title={tr("choose_file_title")}
                         >
                           <div className="mx-auto mb-5 w-20 h-20 rounded-full flex items-center justify-center" style={{ backgroundColor: PRIMARY_SOFT }}>
                             <Plus className="w-10 h-10" style={{ color: PRIMARY }} />
                           </div>
-                          <div className="text-xl font-semibold text-slate-800 dark:text-slate-100">
-                            {tr("choose_file_title")}
-                          </div>
-                          <div className="mt-4 text-sm text-slate-500">
-                            {tr("accepted_formats")}
-                          </div>
-                          <div className="mt-1 text-xs text-slate-400">
-                            {tr("folder_hint")}
-                          </div>
+                          <div className="text-xl font-semibold text-slate-800 dark:text-slate-100">{tr("choose_file_title")}</div>
+                          <div className="mt-4 text-sm text-slate-500">{tr("accepted_formats")}</div>
+                          <div className="mt-1 text-xs text-slate-400">{tr("folder_hint")}</div>
                         </button>
                       </div>
                     )}
 
-                    {/* URL */}
                     {sourceMode === "url" && (
                       <div className="h-full w-full flex flex-col">
                         <div className="mb-3 flex items-center justify-between">
@@ -412,14 +365,7 @@ const CreateSummaryPage = () => {
                                     <UrlIcon className="w-4 h-4" />
                                   </div>
                                   <div className="min-w-0 flex-1">
-                                    <a
-                                      href={url}
-                                      target="_blank"
-                                      rel="noreferrer"
-                                      className="text-sm font-medium block truncate"
-                                      style={{ color: PRIMARY }}
-                                      title={url}
-                                    >
+                                    <a href={url} target="_blank" rel="noreferrer" className="text-sm font-medium block truncate" style={{ color: PRIMARY }} title={url}>
                                       {host} — {url}
                                     </a>
                                   </div>
@@ -450,7 +396,7 @@ const CreateSummaryPage = () => {
                       className="h-10 md:h-11 w-[220px] md:w-[240px] rounded-full text-[14px] md:text-[15px] font-medium shadow-sm flex items-center justify-center"
                       style={{ background: PRIMARY }}
                     >
-                      {tr("generate_from_sources")}
+                      {labelGenBtn}
                     </Button>
                   </div>
 
@@ -466,11 +412,7 @@ const CreateSummaryPage = () => {
 
                   {/* Buscador inferior */}
                   <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <div
-                      className="mx-auto max-w-4xl rounded-full border
-                                 border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900
-                                 shadow-sm focus-within:ring-2 focus-within:ring-sky-400/0"
-                    >
+                    <div className="mx-auto max-w-4xl rounded-full border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm">
                       <div className="flex items-center gap-2 px-4 py-2">
                         <input
                           value={chatInput}
