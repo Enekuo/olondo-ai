@@ -625,7 +625,7 @@ dashboard_chat_input_placeholder: "Sube una fuente para empezar",
 dashboard_chat_sources_count: "0 fuentes",
 
 // AI Chat
-  dashboard_nav_ai_chat: "Chat con IA",
+  dashboard_nav_ai_chat: "Chat con IA",   
   assistant_title: "Chat con IA",
   assistant_hint: "Pregunta lo que quieras",
   assistant_add: "Añadir archivo",
@@ -633,7 +633,7 @@ dashboard_chat_sources_count: "0 fuentes",
   assistant_voice: "Dictar por voz",
   assistant_listen: "Escuchando",
   assistant_send: "Enviar",
-  assistant_mascot_greeting: "¿Cómo puedo ayudarte?",
+  assistant_mascot_greeting: "¿Cómo puedo ayudarte?", 
   
 
 
@@ -641,8 +641,8 @@ dashboard_chat_sources_count: "0 fuentes",
   plan_premium_title: "Plan Premium",
   create_new_intro: "Explora el poder de Olondo AI. Elige una opción para empezar:",
 
-
-
+  // Create Sumary
+  summary_generate_btn: "Generar resumen", 
   
   // Create Text
   create_text_title: "Crear texto",
