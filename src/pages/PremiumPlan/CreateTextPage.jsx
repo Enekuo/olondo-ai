@@ -141,7 +141,10 @@ const CreateTextPage = () => {
   }, [leftRaw]);
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-950 text-slate-900 dark:text-slate-100">
+    <div
+      className="min-h-screen w-full text-slate-900 dark:text-slate-100"
+      style={{ backgroundColor: theme === "dark" ? "#0B1220" : "#F4F8FF" }}
+    >
       {/* HEADER */}
       <header
         className="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-slate-800"
@@ -492,5 +495,4 @@ const CreateTextPage = () => {
   );
 };
 
-export default CreateTextPage; 
-
+export default CreateTextPage;
