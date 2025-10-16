@@ -8,10 +8,11 @@ const OlondoCTASection = () => {
 
   return (
     <section
-      className="w-full bg-no-repeat bg-cover bg-center py-32"
-      style={{ backgroundImage: "url('/cta-background.png')" }} // FONDO SIN CAMBIOS
+      className="w-full bg-no-repeat bg-cover bg-center
+                 min-h-[40vh] md:min-h-[48vh] lg:min-h-[52vh] py-24"
+      style={{ backgroundImage: "url('/cta-background.png')" }}
     >
-      {/* Bloque desplazado a la IZQUIERDA (sin contenedor centrado) */}
+      {/* Bloque alineado a la izquierda */}
       <div className="w-full">
         <div
           className="
@@ -20,8 +21,10 @@ const OlondoCTASection = () => {
             max-w-[980px]
           "
         >
-          <h2 className="text-white font-extrabold leading-tight
-                         text-[36px] sm:text-[44px] md:text-[56px] lg:text-[64px]">
+          <h2
+            className="text-white font-extrabold leading-tight
+                       text-[36px] sm:text-[44px] md:text-[56px] lg:text-[64px]"
+          >
             {t('ctaTitle', 'Empieza ahora a crear y escuchar tu contenido con IA')}
           </h2>
 
@@ -47,4 +50,3 @@ const OlondoCTASection = () => {
 };
 
 export default OlondoCTASection;
-
