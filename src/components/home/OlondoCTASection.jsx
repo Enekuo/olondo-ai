@@ -8,24 +8,24 @@ const OlondoCTASection = () => {
 
   return (
     <section
-      className="w-full bg-no-repeat bg-cover bg-center pt-40 pb-40 px-0"
+      className="w-full bg-no-repeat bg-cover bg-center py-28 px-8"
       style={{ backgroundImage: "url('/cta-background.png')" }}
     >
-      {/* Bloque alineado totalmente a la izquierda */}
-      <div className="w-full flex flex-col items-start text-left gap-6 pl-2 sm:pl-3 md:pl-4 lg:pl-6 xl:pl-8">
-        <h2 className="text-white font-extrabold leading-tight text-[36px] sm:text-[44px] md:text-[52px]">
+      {/* Contenido principal alineado a la izquierda */}
+      <div className="max-w-5xl mx-auto flex flex-col items-start text-left">
+        <h2 className="text-white font-extrabold leading-tight text-[44px] sm:text-[52px] md:text-[60px] mb-4">
           {t('ctaTitle', 'Empieza ahora a crear y escuchar tu contenido con IA')}
         </h2>
 
-        <p className="text-white/90 text-lg sm:text-xl md:text-2xl max-w-3xl">
+        <p className="text-white/90 text-xl sm:text-2xl mb-10">
           {t('ctaSubtitle', 'No necesitas cuenta. Gratis, rápido y sin complicaciones.')}
         </p>
 
-        <div className="pt-2">
+        <div>
           <Button
             asChild
             size="lg"
-            className="bg-green-500 hover:bg-green-600 text-white font-semibold text-2xl px-14 py-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300"
+            className="bg-green-500 hover:bg-green-600 text-white font-semibold text-2xl px-14 py-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
           >
             <Link to="/free-trial">🚀 {t('navFreeTrial', 'Prueba Gratis')}</Link>
           </Button>
@@ -36,3 +36,4 @@ const OlondoCTASection = () => {
 };
 
 export default OlondoCTASection;
+
