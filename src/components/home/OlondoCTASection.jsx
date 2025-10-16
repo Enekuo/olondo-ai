@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Music } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const OlondoCTASection = () => {
@@ -9,30 +8,46 @@ const OlondoCTASection = () => {
 
   return (
     <section
-      className="w-full bg-no-repeat bg-cover bg-center pt-40 pb-40 px-6"
+      className="w-full bg-no-repeat bg-cover bg-center py-24 px-6"
       style={{ backgroundImage: "url('/cta-background.png')" }}
     >
-      <div className="container mx-auto max-w-4xl flex flex-col items-center text-center gap-8">
-        <div className="bg-purple-100 dark:bg-purple-800 p-6 rounded-full">
-          <Music className="text-purple-600 w-20 h-20" />
-        </div>
+      <div className="container mx-auto max-w-6xl">
+        {/* Card estilo Dribbble */}
+        <div className="relative overflow-hidden rounded-[28px] shadow-2xl ring-1 ring-white/10
+                        bg-white/5 backdrop-blur-sm px-8 sm:px-12 md:px-16 py-14 md:py-18">
+          {/* ondas decorativas a la derecha (sin cambiar tu fondo) */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-y-0 right-[-20%] w-[60%] opacity-40"
+            style={{
+              background:
+                'radial-gradient(circle at 70% 50%, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.18) 35%, rgba(255,255,255,0.08) 60%, rgba(255,255,255,0) 70%)'
+            }}
+          />
 
-        <h2 className="text-[36px] sm:text-[44px] md:text-[52px] leading-tight font-extrabold text-slate-900 dark:text-white">
-          {t('ctaTitle', 'Empieza ahora a crear y escuchar tu contenido con IA')}
-        </h2>
+          {/* Contenido alineado a la izquierda */}
+          <div className="relative max-w-3xl">
+            <h2 className="text-white font-extrabold leading-tight
+                           text-[34px] sm:text-[42px] md:text-[50px]">
+              {t('ctaTitle', 'Empieza ahora a crear y escuchar tu contenido con IA')}
+            </h2>
 
-        <p className="text-lg sm:text-xl md:text-2xl text-gray-700 dark:text-slate-300 max-w-2xl">
-          {t('ctaSubtitle', 'No necesitas cuenta. Gratis, rápido y sin complicaciones.')}
-        </p>
+            <p className="mt-4 text-white/90 text-lg sm:text-xl md:text-2xl">
+              {t('ctaSubtitle', 'No necesitas cuenta. Gratis, rápido y sin complicaciones.')}
+            </p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-          <Button
-            asChild
-            size="lg"
-            className="bg-green-500 hover:bg-green-600 text-white font-semibold text-2xl px-14 py-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300"
-          >
-            <Link to="/free-trial">🚀 {t('navFreeTrial', 'Probar Gratis')}</Link>
-          </Button>
+            <div className="mt-8">
+              <Button
+                asChild
+                size="lg"
+                className="bg-green-500 hover:bg-green-600 text-white font-semibold
+                           text-xl sm:text-2xl px-10 sm:px-14 py-6 rounded-2xl
+                           shadow-md hover:shadow-xl transition-all duration-300"
+              >
+                <Link to="/free-trial">🚀 {t('navFreeTrial', 'Prueba Gratis')}</Link>
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
