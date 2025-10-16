@@ -8,18 +8,22 @@ const OlondoCTASection = () => {
   const { t } = useLanguage();
   const { theme } = useTheme(); // 'light' | 'dark'
 
+  // Botón: verde en claro, AZUL SÓLIDO en oscuro (sin degradado)
+  const buttonClass =
+    theme === 'dark'
+      ? "bg-[#34C6FF] hover:bg-[#22B6F2] text-white font-semibold text-2xl px-14 py-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+      : "bg-green-500 hover:bg-green-600 text-white font-semibold text-2xl px-14 py-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300";
+
   return (
     <section
       className="relative w-full bg-no-repeat bg-cover bg-center
                  min-h-[60vh] md:min-h-[64vh] lg:min-h-[70vh] py-32 md:py-36"
-      style={{ backgroundImage: "url('/cta-background.png')" }}
+      style={{ backgroundImage: "url('/cta-background.png')" }} // Fondo SIN cambios
     >
-      {/* Overlay estilo “deep navy” SOLO en modo oscuro (como tu ejemplo) */}
+      {/* Overlay SOLO en modo oscuro para integrar con navbar/footer oscuros */}
       {theme === 'dark' && (
         <div className="pointer-events-none absolute inset-0">
-          {/* capa base oscura */}
           <div className="absolute inset-0 bg-[#0f1424]/70 mix-blend-multiply" />
-          {/* viñeteado radial suave desde el centro-derecha */}
           <div
             className="absolute inset-0"
             style={{
@@ -27,8 +31,6 @@ const OlondoCTASection = () => {
                 'radial-gradient(90% 70% at 85% 50%, rgba(9,12,24,0.6) 0%, rgba(9,12,24,0.35) 45%, rgba(9,12,24,0.18) 65%, rgba(9,12,24,0) 80%)'
             }}
           />
-          {/* brillo muy sutil en bordes para sensación “pulida” */}
-          <div className="absolute inset-0 ring-1 ring-white/5 rounded-[2rem] pointer-events-none" />
         </div>
       )}
 
@@ -51,14 +53,7 @@ const OlondoCTASection = () => {
           </p>
 
           <div className="pt-2">
-            <Button
-              asChild
-              size="lg"
-              className="text-white font-semibold text-2xl px-14 py-6 rounded-2xl
-                         shadow-lg hover:shadow-xl transition-all duration-300
-                         bg-gradient-to-r from-sky-400 to-violet-500
-                         hover:from-sky-500 hover:to-violet-600"
-            >
+            <Button asChild size="lg" className={buttonClass}>
               <Link to="/free-trial">🚀 {t('navFreeTrial', 'Prueba Gratis')}</Link>
             </Button>
           </div>
